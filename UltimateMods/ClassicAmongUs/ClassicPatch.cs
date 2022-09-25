@@ -33,7 +33,7 @@ namespace UltimateMods.ClassicAmongUs
                 if (CustomOptionsH.RememberClassic.getBool())
                 {
                     // 過去を思い出すときだけ無効化
-                    // マジでホスト系Mod神だわ(SHR除く)
+                    // マジでホスト系Mod神だわ
                     return false;
                 }
 
