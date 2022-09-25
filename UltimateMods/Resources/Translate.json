@@ -1,0 +1,469 @@
+{
+    "BuildNum": {
+        "0": "613"
+    },
+    "ModOptionsText": {
+        "0": "UM Options",
+        "11": "UM\u306e\u8a2d\u5b9a"
+    },
+    "VanillaOptionsText": {
+        "0": "AmongUs Options",
+        "11": "AmongUs\u306e\u8a2d\u5b9a"
+    },
+    "GeneralSettings": {
+        "0": "UM Settings",
+        "11": "UM\u306e\u8a2d\u5b9a"
+    },
+    "ImpostorSettings": {
+        "0": "Impostor Roles",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u5f79\u8077"
+    },
+    "NeutralSettings": {
+        "0": "Neutral Roles",
+        "11": "\u7b2c\u4e09\u9663\u55b6\u5f79\u8077"
+    },
+    "CrewmateSettings": {
+        "0": "Crewmate Roles",
+        "11": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u5f79\u8077"
+    },
+    "ModifierSettings": {
+        "0": "Modifier Roles",
+        "11": "\u5c5e\u6027\u5f79\u8077"
+    },
+    "OtherSettings": {
+        "0": "Other Settings",
+        "11": "\u305d\u306e\u4ed6\u8a2d\u5b9a"
+    },
+    "ForceEnd": {
+        "0": "ForceEnd",
+        "11": "\u5f37\u5236\u7d42\u4e86"
+    },
+    "Win": {
+        "0": "Win",
+        "11": "\u52dd\u5229"
+    },
+    "Lose": {
+        "0": "Lose",
+        "11": "\u6557\u5317"
+    },
+    "Everyone": {
+        "0": "Everyone",
+        "11": "\u5168\u54e1"
+    },
+    "ReactorWin": {
+        "0": "<size=80%>Reactor Sabotage was activated.</size>",
+        "11": "<size=80%>\u30ea\u30a2\u30af\u30bf\u30fc\u30b5\u30dc\u304c\u767a\u52d5\u3057\u305f\u3002</size>"
+    },
+    "O2Win": {
+        "0": "<size=80%>Oxygen Sabotage was activated,</size>",
+        "11": "<size=80%>\u9178\u7d20\u30b5\u30dc\u304c\u767a\u52d5\u3057\u305f\u3002</size>"
+    },
+    "roleSummaryText": {
+        "0": "Role Summary",
+        "11": "\u6700\u7d42\u7d50\u679c"
+    },
+    "CreditsMain": {
+        "0": "Created with DekoKiyo",
+        "11": "\u5236\u4f5c:DekoKiyo"
+    },
+    "CreditsVersion": {
+        "0": "Version.{0}",
+        "11": "Version.{0}"
+    },
+    "CreditsBetaVersion": {
+        "0": "Version.Beta{0}",
+        "11": "Version.Beta{0}"
+    },
+    "PlatformTitle": {
+        "0": "===PlayerName : Platform===",
+        "11": "===\u30d7\u30ec\u30a4\u30e4\u30fc\u540d\uff1a\u6a5f\u7a2e\u540d==="
+    },
+    "MeetingStatus": {
+        "0": "<size=100%>Crewmate {0} has\n<color=red>{1} times left, {2} times overall</color>\ncan hold emergency meetings.</size>",
+        "11": "<size=100%>\u30af\u30eb\u30fc {0} \u306f\n<color=red>\u6b8b\u308a{1}\u56de\u3001\u5168\u4f53\u3067\u306f{2}\u56de</color>\n\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u50ac\u3067\u304d\u308b</size>"
+    },
+    "NoUpdate": {
+        "0": "There is no update.\nThis is latest version.",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u3042\u308a\u307e\u305b\u3093\u3002\n\u3053\u308c\u304c\u6700\u65b0\u3067\u3059\u3002"
+    },
+    "Updating": {
+        "0": "Updating now\u2026",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\u2026"
+    },
+    "UpdateManually": {
+        "0": "Unable to auto-update.\nPlease update manually.",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n\u624b\u52d5\u3067\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002"
+    },
+    "UpdateInProgress": {
+        "0": "Update finished.\nQuit Among Us.\nPlease start again.",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\nAmongUs\u3092\u7d42\u4e86\u3057\u307e\u3059\u3002\n\u518d\u5ea6\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044\u3002"
+    },
+    "UpdateButton": {
+        "0": "Mod Update",
+        "11": "Mod\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8"
+    },
+    "UpdateRestart": {
+        "0": "Update finished.\nQuit Among Us.\nPlease start again.",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\nAmongUs\u3092\u7d42\u4e86\u3057\u307e\u3059\u3002\n\u518d\u5ea6\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044\u3002"
+    },
+    "UpdateFailed": {
+        "0": "Unable to auto-update.\nPlease update manually.",
+        "11": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n\u624b\u52d5\u3067\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002"
+    },
+    "OptionOn": {
+        "0": "On",
+        "11": "\u30aa\u30f3"
+    },
+    "OptionOff": {
+        "0": "Off",
+        "11": "\u30aa\u30d5"
+    },
+    "FormatSeconds": {
+        "0": "{0}Seconds",
+        "11": "{0}\u79d2"
+    },
+    "FormatTimes": {
+        "0": "{0}Times",
+        "11": "{0}\u56de"
+    },
+    "FormatPlayer": {
+        "0": "{0}Player",
+        "11": "{0}\u4eba"
+    },
+    "FormatShots": {
+        "0": "{0}Shots",
+        "11": "{0}\u767a"
+    },
+    "wasThe": {
+        "0": "was The",
+        "11": "\u3060\u3063\u305f"
+    },
+    "HA": {
+        "0": "[BLANK]",
+        "11": "\u306f"
+    },
+    "DevName": {
+        "0": "<align=\"center\">Developer\nDekoKiyo\n</align>",
+        "11": "<align=\"center\">\u88fd\u4f5c\u8005\nDekoKiyo\n</align>"
+    },
+    "CreditsText": {
+        "0": "<align=\"center\"><size=120%>Reference Mod</size></align><size=75%>\n<color=#ff351f>TheOtherRoles</color> from Eisbison\n<color=#ff351f>TheOtherRoles+</color> from tomarai\n<color=#ff351f>TheOtherRolesGM</color> from Yukinogatari\n<color=#ff351f>TheOtherRolesGM Haoming</color> from Haoming\n<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color> from ykundesu\n<color=#ffffff>TownOfPlus</color> from tugaru1975\n<color=#e39804>TownOfUs-R</color> from eDonnes124\n<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostor</color> from Team ToI\n<color=#ffffff>LasMonjas</color> from KiraYamato94\n<color=#4169e1>TownOfSuper</color> from reitoh-mugicha</size>",
+        "11": "<align=\"center\"><size=120%>\u53c2\u8003Mod</size></align><size=75%>\nEisbison\u69d8\u306e<color=#ff351f>TheOtherRoles</color>\ntomarai\u69d8\u306e<color=#ff351f>TheOtherRoles+</color>\nYukinogatari\u69d8\u306e<color=#ff351f>TheOtherRolesGM</color>\nHaoming\u69d8\u306e<color=#ff351f>TheOtherRolesGM Haoming</color>\nykundesu\u69d8\u306e<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>\ntugaru1975\u69d8\u306e<color=#ffffff>TownOfPlus</color>\neDonnes124\u69d8\u306e<color=#e39804>TownOfUs-R</color>\nToI\u88fd\u4f5c\u30c1\u30fc\u30e0\u69d8\u306e<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostor</color>\nKiraYamato94\u69d8\u306e<color=#ffffff>LasMonjas</color>\nreitoh-mugicha\u69d8\u306e<color=#4169e1>TownOfSuper</color></size>"
+    },
+    "CreditsTitle": {
+        "0": "Mod Credits",
+        "11": "Mod\u30af\u30ec\u30b8\u30c3\u30c8"
+    },
+    "Position": {
+        "0": "Position:",
+        "11": "\u5ea7\u6a19:"
+    },
+    "RestrictOutOfTime": {
+        "0": "Out Of Time",
+        "11": "\u6642\u9593\u5207\u308c"
+    },
+    "TimeRemaining": {
+        "0": "Remaining: {0}",
+        "11": "\u6b8b\u308a\u6642\u9593: {0}"
+    },
+    "ButtonBlocked": {
+        "0": "BLOCKED",
+        "11": "\u4f7f\u7528\u4e0d\u53ef"
+    },
+    "JesterMeetingButton": {
+        "0": "Jester can't call meetings...",
+        "11": "\u30b8\u30a7\u30b9\u30bf\u30fc\u306f\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u3051\u306a\u3044\u2026"
+    },
+    "GhostsSeeTasksButton": {
+        "0": "Ghosts See Remaining Tasks",
+        "11": "\u5e7d\u970a\u304c\u5168\u54e1\u306e\n\u30bf\u30b9\u30af\u6b8b\u91cf\u304c\u898b\u3048\u308b"
+    },
+    "GhostsSeeVotesButton": {
+        "0": "Ghosts See Roles",
+        "11": "\u5e7d\u970a\u304c\u5168\u54e1\u306e\n\u30ed\u30fc\u30eb\u304c\u898b\u3048\u308b"
+    },
+    "GhostsSeeRolesButton": {
+        "0": "Ghosts See Votes",
+        "11": "\u5e7d\u970a\u304c\u5168\u54e1\u306e\n\u6295\u7968\u5148\u304c\u898b\u3048\u308b"
+    },
+    "ShowRoleSummaryButton": {
+        "0": "Show Role Summary",
+        "11": "\u30cd\u30fc\u30e0\u30d7\u30ec\u30fc\u30c8\u3092\n\u975e\u8868\u793a\u306b\u3059\u308b"
+    },
+    "HideNameplates": {
+        "0": "Hide Nameplates",
+        "11": "\u6700\u7d42\u7d50\u679c\u3092\u8868\u793a"
+    },
+    "HideTaskArrows": {
+        "0": "Hide Task Arrows",
+        "11": "\u30bf\u30b9\u30af\u306e\u77e2\u5370\u3092\n\u975e\u8868\u793a\u306b\u3059\u308b"
+    },
+    "Impostor": {
+        "0": "Impostor",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
+    },
+    "Crewmate": {
+        "0": "Crewmate",
+        "11": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8"
+    },
+    "Jester": {
+        "0": "Jester",
+        "11": "\u30b8\u30a7\u30b9\u30bf\u30fc"
+    },
+    "Sheriff": {
+        "0": "Sheriff",
+        "11": "\u30b7\u30a7\u30ea\u30d5"
+    },
+    "ImpostorIntro": {
+        "0": "Sabotage and Kill Everyone",
+        "11": "\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u3092\u884c\u3044\u5168\u54e1\u3092\u6bba\u305d\u3046"
+    },
+    "ImpostorShort": {
+        "0": "Sabotage and Kill Everyone",
+        "11": "\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u3092\u884c\u3044\u5168\u54e1\u3092\u6bba\u305d\u3046"
+    },
+    "ImpostorFull": {
+        "0": "A regular Impostor.",
+        "11": "\u901a\u5e38\u306e<color=#ff1919ff>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc</color>"
+    },
+    "CrewmateIntro": {
+        "0": "Do Task.",
+        "11": "\u30bf\u30b9\u30af\u3092\u884c\u3046"
+    },
+    "CrewmateShort": {
+        "0": "Do Task.",
+        "11": "\u30bf\u30b9\u30af\u3092\u884c\u3046"
+    },
+    "CrewmateFull": {
+        "0": "Do Task.",
+        "11": "\u30bf\u30b9\u30af\u3092\u884c\u3046"
+    },
+    "JesterIntro": {
+        "0": "Get out of here.",
+        "11": "\u3053\u3053\u304b\u3089\u51fa\u3066\u3044\u3051"
+    },
+    "JesterShort": {
+        "0": "Get out of here.",
+        "11": "\u3053\u3053\u304b\u3089\u51fa\u3066\u3044\u3051"
+    },
+    "JesterFull": {
+        "0": "Get out of here.",
+        "11": "\u3053\u3053\u304b\u3089\u51fa\u3066\u3044\u3051"
+    },
+    "SheriffIntro": {
+        "0": "Shoot the <color=#FF1919FF>Impostors</color>",
+        "11": "<color=#FF1919FF>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u305f\u3061</color>\u3092\u6483\u3061\u629c\u3051"
+    },
+    "SheriffShort": {
+        "0": "Shoot the <color=#FF1919FF>Impostors</color>",
+        "11": "<color=#FF1919FF>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u305f\u3061</color>\u3092\u6483\u3061\u629c\u3051"
+    },
+    "SheriffFull": {
+        "0": "Shoot the <color=#FF1919FF>Impostors</color>",
+        "11": "<color=#FF1919FF>\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u305f\u3061</color>\u3092\u6483\u3061\u629c\u3051"
+    },
+    "ChangePage": {
+        "0": "Press < > for Change Pages,",
+        "11": "< >\u3067\u30da\u30fc\u30b8\u3092\u5909\u66f4"
+    },
+    "ActivateRoles": {
+        "0": "Activate Mod Roles",
+        "11": "Mod\u5f79\u8077\u6709\u52b9\u5316"
+    },
+    "PresetSelection": {
+        "0": "Preset",
+        "11": "\u30d7\u30ea\u30bb\u30c3\u30c8"
+    },
+    "RandomGen": {
+        "0": "Random Generator",
+        "11": "\u5f37\u529b\u306a\u4e71\u6570\u751f\u6210\u6a5f"
+    },
+    "CrewmateRoles": {
+        "0": "Crewmate Roles",
+        "11": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u5f79\u8077"
+    },
+    "NeutralRoles": {
+        "0": "Neutral Roles",
+        "11": "\u7b2c\u4e09\u9663\u55b6\u5f79\u8077"
+    },
+    "ImpostorRoles": {
+        "0": "Impostor Roles",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u5f79\u8077"
+    },
+    "ModifierRoles": {
+        "0": "Modifier Roles",
+        "11": "\u5c5e\u6027\u9663\u55b6\u5f79\u8077"
+    },
+    "RememberClassic": {
+        "0": "Remember the Past",
+        "11": "\u904e\u53bb\u3092\u601d\u3044\u51fa\u3059"
+    },
+    "CrewmateRolesCountMin": {
+        "0": "Minimum Crewmate Roles",
+        "11": "\u6700\u5c0f\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u5f79\u8077\u6570"
+    },
+    "CrewmateRolesCountMax": {
+        "0": "Maximum Crewmate Roles",
+        "11": "\u6700\u5927\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u5f79\u8077\u6570"
+    },
+    "NeutralRolesCountMin": {
+        "0": "Minimum Neutral Roles",
+        "11": "\u6700\u5c0f\u7b2c\u4e09\u9663\u55b6\u5f79\u8077\u6570"
+    },
+    "NeutralRolesCountMax": {
+        "0": "Maximum Neutral Roles",
+        "11": "\u6700\u5927\u7b2c\u4e09\u9663\u55b6\u5f79\u8077\u6570"
+    },
+    "ImpostorRolesCountMin": {
+        "0": "Minimum Impostor Roles",
+        "11": "\u6700\u5c0f\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u5f79\u8077\u6570"
+    },
+    "ImpostorRolesCountMax": {
+        "0": "Maximum Impostor Roles",
+        "11": "\u6700\u5927\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u5f79\u8077\u6570"
+    },
+    "ModifierCountMin": {
+        "0": "Minimum Modifier Roles",
+        "11": "\u6700\u5c0f\u5c5e\u6027\u5f79\u8077\u6570"
+    },
+    "ModifierCountMax": {
+        "0": "Maximum Modifier Roles",
+        "11": "\u6700\u5927\u5c5e\u6027\u5f79\u8077\u6570"
+    },
+    "MaxNumberOfMeetings": {
+        "0": "Maximum Can Emergency Meetings",
+        "11": "\u7dca\u6025\u4f1a\u8b70\u306e\u6700\u5927\u56de\u6570"
+    },
+    "BlockSkip": {
+        "0": "Can't Skip Vote",
+        "11": "\u30b9\u30ad\u30c3\u30d7\u6295\u7968\u7981\u6b62"
+    },
+    "NoVoteIsSelfVote": {
+        "0": "Can't Self Vote",
+        "11": "\u81ea\u6295\u7968\u7981\u6b62"
+    },
+    "NoMedBayLimit": {
+        "0": "Can Simultaneous Progress Med Bay Scan",
+        "11": "\u533b\u52d9\u5ba4\u306e\u30b9\u30ad\u30e3\u30f3\u30bf\u30b9\u30af\u3092\u540c\u6642\u306b\u9032\u884c\u3067\u304d\u308b"
+    },
+    "VentAnimation": {
+        "0": "Disable VentAnimation",
+        "11": "\u30d9\u30f3\u30c8\u306e\u958b\u9589\u904b\u52d5\u7121\u52b9\u5316"
+    },
+    "HideOutName": {
+        "0": "NameTag doesn't Cross the Wall",
+        "11": "\u30cd\u30fc\u30e0\u30bf\u30b0\u306e\u58c1\u629c\u3051\u3092\u9632\u6b62"
+    },
+    "RefundVoteDeath": {
+        "0": "Refund Votes on Death Player",
+        "11": "\u6295\u7968\u5148\u304c\u6b7b\u4ea1\u3057\u305f\u6642\u3001\u518d\u6295\u7968\u53ef"
+    },
+    "EnableGodMira": {
+        "0": "Enable God MiraHQ",
+        "11": "\u795e\u30e9\u3092\u6709\u52b9\u306b\u3059\u308b"
+    },
+    "PlayRandomMaps": {
+        "0": "Enable Random Maps",
+        "11": "\u30e9\u30f3\u30c0\u30e0\u30de\u30c3\u30d7\u30e2\u30fc\u30c9"
+    },
+    "RandomMapsEnableSkeld": {
+        "0": "The Skeld",
+        "11": "The Skeld"
+    },
+    "RandomMapsEnableMira": {
+        "0": "MiraHQ",
+        "11": "MiraHQ"
+    },
+    "RandomMapsEnablePolus": {
+        "0": "Polus",
+        "11": "Polus"
+    },
+    "RandomMapsEnableAirShip": {
+        "0": "AirShip",
+        "11": "AirShip"
+    },
+    "RandomMapsEnableSubmerged": {
+        "0": "Submerged",
+        "11": "Submerged"
+    },
+    "RestrictDevices": {
+        "0": "Restrict Special Devices",
+        "11": "\u7279\u6b8a\u88c5\u7f6e\u306e\u5236\u9650"
+    },
+    "DisableAdmin": {
+        "0": "Restrict Admin Table",
+        "11": "\u30a2\u30c9\u30df\u30f3\u306e\u5236\u9650\u6642\u9593"
+    },
+    "DisableCameras": {
+        "0": "Restrict Security Devices",
+        "11": "\u30ab\u30e1\u30e9\u306e\u5236\u9650\u6642\u9593"
+    },
+    "DisableVitals": {
+        "0": "Restrict Vitals Panel",
+        "11": "\u30d0\u30a4\u30bf\u30eb\u306e\u5236\u9650\u6642\u9593"
+    },
+    "RestrictPerTurn": {
+        "0": "Time Per Round",
+        "11": "\u30bf\u30fc\u30f3\u6bce"
+    },
+    "RestrictPerGame": {
+        "0": "Time Per Game",
+        "11": "\u8a66\u5408\u6bce"
+    },
+    "OldAirShipAdmin": {
+        "0": "Old AirShip Admin System",
+        "11": "\u65e7AirShip\u30a2\u30c9\u30df\u30f3\u4ed5\u69d8"
+    },
+    "EnableRecordsAdmin": {
+        "0": "Enable Archive Admin",
+        "11": "\u30a2\u30fc\u30ab\u30a4\u30d6\u306e\u30a2\u30c9\u30df\u30f3\u6709\u52b9\u5316"
+    },
+    "EnableCockpitAdmin": {
+        "0": "Enable Cockpit Admin",
+        "11": "\u30b3\u30c3\u30af\u30d4\u30c3\u30c8\u306e\u30a2\u30c9\u30df\u30f3\u6709\u52b9\u5316"
+    },
+    "AirShipReactorDuration": {
+        "0": "AirShip Reactor Duration",
+        "11": "AirShip\u6607\u964d\u6a5f\u5236\u9650\u6642\u9593"
+    },
+    "RoleNumAssigned": {
+        "0": "Role Counts",
+        "11": "\u4eba\u6570"
+    },
+    "MaxShots": {
+        "0": "Max Shots",
+        "11": "\u6483\u3066\u308b\u6700\u5927\u6570"
+    },
+    "CanKillNeutral": {
+        "0": "Can Kill Neutral",
+        "11": "\u7b2c\u4e09\u9663\u55b6\u3092\u6bba\u305b\u308b"
+    },
+    "KillCooldowns": {
+        "0": "Kill Cooldowns",
+        "11": "\u30ad\u30eb\u30af\u30fc\u30eb"
+    },
+    "MisfireKillsTarget": {
+        "0": "Misfire Kills Target",
+        "11": "\u30df\u30b9\u3067\u3082\u76f8\u624b\u3092\u9053\u9023\u308c\u306b\u3059\u308b"
+    },
+    "JesterCanEmergencyMeeting": {
+        "0": "Can Emergency Meeting",
+        "11": "\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u3051\u308b"
+    },
+    "JesterCanUseVents": {
+        "0": "Can Use Vents",
+        "11": "\u30d9\u30f3\u30c8\u304c\u4f7f\u3048\u308b"
+    },
+    "JesterCanSabotage": {
+        "0": "Can Sabotage",
+        "11": "\u30b5\u30dc\u30bf\u30fc\u30b8\u30e5\u304c\u3067\u304d\u308b"
+    },
+    "JesterHasImpostorVision": {
+        "0": "Has Impostor Vision",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u306e\u8996\u754c\u3092\u6301\u3064"
+    },
+    "Shots": {
+        "0": "Shots: {0}",
+        "11": "\u6b8b\u308a {0}\u767a"
+    }
+}

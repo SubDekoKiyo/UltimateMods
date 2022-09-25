@@ -1,0 +1,6 @@
+.vs/*
+build.cake
+nuget.config
+UltimateMods/obj
+UltimateMods/bin
+~$Translate.xlsx

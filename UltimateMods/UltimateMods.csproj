@@ -1,0 +1,42 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>netstandard2.1</TargetFramework>
+        <LangVersion>latest</LangVersion>
+        <DebugType>embedded</DebugType>
+
+        <VersionPrefix>0.0.1</VersionPrefix>
+        <Description>Ultimate Mods</Description>
+		<Authors>DekoKiyo</Authors>
+
+		<DefineConstants>$(DefineConstants);STEAM</DefineConstants>
+		<AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+		<ApplicationIcon />
+		<Win32Resource />
+		<AssemblyName>UltimateMods</AssemblyName>
+    </PropertyGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\**" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
+		<Reference Include="$(AmongUs)/BepInEx/unhollowed/*.dll" />
+	</ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="BepInEx.IL2CPP" Version="6.0.0-be.562" />
+        <PackageReference Include="AmongUs.GameLibs.Steam" Version="2022.8.23" PrivateAssets="all" />
+        <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="1.1.1" PrivateAssets="all" />
+    </ItemGroup>
+
+    <Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="Exists('$(AmongUsLatest)/BepInEx/plugins/')">
+		<Message Text="Second occurrence" />
+		<Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\netstandard2.1\$(AssemblyName).dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
+	</Target>
+
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+		<Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
+		<Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" />
+	</Target>
+</Project>
