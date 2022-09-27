@@ -120,13 +120,11 @@ namespace UltimateMods
                 GameData.Instance.AddPlayer(playerControl);
                 AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
 
-                int color = random.Next(Palette.PlayerColors.Length);
-
                 playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
                 playerControl.GetComponent<DummyBehaviour>().enabled = true;
                 playerControl.NetTransform.enabled = false;
                 playerControl.SetName("Bot");
-                playerControl.SetColor(color);
+                playerControl.SetColor((byte)random.Next(Palette.PlayerColors.Length));
                 GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
             }
         }

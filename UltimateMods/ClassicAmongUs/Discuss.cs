@@ -1,7 +1,7 @@
 using HarmonyLib;
 using UnityEngine;
 
-namespace UltimateMods.ClassicAmongUs
+namespace UltimateMods
 {
     [HarmonyPatch]
     public static class MeetingDiscuss
@@ -19,7 +19,7 @@ namespace UltimateMods.ClassicAmongUs
             if (!CustomOptionsH.RememberClassic.getBool()) return;
 
             // Discussのタイマー軌道・終了
-            GameObject Discuss = GameObject.Find("Main Camera/Hud/Emblems/DiscussEmblem");
+            Discuss = GameObject.Find("Main Camera/Hud/Emblems/DiscussEmblem");
 
             if (Discuss != null && EnableTimer)
             {

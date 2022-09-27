@@ -14,7 +14,7 @@ namespace UltimateMods.Patches
         public static Dictionary<int, PlayerVersion> playerVersions = new Dictionary<int, PlayerVersion>();
         public static float timer = 600f;
         public static float shareTimer;
-        private static float kickingTimer = 0f;
+        // private static float kickingTimer = 0f;
         private static bool versionSent = false;
         private static string lobbyCodeText = "";
 
@@ -40,7 +40,7 @@ namespace UltimateMods.Patches
                 // Reset lobby countdown timer
                 timer = 600f;
                 // Reset kicking timer
-                kickingTimer = 0f;
+                // kickingTimer = 0f;
                 // Copy lobby code
                 string code = InnerNet.GameCode.IntToGameName(AmongUsClient.Instance.GameId);
                 GUIUtility.systemCopyBuffer = code;

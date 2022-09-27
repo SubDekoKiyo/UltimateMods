@@ -14,6 +14,7 @@ namespace UltimateMods
         public static Dictionary<string, Dictionary<int, string>> stringData;
 
         private const string blankText = "[BLANK]";
+        public static int lang = (int)SaveManager.LastLanguage;
 
         public ModTranslation() { }
 
@@ -73,7 +74,6 @@ namespace UltimateMods
             }
 
             var data = stringData[keyClean];
-            int lang = (int)SaveManager.LastLanguage;
 
             if (data.ContainsKey(lang))
             {
