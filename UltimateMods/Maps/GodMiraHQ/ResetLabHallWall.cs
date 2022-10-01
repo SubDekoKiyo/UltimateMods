@@ -1,3 +1,5 @@
+// 後日実装
+/*
 using HarmonyLib;
 using UnityEngine;
 using System.Linq;
@@ -89,21 +91,4 @@ namespace UltimateMods.Maps
         }
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+*/

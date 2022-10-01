@@ -116,7 +116,7 @@ namespace UltimateMods.EndGame
                 });
             }
 
-            List<PlayerControl> notWinners = new List<PlayerControl>();
+            List<PlayerControl> notWinners = new();
             if (Jester.jester != null) notWinners.Add(Jester.jester);
 
             List<WinningPlayerData> winnersToRemove = new List<WinningPlayerData>();

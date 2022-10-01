@@ -175,7 +175,7 @@ namespace UltimateMods.Objects
 
             var underlayTransparent = new Color(0.1f, 0.1f, 0.1f, 0.0f);
             var underlayOpaque = new Color(0.1f, 0.1f, 0.1f, 0.88f);
-            HudManager.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
             {
                 InfoUnderlay.color = Color.Lerp(underlayTransparent, underlayOpaque, t);
                 InfoOverlayRules.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
@@ -194,7 +194,7 @@ namespace UltimateMods.Objects
             var underlayTransparent = new Color(0.1f, 0.1f, 0.1f, 0.0f);
             var underlayOpaque = new Color(0.1f, 0.1f, 0.1f, 0.88f);
 
-            HudManager.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
             {
                 if (InfoUnderlay != null)
                 {

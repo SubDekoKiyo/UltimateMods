@@ -1,6 +1,6 @@
 {
     "BuildNum": {
-        "0": "808"
+        "0": "846"
     },
     "ModOptionsText": {
         "0": "UM Options",
@@ -198,6 +198,26 @@
         "0": "Hide Task Arrows",
         "11": "\u30bf\u30b9\u30af\u306e\u77e2\u5370\u3092\n\u975e\u8868\u793a\u306b\u3059\u308b"
     },
+    "ErrorNotInstalled": {
+        "0": ": has a different or no version of UltimateMods",
+        "11": "\u306eUltimateMods\u306f\u6b63\u5e38\u306b\u5c0e\u5165\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002"
+    },
+    "ErrorOlderVersion": {
+        "0": ": has an older version of UltimateMods",
+        "11": "\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3088\u308a\u53e4\u3044\u3067\u3059\u3002"
+    },
+    "ErrorNewerVersion": {
+        "0": ": has a newer version of UltimateMods",
+        "11": "\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3088\u308a\u65b0\u3057\u3044\u3067\u3059\u3002"
+    },
+    "ErrorWrongVersion": {
+        "0": ": has a modified version of UM",
+        "11": "\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3068\u9055\u3044\u307e\u3059\u3002"
+    },
+    "ErrorHostNoVersion": {
+        "0": "<color=#00a2ff>The host has no or a different version of UltimateMods\nYou will be kicked in {0}s</color>",
+        "11": "<color=#00a2ff>\u30db\u30b9\u30c8\u304cUltimateMods\u3092\u5c0e\u5165\u3057\u3066\u3044\u306a\u3044\u304b\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\n\u30d0\u30b0\u9632\u6b62\u306e\u305f\u3081\u3001\u3042\u306a\u305f\u306f\u3042\u3068{0}\u79d2\u3067\u30ad\u30c3\u30af\u3055\u308c\u307e\u3059\u3002</color>"
+    },
     "Impostor": {
         "0": "Impostor",
         "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc"
@@ -362,6 +382,14 @@
         "0": "Enable God MiraHQ",
         "11": "\u795e\u30e9\u3092\u6709\u52b9\u306b\u3059\u308b"
     },
+    "MirrorMap": {
+        "0": "Enable Mirror Maps",
+        "11": "\u53cd\u8ee2\u30de\u30c3\u30d7\u3092\u6709\u52b9\u5316"
+    },
+    "DieZoom": {
+        "0": "Can Zoom Out If you died",
+        "11": "\u6b7b\u4ea1\u6642\u3001\u30ba\u30fc\u30e0\u30a2\u30a6\u30c8\u3067\u304d\u308b"
+    },
     "PlayRandomMaps": {
         "0": "Enable Random Maps",
         "11": "\u30e9\u30f3\u30c0\u30e0\u30de\u30c3\u30d7\u30e2\u30fc\u30c9"
@@ -409,6 +437,10 @@
     "RestrictPerGame": {
         "0": "Time Per Game",
         "11": "\u8a66\u5408\u6bce"
+    },
+    "AirShipSettings": {
+        "0": "AirShipSettings",
+        "11": "AirShip\u306e\u8a2d\u5b9a"
     },
     "OldAirShipAdmin": {
         "0": "Old AirShip Admin System",

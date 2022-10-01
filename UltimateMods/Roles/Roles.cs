@@ -3,7 +3,6 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using UltimateMods.Roles.Yakuza;
 using static UltimateMods.Roles.CrewmateRoles;
 using static UltimateMods.Roles.NeutralRoles;
 
@@ -14,13 +13,9 @@ namespace UltimateMods.Roles
         // Crewmate Roles
         Crewmate = 0,
         Sheriff,
-        YakuzaBoss,
-        YakuzaStaff,
-        YakuzaGun,
 
         // Impostor Roles
         Impostor = 100,
-        Whopper,
 
         // Neutral Roles
         Jester = 200,
@@ -32,12 +27,15 @@ namespace UltimateMods.Roles
     [HarmonyPatch]
     public static class RoleData
     {
-        public static Dictionary<RoleType, Type> allRoleTypes = new();
+        public static Dictionary<RoleType, Type> allRoleTypes = new()
+        {
+            { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
+        };
     }
 
     public abstract class Role
     {
-        public static List<Role> allRoles = new List<Role>();
+        public static List<Role> allRoles = new();
         public PlayerControl player;
         public RoleType roleId;
 
@@ -117,6 +115,29 @@ namespace UltimateMods.Roles
         {
             return players.Any(x => x.player == player);
         }
+
+        public static void setRole(PlayerControl player)
+        {
+            if (!isRole(player))
+            {
+                T role = new T();
+                role.Init(player);
+            }
+        }
+
+        public static void eraseRole(PlayerControl player)
+        {
+            players.DoIf(x => x.player == player, x => x.ResetRole());
+            players.RemoveAll(x => x.player == player && x.roleId == RoleType);
+            allRoles.RemoveAll(x => x.player == player && x.roleId == RoleType);
+        }
+
+        public static void swapRole(PlayerControl p1, PlayerControl p2)
+        {
+            var index = players.FindIndex(x => x.player == p1);
+            if (index >= 0)
+                players[index].player = p2;
+        }
     }
 
     public static class RoleHelpers
@@ -131,16 +152,8 @@ namespace UltimateMods.Roles
             {
                 case RoleType.Jester:
                     return Jester.jester == player;
-                case RoleType.Sheriff:
-                    return Sheriff.sheriff == player;
-                case RoleType.YakuzaBoss:
-                    return YakuzaBoss.boss == player;
-                case RoleType.YakuzaStaff:
-                    return YakuzaStaff.staff == player;
-                case RoleType.YakuzaGun:
-                    return YakuzaGun.gun == player;
                 default:
-                    UltimateModsPlugin.Logger.LogError("isRole: no method found for role type {role}");
+                    UltimateModsPlugin.Logger.LogError($"IsRole: no method found for role type {role}");
                     break;
             }
 
@@ -163,20 +176,8 @@ namespace UltimateMods.Roles
                 case RoleType.Jester:
                     Jester.jester = player;
                     break;
-                case RoleType.Sheriff:
-                    Sheriff.sheriff = player;
-                    break;
-                case RoleType.YakuzaBoss:
-                    YakuzaBoss.boss = player;
-                    break;
-                case RoleType.YakuzaStaff:
-                    YakuzaStaff.staff = player;
-                    break;
-                case RoleType.YakuzaGun:
-                    YakuzaGun.gun = player;
-                    break;
                 default:
-                    UltimateModsPlugin.Logger.LogError("setRole: no method found for role type {role}");
+                    UltimateModsPlugin.Logger.LogError($"SetRole: no method found for role type {role}");
                     return;
             }
         }
@@ -193,7 +194,7 @@ namespace UltimateMods.Roles
                         return;
                     }
                 }
-                UltimateModsPlugin.Logger.LogError("eraseRole: no method found for role type {role}");
+                UltimateModsPlugin.Logger.LogError($"eraseRole: no method found for role type {role}");
             }
         }
 
@@ -205,10 +206,6 @@ namespace UltimateMods.Roles
             }
 
             // Crewmate roles
-            if (player.isRole(RoleType.Sheriff)) Sheriff.ClearAndReload();
-            if (player.isRole(RoleType.YakuzaBoss)) YakuzaBoss.ClearAndReload();
-            if (player.isRole(RoleType.YakuzaStaff)) YakuzaStaff.ClearAndReload();
-            if (player.isRole(RoleType.YakuzaGun)) YakuzaGun.ClearAndReload();
 
             // Impostor roles
 
@@ -225,12 +222,20 @@ namespace UltimateMods.Roles
                     t.Value.GetMethod("swapRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player, target });
                 }
             }
+        }
 
-            if (player.isRole(RoleType.Jester)) Jester.jester = target;
-            if (player.isRole(RoleType.Sheriff)) Sheriff.sheriff = target;
-            if (player.isRole(RoleType.YakuzaBoss)) YakuzaBoss.boss = target;
-            if (player.isRole(RoleType.YakuzaStaff)) YakuzaStaff.staff = target;
-            if (player.isRole(RoleType.YakuzaGun)) YakuzaGun.gun = target;
+        public static void OnKill(this PlayerControl player, PlayerControl target)
+        {
+            Role.allRoles.DoIf(x => x.player == player, x => x.OnKill(target));
+            Modifier.allModifiers.DoIf(x => x.player == player, x => x.OnKill(target));
+        }
+
+        public static void OnDeath(this PlayerControl player, PlayerControl killer)
+        {
+            Role.allRoles.DoIf(x => x.player == player, x => x.OnDeath(killer));
+            Modifier.allModifiers.DoIf(x => x.player == player, x => x.OnDeath(killer));
+
+            RPCProcedure.UpdateMeeting(player.PlayerId, true);
         }
     }
 }

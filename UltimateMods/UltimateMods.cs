@@ -15,26 +15,31 @@ namespace UltimateMods
         public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks);
         public static void ClearAndReloadRoles()
         {
+            Sheriff.Clear();
+
             Jester.ClearAndReload();
-            Sheriff.ClearAndReload();
+
+            Role.ClearAll();
         }
 
         public static void FixedUpdate(PlayerControl player)
         {
+            Role.allRoles.DoIf(x => x.player == player, x => x.FixedUpdate());
             Modifier.allModifiers.DoIf(x => x.player == player, x => x.FixedUpdate());
         }
 
         public static void OnMeetingStart()
         {
+            Role.allRoles.Do(x => x.OnMeetingStart());
             Modifier.allModifiers.Do(x => x.OnMeetingStart());
         }
 
         public static void OnMeetingEnd()
         {
+            Role.allRoles.Do(x => x.OnMeetingEnd());
             Modifier.allModifiers.Do(x => x.OnMeetingEnd());
 
             CustomOverlays.HideInfoOverlay();
-            // CustomOverlays.HideBlackBG();
         }
 
         [HarmonyPatch(typeof(GameData), nameof(GameData.HandleDisconnect), new Type[] { typeof(PlayerControl), typeof(DisconnectReasons) })]

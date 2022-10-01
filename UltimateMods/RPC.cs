@@ -10,7 +10,6 @@ using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Objects;
 using UltimateMods.EndGame;
-using UltimateMods.Roles.Yakuza;
 
 namespace UltimateMods
 {
@@ -27,9 +26,6 @@ namespace UltimateMods
         UseVitalsTime,
         UncheckedMurderPlayer,
         SheriffKill = 70,
-        GunKill,
-        StaffKill,
-        BossKill,
     }
 
     public static class RPCProcedure
@@ -110,18 +106,6 @@ namespace UltimateMods
                     case (byte)CustomRPC.SheriffKill:
                         RPCProcedure.SheriffKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
                         break;
-                    // 71
-                    case (byte)CustomRPC.GunKill:
-                        RPCProcedure.GunKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
-                        break;
-                    // 72
-                    case (byte)CustomRPC.StaffKill:
-                        RPCProcedure.StaffKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
-                        break;
-                    // 73
-                    case (byte)CustomRPC.BossKill:
-                        RPCProcedure.BossKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
-                        break;
                 }
             }
         }
@@ -137,7 +121,7 @@ namespace UltimateMods
             Buttons.SetCustomButtonCooldowns();
             CustomOverlays.ResetOverlays();
             MapBehaviorPatch.ResetIcons();
-            CustomLobbyPatch.ResetLobbyText();
+            // CustomLobbyPatch.ResetLobbyText();
         }
 
         public static void ShareOptions(int numberOfOptions, MessageReader reader)
@@ -221,8 +205,9 @@ namespace UltimateMods
             PlayerControl target = Helpers.PlayerById(targetId);
             if (sheriff == null || target == null) return;
 
-            if (Sheriff.sheriff != null)
-                Sheriff.MaxShots--;
+            Sheriff role = Sheriff.getRole(sheriff);
+            if (role != null)
+                role.NumShots--;
 
             if (misfire)
             {
@@ -234,97 +219,6 @@ namespace UltimateMods
             }
 
             sheriff.MurderPlayer(target);
-        }
-
-        public static void GunKill(byte gunId, byte targetId, bool misfire)
-        {
-            PlayerControl gun = Helpers.PlayerById(gunId);
-            PlayerControl target = Helpers.PlayerById(targetId);
-            if (gun == null || target == null) return;
-
-            if (YakuzaGun.gun != null && !CustomRolesH.YakuzaShareShotsCount.getBool())
-                YakuzaGun.MaxShots--;
-            else
-                YakuzaGun.ShareShots--;
-
-            if (misfire)
-            {
-                YakuzaStaff.CanKill = true;
-
-                gun.MurderPlayer(gun);
-                finalStatuses[gunId] = FinalStatus.Misfire;
-
-                if (!YakuzaGun.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-
-                if (!YakuzaStaff.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-
-                if (!YakuzaBoss.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-            }
-
-            gun.MurderPlayer(target);
-        }
-
-        public static void StaffKill(byte gunId, byte targetId, bool misfire)
-        {
-            PlayerControl staff = Helpers.PlayerById(gunId);
-            PlayerControl target = Helpers.PlayerById(targetId);
-            if (staff == null || target == null) return;
-
-            if (YakuzaStaff.staff != null && !CustomRolesH.YakuzaShareShotsCount.getBool())
-                YakuzaStaff.MaxShots--;
-            else
-                YakuzaGun.ShareShots--;
-
-            if (misfire)
-            {
-                YakuzaBoss.CanKill = true;
-
-                staff.MurderPlayer(staff);
-                finalStatuses[gunId] = FinalStatus.Misfire;
-
-                if (!YakuzaGun.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-
-                if (!YakuzaStaff.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-
-                if (!YakuzaBoss.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-            }
-
-            staff.MurderPlayer(target);
-        }
-
-        public static void BossKill(byte gunId, byte targetId, bool misfire)
-        {
-            PlayerControl boss = Helpers.PlayerById(gunId);
-            PlayerControl target = Helpers.PlayerById(targetId);
-            if (boss == null || target == null) return;
-
-            if (YakuzaBoss.boss != null && !CustomRolesH.YakuzaShareShotsCount.getBool())
-                YakuzaBoss.MaxShots--;
-            else
-                YakuzaGun.ShareShots--;
-
-            if (misfire)
-            {
-                boss.MurderPlayer(boss);
-                finalStatuses[gunId] = FinalStatus.Misfire;
-
-                if (!YakuzaGun.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-
-                if (!YakuzaStaff.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-
-                if (!YakuzaBoss.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-            }
-
-            boss.MurderPlayer(target);
         }
 
         public static void UpdateMeeting(byte targetId, bool dead = true)

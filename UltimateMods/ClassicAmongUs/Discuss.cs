@@ -1,3 +1,5 @@
+// 今後復活予定
+/*
 using HarmonyLib;
 using UnityEngine;
 
@@ -56,3 +58,4 @@ namespace UltimateMods
         }
     }
 }
+*/

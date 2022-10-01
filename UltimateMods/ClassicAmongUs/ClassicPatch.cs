@@ -1,3 +1,7 @@
+// 今後復予定活
+
+/*
+
 using UnityEngine;
 using HarmonyLib;
 using UltimateMods.Utilities;
@@ -19,22 +23,57 @@ namespace UltimateMods
             public static GameObject PushButton;
             public static SpriteRenderer renderer;
             public static SpriteRenderer renderer2;
-            public static float AnimTimer;
+            public static bool IsDeadReport;
             public static int AnimNum = 0;
+
+            public static GameObject Text;
+            public static GameObject TextBg;
+            public static GameObject SpeedLines;
+            public static GameObject YellowTape;
+            public static GameObject Player;
+
             public static void Prefix()
             {
                 if (CustomOptionsH.RememberClassic.getBool())
                 {
-                    GameObject Text = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/Text (TMP)");
-                    GameObject TextBg = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/TextBg");
-                    GameObject SpeedLines = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/SpeedLines");
-                    GameObject YellowTape = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/yellowtape");
-                    GameObject Player = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/killstabplayerstill");
-                    Text.gameObject.SetActive(false);
-                    TextBg.gameObject.SetActive(false);
-                    SpeedLines.gameObject.SetActive(false);
-                    YellowTape.gameObject.SetActive(false);
-                    Player.gameObject.SetActive(false);
+                    foreach (DeadBody body in UnityEngine.Object.FindObjectsOfType<DeadBody>())
+                    {
+                        if (body == null)
+                        {
+                            IsDeadReport = false;
+                        }
+                        else
+                        {
+                            IsDeadReport = true;
+                        }
+                    }
+
+                    if (IsDeadReport)
+                    {
+                        Text = GameObject.Find("Main Camera/Hud/KillOverlay/ReportBodyAnimation(Clone)/Text (TMP)");
+                        TextBg = GameObject.Find("Main Camera/Hud/KillOverlay/ReportBodyAnimation(Clone)/TextBg");
+                        SpeedLines = GameObject.Find("Main Camera/Hud/KillOverlay/ReportBodyAnimation(Clone)/SpeedLines");
+                        YellowTape = GameObject.Find("Main Camera/Hud/KillOverlay/ReportBodyAnimation(Clone)/yellowtape");
+                        Player = GameObject.Find("Main Camera/Hud/KillOverlay/ReportBodyAnimation(Clone)/killstabplayerstill");
+                        Text.gameObject.SetActive(false);
+                        TextBg.gameObject.SetActive(false);
+                        SpeedLines.gameObject.SetActive(false);
+                        YellowTape.gameObject.SetActive(false);
+                        Player.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        Text = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/Text (TMP)");
+                        TextBg = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/TextBg");
+                        SpeedLines = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/SpeedLines");
+                        YellowTape = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/yellowtape");
+                        Player = GameObject.Find("Main Camera/Hud/KillOverlay/EmergencyAnimation(Clone)/killstabplayerstill");
+                        Text.gameObject.SetActive(false);
+                        TextBg.gameObject.SetActive(false);
+                        SpeedLines.gameObject.SetActive(false);
+                        YellowTape.gameObject.SetActive(false);
+                        Player.gameObject.SetActive(false);
+                    }
 
                     // Discussのやつが出てくるまでの時間
                     MeetingDiscuss.Timer = 6f;
@@ -55,8 +94,8 @@ namespace UltimateMods
                     PushButton.SetActive(true);
 
                     renderer = ClassicAnimation.AddComponent<SpriteRenderer>();
-                    renderer.sprite = Helpers.LoadSpriteFromResources($"UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation0.png", 115f);
-                    AnimNum = 0;
+                    renderer.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation0.png", 115f);
+                    AnimNum = 1;
                 }
             }
 
@@ -64,7 +103,7 @@ namespace UltimateMods
             {
                 if (renderer != null)
                 {
-                    renderer.sprite = Helpers.LoadSpriteFromResources($"UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation1.png", 115f);
+                    renderer.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation1.png", 115f);
                     Timer = 0.1f;
                     AnimNum++;
                 }
@@ -74,7 +113,7 @@ namespace UltimateMods
             {
                 if (renderer != null)
                 {
-                    renderer.sprite = Helpers.LoadSpriteFromResources($"UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation2.png", 115f);
+                    renderer.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation2.png", 115f);
                     Timer = 0.1f;
                     AnimNum++;
                 }
@@ -84,12 +123,19 @@ namespace UltimateMods
             {
                 if (renderer != null)
                 {
-                    renderer.sprite = Helpers.LoadSpriteFromResources($"UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation3.png", 115f);
+                    renderer.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.Animation3.png", 115f);
 
                     renderer2 = PushButton.AddComponent<SpriteRenderer>();
-                    renderer2.sprite = Helpers.LoadSpriteFromResources($"UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.PushButton{ModTranslation.lang}.png", 115f);
+                    if (IsDeadReport == true)
+                    {
+                        renderer.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.DeadBodyReport0.png", 115f);
+                    }
+                    else
+                    {
+                        renderer2.sprite = Helpers.LoadSpriteFromResources($"UltimateMods.Resources.ClassicAmongUs.EmergencyMeeting.PushButton{ModTranslation.lang}.png", 115f);
+                    }
                     Timer = 2.2f;
-                    AnimNum++;
+                    AnimNum = 0;
                 }
             }
         }
@@ -119,3 +165,5 @@ namespace UltimateMods
         // }
     }
 }
+
+*/

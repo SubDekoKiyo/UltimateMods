@@ -1,3 +1,5 @@
+// 後日有効化
+/*
 using UnityEngine;
 using HarmonyLib;
 using Hazel;
@@ -112,3 +114,4 @@ namespace UltimateMods.Patches
         }
     }
 }
+*/

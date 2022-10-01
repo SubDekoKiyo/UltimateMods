@@ -9,13 +9,6 @@ namespace UltimateMods.Patches
     public static class CredentialsPatch
     {
         public static string baseCredentials;
-        static void SetPingModName()
-        {
-            if (UltimateModsPlugin.isBeta)
-                baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.Beta{UltimateModsPlugin.Version.ToString()}";
-            else
-                baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.{UltimateModsPlugin.Version.ToString()}";
-        }
 
         [HarmonyPatch(typeof(VersionShower), nameof(VersionShower.Start))]
         private static class VersionShowerPatch
@@ -33,7 +26,11 @@ namespace UltimateMods.Patches
                     version.SetText(string.Format(ModTranslation.getString("CreditsVersion"), UltimateModsPlugin.Version.ToString()));
 
                 version.transform.SetParent(amongUsLogo.transform);
-                SetPingModName();
+
+                if (UltimateModsPlugin.isBeta)
+                    baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.Beta{UltimateModsPlugin.Version.ToString()}";
+                else
+                    baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.{UltimateModsPlugin.Version.ToString()}";
 
                 __instance.text.text += $"\n<color=#0094ff>UltimateMods</color> BuildNum: " + ModTranslation.getString("BuildNum");
                 __instance.transform.localPosition = new Vector3(__instance.transform.localPosition.x, __instance.transform.localPosition.y - 0.1f, __instance.transform.localPosition.z);
@@ -48,7 +45,7 @@ namespace UltimateMods.Patches
                 __instance.text.alignment = TMPro.TextAlignmentOptions.TopRight;
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
-                    if (UltimateModsPlugin.DebugMode.Value)
+                    if (UltimateModsPlugin.DebugMode.Value && AmongUsClient.Instance.AmHost)
                         __instance.text.text = $"{baseCredentials}\n" + ModTranslation.getString("Position") + PlayerControl.LocalPlayer.GetTruePosition().ToString() + $"\n{__instance.text.text}";
                     else
                         __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
@@ -60,11 +57,7 @@ namespace UltimateMods.Patches
                 }
                 else
                 {
-                    if (UltimateModsPlugin.DebugMode.Value)
-                        __instance.text.text = $"{baseCredentials}\n" + ModTranslation.getString("Position") + PlayerControl.LocalPlayer.GetTruePosition().ToString() + $"\n{__instance.text.text}";
-                    else
-                        __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
-
+                    __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
                     __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.8f, 0.1f, 0.5f);
                 }
             }

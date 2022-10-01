@@ -4,8 +4,9 @@ using System.Reflection;
 using System.Collections.Generic;
 using Hazel;
 using System;
+using TMPro;
 using UltimateMods.Utilities;
-using static UltimateMods.Patches.CustomLobbyPatch;
+// using static UltimateMods.Patches.CustomLobbyPatch;
 
 namespace UltimateMods.Patches
 {
@@ -14,7 +15,7 @@ namespace UltimateMods.Patches
         public static Dictionary<int, PlayerVersion> playerVersions = new Dictionary<int, PlayerVersion>();
         public static float timer = 600f;
         public static float shareTimer;
-        // private static float kickingTimer = 0f;
+        private static float kickingTimer = 0f;
         private static bool versionSent = false;
         private static string lobbyCodeText = "";
 
@@ -33,6 +34,7 @@ namespace UltimateMods.Patches
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
         public class GameStartManagerStartPatch
         {
+            public static TMP_Text ErrorText;
             public static void Postfix(GameStartManager __instance)
             {
                 // Trigger version refresh
@@ -40,11 +42,12 @@ namespace UltimateMods.Patches
                 // Reset lobby countdown timer
                 timer = 600f;
                 // Reset kicking timer
-                // kickingTimer = 0f;
+                kickingTimer = 0f;
                 // Copy lobby code
                 string code = InnerNet.GameCode.IntToGameName(AmongUsClient.Instance.GameId);
                 GUIUtility.systemCopyBuffer = code;
                 lobbyCodeText = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.RoomCode, new Il2CppReferenceArray<Il2CppSystem.Object>(0)) + "\r\n" + code;
+                ErrorText = GameObject.Instantiate(__instance.GameStartText, __instance.GameStartText.transform);
             }
         }
 
@@ -59,72 +62,75 @@ namespace UltimateMods.Patches
             {
                 if (!GameData.Instance) return; // No instance
                 update = GameData.Instance.PlayerCount != __instance.LastPlayerCount;
+                // カウントダウンキャンセル
+                if (Input.GetKeyDown(KeyCode.LeftShift) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
+                    GameStartManager.Instance.ResetStartState();
+                // 即スタート
+                if (Input.GetKeyDown(KeyCode.KeypadEnter) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
+                    GameStartManager.Instance.countDownTimer = 0;
             }
 
             public static void Postfix(GameStartManager __instance)
             {
-                // Send version as soon as CachedPlayer.LocalPlayer.PlayerControl exists
+                // Send version as soon as PlayerControl.LocalPlayer exists
                 if (PlayerControl.LocalPlayer != null && !versionSent)
                 {
                     versionSent = true;
                     Helpers.ShareGameVersion();
                 }
 
-                // Check version handshake infos
-/*
-                bool versionMismatch = false;
-                string message = "";
-                foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.ToArray())
-                {
-                    if (client.Character == null) continue;
-                    var dummyComponent = client.Character.GetComponent<DummyBehaviour>();
-                    if (dummyComponent != null && dummyComponent.enabled)
-                        continue;
-                    else if (!playerVersions.ContainsKey(client.Id))
-                    {
-                        versionMismatch = true;
-                        message += $"<color=#FF0000FF>{client.Character.Data.PlayerName} has a different or no version of The Other Roles\n</color>";
-                    }
-                    else
-                    {
-                        PlayerVersion PV = playerVersions[client.Id];
-                        int diff = UltimateModsPlugin.Version.CompareTo(PV.version);
-                        if (diff > 0)
-                        {
-                            message += $"<color=#FF0000FF>{client.Character.Data.PlayerName} has an older version of The Other Roles (v{playerVersions[client.Id].version.ToString()})\n</color>";
-                            versionMismatch = true;
-                        }
-                        else if (diff < 0)
-                        {
-                            message += $"<color=#FF0000FF>{client.Character.Data.PlayerName} has a newer version of The Other Roles (v{playerVersions[client.Id].version.ToString()})\n</color>";
-                            versionMismatch = true;
-                        }
-                        else if (!PV.GuidMatches())
-                        { // version presumably matches, check if Guid matches
-                            message += $"<color=#FF0000FF>{client.Character.Data.PlayerName} has a modified version of TOR v{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
-                            versionMismatch = true;
-                        }
-                    }
-                }
-
-                // Display message to the host
+                // Host update with version handshake infos
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    if (versionMismatch)
+                    bool blockStart = false;
+                    string message = "";
+                    foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.ToArray())
+                    {
+                        if (client.Character == null) continue;
+                        var dummyComponent = client.Character.GetComponent<DummyBehaviour>();
+                        if (dummyComponent != null && dummyComponent.enabled)
+                            continue;
+                        else if (!playerVersions.ContainsKey(client.Id))
+                        {
+                            blockStart = true;
+                            message += $"<color=#00a2ff>{client.Character.Data.PlayerName} {ModTranslation.getString("ErrorNotInstalled")}\n</color>";
+                        }
+                        else
+                        {
+                            PlayerVersion PV = playerVersions[client.Id];
+                            int diff = UltimateModsPlugin.Version.CompareTo(PV.version);
+                            if (diff > 0)
+                            {
+                                message += $"<color=#00a2ff>{client.Character.Data.PlayerName} {ModTranslation.getString("ErrorOlderVersion")} (v{playerVersions[client.Id].version.ToString()})\n</color>";
+                                blockStart = true;
+                            }
+                            else if (diff < 0)
+                            {
+                                message += $"<color=#00a2ff>{client.Character.Data.PlayerName} {ModTranslation.getString("ErrorNewerVersion")} (v{playerVersions[client.Id].version.ToString()})\n</color>";
+                                blockStart = true;
+                            }
+                            else if (!PV.GuidMatches())
+                            { // version presumably matches, check if Guid matches
+                                message += $"<color=#00a2ff>{client.Character.Data.PlayerName} {ModTranslation.getString("ErrorWrongVersion")} v{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
+                                blockStart = true;
+                            }
+                        }
+                    }
+                    if (blockStart)
                     {
                         __instance.StartButton.color = __instance.startLabelText.color = Palette.DisabledClear;
-                        __instance.GameStartText.text = message;
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
+                        GameStartManagerStartPatch.ErrorText.text = message;
+                        GameStartManagerStartPatch.ErrorText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
                     }
                     else
                     {
                         __instance.StartButton.color = __instance.startLabelText.color = ((__instance.LastPlayerCount >= __instance.MinPlayers) ? Palette.EnabledColor : Palette.DisabledClear);
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition;
+                        GameStartManagerStartPatch.ErrorText.transform.localPosition = __instance.StartButton.transform.localPosition;
                     }
                 }
 
                 // Client update with handshake infos
-                else
+                if (!AmongUsClient.Instance.AmHost)
                 {
                     if (!playerVersions.ContainsKey(AmongUsClient.Instance.HostId) || UltimateModsPlugin.Version.CompareTo(playerVersions[AmongUsClient.Instance.HostId].version) != 0)
                     {
@@ -136,23 +142,18 @@ namespace UltimateMods.Patches
                             SceneChanger.ChangeScene("MainMenu");
                         }
 
-                        __instance.GameStartText.text = $"<color=#FF0000FF>The host has no or a different version of The Other Roles\nYou will be kicked in {Math.Round(10 - kickingTimer)}s</color>";
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
-                    }
-                    else if (versionMismatch)
-                    {
-                        __instance.GameStartText.text = $"<color=#FF0000FF>Players With Different Versions:\n</color>" + message;
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
+                        GameStartManagerStartPatch.ErrorText.text = String.Format(ModTranslation.getString("ErrorHostNoVersion"), Math.Round(10 - kickingTimer));
+                        GameStartManagerStartPatch.ErrorText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
                     }
                     else
                     {
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition;
+                        GameStartManagerStartPatch.ErrorText.transform.localPosition = __instance.StartButton.transform.localPosition;
                         if (__instance.startState != GameStartManager.StartingStates.Countdown)
                         {
-                            __instance.GameStartText.text = String.Empty;
+                            GameStartManagerStartPatch.ErrorText.text = String.Empty;
                         }
                     }
-                }*/
+                }
 
                 // Lobby timer
                 if (!GameData.Instance) return; // No instance
@@ -168,14 +169,14 @@ namespace UltimateMods.Patches
                 __instance.PlayerCounter.text = currentText + suffix;
                 __instance.PlayerCounter.autoSizeTextContainer = true;
 
-                if (NewsText.transform.localPosition.x >= -7f)
+                /*if (NewsText.transform.localPosition.x >= -7f)
                 {
                     NewsText.transform.localPosition -= new Vector3(0.01f, 0f, 0f);
                 }
                 else
                 {
                     NewsText.transform.localPosition = new Vector3(3.5f, NewsText.transform.localPosition.y, NewsText.transform.localPosition.z);
-                }
+                }*/
             }
         }
 

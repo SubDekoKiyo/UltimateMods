@@ -178,7 +178,6 @@ namespace UltimateMods.Patches
                 UpdatePlayerInfo();
 
                 UltimateMods.FixedUpdate(__instance);
-                Roles.Patches.RolesUpdate.SetTargetOutline();
             }
         }
     }
@@ -225,8 +224,25 @@ namespace UltimateMods.Patches
             if (target.HasFakeTasks())
                 target.ClearAllTasks();
 
-            Roles.Patches.RolesMurder.DeathPlayer();
-            Roles.Patches.RolesMurder.KillPlayer();
+            __instance.OnKill(target);
+            target.OnDeath(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.Exiled))]
+    public static class ExilePlayerPatch
+    {
+        public static void Postfix(PlayerControl __instance)
+        {
+            // Collect dead player info
+            DeadPlayer deadPlayer = new DeadPlayer(__instance, DateTime.UtcNow, DeathReason.Exile, null);
+            GameHistory.deadPlayers.Add(deadPlayer);
+
+            // Remove fake tasks when player dies
+            if (__instance.HasFakeTasks())
+                __instance.ClearAllTasks();
+
+            __instance.OnDeath(killer: null);
         }
     }
 }

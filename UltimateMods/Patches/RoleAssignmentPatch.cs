@@ -179,15 +179,6 @@ namespace UltimateMods.Patches
                     }
                 }
             }*/
-
-            // Assign Mafia
-            if (data.crewmates.Count >= 3 && data.maxCrewmateRoles >= 3 && (rnd.Next(1, 101) <= CustomRolesH.YakuzaRate.getSelection() * 10))
-            {
-                setRoleToRandomPlayer((byte)RoleType.YakuzaBoss, data.crewmates);
-                setRoleToRandomPlayer((byte)RoleType.YakuzaStaff, data.crewmates);
-                setRoleToRandomPlayer((byte)RoleType.YakuzaGun, data.crewmates);
-                data.maxCrewmateRoles -= 3;
-            }
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)

@@ -1,3 +1,5 @@
+// 後日実装
+/*
 using HarmonyLib;
 
 namespace UltimateMods.Maps
@@ -12,3 +14,4 @@ namespace UltimateMods.Maps
         }
     }
 }
+*/
