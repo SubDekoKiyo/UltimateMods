@@ -1,3 +1,6 @@
+// 今後復活予定
+
+/*
 using UnityEngine;
 using HarmonyLib;
 using UltimateMods.Utilities;
@@ -16,28 +19,28 @@ namespace UltimateMods
         {
             switch (AnimNum)
             {
-                case 0:
+                case 1:
                     if (Timer <= 0f && ClassicAnimation != null)
                     {
                         SetOne();
                     }
                     Timer = Mathf.Max(0f, Timer -= Time.deltaTime);
                     break;
-                case 1:
+                case 2:
                     if (Timer <= 0f && ClassicAnimation != null)
                     {
                         SetTwo();
                     }
                     Timer = Mathf.Max(0f, Timer -= Time.deltaTime);
                     break;
-                case 2:
+                case 3:
                     if (Timer <= 0f && ClassicAnimation != null)
                     {
                         SetThree();
                     }
                     Timer = Mathf.Max(0f, Timer -= Time.deltaTime);
                     break;
-                case 3:
+                case 4:
                     if (Timer <= 0f)
                     {
                         if (ClassicAnimation.transform.localScale.y > 0f && ClassicAnimation != null)
@@ -51,9 +54,7 @@ namespace UltimateMods
                     }
                     Timer = Mathf.Max(0f, Timer -= Time.deltaTime);
                     break;
-                case 4:
-                    break;
             }
         }
     }
-}
+}*/

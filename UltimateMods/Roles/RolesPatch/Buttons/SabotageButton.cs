@@ -38,7 +38,7 @@ namespace UltimateMods.Roles.Patches
                 if (!PlayerControl.LocalPlayer.IsNeutral())
                     return true;
 
-                HudManager.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((SaboMap) => { SaboMap.ShowSabotageMap(); }));
+                FastDestroyableSingleton<HudManager>.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((SaboMap) => { SaboMap.ShowSabotageMap(); }));
                 return false;
             }
         }

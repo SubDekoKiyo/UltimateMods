@@ -1,3 +1,5 @@
+// 後日実装
+/*
 using HarmonyLib;
 using UnityEngine;
 
@@ -40,6 +42,7 @@ namespace UltimateMods.Maps
         }
     }
 }
+*/
 
 // メモ
 // MiraのCloud Gen、外回りに謎の壁設置

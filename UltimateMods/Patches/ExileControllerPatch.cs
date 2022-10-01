@@ -94,8 +94,8 @@ namespace UltimateMods.Patches
             // Custom role post-meeting functions
             UltimateMods.OnMeetingEnd();
 
-            MeetingDiscuss.OnMeetingEnd();
-            ClassicAmongUs.DestroyObject();
+            // MeetingDiscuss.OnMeetingEnd();
+            // ClassicAmongUs.DestroyObject();
 
             // Remove DeadBodys
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();

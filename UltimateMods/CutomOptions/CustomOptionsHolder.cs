@@ -22,21 +22,19 @@ namespace UltimateMods
         public static CustomOption ImpostorRolesCountMax;
         public static CustomOption ModifierCountMin;
         public static CustomOption ModifierCountMax;
-        public static CustomOption RememberClassic;
+        // public static CustomOption RememberClassic;
 
         public static CustomOption SpecialOptions;
         public static CustomOption MaxNumberOfMeetings;
         public static CustomOption BlockSkippingInEmergencyMeetings;
         public static CustomOption NoVoteIsSelfVote;
         public static CustomOption AllowParallelMedBayScans;
-        public static CustomOption VentAnimation;
-        // public static CustomOption enableDiePlayerZoomInOut;
+        public static CustomOption EnableDiePlayerZoomInOut;
         // public static CustomOption onePlayerStart;
         // public static CustomOption betterStartButtons;
         public static CustomOption HideOutOfSightNameTags;
         public static CustomOption RefundVotesOnDeath;
-
-        // public static CustomOption enableMirrorMap;
+        public static CustomOption EnableMirrorMap;
 
         public static CustomOption RandomMap;
         public static CustomOption RandomMapEnableSkeld;
@@ -50,7 +48,7 @@ namespace UltimateMods
         public static CustomOption RestrictCameras;
         public static CustomOption RestrictVitals;
 
-        public static CustomOption EnableGodMiraHQ;
+        // public static CustomOption EnableGodMiraHQ;
 
         public static CustomOption AirShipSettings;
         public static CustomOption OldAirShipAdmin;
@@ -81,7 +79,8 @@ namespace UltimateMods
 
             RandomGen = CustomOption.Create(4, General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RandomGen"), true, null, true);
 
-            RememberClassic = CustomOption.Create(13, General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
+            // RememberClassic = CustomOption.Create(13, General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
+            EnableMirrorMap = CustomOption.Create(33, General, "MirrorMap", false, SpecialOptions);
 
             // Using new id's for the options to not break compatibilty with older versions
             CrewmateRolesCountMin = CustomOption.Create(5, General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
@@ -98,14 +97,12 @@ namespace UltimateMods
             BlockSkippingInEmergencyMeetings = CustomOption.Create(21, General, "BlockSkip", false, SpecialOptions);
             NoVoteIsSelfVote = CustomOption.Create(22, General, "NoVoteIsSelfVote", false, SpecialOptions);
             AllowParallelMedBayScans = CustomOption.Create(24, General, "NoMedBayLimit", true, SpecialOptions);
-            VentAnimation = CustomOption.Create(25, General, "VentAnimation", true, SpecialOptions);
-            // enableDiePlayerZoomInOut = CustomOption.Create(26, General, "dieZoom", false, specialOptions);
+            EnableDiePlayerZoomInOut = CustomOption.Create(26, General, "DieZoom", false, SpecialOptions);
             // onePlayerStart = CustomOption.Create(27, General, "oneStart", false, specialOptions);
             // betterStartButtons = CustomOption.Create(30, General, "betterStart", true, specialOptions);
             HideOutOfSightNameTags = CustomOption.Create(31, General, "HideOutName", true, SpecialOptions);
             RefundVotesOnDeath = CustomOption.Create(32, General, "RefundVoteDeath", true, SpecialOptions);
-            // enableMirrorMap = CustomOption.Create(33, General, "mirrorMap", false, specialOptions);
-            EnableGodMiraHQ = CustomOption.Create(35, General, "EnableGodMira", false, SpecialOptions);
+            // EnableGodMiraHQ = CustomOption.Create(35, General, "EnableGodMira", false, SpecialOptions);
             RandomMap = CustomOption.Create(34, General, "PlayRandomMaps", false, SpecialOptions);
             RandomMapEnableSkeld = CustomOption.Create(50, General, "RandomMapsEnableSkeld", true, RandomMap, false);
             RandomMapEnableMira = CustomOption.Create(51, General, "RandomMapsEnableMira", true, RandomMap, false);
@@ -117,11 +114,11 @@ namespace UltimateMods
             RestrictCameras = CustomOption.Create(62, General, "DisableCameras", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
             RestrictVitals = CustomOption.Create(63, General, "DisableVitals", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
 
-            AirShipSettings = new CustomOptionBlank(null);
-            OldAirShipAdmin = CustomOption.Create(80, General, "OldAirShipAdmin", true, AirShipSettings);
-            EnableRecordsAdmin = CustomOption.Create(81, General, "EnableRecordsAdmin", false, AirShipSettings);
-            EnableCockpitAdmin = CustomOption.Create(82, General, "EnableCockpitAdmin", false, AirShipSettings);
-            AirshipReactorDuration = CustomOption.Create(83, General, "AirShipReactorDuration", 60f, 0f, 600f, 5f, AirShipSettings, format: "FormatSeconds");
+            AirShipSettings = CustomOption.Create(80, General, "AirShipSettings", false, SpecialOptions);
+            OldAirShipAdmin = CustomOption.Create(81, General, "OldAirShipAdmin", true, AirShipSettings);
+            EnableRecordsAdmin = CustomOption.Create(82, General, "EnableRecordsAdmin", false, AirShipSettings);
+            EnableCockpitAdmin = CustomOption.Create(83, General, "EnableCockpitAdmin", false, AirShipSettings);
+            AirshipReactorDuration = CustomOption.Create(84, General, "AirShipReactorDuration", 90f, 10f, 600f, 5f, AirShipSettings, format: "FormatSeconds");
         }
     }
 }

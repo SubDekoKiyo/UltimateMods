@@ -66,6 +66,7 @@ namespace UltimateMods
             CustomOptionsH.Load();
             Patches.FreeNamePatch.Initialize();
             SubmergedCompatibility.Initialize();
+            RandomGenerator.Initialize();
             Harmony.PatchAll();
         }
     }

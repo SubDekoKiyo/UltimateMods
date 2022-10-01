@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using UltimateMods.Patches;
+using UltimateMods.Utilities;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 
@@ -108,9 +109,9 @@ namespace UltimateMods.Modules
             moreOptionsButton.OnClick.AddListener((Action)(() =>
             {
                 if (!popUp) return;
-                if (__instance.transform.parent && __instance.transform.parent == HudManager.Instance.transform)
+                if (__instance.transform.parent && __instance.transform.parent == FastDestroyableSingleton<HudManager>.Instance.transform)
                 {
-                    popUp.transform.SetParent(HudManager.Instance.transform);
+                    popUp.transform.SetParent(FastDestroyableSingleton<HudManager>.Instance.transform);
                     popUp.transform.localPosition = new Vector3(0, 0, -800f);
                 }
                 else

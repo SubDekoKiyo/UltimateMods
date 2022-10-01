@@ -67,31 +67,6 @@ namespace UltimateMods.Roles.Patches
                 return false;
             }
         }
-        [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
-        class EnterVentAnimPatch
-        {
-            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
-            {
-                if (COHelpers.GameStarted && CustomOptionsH.VentAnimation.getBool())
-                {
-                    return pc.AmOwner;
-                }
-                return true;
-            }
-        }
-
-        [HarmonyPatch(typeof(Vent), nameof(Vent.ExitVent))]
-        class ExitVentAnimPatch
-        {
-            public static bool Prefix(Vent __instance, [HarmonyArgument(0)] PlayerControl pc)
-            {
-                if (COHelpers.GameStarted && CustomOptionsH.VentAnimation.getBool())
-                {
-                    return pc.AmOwner;
-                }
-                return true;
-            }
-        }
 
         [HarmonyPatch(typeof(VentButton), nameof(VentButton.DoClick))]
         class VentButtonDoClickPatch

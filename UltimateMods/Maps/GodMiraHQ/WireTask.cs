@@ -1,3 +1,5 @@
+// 後日実装
+/*
 using UnityEngine;
 using HarmonyLib;
 
@@ -16,3 +18,4 @@ namespace UltimateMods.Maps
         }
     }
 }
+*/

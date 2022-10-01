@@ -59,10 +59,11 @@ namespace UltimateMods.Patches
 
         static void setNameColors()
         {
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Jester))
-                setPlayerNameColor(PlayerControl.LocalPlayer, Jester.color);
-            if (PlayerControl.LocalPlayer.isRole(RoleType.Sheriff))
-                setPlayerNameColor(PlayerControl.LocalPlayer, Sheriff.color);
+            var p = PlayerControl.LocalPlayer;
+            if (p.isRole(RoleType.Jester))
+                setPlayerNameColor(p, Jester.color);
+            if (p.isRole(RoleType.Sheriff))
+                setPlayerNameColor(p, Sheriff.color);
         }
 
         static void Postfix(HudManager __instance)

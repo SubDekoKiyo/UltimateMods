@@ -942,12 +942,11 @@ namespace UltimateMods.Modules
 
             // First add the Presets and the role counts
             entries.Add(optionToString(CustomOptionsH.PresetSelection));
-
             entries.Add(optionToString(CustomOptionsH.ActivateModRoles));
-
             entries.Add(optionToString(CustomOptionsH.RandomGen));
+            entries.Add(optionToString(CustomOptionsH.EnableMirrorMap));
 
-            entries.Add(optionToString(CustomOptionsH.RememberClassic));
+            // entries.Add(optionToString(CustomOptionsH.RememberClassic));
 
             var optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("CrewmateRoles"));
             var min = CustomOptionsH.CrewmateRolesCountMin.getSelection();
@@ -996,7 +995,8 @@ namespace UltimateMods.Modules
                 if ((option == CustomOptionsH.PresetSelection) ||
                     (option == CustomOptionsH.ActivateModRoles) ||
                     (option == CustomOptionsH.RandomGen) ||
-                    (option == CustomOptionsH.RememberClassic) ||
+                    (option == CustomOptionsH.EnableMirrorMap) ||
+                    // (option == CustomOptionsH.RememberClassic) ||
                     (option == CustomOptionsH.CrewmateRolesCountMin) ||
                     (option == CustomOptionsH.CrewmateRolesCountMax) ||
                     (option == CustomOptionsH.NeutralRolesCountMin) ||

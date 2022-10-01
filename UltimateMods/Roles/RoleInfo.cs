@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
-using UltimateMods.Roles.Yakuza;
 using static UltimateMods.Roles.CrewmateRoles;
 using static UltimateMods.Roles.NeutralRoles;
 
@@ -42,21 +41,15 @@ namespace UltimateMods.Roles
 
         public static RoleInfo jester = new RoleInfo("Jester", Jester.color, CustomRolesH.JesterRate, RoleType.Jester);
         public static RoleInfo sheriff = new RoleInfo("Sheriff", Sheriff.color, CustomRolesH.SheriffRate, RoleType.Sheriff);
-        public static RoleInfo gun = new RoleInfo("Gun", YakuzaBoss.color, CustomRolesH.YakuzaRate, RoleType.YakuzaGun);
-        public static RoleInfo staff = new RoleInfo("Staff", YakuzaBoss.color, CustomRolesH.YakuzaRate, RoleType.YakuzaStaff);
-        public static RoleInfo boss = new RoleInfo("Boss", YakuzaBoss.color, CustomRolesH.YakuzaRate, RoleType.YakuzaBoss);
         public static RoleInfo impostor = new RoleInfo("Impostor", Palette.ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new RoleInfo("Crewmate", Palette.CrewmateBlue, null, RoleType.Crewmate);
 
-        public static List<RoleInfo> allRoleInfos = new List<RoleInfo>()
+        public static List<RoleInfo> allRoleInfos = new()
         {
             impostor,
             jester,
             crewmate,
             sheriff,
-            gun,
-            staff,
-            boss,
         };
 
         public static string tl(string key)
@@ -66,15 +59,12 @@ namespace UltimateMods.Roles
 
         public static List<RoleInfo> getRoleInfoForPlayer(PlayerControl p, RoleType[] excludeRoles = null, bool includeHidden = false)
         {
-            List<RoleInfo> infos = new List<RoleInfo>();
+            List<RoleInfo> infos = new();
             if (p == null) return infos;
 
             // Special roles
             if (p.isRole(RoleType.Jester)) infos.Add(jester);
             if (p.isRole(RoleType.Sheriff)) infos.Add(sheriff);
-            if (p.isRole(RoleType.YakuzaBoss)) infos.Add(boss);
-            if (p.isRole(RoleType.YakuzaStaff)) infos.Add(staff);
-            if (p.isRole(RoleType.YakuzaGun)) infos.Add(gun);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
