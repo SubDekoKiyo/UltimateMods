@@ -3,8 +3,6 @@ using HarmonyLib;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using static UltimateMods.Roles.CrewmateRoles;
-using static UltimateMods.Roles.NeutralRoles;
 
 namespace UltimateMods.Roles
 {
@@ -13,6 +11,7 @@ namespace UltimateMods.Roles
         // Crewmate Roles
         Crewmate = 0,
         Sheriff,
+        Engineer,
 
         // Impostor Roles
         Impostor = 100,
@@ -30,6 +29,8 @@ namespace UltimateMods.Roles
         public static Dictionary<RoleType, Type> allRoleTypes = new()
         {
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
+            { RoleType.Engineer, typeof(RoleBase<Engineer>) },
+            { RoleType.Jester, typeof(RoleBase<Jester>) },
         };
     }
 
@@ -150,8 +151,6 @@ namespace UltimateMods.Roles
 
             switch (role)
             {
-                case RoleType.Jester:
-                    return Jester.jester == player;
                 default:
                     UltimateModsPlugin.Logger.LogError($"IsRole: no method found for role type {role}");
                     break;
@@ -174,8 +173,7 @@ namespace UltimateMods.Roles
             switch (role)
             {
                 case RoleType.Jester:
-                    Jester.jester = player;
-                    break;
+
                 default:
                     UltimateModsPlugin.Logger.LogError($"SetRole: no method found for role type {role}");
                     return;
@@ -210,7 +208,6 @@ namespace UltimateMods.Roles
             // Impostor roles
 
             // Neutral roles
-            if (player.isRole(RoleType.Jester)) Jester.ClearAndReload();
         }
 
         public static void swapRoles(this PlayerControl player, PlayerControl target)

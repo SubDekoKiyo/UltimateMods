@@ -3,8 +3,6 @@ using System;
 using UltimateMods.Roles;
 using UltimateMods.EndGame;
 using UltimateMods.Objects;
-using static UltimateMods.Roles.CrewmateRoles;
-using static UltimateMods.Roles.NeutralRoles;
 using static UltimateMods.GameHistory;
 
 namespace UltimateMods
@@ -16,9 +14,7 @@ namespace UltimateMods
         public static void ClearAndReloadRoles()
         {
             Sheriff.Clear();
-
-            Jester.ClearAndReload();
-
+            Jester.Clear();
             Role.ClearAll();
         }
 

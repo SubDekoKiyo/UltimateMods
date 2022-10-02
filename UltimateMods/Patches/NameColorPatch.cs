@@ -3,8 +3,7 @@ using UltimateMods.Utilities;
 using UnityEngine;
 using System.Collections.Generic;
 using UltimateMods.Roles;
-using static UltimateMods.Roles.CrewmateRoles;
-using static UltimateMods.Roles.NeutralRoles;
+using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.Patches
 {
@@ -61,9 +60,11 @@ namespace UltimateMods.Patches
         {
             var p = PlayerControl.LocalPlayer;
             if (p.isRole(RoleType.Jester))
-                setPlayerNameColor(p, Jester.color);
+                setPlayerNameColor(p, JesterPink);
             if (p.isRole(RoleType.Sheriff))
-                setPlayerNameColor(p, Sheriff.color);
+                setPlayerNameColor(p, SheriffYellow);
+            if (p.isRole(RoleType.Engineer))
+                setPlayerNameColor(p, EngineerBlue);
         }
 
         static void Postfix(HudManager __instance)

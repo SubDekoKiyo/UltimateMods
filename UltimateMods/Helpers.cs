@@ -11,7 +11,6 @@ using UltimateMods.Roles;
 using UltimateMods.EndGame;
 using static UltimateMods.UltimateMods;
 using static UltimateMods.GameHistory;
-using static UltimateMods.Roles.NeutralRoles;
 
 namespace UltimateMods
 {
@@ -175,17 +174,14 @@ namespace UltimateMods
 
         public static bool HasFakeTasks(this PlayerControl player)
         {
-            return (player.IsNeutral() /*&& !player.neutralHasTasks()*/);
+            return (player.IsNeutral() && !player.NeutralHasTasks());
         }
 
-        /*public static bool neutralHasTasks(this PlayerControl player)
+        public static bool NeutralHasTasks(this PlayerControl player)
         {
-            return player.isNeutral() &&
-                (player.isRole(RoleType.Lawyer) ||
-                player.isRole(RoleType.Pursuer) ||
-                player.isRole(RoleType.Shifter) ||
-                player.isRole(RoleType.Fox));
-        }*/
+            return player.IsNeutral() &&
+                (player.isRole(RoleType.Jester) && Jester.HasTasks);
+        }
 
         public static bool IsNeutral(this PlayerControl player)
         {
@@ -348,6 +344,8 @@ namespace UltimateMods
         public static bool RoleCanUseVents(this PlayerControl player)
         {
             bool roleCouldUse = false;
+            if (Engineer.CanUseVents && player.isRole(RoleType.Engineer))
+                roleCouldUse = true;
             if (Jester.CanUseVents && player.isRole(RoleType.Jester))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
@@ -431,6 +429,19 @@ namespace UltimateMods
         public static int GetRandomInt(int max, int min = 0)
         {
             return UnityEngine.Random.Range(min, max + 1);
+        }
+
+        public static void GenerateAndAssignTasks(this PlayerControl player, int numCommon, int numShort, int numLong)
+        {
+            if (player == null) return;
+
+            List<byte> taskTypeIds = GenerateTasks(numCommon, numShort, numLong);
+
+            MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedSetTasks, Hazel.SendOption.Reliable, -1);
+            writer.Write(player.PlayerId);
+            writer.WriteBytesAndSize(taskTypeIds.ToArray());
+            AmongUsClient.Instance.FinishRpcImmediately(writer);
+            RPCProcedure.UncheckedSetTasks(player.PlayerId, taskTypeIds.ToArray());
         }
     }
 }

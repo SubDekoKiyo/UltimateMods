@@ -2,7 +2,6 @@ using HarmonyLib;
 using System;
 using UnityEngine;
 using static UltimateMods.MapOptions;
-using static UltimateMods.Roles.NeutralRoles;
 
 namespace UltimateMods.Roles.Patches
 {
@@ -27,7 +26,7 @@ namespace UltimateMods.Roles.Patches
                 }
 
                 // Jester
-                if (Jester.jester != null && Jester.jester == PlayerControl.LocalPlayer && !Jester.CanCallEmergency)
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanCallEmergency)
                 {
                     roleCanCallEmergency = false;
                     statusText = ModTranslation.getString("JesterMeetingButton");

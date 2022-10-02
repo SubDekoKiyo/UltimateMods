@@ -3,8 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
-using static UltimateMods.Roles.CrewmateRoles;
-using static UltimateMods.Roles.NeutralRoles;
+using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.Roles
 {
@@ -39,10 +38,11 @@ namespace UltimateMods.Roles
             this.roleType = roleType;
         }
 
-        public static RoleInfo jester = new RoleInfo("Jester", Jester.color, CustomRolesH.JesterRate, RoleType.Jester);
-        public static RoleInfo sheriff = new RoleInfo("Sheriff", Sheriff.color, CustomRolesH.SheriffRate, RoleType.Sheriff);
-        public static RoleInfo impostor = new RoleInfo("Impostor", Palette.ImpostorRed, null, RoleType.Impostor);
-        public static RoleInfo crewmate = new RoleInfo("Crewmate", Palette.CrewmateBlue, null, RoleType.Crewmate);
+        public static RoleInfo jester = new RoleInfo("Jester", JesterPink, CustomRolesH.JesterRate, RoleType.Jester);
+        public static RoleInfo sheriff = new RoleInfo("Sheriff", SheriffYellow, CustomRolesH.SheriffRate, RoleType.Sheriff);
+        public static RoleInfo engineer = new RoleInfo("Engineer", EngineerBlue, CustomRolesH.EngineerRate, RoleType.Engineer);
+        public static RoleInfo impostor = new RoleInfo("Impostor", ImpostorRed, null, RoleType.Impostor);
+        public static RoleInfo crewmate = new RoleInfo("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
         public static List<RoleInfo> allRoleInfos = new()
         {
@@ -50,6 +50,7 @@ namespace UltimateMods.Roles
             jester,
             crewmate,
             sheriff,
+            engineer,
         };
 
         public static string tl(string key)
@@ -65,6 +66,7 @@ namespace UltimateMods.Roles
             // Special roles
             if (p.isRole(RoleType.Jester)) infos.Add(jester);
             if (p.isRole(RoleType.Sheriff)) infos.Add(sheriff);
+            if (p.isRole(RoleType.Engineer)) infos.Add(engineer);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
