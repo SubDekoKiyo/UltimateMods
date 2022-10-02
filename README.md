@@ -1,5 +1,5 @@
 ![Logo](./Images/UltimateMods.png)
-![Submerged](./Images/Submerged.png)
+[![Submerged](./Images/Submerged.png)](https://github.com/SubmergedAmongUs/Submerged)
 [![Discord](./Images/Discord.png)](https://discord.gg/hNs7fB5ABQ)
 
 <br>
@@ -29,31 +29,38 @@ We are not responsible for any damage caused by this mod.<br>
 Click to need version's "Download" Button.
 | AmongUs Version | Mod Version | Download Link |
 |-----------------|-------------|---------------|
-|2022.09.20s/e|1.0|[Download](https://github.com/Dekokiyo/UltimateMods/releases/download/1.0/UltimateMods-1.0.zip)|
+|~~2022.09.20s/e~~|~~1.0~~|~~[Download](https://github.com/Dekokiyo/UltimateMods/releases/download/1.0/UltimateMods-1.0.zip)~~|
 
 # Credits
+## Other AmongUs Mods
 - [TheOtherRoles](https://github.com/TheOtherRolesAU/TheOtherRoles) from [Eisbison](https://github.com/Eisbison)<br>
-Many roles idea and source code are made by this mod.
+Many roles ideas and source code are made by this mod.
 - [TheOtherRoles+](https://github.com/tomarai/TheOtherRoles) from [tomarai](https://github.com/tomarai)<br>
 AirShip Reactor Duration System is made by this mod.
 - [TheOtherRolesGM](https://github.com/yukinogatari/TheOtherRoles-GM) from [Yukinogatari](https://github.com/yukinogatari)<br>
-Many roles idea and source code are made by this mod.
+Many roles ideas and source code are made by this mod.
 - [TheOtherRolesGM Haoming](https://github.com/haoming37/TheOtherRoles-GM-Haoming) from [Haoming](https://github.com/haoming37)<br>
 Strong random generator System, Modifier System and some source code are made by this mod.
 - [Super New Roles](https://github.com/ykundesu/SuperNewRoles) from [Yoppy](https://github.com/ykundesu)<br>
-Thanks to Yoppy the mod was completed. **(Maybe)**
+Thanks to Yoppy the mod was completed. ~~**(Maybe)**~~
 - [Town of Plus](https://github.com/tugaru1975/TownOfPlus) from [tugaru1975](https://github.com/tugaru1975) And [Town of Super](https://github.com/reitou-mugicha/TownOfSuper) from [reitou-mugicha](https://github.com/reitou-mugicha)<br>
-Custom Overlay System idea and more source code are made by this mod.
+Custom Overlay System ideas and more source code are made by this mod.
 - [Town of Us-R](https://github.com/eDonnes124/Town-Of-Us-R) from [eDonnes124](https://github.com/eDonnes124)<br>
-Some roles idea is made by this mod.
+Some roles ideas is made by this mod.
 -  [Town of Impostors](https://github.com/Town-of-Impostors/TownOfImpostors) from [TeamToI](https://github.com/Town-of-Impostors)<br>
-Some roles idea is made by this mod.
+Some roles ideas is made by this mod.
 - [Las Monjas](https://github.com/KiraYamato94/LasMonjas) from [KiraYamato94](https://github.com/KiraYamato94)<br>
-Some roles idea and source code are made by this mod.
+Some roles ideas and source code are made by this mod.
 - [Extreme Roles](https://github.com/yukieiji/ExtremeRoles) from [yukieiji](https://github.com/yukieiji)<br>
 Strong random generator System is made by this mod.
 - [Town of Host](https://github.com/tukasa0001/TownOfHost) from [Empty Bottle](https://github.com/tukasa0001)<br>
-Some source code made by this mod.
+Some ideas come from this mod.
+
+## Button Sprites
+- [Irasutoya](https://www.irasutoya.com/)<br>
+Some Buttons Sprites Textures are come from this site.
+- [Fukidashi Design](https://fukidesign.com/)<br>
+Button Background Textures is come from this site.
 
 # Settings
 ## Client Options
@@ -63,8 +70,8 @@ Show number of tasks for everyone if you died.
 Show roles for everyone if you died.
 - Ghosts See Votes<br>
 Show vote if you died.
-- Show Role Summary<br>
-Show result when the game end.
+- ~~Show Role Summary<br>
+Show result when the game end.~~
 - Hide Nameplates<br>
 Hide nameplates picture when during the emergency meeting.
 - Hide Task Arrows<br>
@@ -100,3 +107,4 @@ AirShip Reactor Duration (10~600) <br>
 |---------|----------|----------------|
 |Sheriff|Crewmate|Pluralized Role|
 |Jester|Neutral||
+|Engineer|Crewmate|Pluralized Role|
