@@ -10,19 +10,13 @@ namespace UltimateMods.Roles
     class RoleInfo
     {
         public Color color;
-        public virtual string name { get { return ModTranslation.getString(nameKey); } }
-        public virtual string nameColored { get { return Helpers.cs(color, name); } }
-        public virtual string introDescription { get { return ModTranslation.getString(nameKey + "Intro"); } }
-        public virtual string shortDescription { get { return ModTranslation.getString(nameKey + "Short"); } }
-        public virtual string fullDescription { get { return ModTranslation.getString(nameKey + "Full"); } }
-        public virtual string blurb { get { return ModTranslation.getString(nameKey + "Blurb"); } }
-        public virtual string roleOptions
-        {
-            get
-            {
-                return GameOptionsDataPatch.optionsToString(baseOption, true);
-            }
-        }
+        public virtual string Name { get { return ModTranslation.getString(nameKey); } }
+        public virtual string NameColored { get { return Helpers.cs(color, Name); } }
+        public virtual string IntroDescription { get { return ModTranslation.getString(nameKey + "Intro"); } }
+        public virtual string ShortDescription { get { return ModTranslation.getString(nameKey + "Short"); } }
+        public virtual string FullDescription { get { return ModTranslation.getString(nameKey + "Full"); } }
+        public virtual string Blurb { get { return ModTranslation.getString(nameKey + "Blurb"); } }
+        public virtual string RoleOptions { get { return GameOptionsDataPatch.optionsToString(baseOption, true); } }
 
         public bool enabled { get { return CustomOptionsH.ActivateModRoles.getBool() && (baseOption == null || baseOption.enabled); } }
         public RoleType roleType;
@@ -82,9 +76,15 @@ namespace UltimateMods.Roles
         {
             if (p?.Data?.Disconnected != false) return "";
 
-            string roleName;
             var roleInfo = getRoleInfoForPlayer(p, excludeRoles, includeHidden);
-            roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.name) : x.name).ToArray());
+            string roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.Name) : x.Name).ToArray());
+
+            if (p.hasModifier(ModifierType.Opportunist))
+            {
+                string postfix = useColors ? Helpers.cs(OpportunistGreen, Opportunist.Postfix) : Opportunist.Postfix;
+                roleName = roleName + postfix;
+            }
+
             return roleName;
         }
     }

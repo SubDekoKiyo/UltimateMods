@@ -125,10 +125,10 @@ namespace UltimateMods.Patches
                         switch ((int)SaveManager.LastLanguage)
                         {
                             case 0:
-                                __result = player.Data.PlayerName + " " + ModTranslation.getString("wasThe") + " " + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.name).ToArray());
+                                __result = player.Data.PlayerName + " " + ModTranslation.getString("wasThe") + " " + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.Name).ToArray());
                                 break;
                             case 11:
-                                __result = player.Data.PlayerName + ModTranslation.getString("HA") + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.name).ToArray()) + ModTranslation.getString("wasThe");
+                                __result = player.Data.PlayerName + ModTranslation.getString("HA") + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.Name).ToArray()) + ModTranslation.getString("wasThe");
                                 break;
                         }
                     }

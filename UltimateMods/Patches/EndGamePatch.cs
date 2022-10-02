@@ -43,6 +43,7 @@ namespace UltimateMods.EndGame
         CrewmateWin,
         ImpostorWin,
         JesterWin,
+        OpportunistWin,
 
         ForceEnd,
         EveryoneLose
@@ -118,6 +119,7 @@ namespace UltimateMods.EndGame
 
             List<PlayerControl> notWinners = new();
             notWinners.AddRange(Jester.allPlayers);
+            notWinners.AddRange(Opportunist.allPlayers);
 
             List<WinningPlayerData> winnersToRemove = new List<WinningPlayerData>();
             foreach (WinningPlayerData winner in TempData.winners.GetFastEnumerator())
@@ -129,6 +131,7 @@ namespace UltimateMods.EndGame
             bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
 
             bool ForceEnd = KeyboardClass.triggerForceEnd;
+            bool SaboWin = GameOverReason == GameOverReason.ImpostorBySabotage;
             bool EveryoneLose = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
             if (JesterWin)
@@ -161,6 +164,19 @@ namespace UltimateMods.EndGame
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 AdditionalTempData.winCondition = WinCondition.EveryoneLose;
+            }
+
+            if (!SaboWin)
+            {
+                bool oppWin = false;
+                foreach (var p in Opportunist.livingPlayers)
+                {
+                    if (!TempData.winners.ToArray().Any(x => x.PlayerName == p.Data.PlayerName))
+                        TempData.winners.Add(new WinningPlayerData(p.Data));
+                    oppWin = true;
+                }
+                if (oppWin)
+                    AdditionalTempData.additionalWinConditions.Add(WinCondition.OpportunistWin);
             }
 
             foreach (WinningPlayerData wpd in TempData.winners)
@@ -225,57 +241,117 @@ namespace UltimateMods.EndGame
                 {
                     if (data.PlayerName != winningPlayerData2.PlayerName) continue;
                     var roles =
-                    poolablePlayer.cosmetics.nameText.text += $"\n{string.Join("\n", data.Roles.Select(x => Helpers.cs(x.color, x.name)))}";
+                    poolablePlayer.cosmetics.nameText.text += $"\n{string.Join("\n", data.Roles.Select(x => Helpers.cs(x.color, x.Name)))}";
                 }
             }
 
             // Additional code
-            GameObject bonusText = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
-            bonusText.transform.position = new Vector3(__instance.WinText.transform.position.x, __instance.WinText.transform.position.y - 0.5f, __instance.WinText.transform.position.z);
-            bonusText.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
-            TMPro.TMP_Text textRenderer = bonusText.GetComponent<TMPro.TMP_Text>();
+            GameObject bonusTextObject = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
+            bonusTextObject.transform.position = new Vector3(__instance.WinText.transform.position.x, __instance.WinText.transform.position.y - 0.5f, __instance.WinText.transform.position.z);
+            bonusTextObject.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
+            TMPro.TMP_Text textRenderer = bonusTextObject.GetComponent<TMPro.TMP_Text>();
             textRenderer.text = "";
 
-            string winText = ModTranslation.getString("Win");
-            string loseText = ModTranslation.getString("Lose");
+            string bonusText = "";
 
             if (AdditionalTempData.winCondition == WinCondition.JesterWin)
             {
-                textRenderer.text = ModTranslation.getString("Jester") + winText;
+                bonusText = ModTranslation.getString("Jester");
                 textRenderer.color = JesterPink;
                 __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
             }
             else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
             {
-                textRenderer.text = ModTranslation.getString("Crewmate") + winText;
+                bonusText = ModTranslation.getString("Crewmate");
                 textRenderer.color = CrewmateBlue;
             }
-            else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote)
+            else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage)
             {
-                textRenderer.text = ModTranslation.getString("Impostor") + winText;
-                textRenderer.color = ImpostorRed;
-            }
-            else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageO2)
-            {
-                textRenderer.text = ModTranslation.getString("Impostor") + winText + $"\n" + ModTranslation.getString("O2Win");
-                textRenderer.color = ImpostorRed;
-            }
-            else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageReactor)
-            {
-                textRenderer.text = ModTranslation.getString("Impostor") + winText + $"\n" + ModTranslation.getString("ReactorWin");
+                bonusText = ModTranslation.getString("Impostor");
                 textRenderer.color = ImpostorRed;
             }
             else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
             {
-                textRenderer.text = ModTranslation.getString("Everyone") + loseText;
+                bonusText = ModTranslation.getString("Everyone");
                 textRenderer.color = Palette.DisabledGrey;
                 __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
             }
             else if (AdditionalTempData.winCondition == WinCondition.ForceEnd)
             {
-                textRenderer.text = ModTranslation.getString("ForceEnd");
+                bonusText = ModTranslation.getString("ForceEnd");
                 textRenderer.color = Palette.DisabledGrey;
                 __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
+            }
+
+            string extraText = "";
+            foreach (WinCondition w in AdditionalTempData.additionalWinConditions)
+            {
+                switch (w)
+                {
+                    case WinCondition.OpportunistWin:
+                        extraText += ModTranslation.getString("OpportunistExtra");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            if (extraText.Length > 0)
+            {
+                textRenderer.text = string.Format(ModTranslation.getString(bonusText + "Extra"), extraText);
+            }
+            else
+            {
+                textRenderer.text = ModTranslation.getString(bonusText);
+            }
+
+            if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageO2)
+            {
+                textRenderer.text += ($"\n" + ModTranslation.getString("O2Win"));
+            }
+            else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageReactor)
+            {
+                textRenderer.text += ($"\n" + ModTranslation.getString("ReactorWin"));
+            }
+
+            if (MapOptions.showRoleSummary)
+            {
+                var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
+                GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
+                roleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + 0.1f, position.y - 0.1f, -14f);
+                roleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
+
+                var roleSummaryText = new StringBuilder();
+                roleSummaryText.AppendLine(ModTranslation.getString("roleSummaryText"));
+                AdditionalTempData.playerRoles.Sort((x, y) =>
+                {
+                    RoleInfo roleX = x.Roles.FirstOrDefault();
+                    RoleInfo roleY = y.Roles.FirstOrDefault();
+                    RoleType idX = roleX == null ? RoleType.NoRole : roleX.roleType;
+                    RoleType idY = roleY == null ? RoleType.NoRole : roleY.roleType;
+
+                    if (x.Status == y.Status)
+                    {
+                        if (idX == idY)
+                        {
+                            return x.PlayerName.CompareTo(y.PlayerName);
+                        }
+                        return idX.CompareTo(idY);
+                    }
+                    return x.Status.CompareTo(y.Status);
+                });
+
+                TMPro.TMP_Text roleSummaryTextMesh = roleSummary.GetComponent<TMPro.TMP_Text>();
+                roleSummaryTextMesh.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                roleSummaryTextMesh.color = Color.white;
+                roleSummaryTextMesh.outlineWidth *= 1.2f;
+                roleSummaryTextMesh.fontSizeMin = 1.25f;
+                roleSummaryTextMesh.fontSizeMax = 1.25f;
+                roleSummaryTextMesh.fontSize = 1.25f;
+
+                var roleSummaryTextMeshRectTransform = roleSummaryTextMesh.GetComponent<RectTransform>();
+                roleSummaryTextMeshRectTransform.anchoredPosition = new Vector2(position.x + 3.5f, position.y - 0.1f);
+                roleSummaryTextMesh.text = roleSummaryText.ToString();
             }
             AdditionalTempData.clear();
         }

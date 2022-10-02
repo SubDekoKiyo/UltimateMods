@@ -60,7 +60,7 @@ namespace UltimateMods.Patches
             if (PlayerControl.LocalPlayer.IsNeutral())
             {
                 __instance.BackgroundBar.material.color = roleInfo.color;
-                __instance.TeamTitle.text = roleInfo.name;
+                __instance.TeamTitle.text = roleInfo.Name;
                 __instance.TeamTitle.color = roleInfo.color;
                 __instance.ImpostorText.text = "";
             }
@@ -82,13 +82,13 @@ namespace UltimateMods.Patches
                 List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { });
                 RoleInfo roleInfo = infos.FirstOrDefault();
 
-                Helpers.Log($"{roleInfo.name}");
-                Helpers.Log($"{roleInfo.introDescription}");
+                Helpers.Log($"{roleInfo.Name}");
+                Helpers.Log($"{roleInfo.IntroDescription}");
 
                 __instance.YouAreText.color = roleInfo.color;
-                __instance.RoleText.text = roleInfo.name;
+                __instance.RoleText.text = roleInfo.Name;
                 __instance.RoleText.color = roleInfo.color;
-                __instance.RoleBlurbText.text = roleInfo.introDescription;
+                __instance.RoleBlurbText.text = roleInfo.IntroDescription;
                 __instance.RoleBlurbText.color = roleInfo.color;
 
                 // 従来処理
