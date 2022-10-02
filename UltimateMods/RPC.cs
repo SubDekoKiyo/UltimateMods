@@ -88,7 +88,7 @@ namespace UltimateMods
                         break;
                     // 66
                     case (byte)CustomRPC.UseAdminTime:
-                        RPCProcedure.useAdminTime(reader.ReadSingle());
+                        RPCProcedure.UseAdminTime(reader.ReadSingle());
                         break;
                     // 67
                     case (byte)CustomRPC.UseCameraTime:
@@ -192,7 +192,7 @@ namespace UltimateMods
             );
         }
 
-        public static void useAdminTime(float time)
+        public static void UseAdminTime(float time)
         {
             MapOptions.restrictAdminTime -= time;
         }

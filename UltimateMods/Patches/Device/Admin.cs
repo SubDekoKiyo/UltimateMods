@@ -42,7 +42,7 @@ namespace UltimateMods.Patches
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.useAdminTime(adminTimer);
+                RPCProcedure.UseAdminTime(adminTimer);
             }
             adminTimer = 0f;
         }

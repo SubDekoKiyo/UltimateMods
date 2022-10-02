@@ -214,7 +214,7 @@ namespace UltimateMods
                 var textTask = t.gameObject.GetComponent<ImportantTextTask>();
                 if (textTask != null)
                 {
-                    var info = infos.FirstOrDefault(x => textTask.Text.StartsWith(x.name));
+                    var info = infos.FirstOrDefault(x => textTask.Text.StartsWith(x.Name));
                     if (info != null)
                         infos.Remove(info); // TextTask for this RoleInfo does not have to be added, as it already exists
                     else
@@ -248,7 +248,7 @@ namespace UltimateMods
                 }
                 else
                 {*/
-                task.Text = cs(roleInfo.color, $"{roleInfo.name}: {roleInfo.shortDescription}");
+                task.Text = cs(roleInfo.color, $"{roleInfo.Name}: {roleInfo.ShortDescription}");
                 // }
 
                 player.myTasks.Insert(0, task);

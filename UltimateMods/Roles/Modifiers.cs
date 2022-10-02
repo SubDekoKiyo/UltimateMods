@@ -9,6 +9,7 @@ namespace UltimateMods.Roles
     public enum ModifierType
     {
         // don't put anything below this
+        Opportunist = 0,
         NoModifier = int.MaxValue
     }
 
@@ -17,7 +18,7 @@ namespace UltimateMods.Roles
     {
         public static Dictionary<ModifierType, Type> allModTypes = new Dictionary<ModifierType, Type>
         {
-            // { ModifierType.Watcher, typeof(ModifierBase<Watcher>) },
+            { ModifierType.Opportunist, typeof(ModifierBase<Opportunist>) },
         };
     }
 

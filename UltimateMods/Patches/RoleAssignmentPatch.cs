@@ -99,7 +99,6 @@ namespace UltimateMods.Patches
             Dictionary<byte, (int rate, int count)> impSettings = new();
             Dictionary<byte, (int rate, int count)> neutralSettings = new();
             Dictionary<byte, (int rate, int count)> crewSettings = new();
-            Dictionary<byte, (int rate, int count)> modSettings = new();
 
             // impSettings.Add((byte)RoleType.Morphling, CustomRolesH.MorphlingRate.data);
 
@@ -418,12 +417,12 @@ namespace UltimateMods.Patches
                     }
                     setModifierToRandomPlayer((byte)ModifierType.AntiTeleport, AntiTeleport.candidates);
                 }
-            }
+            }*/
 
             // Opportunist
-            for (int i = 0; i < CustomOptionsH.opportunistSpawnRate.count; i++)
+            for (int i = 0; i < CustomRolesH.OpportunistRate.count; i++)
             {
-                if (rnd.Next(1, 100) <= CustomOptionsH.opportunistSpawnRate.rate * 10)
+                if (rnd.Next(1, 100) <= CustomRolesH.OpportunistRate.rate * 10)
                 {
                     var candidates = Opportunist.candidates;
                     if (candidates.Count <= 0)
@@ -432,7 +431,7 @@ namespace UltimateMods.Patches
                     }
                     setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.candidates);
                 }
-            }*/
+            }
         }
 
         private static byte setRoleToRandomPlayer(byte roleId, List<PlayerControl> playerList, byte flag = 0, bool removePlayer = true)

@@ -16,12 +16,12 @@ namespace UltimateMods.Modules
     {
         public enum CustomOptionType
         {
-            General,
-            Impostor,
-            Neutral,
-            Crewmate,
-            Modifier,
-            Other
+            TypeGeneral,
+            TypeImpostor,
+            TypeNeutral,
+            TypeCrewmate,
+            TypeModifier,
+            TypeOther
         }
 
         public static List<CustomOption> options = new();
@@ -271,7 +271,7 @@ namespace UltimateMods.Modules
         }
 
         public CustomRoleOption(int id, CustomOptionType type, Color BGColor, string name, Color color, int max = 15, bool roleEnabled = true) :
-            base(id, type, BGColor, Helpers.cs(color, name), CustomOptionsH.rates, "", null, true, false, "")
+            base(id, type, BGColor, Helpers.cs(color, name), CustomOptionsH.TenRates, "", null, true, false, "")
         {
             this.roleEnabled = roleEnabled;
 
@@ -300,7 +300,7 @@ namespace UltimateMods.Modules
         public CustomDualRoleOption(int id, CustomOptionType type, Color BGColor, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, type, BGColor, name, color, max, roleEnabled)
         {
             roleAssignEqually = new CustomOption(id + 15001, type, BGColor, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
-            roleImpChance = Create(id + 15000, type, BGColor, "roleImpChance", CustomOptionsH.rates, roleAssignEqually, false, isHidden);
+            roleImpChance = Create(id + 15000, type, BGColor, "roleImpChance", CustomOptionsH.TenRates, roleAssignEqually, false, isHidden);
 
             this.roleType = roleType;
             dualRoles.Add(this);
@@ -362,7 +362,7 @@ namespace UltimateMods.Modules
                 selections = roleTypes.Select(
                     x =>
                         x == RoleType.NoRole ? "OptionOff" :
-                        RoleInfo.allRoleInfos.First(y => y.roleType == x).nameColored
+                        RoleInfo.allRoleInfos.First(y => y.roleType == x).NameColored
                     ).ToArray();
             }
 
@@ -765,17 +765,17 @@ namespace UltimateMods.Modules
             float offset = 2.75f;
             foreach (CustomOption option in CustomOption.options)
             {
-                if (GameObject.Find("UMSettings") && option.type != CustomOption.CustomOptionType.General)
+                if (GameObject.Find("UMSettings") && option.type != CustomOption.CustomOptionType.TypeGeneral)
                     continue;
-                if (GameObject.Find("ImpostorSettings") && option.type != CustomOption.CustomOptionType.Impostor)
+                if (GameObject.Find("ImpostorSettings") && option.type != CustomOption.CustomOptionType.TypeImpostor)
                     continue;
-                if (GameObject.Find("NeutralSettings") && option.type != CustomOption.CustomOptionType.Neutral)
+                if (GameObject.Find("NeutralSettings") && option.type != CustomOption.CustomOptionType.TypeNeutral)
                     continue;
-                if (GameObject.Find("CrewmateSettings") && option.type != CustomOption.CustomOptionType.Crewmate)
+                if (GameObject.Find("CrewmateSettings") && option.type != CustomOption.CustomOptionType.TypeCrewmate)
                     continue;
-                if (GameObject.Find("ModifierSettings") && option.type != CustomOption.CustomOptionType.Modifier)
+                if (GameObject.Find("ModifierSettings") && option.type != CustomOption.CustomOptionType.TypeModifier)
                     continue;
-                if (GameObject.Find("OtherSettings") && option.type != CustomOption.CustomOptionType.Other)
+                if (GameObject.Find("OtherSettings") && option.type != CustomOption.CustomOptionType.TypeOther)
                     continue;
                 if (option?.optionBehaviour != null && option.optionBehaviour.gameObject != null)
                 {
