@@ -118,7 +118,7 @@ namespace UltimateMods.Roles
             EngineerRepairButtonText.text = "";
             EngineerRepairButtonText.enableWordWrapping = false;
             EngineerRepairButtonText.transform.localScale = Vector3.one * 0.5f;
-            EngineerRepairButtonText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
+            EngineerRepairButtonText.transform.localPosition += new Vector3(-0.05f, 0.5f, 0);
         }
 
         public static Sprite GetFixButtonSprite()
@@ -126,6 +126,11 @@ namespace UltimateMods.Roles
             if (EngineerRepairButtonSprite) return EngineerRepairButtonSprite;
             EngineerRepairButtonSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.EngineerRepairButton.png", 115f);
             return EngineerRepairButtonSprite;
+        }
+
+        public static void SetButtonCooldowns()
+        {
+            EngineerRepairButton.MaxTimer = 0f;
         }
 
         public static void Clear()
