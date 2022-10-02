@@ -1,4 +1,4 @@
-[![Logo](./Images/UltimateMods.png)](https://github.com/Dekokiyo/UltimateMods/wiki)
+[![Logo](./Images/UltimateModsWiki.png)](https://github.com/Dekokiyo/UltimateMods/wiki)
 [![Submerged](./Images/Submerged.png)](https://github.com/SubmergedAmongUs/Submerged)
 [![Discord](./Images/Discord.png)](https://discord.gg/hNs7fB5ABQ)
 
