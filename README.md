@@ -53,7 +53,7 @@ Some roles idea and source code are made by this mod.
 - [Extreme Roles](https://github.com/yukieiji/ExtremeRoles) from [yukieiji](https://github.com/yukieiji)<br>
 Strong random generator System is made by this mod.
 - [Town of Host](https://github.com/tukasa0001/TownOfHost) from [Empty Bottle](https://github.com/tukasa0001)<br>
-Custom Option Holder's Background color and some source code made by this mod.
+Some source code made by this mod.
 
 # Settings
 ## Client Options

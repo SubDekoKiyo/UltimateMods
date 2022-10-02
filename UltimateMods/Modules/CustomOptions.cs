@@ -24,7 +24,7 @@ namespace UltimateMods.Modules
             Other
         }
 
-        public static List<CustomOption> options = new List<CustomOption>();
+        public static List<CustomOption> options = new();
         public static int Preset = 0;
 
         public int id;
@@ -41,6 +41,7 @@ namespace UltimateMods.Modules
         public bool isHeader;
         public bool isHidden;
         public CustomOptionType type;
+        public Color BGColor;
 
         public virtual bool enabled
         {
@@ -53,12 +54,12 @@ namespace UltimateMods.Modules
         // Option creation
         public CustomOption() { }
 
-        public CustomOption(int id, CustomOptionType type, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
+        public CustomOption(int id, CustomOptionType type, Color BGColor, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
         {
-            Init(id, type, name, selections, defaultValue, parent, isHeader, isHidden, format);
+            Init(id, type, BGColor, name, selections, defaultValue, parent, isHeader, isHidden, format);
         }
 
-        public void Init(int id, CustomOptionType type, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
+        public void Init(int id, CustomOptionType type, Color BGColor, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
         {
             this.id = id;
             this.name = name;
@@ -70,6 +71,7 @@ namespace UltimateMods.Modules
             this.isHeader = isHeader;
             this.isHidden = isHidden;
             this.type = type;
+            this.BGColor = BGColor;
 
             this.children = new List<CustomOption>();
             if (parent != null)
@@ -91,22 +93,22 @@ namespace UltimateMods.Modules
             options.Add(this);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, string name, string[] selections, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color BGColor, string name, string[] selections, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
-            return new CustomOption(id, type, name, selections, "", parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, BGColor, name, selections, "", parent, isHeader, isHidden, format);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, string name, float defaultValue, float min, float max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color BGColor, string name, float defaultValue, float min, float max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
             List<object> selections = new();
             for (float s = min; s <= max; s += step)
                 selections.Add(s);
-            return new CustomOption(id, type, name, selections.ToArray(), defaultValue, parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, BGColor, name, selections.ToArray(), defaultValue, parent, isHeader, isHidden, format);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, string name, bool defaultValue, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color BGColor, string name, bool defaultValue, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
-            return new CustomOption(id, type, name, new string[] { "OptionOff", "OptionOn" }, defaultValue ? "OptionOn" : "OptionOff", parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, BGColor, name, new string[] { "OptionOff", "OptionOn" }, defaultValue ? "OptionOn" : "OptionOff", parent, isHeader, isHidden, format);
         }
 
         // Static behaviour
@@ -200,8 +202,12 @@ namespace UltimateMods.Modules
             return ModTranslation.getString(name);
         }
 
-        // Option changes
+        public virtual Color getColor()
+        {
+            return BGColor;
+        }
 
+        // Option changes
         public virtual void updateSelection(int newSelection)
         {
             selection = Mathf.Clamp((newSelection + selections.Length) % selections.Length, 0, selections.Length - 1);
@@ -264,8 +270,8 @@ namespace UltimateMods.Modules
             }
         }
 
-        public CustomRoleOption(int id, CustomOptionType type, string name, Color color, int max = 15, bool roleEnabled = true) :
-            base(id, type, Helpers.cs(color, name), CustomOptionsH.rates, "", null, true, false, "")
+        public CustomRoleOption(int id, CustomOptionType type, Color BGColor, string name, Color color, int max = 15, bool roleEnabled = true) :
+            base(id, type, BGColor, Helpers.cs(color, name), CustomOptionsH.rates, "", null, true, false, "")
         {
             this.roleEnabled = roleEnabled;
 
@@ -276,7 +282,7 @@ namespace UltimateMods.Modules
             }
 
             if (max > 1)
-                countOption = Create(id + 10000, type, "RoleNumAssigned", 1f, 1f, 15f, 1f, this, false, isHidden, "FormatPlayer");
+                countOption = Create(id + 10000, type, BGColor, "RoleNumAssigned", 1f, 1f, 15f, 1f, this, false, isHidden, "FormatPlayer");
         }
     }
 
@@ -291,10 +297,10 @@ namespace UltimateMods.Modules
 
         public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
 
-        public CustomDualRoleOption(int id, CustomOptionType type, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, type, name, color, max, roleEnabled)
+        public CustomDualRoleOption(int id, CustomOptionType type, Color BGColor, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, type, BGColor, name, color, max, roleEnabled)
         {
-            roleAssignEqually = new CustomOption(id + 15001, type, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
-            roleImpChance = Create(id + 15000, type, "roleImpChance", CustomOptionsH.rates, roleAssignEqually, false, isHidden);
+            roleAssignEqually = new CustomOption(id + 15001, type, BGColor, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
+            roleImpChance = Create(id + 15000, type, BGColor, "roleImpChance", CustomOptionsH.rates, roleAssignEqually, false, isHidden);
 
             this.roleType = roleType;
             dualRoles.Add(this);
@@ -316,11 +322,11 @@ namespace UltimateMods.Modules
             return Helpers.GenerateTasks(commonTasks, shortTasks, longTasks);
         }
 
-        public CustomTasksOption(int id, CustomOptionType type, int commonDef, int longDef, int shortDef, CustomOption parent = null)
+        public CustomTasksOption(int id, CustomOptionType type, Color BGColor, int commonDef, int longDef, int shortDef, CustomOption parent = null)
         {
-            commonTasksOption = Create(id + 20000, type, "numCommonTasks", commonDef, 0f, 4f, 1f, parent);
-            longTasksOption = Create(id + 20001, type, "numLongTasks", longDef, 0f, 15f, 1f, parent);
-            shortTasksOption = Create(id + 20002, type, "numShortTasks", shortDef, 0f, 23f, 1f, parent);
+            commonTasksOption = Create(id + 20000, type, BGColor, "numCommonTasks", commonDef, 0f, 4f, 1f, parent);
+            longTasksOption = Create(id + 20001, type, BGColor, "numLongTasks", longDef, 0f, 15f, 1f, parent);
+            shortTasksOption = Create(id + 20002, type, BGColor, "numShortTasks", shortDef, 0f, 23f, 1f, parent);
         }
     }
 
@@ -336,7 +342,7 @@ namespace UltimateMods.Modules
             }
         }
 
-        public CustomRoleSelectionOption(int id, CustomOptionType type, string name, List<RoleType> roleTypes = null, CustomOption parent = null)
+        public CustomRoleSelectionOption(int id, CustomOptionType type, Color BGColor, string name, List<RoleType> roleTypes = null, CustomOption parent = null)
         {
             if (roleTypes == null)
             {
@@ -346,7 +352,7 @@ namespace UltimateMods.Modules
             this.roleTypes = roleTypes;
             var strings = new string[] { "OptionOff" };
 
-            Init(id, type, name, strings, 0, parent, false, false, "");
+            Init(id, type, BGColor, name, strings, 0, parent, false, false, "");
         }
 
         public override void updateSelection(int newSelection)
@@ -409,7 +415,6 @@ namespace UltimateMods.Modules
     {
         public static void Postfix(GameOptionsMenu __instance)
         {
-
             if (GameObject.Find("UMSettings") != null)
             { // Settings setup has already been performed, fixing the title of the tab and returning
                 GameObject.Find("UMSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("GeneralSettings"));
@@ -441,7 +446,7 @@ namespace UltimateMods.Modules
                 return;
             }
 
-            // Setup TOR tab
+            // Setup UM tab
             var template = UnityEngine.Object.FindObjectsOfType<StringOption>().FirstOrDefault();
             if (template == null) return;
             var gameSettings = GameObject.Find("Game Settings");
@@ -582,7 +587,7 @@ namespace UltimateMods.Modules
 
             foreach (OptionBehaviour option in umMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> torOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> umOptions = new List<OptionBehaviour>();
 
             foreach (OptionBehaviour option in impostorMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
@@ -604,10 +609,8 @@ namespace UltimateMods.Modules
                 UnityEngine.Object.Destroy(option.gameObject);
             List<OptionBehaviour> otherOptions = new List<OptionBehaviour>();
 
-
             List<Transform> menus = new List<Transform>() { umMenu.transform, impostorMenu.transform, neutralMenu.transform, crewmateMenu.transform, modifierMenu.transform, otherMenu.transform };
-            List<List<OptionBehaviour>> optionBehaviours = new List<List<OptionBehaviour>>() { torOptions, impostorOptions, neutralOptions, crewmateOptions, modifierOptions, otherOptions };
-
+            List<List<OptionBehaviour>> optionBehaviours = new List<List<OptionBehaviour>>() { umOptions, impostorOptions, neutralOptions, crewmateOptions, modifierOptions, otherOptions };
 
             for (int i = 0; i < CustomOption.options.Count; i++)
             {
@@ -626,7 +629,7 @@ namespace UltimateMods.Modules
                 option.optionBehaviour.gameObject.SetActive(true);
             }
 
-            umMenu.Children = torOptions.ToArray();
+            umMenu.Children = umOptions.ToArray();
             umSettings.gameObject.SetActive(false);
 
             impostorMenu.Children = impostorOptions.ToArray();
@@ -847,47 +850,6 @@ namespace UltimateMods.Modules
                 i.position += new Vector3(0, num, 0);
             }
             __instance.Scroller.ContentYBounds.max += 0.5F;
-        }
-    }
-
-    [HarmonyPatch(typeof(Constants), nameof(Constants.ShouldFlipSkeld))]
-    class ConstantsShouldFlipSkeldPatch
-    {
-        public static bool Prefix(ref bool __result)
-        {
-            if (PlayerControl.GameOptions == null) return true;
-            __result = PlayerControl.GameOptions.MapId == 3;
-            return false;
-        }
-
-        public static bool aprilFools
-        {
-            get
-            {
-                try
-                {
-                    DateTime utcNow = DateTime.UtcNow;
-                    DateTime t = new DateTime(utcNow.Year, 4, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-                    DateTime t2 = t.AddDays(1.0);
-                    if (utcNow >= t && utcNow <= t2)
-                    {
-                        return true;
-                    }
-                }
-                catch
-                {
-                }
-                return false;
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(FreeWeekendShower), nameof(FreeWeekendShower.Start))]
-    class FreeWeekendShowerPatch
-    {
-        public static bool Prefix()
-        {
-            return ConstantsShouldFlipSkeldPatch.aprilFools;
         }
     }
 

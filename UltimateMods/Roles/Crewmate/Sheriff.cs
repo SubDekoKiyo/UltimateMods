@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
 using Hazel;
+using static UltimateMods.ColorDictionary;
 using static UltimateMods.Patches.PlayerControlFixedUpdatePatch;
 
 namespace UltimateMods.Roles
@@ -16,7 +17,6 @@ namespace UltimateMods.Roles
         private static CustomButton SheriffKillButton;
         public static TMPro.TMP_Text SheriffNumShotsText;
         public int NumShots = 2;
-        public static Color color = new Color32(248, 205, 70, byte.MaxValue);
 
         public static float Cooldown { get { return CustomRolesH.SheriffCooldowns.getFloat(); } }
         public static int MaxShots { get { return Mathf.RoundToInt(CustomRolesH.SheriffMaxShots.getFloat()); } }
@@ -76,7 +76,7 @@ namespace UltimateMods.Roles
                     if (SheriffNumShotsText != null)
                     {
                         if (local.NumShots > 0)
-                            SheriffNumShotsText.text = String.Format(ModTranslation.getString("Shots"), local.NumShots);
+                            SheriffNumShotsText.text = String.Format(ModTranslation.getString("ReamingShots"), local.NumShots);
                         else
                             SheriffNumShotsText.text = "";
                     }
@@ -109,7 +109,7 @@ namespace UltimateMods.Roles
             if (player == PlayerControl.LocalPlayer && NumShots > 0)
             {
                 currentTarget = SetTarget();
-                SetPlayerOutline(currentTarget, Sheriff.color);
+                SetPlayerOutline(currentTarget, SheriffYellow);
             }
         }
         public override void OnKill(PlayerControl target) { }

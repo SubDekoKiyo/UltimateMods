@@ -8,8 +8,8 @@ using System;
 using System.Text;
 using UltimateMods.Modules;
 using UltimateMods.Utilities;
-using static UltimateMods.Roles.NeutralRoles;
 using static UltimateMods.CustomRolesH;
+using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.EndGame
 {
@@ -117,7 +117,7 @@ namespace UltimateMods.EndGame
             }
 
             List<PlayerControl> notWinners = new();
-            if (Jester.jester != null) notWinners.Add(Jester.jester);
+            notWinners.AddRange(Jester.allPlayers);
 
             List<WinningPlayerData> winnersToRemove = new List<WinningPlayerData>();
             foreach (WinningPlayerData winner in TempData.winners.GetFastEnumerator())
@@ -126,7 +126,7 @@ namespace UltimateMods.EndGame
             }
             foreach (var winner in winnersToRemove) TempData.winners.Remove(winner);
 
-            bool JesterWin = Jester.jester != null && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
+            bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
 
             bool ForceEnd = KeyboardClass.triggerForceEnd;
             bool EveryoneLose = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
@@ -134,9 +134,12 @@ namespace UltimateMods.EndGame
             if (JesterWin)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                Jester.jester.Data.IsDead = true;
-                WinningPlayerData wpd = new WinningPlayerData(Jester.jester.Data);
-                TempData.winners.Add(wpd);
+                foreach (var jester in Jester.players)
+                {
+                    WinningPlayerData wpd = new WinningPlayerData(jester.player.Data);
+                    TempData.winners.Add(wpd);
+                    jester.player.Data.IsDead = true;
+                }
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
             }
 
@@ -239,28 +242,28 @@ namespace UltimateMods.EndGame
             if (AdditionalTempData.winCondition == WinCondition.JesterWin)
             {
                 textRenderer.text = ModTranslation.getString("Jester") + winText;
-                textRenderer.color = Jester.color;
-                __instance.BackgroundBar.material.SetColor("_Color", Jester.color);
+                textRenderer.color = JesterPink;
+                __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
             }
             else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
             {
                 textRenderer.text = ModTranslation.getString("Crewmate") + winText;
-                textRenderer.color = Palette.White;
+                textRenderer.color = CrewmateBlue;
             }
             else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote)
             {
                 textRenderer.text = ModTranslation.getString("Impostor") + winText;
-                textRenderer.color = Palette.ImpostorRed;
+                textRenderer.color = ImpostorRed;
             }
             else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageO2)
             {
                 textRenderer.text = ModTranslation.getString("Impostor") + winText + $"\n" + ModTranslation.getString("O2Win");
-                textRenderer.color = Palette.ImpostorRed;
+                textRenderer.color = ImpostorRed;
             }
             else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageReactor)
             {
                 textRenderer.text = ModTranslation.getString("Impostor") + winText + $"\n" + ModTranslation.getString("ReactorWin");
-                textRenderer.color = Palette.ImpostorRed;
+                textRenderer.color = ImpostorRed;
             }
             else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
             {

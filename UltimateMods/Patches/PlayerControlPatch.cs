@@ -171,14 +171,17 @@ namespace UltimateMods.Patches
 
             if (PlayerControl.LocalPlayer == __instance)
             {
+                // Update player outlines
+                SetBasePlayerOutlines();
+
                 // Update Role Description
                 Helpers.RefreshRoleDescription(__instance);
 
                 // Update Player Info
                 UpdatePlayerInfo();
-
-                UltimateMods.FixedUpdate(__instance);
             }
+
+            UltimateMods.FixedUpdate(__instance);
         }
     }
 

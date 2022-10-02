@@ -106,6 +106,7 @@ namespace UltimateMods.Patches
             neutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
 
             crewSettings.Add((byte)RoleType.Sheriff, CustomRolesH.SheriffRate.data);
+            crewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);
 
             return new RoleAssignmentData
             {

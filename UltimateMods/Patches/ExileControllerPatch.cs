@@ -7,7 +7,6 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Modules;
-using static UltimateMods.Roles.NeutralRoles;
 using static UltimateMods.UltimateMods;
 
 namespace UltimateMods.Patches
@@ -67,7 +66,10 @@ namespace UltimateMods.Patches
                 // Jester win condition
                 if (p.isRole(RoleType.Jester))
                 {
-                    Jester.TriggerJesterWin = true;
+                    if ((Jester.HasTasks && Jester.TasksComplete(p)) || !Jester.HasTasks)
+                    {
+                        Jester.TriggerJesterWin = true;
+                    }
                 }
 
                 if (SubmergedCompatibility.IsSubmerged)
@@ -133,7 +135,7 @@ namespace UltimateMods.Patches
                     // Hide number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
-                        if (Jester.jester != null && player.PlayerId == Jester.jester.PlayerId) __result = "";
+                        if (PlayerControl.LocalPlayer.isRole(RoleType.Jester)) __result = "";
                     }
                 }
             }

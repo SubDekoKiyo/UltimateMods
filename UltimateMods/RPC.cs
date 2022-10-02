@@ -4,9 +4,8 @@ using UltimateMods.Patches;
 using UltimateMods.Modules;
 using System.Linq;
 using System;
-using static UltimateMods.Roles.CrewmateRoles;
 using static UltimateMods.GameHistory;
-using UnityEngine;
+using UltimateMods.Utilities;
 using UltimateMods.Roles;
 using UltimateMods.Objects;
 using UltimateMods.EndGame;
@@ -26,6 +25,10 @@ namespace UltimateMods
         UseVitalsTime,
         UncheckedMurderPlayer,
         SheriffKill = 70,
+        EngineerFixLights,
+        EngineerUsedRepair,
+        EngineerFixSubmergedOxygen,
+        UncheckedSetTasks,
     }
 
     public static class RPCProcedure
@@ -105,6 +108,22 @@ namespace UltimateMods
                     // 70
                     case (byte)CustomRPC.SheriffKill:
                         RPCProcedure.SheriffKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
+                        break;
+                    // 71
+                    case (byte)CustomRPC.EngineerFixLights:
+                        RPCProcedure.EngineerFixLights();
+                        break;
+                    // 72
+                    case (byte)CustomRPC.EngineerUsedRepair:
+                        RPCProcedure.EngineerUsedRepair(reader.ReadByte());
+                        break;
+                    // 73
+                    case (byte)CustomRPC.EngineerFixSubmergedOxygen:
+                        RPCProcedure.EngineerFixSubmergedOxygen();
+                        break;
+                    // 74
+                    case (byte)CustomRPC.UncheckedSetTasks:
+                        RPCProcedure.UncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;
                 }
             }
@@ -247,6 +266,33 @@ namespace UltimateMods
                 if (AmongUsClient.Instance.AmHost)
                     MeetingHud.Instance.CheckForEndVoting();
             }
+        }
+
+        public static void EngineerFixLights()
+        {
+            SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+            switchSystem.ActualSwitches = switchSystem.ExpectedSwitches;
+        }
+
+        public static void EngineerUsedRepair(byte engineerId)
+        {
+            PlayerControl engineer = Helpers.PlayerById(engineerId);
+            Engineer role = Engineer.getRole(engineer);
+            if (role != null)
+                role.RemainingFixes--;
+        }
+
+        public static void EngineerFixSubmergedOxygen()
+        {
+            SubmergedCompatibility.RepairOxygen();
+        }
+
+        public static void UncheckedSetTasks(byte playerId, byte[] taskTypeIds)
+        {
+            var player = Helpers.PlayerById(playerId);
+            player.ClearAllTasks();
+
+            GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
     }
 }
