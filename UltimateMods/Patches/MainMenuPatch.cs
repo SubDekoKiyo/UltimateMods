@@ -105,14 +105,14 @@ namespace UltimateMods.Patches
             bottomTemplate = GameObject.Find("InventoryButton");
             if (bottomTemplate == null) return;
             var htpButton = Object.Instantiate(bottomTemplate, bottomTemplate.transform.parent);
-            var passiveHtPButton = creditsButton.GetComponent<PassiveButton>();
-            var spriteHtPButton = creditsButton.GetComponent<SpriteRenderer>();
+            var passiveHtPButton = htpButton.GetComponent<PassiveButton>();
+            var spriteHtPButton = htpButton.GetComponent<SpriteRenderer>();
 
-            spriteCreditsButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HelpButton.png", 115f);
+            spriteHtPButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HelpButton.png", 40f);
 
-            passiveCreditsButton.OnClick = new ButtonClickedEvent();
+            passiveHtPButton.OnClick = new ButtonClickedEvent();
 
-            passiveCreditsButton.OnClick.AddListener((System.Action)delegate
+            passiveHtPButton.OnClick.AddListener((System.Action)delegate
             {
                 SceneManager.LoadScene("HowToPlay");
             });
