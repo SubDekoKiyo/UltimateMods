@@ -50,7 +50,12 @@ namespace UltimateMods.Roles.Patches
         public static void Prefix(ref RoleTeamTypes __state)
         {
             var player = PlayerControl.LocalPlayer;
-            if (player.isRole(RoleType.Jester))
+            if (player.isRole(RoleType.Jester) && CustomRolesH.JesterCanSabotage.getBool())
+            {
+                __state = player.Data.Role.TeamType;
+                player.Data.Role.TeamType = RoleTeamTypes.Impostor;
+            }
+            if (player.isRole(RoleType.CustomImpostor) && CustomRolesH.CustomImpostorCanSabotage.getBool())
             {
                 __state = player.Data.Role.TeamType;
                 player.Data.Role.TeamType = RoleTeamTypes.Impostor;
@@ -60,7 +65,11 @@ namespace UltimateMods.Roles.Patches
         public static void Postfix(ref RoleTeamTypes __state)
         {
             var player = PlayerControl.LocalPlayer;
-            if (player.isRole(RoleType.Jester))
+            if (player.isRole(RoleType.Jester) && CustomRolesH.JesterCanSabotage.getBool())
+            {
+                player.Data.Role.TeamType = __state;
+            }
+            if (player.isRole(RoleType.CustomImpostor) && CustomRolesH.CustomImpostorCanSabotage.getBool())
             {
                 player.Data.Role.TeamType = __state;
             }

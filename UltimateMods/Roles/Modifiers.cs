@@ -16,15 +16,15 @@ namespace UltimateMods.Roles
     [HarmonyPatch]
     public static class ModifierData
     {
-        public static Dictionary<ModifierType, Type> allModTypes = new Dictionary<ModifierType, Type>
+        public static Dictionary<ModifierType, Type> allModTypes = new()
         {
             { ModifierType.Opportunist, typeof(ModifierBase<Opportunist>) },
         };
     }
 
-    public abstract class Modifier
+    public abstract class Modifiers
     {
-        public static List<Modifier> allModifiers = new List<Modifier>();
+        public static List<Modifiers> allModifiers = new();
         public PlayerControl player;
         public ModifierType modId;
 
@@ -38,14 +38,14 @@ namespace UltimateMods.Roles
 
         public static void ClearAll()
         {
-            allModifiers = new List<Modifier>();
+            allModifiers = new List<Modifiers>();
         }
     }
 
     [HarmonyPatch]
-    public abstract class ModifierBase<T> : Modifier where T : ModifierBase<T>, new()
+    public abstract class ModifierBase<T> : Modifiers where T : ModifierBase<T>, new()
     {
-        public static List<T> players = new List<T>();
+        public static List<T> players = new();
         public static ModifierType ModType;
 
         public void Init(PlayerControl player)
@@ -125,7 +125,6 @@ namespace UltimateMods.Roles
             }
         }
     }
-
 
     public static class ModifierHelpers
     {

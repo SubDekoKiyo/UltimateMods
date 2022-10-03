@@ -350,7 +350,10 @@ namespace UltimateMods
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
-                roleCouldUse = true;
+                if (!CustomImpostor.CanUseVents && player.isRole(RoleType.CustomImpostor))
+                    roleCouldUse = false;
+                else
+                    roleCouldUse = true;
             }
             return roleCouldUse;
         }
@@ -360,6 +363,8 @@ namespace UltimateMods
             bool roleCouldUse = false;
             if (Jester.CanSabotage && player.isRole(RoleType.Jester))
                 roleCouldUse = true;
+            else if (!CustomImpostor.CanSabotage && player.isRole(RoleType.CustomImpostor))
+                roleCouldUse = false;
             else if (player.Data?.Role != null && player.Data.Role.IsImpostor)
                 roleCouldUse = true;
 

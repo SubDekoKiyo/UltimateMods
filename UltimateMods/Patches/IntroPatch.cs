@@ -7,6 +7,7 @@ using System.Linq;
 using UltimateMods.Utilities;
 using BepInEx.IL2CPP.Utils.Collections;
 using UltimateMods.Roles;
+using Hazel;
 
 namespace UltimateMods.Patches
 {

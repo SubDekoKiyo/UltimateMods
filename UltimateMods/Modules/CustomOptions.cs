@@ -16,12 +16,12 @@ namespace UltimateMods.Modules
     {
         public enum CustomOptionType
         {
-            TypeGeneral,
-            TypeImpostor,
-            TypeNeutral,
-            TypeCrewmate,
-            TypeModifier,
-            TypeOther
+            General,
+            Impostor,
+            Neutral,
+            Crewmate,
+            Modifier,
+            Other
         }
 
         public static List<CustomOption> options = new();
@@ -288,7 +288,7 @@ namespace UltimateMods.Modules
 
     public class CustomDualRoleOption : CustomRoleOption
     {
-        public static List<CustomDualRoleOption> dualRoles = new List<CustomDualRoleOption>();
+        public static List<CustomDualRoleOption> dualRoles = new();
         public CustomOption roleImpChance = null;
         public CustomOption roleAssignEqually = null;
         public RoleType roleType;
@@ -587,30 +587,30 @@ namespace UltimateMods.Modules
 
             foreach (OptionBehaviour option in umMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> umOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> umOptions = new();
 
             foreach (OptionBehaviour option in impostorMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> impostorOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> impostorOptions = new();
 
             foreach (OptionBehaviour option in neutralMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> neutralOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> neutralOptions = new();
 
             foreach (OptionBehaviour option in crewmateMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> crewmateOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> crewmateOptions = new();
 
             foreach (OptionBehaviour option in modifierMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> modifierOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> modifierOptions = new();
 
             foreach (OptionBehaviour option in otherMenu.GetComponentsInChildren<OptionBehaviour>())
                 UnityEngine.Object.Destroy(option.gameObject);
-            List<OptionBehaviour> otherOptions = new List<OptionBehaviour>();
+            List<OptionBehaviour> otherOptions = new();
 
-            List<Transform> menus = new List<Transform>() { umMenu.transform, impostorMenu.transform, neutralMenu.transform, crewmateMenu.transform, modifierMenu.transform, otherMenu.transform };
-            List<List<OptionBehaviour>> optionBehaviours = new List<List<OptionBehaviour>>() { umOptions, impostorOptions, neutralOptions, crewmateOptions, modifierOptions, otherOptions };
+            List<Transform> menus = new() { umMenu.transform, impostorMenu.transform, neutralMenu.transform, crewmateMenu.transform, modifierMenu.transform, otherMenu.transform };
+            List<List<OptionBehaviour>> optionBehaviours = new() { umOptions, impostorOptions, neutralOptions, crewmateOptions, modifierOptions, otherOptions };
 
             for (int i = 0; i < CustomOption.options.Count; i++)
             {
@@ -765,17 +765,17 @@ namespace UltimateMods.Modules
             float offset = 2.75f;
             foreach (CustomOption option in CustomOption.options)
             {
-                if (GameObject.Find("UMSettings") && option.type != CustomOption.CustomOptionType.TypeGeneral)
+                if (GameObject.Find("UMSettings") && option.type != CustomOption.CustomOptionType.General)
                     continue;
-                if (GameObject.Find("ImpostorSettings") && option.type != CustomOption.CustomOptionType.TypeImpostor)
+                if (GameObject.Find("ImpostorSettings") && option.type != CustomOption.CustomOptionType.Impostor)
                     continue;
-                if (GameObject.Find("NeutralSettings") && option.type != CustomOption.CustomOptionType.TypeNeutral)
+                if (GameObject.Find("NeutralSettings") && option.type != CustomOption.CustomOptionType.Neutral)
                     continue;
-                if (GameObject.Find("CrewmateSettings") && option.type != CustomOption.CustomOptionType.TypeCrewmate)
+                if (GameObject.Find("CrewmateSettings") && option.type != CustomOption.CustomOptionType.Crewmate)
                     continue;
-                if (GameObject.Find("ModifierSettings") && option.type != CustomOption.CustomOptionType.TypeModifier)
+                if (GameObject.Find("ModifierSettings") && option.type != CustomOption.CustomOptionType.Modifier)
                     continue;
-                if (GameObject.Find("OtherSettings") && option.type != CustomOption.CustomOptionType.TypeOther)
+                if (GameObject.Find("OtherSettings") && option.type != CustomOption.CustomOptionType.Other)
                     continue;
                 if (option?.optionBehaviour != null && option.optionBehaviour.gameObject != null)
                 {
@@ -881,7 +881,7 @@ namespace UltimateMods.Modules
                 return "";
             }
 
-            List<string> options = new List<string>();
+            List<string> options = new();
             if (!option.isHidden && !skipFirst) options.Add(optionToString(option));
             if (option.enabled)
             {
@@ -896,11 +896,11 @@ namespace UltimateMods.Modules
 
         private static void Postfix(ref string __result)
         {
-            List<string> pages = new List<string>();
+            List<string> pages = new();
             pages.Add(__result);
 
             StringBuilder entry = new StringBuilder();
-            List<string> entries = new List<string>();
+            List<string> entries = new();
 
             // First add the Presets and the role counts
             entries.Add(optionToString(CustomOptionsH.PresetSelection));

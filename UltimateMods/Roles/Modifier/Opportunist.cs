@@ -14,7 +14,7 @@ namespace UltimateMods.Roles
         {
             get
             {
-                List<PlayerControl> validPlayers = new List<PlayerControl>();
+                List<PlayerControl> validPlayers = new();
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {

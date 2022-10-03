@@ -28,12 +28,17 @@ namespace UltimateMods
         public static CustomOption EngineerCanFixSabo;
         public static CustomOption EngineerMaxFixCount;
         public static CustomOption EngineerCanUseVents;
-        public static CustomOption EngineerVentCooldown;
+        // public static CustomOption EngineerVentCooldown;
+
+        public static CustomRoleOption CustomImpostorRate;
+        public static CustomOption CustomImpostorKillCooldown;
+        public static CustomOption CustomImpostorCanUseVents;
+        public static CustomOption CustomImpostorCanSabotage;
 
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
-        internal static Dictionary<byte, byte[]> blockedRolePairings = new Dictionary<byte, byte[]>();
+        internal static Dictionary<byte, byte[]> blockedRolePairings = new();
 
         public static string cs(Color c, string s)
         {
@@ -49,28 +54,33 @@ namespace UltimateMods
         public static void Load()
         {
             /* Roles */
-            JesterRate = new CustomRoleOption(100, TypeNeutral, ClearWhite, "Jester", JesterPink, 1);
-            JesterCanEmergencyMeeting = CustomOption.Create(101, TypeNeutral, JesterPink, "CanEmergencyMeeting", false, JesterRate);
-            JesterCanUseVents = CustomOption.Create(102, TypeNeutral, JesterPink, "CanUseVents", false, JesterRate);
-            JesterCanSabotage = CustomOption.Create(103, TypeNeutral, JesterPink, "CanSabotage", false, JesterRate);
-            JesterHasImpostorVision = CustomOption.Create(104, TypeNeutral, JesterPink, "HasImpostorVision", false, JesterRate);
-            JesterMustFinishTasks = CustomOption.Create(105, TypeNeutral, JesterPink, "JesterMustFinishTasks", false, JesterRate);
-            JesterTasks = new CustomTasksOption(106, TypeNeutral, JesterPink, 1, 1, 3, JesterTasks);
+            JesterRate = new CustomRoleOption(100, Neutral, ClearWhite, "Jester", JesterPink, 1);
+            JesterCanEmergencyMeeting = CustomOption.Create(101, Neutral, JesterPink, "CanEmergencyMeeting", false, JesterRate);
+            JesterCanUseVents = CustomOption.Create(102, Neutral, JesterPink, "CanUseVents", false, JesterRate);
+            JesterCanSabotage = CustomOption.Create(103, Neutral, JesterPink, "CanSabotage", false, JesterRate);
+            JesterHasImpostorVision = CustomOption.Create(104, Neutral, JesterPink, "HasImpostorVision", false, JesterRate);
+            JesterMustFinishTasks = CustomOption.Create(105, Neutral, JesterPink, "JesterMustFinishTasks", false, JesterRate);
+            JesterTasks = new CustomTasksOption(106, Neutral, JesterPink, 1, 1, 3, JesterMustFinishTasks);
 
-            SheriffRate = new CustomRoleOption(110, TypeCrewmate, ClearWhite, "Sheriff", SheriffYellow, 15);
-            SheriffMaxShots = CustomOption.Create(111, TypeCrewmate, SheriffYellow, "MaxShots", 2f, 1f, 15f, 1f, SheriffRate, format: "FormatShots");
-            SheriffCooldowns = CustomOption.Create(112, TypeCrewmate, SheriffYellow, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, SheriffRate, format: "FormatSeconds");
-            SheriffCanKillNeutral = CustomOption.Create(113, TypeCrewmate, SheriffYellow, "CanKillNeutral", true, SheriffRate);
-            SheriffMisfireKillsTarget = CustomOption.Create(114, TypeCrewmate, SheriffYellow, "MisfireKillsTarget", false, SheriffRate);
+            SheriffRate = new CustomRoleOption(110, Crewmate, ClearWhite, "Sheriff", SheriffYellow, 15);
+            SheriffMaxShots = CustomOption.Create(111, Crewmate, SheriffYellow, "MaxShots", 2f, 1f, 15f, 1f, SheriffRate, format: "FormatShots");
+            SheriffCooldowns = CustomOption.Create(112, Crewmate, SheriffYellow, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, SheriffRate, format: "FormatSeconds");
+            SheriffCanKillNeutral = CustomOption.Create(113, Crewmate, SheriffYellow, "CanKillNeutral", true, SheriffRate);
+            SheriffMisfireKillsTarget = CustomOption.Create(114, Crewmate, SheriffYellow, "MisfireKillsTarget", false, SheriffRate);
 
-            EngineerRate = new CustomRoleOption(120, TypeCrewmate, ClearWhite, "Engineer", EngineerBlue, 15);
-            EngineerCanFixSabo = CustomOption.Create(121, TypeCrewmate, EngineerBlue, "EngineerCanFixSabo", true, EngineerRate);
-            EngineerMaxFixCount = CustomOption.Create(122, TypeCrewmate, EngineerBlue, "EngineerSaboFixCount", 2f, 1f, 15f, 1f, EngineerCanFixSabo, format: "FormatTimes");
-            EngineerCanUseVents = CustomOption.Create(123, TypeCrewmate, EngineerBlue, "CanUseVents", true, EngineerRate);
-            // EngineerVentCooldown = CustomOption.Create(124, TypeCrewmate, "EngineerVentCooldown", 20f, 0f, 60f, 2.5f, EngineerCanUseVents, format: "FormatSeconds");
+            EngineerRate = new CustomRoleOption(120, Crewmate, ClearWhite, "Engineer", EngineerBlue, 15);
+            EngineerCanFixSabo = CustomOption.Create(121, Crewmate, EngineerBlue, "EngineerCanFixSabo", true, EngineerRate);
+            EngineerMaxFixCount = CustomOption.Create(122, Crewmate, EngineerBlue, "EngineerSaboFixCount", 2f, 1f, 15f, 1f, EngineerCanFixSabo, format: "FormatTimes");
+            EngineerCanUseVents = CustomOption.Create(123, Crewmate, EngineerBlue, "CanUseVents", true, EngineerRate);
+            // EngineerVentCooldown = CustomOption.Create(124, Crewmate, "EngineerVentCooldown", 20f, 0f, 60f, 2.5f, EngineerCanUseVents, format: "FormatSeconds");
+
+            CustomImpostorRate = new CustomRoleOption(130, Impostor, ClearWhite, "CustomImpostor", ImpostorRed, 15);
+            CustomImpostorKillCooldown = CustomOption.Create(131, Impostor, ClearWhite, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, CustomImpostorRate, format: "FormatSeconds");
+            CustomImpostorCanUseVents = CustomOption.Create(132, Impostor, ClearWhite, "CanUseVents", true, CustomImpostorRate);
+            CustomImpostorCanSabotage = CustomOption.Create(133, Impostor, ClearWhite, "CanSabotage", true, CustomImpostorRate);
 
             /* Modifiers */
-            OpportunistRate = new CustomRoleOption(2000, TypeModifier, ClearWhite, "Opportunist", OpportunistGreen, 15);
+            OpportunistRate = new CustomRoleOption(2000, Modifier, ClearWhite, "Opportunist", OpportunistGreen, 15);
         }
     }
 }

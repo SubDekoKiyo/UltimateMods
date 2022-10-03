@@ -41,7 +41,7 @@ namespace UltimateMods.Patches
 
         static void initializeIcons(MapBehaviour __instance, PlayerControl pc = null)
         {
-            List<PlayerControl> players = new List<PlayerControl>();
+            List<PlayerControl> players = new();
             if (pc == null)
             {
                 mapIcons = new Dictionary<byte, SpriteRenderer>();

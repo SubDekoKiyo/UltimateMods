@@ -17,7 +17,7 @@ namespace UltimateMods.Patches
     {
         static float vitalsTimer = 0f;
         static TMPro.TextMeshPro TimeRemaining;
-        private static List<TMPro.TextMeshPro> hackerTexts = new List<TMPro.TextMeshPro>();
+        private static List<TMPro.TextMeshPro> hackerTexts = new();
 
         public static void ResetData()
         {

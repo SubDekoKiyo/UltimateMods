@@ -99,7 +99,7 @@ namespace UltimateMods
     {
         public static bool triggerForceEnd;
         private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
-        private static List<PlayerControl> bots = new List<PlayerControl>();
+        private static List<PlayerControl> bots = new();
 
         // Source Code with TheOtherRoles
         public static void Postfix(KeyboardJoystick __instance)
