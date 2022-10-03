@@ -108,7 +108,7 @@ namespace UltimateMods.Patches
             var passiveHtPButton = creditsButton.GetComponent<PassiveButton>();
             var spriteHtPButton = creditsButton.GetComponent<SpriteRenderer>();
 
-            spriteCreditsButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HelpButton.png", 75f);
+            spriteCreditsButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HelpButton.png", 115f);
 
             passiveCreditsButton.OnClick = new ButtonClickedEvent();
 
