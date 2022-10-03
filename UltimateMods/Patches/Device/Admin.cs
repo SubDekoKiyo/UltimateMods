@@ -12,7 +12,7 @@ namespace UltimateMods.Patches
     [Harmony]
     public class AdminPatch
     {
-        static Dictionary<SystemTypes, List<Color>> playerColors = new Dictionary<SystemTypes, List<Color>>();
+        static Dictionary<SystemTypes, List<Color>> playerColors = new();
         static float adminTimer = 0f;
         static TMPro.TextMeshPro OutOfTime;
         static TMPro.TextMeshPro TimeRemaining;
@@ -128,25 +128,25 @@ namespace UltimateMods.Patches
                     }
                     else
                     {*/
-                        if (MapOptions.restrictAdminTime <= 0f)
+                    if (MapOptions.restrictAdminTime <= 0f)
+                    {
+                        __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
+                        OutOfTime.gameObject.SetActive(true);
+                        TimeRemaining.gameObject.SetActive(false);
+                        if (clearedIcons == false)
                         {
-                            __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
-                            OutOfTime.gameObject.SetActive(true);
-                            TimeRemaining.gameObject.SetActive(false);
-                            if (clearedIcons == false)
-                            {
-                                foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
-                                clearedIcons = true;
-                            }
-                            return false;
+                            foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
+                            clearedIcons = true;
                         }
+                        return false;
+                    }
 
-                        clearedIcons = false;
-                        OutOfTime.gameObject.SetActive(false);
-                        string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
-                        TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
-                        //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
-                        TimeRemaining.gameObject.SetActive(true);
+                    clearedIcons = false;
+                    OutOfTime.gameObject.SetActive(false);
+                    string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
+                    TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                    //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                    TimeRemaining.gameObject.SetActive(true);
                     // }
                 }
 
@@ -174,7 +174,7 @@ namespace UltimateMods.Patches
                 for (int i = 0; i < __instance.CountAreas.Length; i++)
                 {
                     CounterArea counterArea = __instance.CountAreas[i];
-                    List<Color> roomColors = new List<Color>();
+                    List<Color> roomColors = new();
                     playerColors.Add(counterArea.RoomType, roomColors);
 
                     if (!commsActive)
@@ -255,9 +255,9 @@ namespace UltimateMods.Patches
                 if (playerColors.ContainsKey(__instance.RoomType))
                 {
                     List<Color> colors = playerColors[__instance.RoomType];
-                    List<Color> impostorColors = new List<Color>();
-                    List<Color> mimicKColors = new List<Color>();
-                    List<Color> deadBodyColors = new List<Color>();
+                    List<Color> impostorColors = new();
+                    List<Color> mimicKColors = new();
+                    List<Color> deadBodyColors = new();
                     foreach (var p in PlayerControl.AllPlayerControls)
                     {
                         // var color = p.myRend.material.GetColor("_BodyColor");
@@ -341,7 +341,7 @@ namespace UltimateMods.Patches
                             }
                             else
                             {*/
-                                renderer.material = defaultMat;
+                            renderer.material = defaultMat;
                             //}
                         }
                     }
@@ -350,7 +350,7 @@ namespace UltimateMods.Patches
         }
     }
 
-    [HarmonyPatch(typeof(ShipStatus),nameof(ShipStatus.Awake))]
+    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Awake))]
     public class DisableRecordsAdminPatch
     {
         public static void Postfix()

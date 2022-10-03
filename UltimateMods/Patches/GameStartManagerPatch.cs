@@ -12,7 +12,7 @@ namespace UltimateMods.Patches
 {
     public class GameStartManagerPatch
     {
-        public static Dictionary<int, PlayerVersion> playerVersions = new Dictionary<int, PlayerVersion>();
+        public static Dictionary<int, PlayerVersion> playerVersions = new();
         public static float timer = 600f;
         public static float shareTimer;
         private static float kickingTimer = 0f;
@@ -219,7 +219,7 @@ namespace UltimateMods.Patches
                         // 2 = Polus
                         // 3 = Dleks - deactivated
                         // 4 = Airship
-                        List<byte> possibleMaps = new List<byte>();
+                        List<byte> possibleMaps = new();
                         if (CustomOptionsH.RandomMapEnableSkeld.getBool())
                             possibleMaps.Add(0);
                         if (CustomOptionsH.RandomMapEnableMira.getBool())

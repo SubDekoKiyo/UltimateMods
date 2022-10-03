@@ -23,9 +23,9 @@ namespace UltimateMods
 
     static class GameHistory
     {
-        public static List<Tuple<Vector3, bool>> localPlayerPositions = new List<Tuple<Vector3, bool>>();
-        public static List<DeadPlayer> deadPlayers = new List<DeadPlayer>();
-        public static Dictionary<int, FinalStatus> finalStatuses = new Dictionary<int, FinalStatus>();
+        public static List<Tuple<Vector3, bool>> localPlayerPositions = new();
+        public static List<DeadPlayer> deadPlayers = new();
+        public static Dictionary<int, FinalStatus> finalStatuses = new();
 
         public static void clearGameHistory()
         {

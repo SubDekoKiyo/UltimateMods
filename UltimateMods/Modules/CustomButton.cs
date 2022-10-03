@@ -7,7 +7,7 @@ namespace UltimateMods.Modules
 {
     public class CustomButton
     {
-        public static List<CustomButton> buttons = new List<CustomButton>();
+        public static List<CustomButton> buttons = new();
         public ActionButton actionButton;
         public Vector3 PositionOffset;
         public Vector3 LocalScale = Vector3.one;

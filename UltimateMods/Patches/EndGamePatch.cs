@@ -52,8 +52,8 @@ namespace UltimateMods.EndGame
     static class AdditionalTempData
     {
         public static WinCondition winCondition = WinCondition.Default;
-        public static List<WinCondition> additionalWinConditions = new List<WinCondition>();
-        public static List<PlayerRoleInfo> playerRoles = new List<PlayerRoleInfo>();
+        public static List<WinCondition> additionalWinConditions = new ();
+        public static List<PlayerRoleInfo> playerRoles = new ();
         public static GameOverReason gameOverReason;
 
         public static void clear()
@@ -121,7 +121,7 @@ namespace UltimateMods.EndGame
             notWinners.AddRange(Jester.allPlayers);
             notWinners.AddRange(Opportunist.allPlayers);
 
-            List<WinningPlayerData> winnersToRemove = new List<WinningPlayerData>();
+            List<WinningPlayerData> winnersToRemove = new();
             foreach (WinningPlayerData winner in TempData.winners.GetFastEnumerator())
             {
                 if (notWinners.Any(x => x.Data.PlayerName == winner.PlayerName)) winnersToRemove.Add(winner);

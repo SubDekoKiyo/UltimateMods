@@ -100,7 +100,7 @@ namespace UltimateMods.Patches
             Dictionary<byte, (int rate, int count)> neutralSettings = new();
             Dictionary<byte, (int rate, int count)> crewSettings = new();
 
-            // impSettings.Add((byte)RoleType.Morphling, CustomRolesH.MorphlingRate.data);
+            impSettings.Add((byte)RoleType.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
 

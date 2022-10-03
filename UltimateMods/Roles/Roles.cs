@@ -15,6 +15,7 @@ namespace UltimateMods.Roles
 
         // Impostor Roles
         Impostor = 100,
+        CustomImpostor,
 
         // Neutral Roles
         Jester = 200,
@@ -31,6 +32,7 @@ namespace UltimateMods.Roles
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
             { RoleType.Jester, typeof(RoleBase<Jester>) },
+            { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
         };
     }
 
@@ -224,13 +226,13 @@ namespace UltimateMods.Roles
         public static void OnKill(this PlayerControl player, PlayerControl target)
         {
             Role.allRoles.DoIf(x => x.player == player, x => x.OnKill(target));
-            Modifier.allModifiers.DoIf(x => x.player == player, x => x.OnKill(target));
+            Modifiers.allModifiers.DoIf(x => x.player == player, x => x.OnKill(target));
         }
 
         public static void OnDeath(this PlayerControl player, PlayerControl killer)
         {
             Role.allRoles.DoIf(x => x.player == player, x => x.OnDeath(killer));
-            Modifier.allModifiers.DoIf(x => x.player == player, x => x.OnDeath(killer));
+            Modifiers.allModifiers.DoIf(x => x.player == player, x => x.OnDeath(killer));
 
             RPCProcedure.UpdateMeeting(player.PlayerId, true);
         }

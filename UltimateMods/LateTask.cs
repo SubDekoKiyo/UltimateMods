@@ -12,7 +12,7 @@ namespace UltimateMods
         public string name;
         public float timer;
         public Action action;
-        public static List<LateTask> Tasks = new List<LateTask>();
+        public static List<LateTask> Tasks = new ();
         public bool run(float deltaTime)
         {
             timer -= deltaTime;
