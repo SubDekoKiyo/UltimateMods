@@ -2,6 +2,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using UnityEngine.SceneManagement;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 
@@ -98,6 +99,22 @@ namespace UltimateMods.Patches
                         if (titleText != null) titleText.text = ModTranslation.getString("CreditsTitle");
                     }
                 })));
+            });
+
+            // How to Play button
+            bottomTemplate = GameObject.Find("InventoryButton");
+            if (bottomTemplate == null) return;
+            var htpButton = Object.Instantiate(bottomTemplate, bottomTemplate.transform.parent);
+            var passiveHtPButton = htpButton.GetComponent<PassiveButton>();
+            var spriteHtPButton = htpButton.GetComponent<SpriteRenderer>();
+
+            spriteHtPButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HelpButton.png", 40f);
+
+            passiveHtPButton.OnClick = new ButtonClickedEvent();
+
+            passiveHtPButton.OnClick.AddListener((System.Action)delegate
+            {
+                SceneManager.LoadScene("HowToPlay");
             });
         }
         public static void Postfix(MainMenuManager __instance)
