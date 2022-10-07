@@ -88,7 +88,7 @@ namespace UltimateMods.Objects
                 InfoOverlayRules.enableWordWrapping = false;
                 InfoOverlayRules.alignment = TMPro.TextAlignmentOptions.TopLeft;
                 InfoOverlayRules.transform.position = Vector3.zero;
-                InfoOverlayRules.transform.localPosition = new Vector3(-2.5f, 1f, -910f);
+                InfoOverlayRules.transform.localPosition = new Vector3(-3f, 1f, -910f);
                 InfoOverlayRules.transform.localScale = Vector3.one * 1.25f;
                 InfoOverlayRules.color = Palette.White;
                 InfoOverlayRules.enabled = false;
@@ -104,7 +104,7 @@ namespace UltimateMods.Objects
                 InfoOverlayPlayer.enableWordWrapping = false;
                 InfoOverlayPlayer.alignment = TMPro.TextAlignmentOptions.TopLeft;
                 InfoOverlayPlayer.transform.position = Vector3.zero;
-                InfoOverlayPlayer.transform.localPosition = InfoOverlayRules.transform.localPosition + new Vector3(2f, 0f, 0f);
+                InfoOverlayPlayer.transform.localPosition = new Vector3(0f, 1f, -910f);
                 InfoOverlayPlayer.transform.localScale = Vector3.one * 1.25f;
                 InfoOverlayPlayer.color = Palette.White;
                 InfoOverlayPlayer.enabled = false;
@@ -120,7 +120,7 @@ namespace UltimateMods.Objects
                 InfoOverlayRoles.enableWordWrapping = false;
                 InfoOverlayRoles.alignment = TMPro.TextAlignmentOptions.TopLeft;
                 InfoOverlayRoles.transform.position = Vector3.zero;
-                InfoOverlayRoles.transform.localPosition = InfoOverlayPlayer.transform.localPosition + new Vector3(2f, 0f, 0f);
+                InfoOverlayRoles.transform.localPosition = new Vector3(2.7f, 1f, -910f);
                 InfoOverlayRoles.transform.localScale = Vector3.one * 1.25f;
                 InfoOverlayRoles.color = Palette.White;
                 InfoOverlayRoles.enabled = false;
@@ -155,7 +155,7 @@ namespace UltimateMods.Objects
             InfoOverlayRoles.transform.parent = parent;
 
             InfoUnderlay.color = new Color(0.1f, 0.1f, 0.1f, 0.88f);
-            InfoUnderlay.transform.localScale = new Vector3(8f, 5f, 1f);
+            InfoUnderlay.transform.localScale = new Vector3(9f, 5.3f, 1f);
             InfoUnderlay.enabled = true;
             InfoOverlayRules.enabled = true;
             InfoOverlayPlayer.enabled = true;

@@ -33,6 +33,7 @@ namespace UltimateMods
         // public static CustomOption onePlayerStart;
         // public static CustomOption betterStartButtons;
         public static CustomOption HideOutOfSightNameTags;
+        public static CustomOption HidePlayerNames;
         public static CustomOption RefundVotesOnDeath;
         public static CustomOption EnableMirrorMap;
 
@@ -100,6 +101,7 @@ namespace UltimateMods
             // onePlayerStart = CustomOption.Create(27, General, "oneStart", false, specialOptions);
             // betterStartButtons = CustomOption.Create(30, General, "betterStart", true, specialOptions);
             HideOutOfSightNameTags = CustomOption.Create(31, General, ClearWhite, "HideOutName", true, SpecialOptions);
+            HidePlayerNames = CustomOption.Create(55, General, ClearWhite, "HidePlayerName", false, SpecialOptions);
             RefundVotesOnDeath = CustomOption.Create(32, General, ClearWhite, "RefundVoteDeath", true, SpecialOptions);
             // EnableGodMiraHQ = CustomOption.Create(35, General, "EnableGodMira", false, SpecialOptions);
             RandomMap = CustomOption.Create(34, General, ClearWhite, "PlayRandomMaps", false, SpecialOptions);
