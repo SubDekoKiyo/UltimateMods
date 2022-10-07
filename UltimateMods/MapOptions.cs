@@ -11,6 +11,7 @@ namespace UltimateMods
         public static bool blockSkippingInEmergencyMeetings = false;
         public static bool noVoteIsSelfVote = false;
         public static bool hideOutOfSightNametags = false;
+        public static bool hidePlayerNames = false;
 
         public static int restrictDevices = 0;
         public static float restrictAdminTime = 600f;
@@ -23,7 +24,6 @@ namespace UltimateMods
         public static bool ghostsSeeRoles = true;
         public static bool ghostsSeeTasks = true;
         public static bool ghostsSeeVotes = true;
-        public static bool showRoleSummary = true;
         public static bool hideNameplates = false;
         public static bool allowParallelMedBayScans = false;
         // public static bool showLighterDarker = false;
@@ -48,6 +48,7 @@ namespace UltimateMods
             noVoteIsSelfVote = CustomOptionsH.NoVoteIsSelfVote.getBool();
 
             hideOutOfSightNametags = CustomOptionsH.HideOutOfSightNameTags.getBool();
+            hidePlayerNames = CustomOptionsH.HidePlayerNames.getBool();
 
             restrictDevices = CustomOptionsH.RestrictDevices.getSelection();
             restrictAdminTime = restrictAdminTimeMax = CustomOptionsH.RestrictAdmin.getFloat();
@@ -61,7 +62,6 @@ namespace UltimateMods
             ghostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value;
             ghostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value;
             ghostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value;
-            showRoleSummary = UltimateModsPlugin.ShowRoleSummary.Value;
             hideNameplates = UltimateModsPlugin.HideNameplates.Value;
             // showLighterDarker = UltimateModsPlugin.ShowLighterDarker.Value;
             hideTaskArrows = UltimateModsPlugin.HideTaskArrows.Value;

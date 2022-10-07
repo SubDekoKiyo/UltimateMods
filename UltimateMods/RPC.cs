@@ -29,6 +29,7 @@ namespace UltimateMods
         EngineerUsedRepair,
         EngineerFixSubmergedOxygen,
         UncheckedSetTasks,
+        ForceEnd,
     }
 
     public static class RPCProcedure
@@ -124,6 +125,10 @@ namespace UltimateMods
                     // 74
                     case (byte)CustomRPC.UncheckedSetTasks:
                         RPCProcedure.UncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
+                        break;
+                    // 75
+                    case (byte)CustomRPC.ForceEnd:
+                        RPCProcedure.ForceEnd();
                         break;
                 }
             }
@@ -293,6 +298,11 @@ namespace UltimateMods
             player.ClearAllTasks();
 
             GameData.Instance.SetTasks(playerId, taskTypeIds);
+        }
+
+        public static void ForceEnd()
+        {
+            EndGameManagerSetUpPatch.TriggerForceEnd = true;
         }
     }
 }

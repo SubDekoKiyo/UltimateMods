@@ -1,6 +1,6 @@
 {
     "BuildNum": {
-        "0": "914"
+        "0": "946"
     },
     "ModOptionsText": {
         "0": "UM Options",
@@ -50,7 +50,7 @@
         "0": "ForceEnd",
         "11": "\u5f37\u5236\u7d42\u4e86"
     },
-    "Everyone": {
+    "EveryoneLose": {
         "0": "Everyone Lose",
         "11": "\u5168\u54e1\u6557\u5317"
     },
@@ -78,9 +78,9 @@
         "0": "& <color#00da00>Oppotunist</color>",
         "11": "& <color=#00da00>\u30aa\u30dd\u30c1\u30e5\u30cb\u30b9\u30c8</color>"
     },
-    "RoleSummaryText": {
-        "0": "Role Summary",
-        "11": "\u6700\u7d42\u7d50\u679c"
+    "FinishedByHost": {
+        "0": "Force End with Host",
+        "11": "\u30db\u30b9\u30c8\u304c\u5f37\u5236\u7d42\u4e86\u3092\u884c\u3063\u305f\u3002"
     },
     "CreditsMain": {
         "0": "Created with DekoKiyo",
@@ -167,8 +167,8 @@
         "11": "<align=\"center\">\u88fd\u4f5c\u8005\nDekoKiyo\n</align>"
     },
     "CreditsText": {
-        "0": "<align=\"center\"><size=120%>Reference Mod</size></align><size=78%>\n<color=#ff351f>TheOtherRoles</color> from Eisbison\n<color=#ff351f>TheOtherRoles+</color> from tomarai\n<color=#ff351f>TheOtherRolesGM</color> from Yukinogatari\n<color=#ff351f>TheOtherRolesGM Haoming</color> from Haoming\n<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color> from Yoppy\n<color=#ffffff>Town of Plus</color> from tugaru1975\n<color=#4169e1>Town of Super</color> from reitou-mugicha\n<color=#e39804>TownOfUs-R</color> from eDonnes124\n<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color> from TeamToI\n<color=#ffffff>Las Monjas</color> from KiraYamato94\n<color=#ffffff>Extreme Roles</color> from yukieiji\n<color=#02fcfe>Town of Host</color> from Empty Bottle\n</size>",
-        "11": "<align=\"center\"><size=120%>\u53c2\u8003Mod</size></align><size=78%>\nEisbison\u69d8\u306e<color=#ff351f>TheOtherRoles</color>\ntomarai\u69d8\u306e<color=#ff351f>TheOtherRoles+</color>\nYukinogatari\u69d8\u306e<color=#ff351f>TheOtherRolesGM</color>\nHaoming\u69d8\u306e<color=#ff351f>TheOtherRolesGM Haoming</color>\n\u3088\u3063\u30ad\u30f3\u30b0\u306e<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>\ntugaru1975\u69d8\u306e<color=#ffffff>TownOfPlus</color>\neDonnes124\u69d8\u306e<color=#e39804>TownOfUs-R</color>\nToI\u88fd\u4f5c\u30c1\u30fc\u30e0\u69d8\u306e<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color>\nKiraYamato94\u69d8\u306e<color=#ffffff>LasMonjas</color>\n\u51b7\u51cd\u9ea6\u8336\u69d8\u306e<color=#4169e1>TownOfSuper</color>\nyukieiji\u69d8\u306e<color=#ffffff>Extreme Roles</color>\n\u7a7a\u304d\u74f6\u69d8\u306e<color=#02fcfe>Town of Host</color></size></size>"
+        "0": "<align=\"center\"><size=120%>Reference Mod</size></align><size=78%>\n<color=#ff351f>TheOtherRoles</color> from Eisbison\n<color=#ff351f>TheOtherRoles+</color> from tomarai\n<color=#ff351f>TheOtherRolesGM</color> from Yukinogatari\n<color=#ff351f>TheOtherRolesGM Haoming</color> from Haoming\n<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color> from Yoppy\n<color=#ffffff>Town of Plus</color> from tugaru1975\n<color=#4169e1>Town of Super</color> from reitou-mugicha\n<color=#e39804>TownOfUs-R</color> from eDonnes124\n<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color> from TeamToI\n<color=#ffffff>Las Monjas</color> from KiraYamato94\n<color=#ffffff>Extreme Roles</color> from yukieiji\n<color=#00bfff>TownOfHost</color> from Empty Bottle\n</size>",
+        "11": "<align=\"center\"><size=120%>\u53c2\u8003Mod</size></align><size=78%>\nEisbison\u69d8\u306e<color=#ff351f>TheOtherRoles</color>\ntomarai\u69d8\u306e<color=#ff351f>TheOtherRoles+</color>\nYukinogatari\u69d8\u306e<color=#ff351f>TheOtherRolesGM</color>\nHaoming\u69d8\u306e<color=#ff351f>TheOtherRolesGM Haoming</color>\n\u3088\u3063\u30ad\u30f3\u30b0\u306e<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>\ntugaru1975\u69d8\u306e<color=#ffffff>TownOfPlus</color>\neDonnes124\u69d8\u306e<color=#e39804>TownOfUs-R</color>\nToI\u88fd\u4f5c\u30c1\u30fc\u30e0\u69d8\u306e<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color>\nKiraYamato94\u69d8\u306e<color=#ffffff>LasMonjas</color>\n\u51b7\u51cd\u9ea6\u8336\u69d8\u306e<color=#4169e1>TownOfSuper</color>\nyukieiji\u69d8\u306e<color=#ffffff>Extreme Roles</color>\n\u7a7a\u304d\u74f6\u69d8\u306e<color=#00bfff>TownOfHost</color></size></size>"
     },
     "CreditsTitle": {
         "0": "Mod Credits",

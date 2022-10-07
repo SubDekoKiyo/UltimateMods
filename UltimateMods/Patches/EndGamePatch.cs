@@ -8,7 +8,7 @@ using System;
 using System.Text;
 using UltimateMods.Modules;
 using UltimateMods.Utilities;
-using static UltimateMods.CustomRolesH;
+using UltimateMods.Debug;
 using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.EndGame
@@ -52,8 +52,8 @@ namespace UltimateMods.EndGame
     static class AdditionalTempData
     {
         public static WinCondition winCondition = WinCondition.Default;
-        public static List<WinCondition> additionalWinConditions = new ();
-        public static List<PlayerRoleInfo> playerRoles = new ();
+        public static List<WinCondition> additionalWinConditions = new();
+        public static List<PlayerRoleInfo> playerRoles = new();
         public static GameOverReason gameOverReason;
 
         public static void clear()
@@ -82,6 +82,11 @@ namespace UltimateMods.EndGame
         {
             AdditionalTempData.gameOverReason = endGameResult.GameOverReason;
             if ((int)endGameResult.GameOverReason >= 10) endGameResult.GameOverReason = GameOverReason.ImpostorByKill;
+
+            if (UltimateModsPlugin.DebugMode.Value)
+            {
+                DebugBots.BotCount = 0;
+            }
         }
 
         public static void Postfix(AmongUsClient __instance, [HarmonyArgument(0)] ref EndGameResult endGameResult)
@@ -130,7 +135,7 @@ namespace UltimateMods.EndGame
 
             bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
 
-            bool ForceEnd = KeyboardClass.triggerForceEnd;
+            bool ForceEnd = EndGameManagerSetUpPatch.TriggerForceEnd;
             bool SaboWin = GameOverReason == GameOverReason.ImpostorBySabotage;
             bool EveryoneLose = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
@@ -192,6 +197,7 @@ namespace UltimateMods.EndGame
     [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
     public class EndGameManagerSetUpPatch
     {
+        public static bool TriggerForceEnd = false;
         public static void Postfix(EndGameManager __instance)
         {
             // Delete and readd PoolablePlayers always showing the name and role of the player
@@ -233,6 +239,7 @@ namespace UltimateMods.EndGame
                 }
 
                 poolablePlayer.cosmetics.nameText.color = Color.white;
+                poolablePlayer.cosmetics.nameText.lineSpacing *= 0.7f;
                 poolablePlayer.cosmetics.nameText.transform.localScale = new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z);
                 poolablePlayer.cosmetics.nameText.transform.localPosition = new Vector3(poolablePlayer.cosmetics.nameText.transform.localPosition.x, poolablePlayer.cosmetics.nameText.transform.localPosition.y, -15f);
                 poolablePlayer.cosmetics.nameText.text = winningPlayerData2.PlayerName;
@@ -240,8 +247,7 @@ namespace UltimateMods.EndGame
                 foreach (var data in AdditionalTempData.playerRoles)
                 {
                     if (data.PlayerName != winningPlayerData2.PlayerName) continue;
-                    var roles =
-                    poolablePlayer.cosmetics.nameText.text += $"\n{string.Join("\n", data.Roles.Select(x => Helpers.cs(x.color, x.Name)))}";
+                    poolablePlayer.cosmetics.nameText.text += $"\n<size=80%>{data.RoleString}</size>";
                 }
             }
 
@@ -256,23 +262,23 @@ namespace UltimateMods.EndGame
 
             if (AdditionalTempData.winCondition == WinCondition.JesterWin)
             {
-                bonusText = ModTranslation.getString("Jester");
+                bonusText = ModTranslation.getString("JesterWin");
                 textRenderer.color = JesterPink;
                 __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
             }
             else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
             {
-                bonusText = ModTranslation.getString("Crewmate");
+                bonusText = ModTranslation.getString("CrewmateWin");
                 textRenderer.color = CrewmateBlue;
             }
             else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage)
             {
-                bonusText = ModTranslation.getString("Impostor");
+                bonusText = ModTranslation.getString("ImpostorWin");
                 textRenderer.color = ImpostorRed;
             }
             else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
             {
-                bonusText = ModTranslation.getString("Everyone");
+                bonusText = ModTranslation.getString("EveryoneLose");
                 textRenderer.color = Palette.DisabledGrey;
                 __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
             }
@@ -313,45 +319,9 @@ namespace UltimateMods.EndGame
             {
                 textRenderer.text += ($"\n" + ModTranslation.getString("ReactorWin"));
             }
-
-            if (MapOptions.showRoleSummary)
+            else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.ForceEnd)
             {
-                var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
-                GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
-                roleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + 0.1f, position.y - 0.1f, -14f);
-                roleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
-
-                var roleSummaryText = new StringBuilder();
-                roleSummaryText.AppendLine(ModTranslation.getString("roleSummaryText"));
-                AdditionalTempData.playerRoles.Sort((x, y) =>
-                {
-                    RoleInfo roleX = x.Roles.FirstOrDefault();
-                    RoleInfo roleY = y.Roles.FirstOrDefault();
-                    RoleType idX = roleX == null ? RoleType.NoRole : roleX.roleType;
-                    RoleType idY = roleY == null ? RoleType.NoRole : roleY.roleType;
-
-                    if (x.Status == y.Status)
-                    {
-                        if (idX == idY)
-                        {
-                            return x.PlayerName.CompareTo(y.PlayerName);
-                        }
-                        return idX.CompareTo(idY);
-                    }
-                    return x.Status.CompareTo(y.Status);
-                });
-
-                TMPro.TMP_Text roleSummaryTextMesh = roleSummary.GetComponent<TMPro.TMP_Text>();
-                roleSummaryTextMesh.alignment = TMPro.TextAlignmentOptions.TopLeft;
-                roleSummaryTextMesh.color = Color.white;
-                roleSummaryTextMesh.outlineWidth *= 1.2f;
-                roleSummaryTextMesh.fontSizeMin = 1.25f;
-                roleSummaryTextMesh.fontSizeMax = 1.25f;
-                roleSummaryTextMesh.fontSize = 1.25f;
-
-                var roleSummaryTextMeshRectTransform = roleSummaryTextMesh.GetComponent<RectTransform>();
-                roleSummaryTextMeshRectTransform.anchoredPosition = new Vector2(position.x + 3.5f, position.y - 0.1f);
-                roleSummaryTextMesh.text = roleSummaryText.ToString();
+                textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
             }
             AdditionalTempData.clear();
         }
@@ -388,11 +358,11 @@ namespace UltimateMods.EndGame
 
         private static bool CheckAndEndGameForForceEnd(ShipStatus __instance)
         {
-            if (KeyboardClass.triggerForceEnd)
+            if (EndGameManagerSetUpPatch.TriggerForceEnd)
             {
                 __instance.enabled = false;
                 ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.ForceEnd, false);
-                KeyboardClass.triggerForceEnd = false;
+                EndGameManagerSetUpPatch.TriggerForceEnd = false;
                 return true;
             }
             return false;

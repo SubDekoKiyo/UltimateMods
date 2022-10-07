@@ -105,7 +105,6 @@ namespace UltimateMods
             return false;
         }
 
-
         public static void Initialize()
         {
             Loaded = IL2CPPChainloader.Instance.Plugins.TryGetValue(SUBMERGED_GUID, out PluginInfo plugin);

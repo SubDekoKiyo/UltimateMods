@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using UnityEngine;
-using TMPro;
+using Hazel;
 using UltimateMods.Roles;
 
 namespace UltimateMods
@@ -32,7 +32,6 @@ namespace UltimateMods
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
-        public static ConfigEntry<bool> ShowRoleSummary { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
         // public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> HideTaskArrows { get; set; }
@@ -53,7 +52,6 @@ namespace UltimateMods
             GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
             GhostsSeeRoles = Config.Bind("Custom", "Ghosts See Roles", true);
             GhostsSeeVotes = Config.Bind("Custom", "Ghosts See Votes", true);
-            ShowRoleSummary = Config.Bind("Custom", "Show Role Summary", true);
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             // ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
@@ -88,44 +86,6 @@ namespace UltimateMods
             {
                 SaveManager.chatModeType = 1;
                 SaveManager.isGuest = false;
-            }
-        }
-    }
-
-    // Debugging tools
-    [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
-    //DebugModeがONの時使用可
-    public static class KeyboardClass
-    {
-        public static bool triggerForceEnd;
-        private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
-        private static List<PlayerControl> bots = new();
-
-        // Source Code with TheOtherRoles
-        public static void Postfix(KeyboardJoystick __instance)
-        {
-            if (Input.GetKeyDown(KeyCode.LeftShift) && Input.GetKeyDown(KeyCode.F11))
-            {
-                triggerForceEnd = true;
-            }
-
-            if (!UltimateModsPlugin.DebugMode.Value) return;
-
-            if (Input.GetKeyDown(KeyCode.F) && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Joined)
-            {
-                var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
-                var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
-
-                bots.Add(playerControl);
-                GameData.Instance.AddPlayer(playerControl);
-                AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
-
-                playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
-                playerControl.GetComponent<DummyBehaviour>().enabled = true;
-                playerControl.NetTransform.enabled = false;
-                playerControl.SetName("Bot");
-                playerControl.SetColor((byte)random.Next(Palette.PlayerColors.Length));
-                GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
             }
         }
     }

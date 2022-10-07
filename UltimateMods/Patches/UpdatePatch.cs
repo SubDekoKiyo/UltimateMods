@@ -1,4 +1,6 @@
 using HarmonyLib;
+using UnityEngine;
+using Hazel;
 using UltimateMods.Modules;
 
 namespace UltimateMods.Patches
@@ -11,6 +13,21 @@ namespace UltimateMods.Patches
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
 
             CustomButton.HudUpdate();
+        }
+    }
+
+    [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
+    //DebugModeがONの時使用可
+    public static class KeyboardClass
+    {
+        public static void Postfix()
+        {
+            if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started && AmongUsClient.Instance.AmHost && Input.GetKeyDown(KeyCode.F11))
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ForceEnd, Hazel.SendOption.Reliable, -1);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.ForceEnd();
+            }
         }
     }
 }
