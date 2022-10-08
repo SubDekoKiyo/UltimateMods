@@ -16,6 +16,7 @@ namespace UltimateMods.Roles
         // Impostor Roles
         Impostor = 100,
         CustomImpostor,
+        UnderTaker,
 
         // Neutral Roles
         Jester = 200,
@@ -29,10 +30,16 @@ namespace UltimateMods.Roles
     {
         public static Dictionary<RoleType, Type> allRoleTypes = new()
         {
+            // Crewmate
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
+
+            // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },
+
+            // Impostor
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
+            { RoleType.UnderTaker, typeof(RoleBase<UnderTaker>) },
         };
     }
 

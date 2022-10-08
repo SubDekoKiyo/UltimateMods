@@ -10,7 +10,6 @@ using UltimateMods.Utilities;
 
 namespace UltimateMods.Patches
 {
-
     [Harmony]
     public class CameraPatch
     {
@@ -220,7 +219,6 @@ namespace UltimateMods.Patches
                     return true;
                 }
             }
-
 
             [HarmonyPatch(typeof(PlanetSurveillanceMinigame), nameof(PlanetSurveillanceMinigame.Close))]
             class PlanetSurveillanceMinigameClosePatch

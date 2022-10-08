@@ -35,6 +35,14 @@ namespace UltimateMods
         public static CustomOption CustomImpostorCanUseVents;
         public static CustomOption CustomImpostorCanSabotage;
 
+        public static CustomRoleOption UnderTakerRate;
+        public static CustomOption UnderTakerKillCooldown;
+        public static CustomOption UnderTakerButtonCooldown;
+        public static CustomOption UnderTakerHasDuration;
+        public static CustomOption UnderTakerDuration;
+        public static CustomOption UnderTakerDraggingSpeed;
+        public static CustomOption UnderTakerCanDumpBodyVents;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -78,6 +86,14 @@ namespace UltimateMods
             CustomImpostorKillCooldown = CustomOption.Create(131, Impostor, ClearWhite, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, CustomImpostorRate, format: "FormatSeconds");
             CustomImpostorCanUseVents = CustomOption.Create(132, Impostor, ClearWhite, "CanUseVents", true, CustomImpostorRate);
             CustomImpostorCanSabotage = CustomOption.Create(133, Impostor, ClearWhite, "CanSabotage", true, CustomImpostorRate);
+
+            UnderTakerRate = new CustomRoleOption(140, Impostor, ClearWhite, "UnderTaker", ImpostorRed, 15);
+            UnderTakerKillCooldown = CustomOption.Create(141, Impostor, ClearWhite, "KillCooldowns", 35f, 5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
+            UnderTakerButtonCooldown = CustomOption.Create(142, Impostor, ClearWhite, "UnderTakerButtonCooldown", 30f, 2.5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
+            UnderTakerHasDuration = CustomOption.Create(143, Impostor, ClearWhite, "UnderTakerHasDuration", true, UnderTakerRate);
+            UnderTakerDuration = CustomOption.Create(144, Impostor, ClearWhite, "UnderTakerDuration", 15f, 2.5f, 30f, 2.5f, UnderTakerHasDuration, format: "FormatSeconds");
+            UnderTakerDraggingSpeed = CustomOption.Create(145, Impostor, ClearWhite, "UnderTakerDraggingSpeed", 80f, 75f, 100f, 2.5f, UnderTakerRate, format: "FormatPercent");
+            UnderTakerCanDumpBodyVents = CustomOption.Create(146, Impostor, ClearWhite, "UnderTakerCanDumpDeadBodyInVent", false, UnderTakerRate);
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, ClearWhite, "Opportunist", OpportunistGreen, 15);

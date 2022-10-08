@@ -9,10 +9,42 @@
 </p>
 <br>
 
-# UltimateMods
+#
 <p align="center">
 This mod is not affiliated with Among Us or Innersloth LLC,
 <br>and the content contained therein is not endorsed or otherwise sponsored by Innersloth LLC.
 <br>Portions of the materials contained herein are property of Innersloth LLC. © Innersloth LLC.
 </p>
 <br>
+
+#
+<br>
+<br>
+
+# We need more **Translator**!
+If you can cooperate with translation activities,<br>
+Mention me on my dedicated Discord channel.<br>
+<br>
+
+## Translation Status
+✅ All Completed!<br>
+🟨 We already have a translator. In progress.<br>
+🛑 Not Completed. We need Translator.
+|No.|Language||Status|
+|---|--------|-------|------|
+|0|English||✅|
+|1|Español|Latam|🛑|
+|2|Português|Brazilian|🛑|
+|3|Português|Portuguese|🛑|
+|4|한국어|Korean|🛑|
+|5|Русский|Russian|🛑|
+|6|Nederland|Dutch|🛑|
+|7|Bisaya|Filipino|🛑|
+|8|Français|French|🛑|
+|9|Deutsch|German|🛑|
+|10|Italiano|Italian|🛑|
+|11|日本語|Japan|✅|
+|12|Español|Spanish|🛑|
+|13|简体中文|SChinese|🟨|
+|14|繁體中文|TChinese|🛑|
+|15|Gaeilge|Irish|🛑|

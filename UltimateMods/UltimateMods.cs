@@ -16,6 +16,8 @@ namespace UltimateMods
             Sheriff.Clear();
             Jester.Clear();
             Engineer.Clear();
+            CustomImpostor.Clear();
+            UnderTaker.Clear();
             Role.ClearAll();
         }
 

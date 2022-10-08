@@ -113,7 +113,7 @@ namespace UltimateMods.Roles
                 KeyCode.F
             );
 
-            EngineerRepairButton.buttonText = ModTranslation.getString("EngineerRepairButtonText");
+            EngineerRepairButton.ButtonText = ModTranslation.getString("EngineerRepairButtonText");
             EngineerRepairButtonText = GameObject.Instantiate(EngineerRepairButton.actionButton.cooldownTimerText, EngineerRepairButton.actionButton.cooldownTimerText.transform.parent); // TMP初期化
             EngineerRepairButtonText.text = "";
             EngineerRepairButtonText.enableWordWrapping = false;

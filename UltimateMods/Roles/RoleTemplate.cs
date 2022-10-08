@@ -58,8 +58,8 @@ namespace UltimateMods.Roles
                 () => { } // // 効果終了時
             );
 
-            TemplateButton.buttonText = ModTranslation.getString("ButtonText"); // 文字
-            TemplateButton.effectCancellable = true; // 効果を途中で止められるか
+            TemplateButton.ButtonText = ModTranslation.getString("ButtonText"); // 文字
+            TemplateButton.EffectCancellable = true; // 効果を途中で止められるか
             // ボタンの上に表示する小さい文字
             TemplateButtonText = GameObject.Instantiate(TemplateButton.actionButton.cooldownTimerText, TemplateButton.actionButton.cooldownTimerText.transform.parent); // TMP初期化
             TemplateButtonText.text = "";
