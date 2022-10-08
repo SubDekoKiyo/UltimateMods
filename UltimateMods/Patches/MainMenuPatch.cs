@@ -2,6 +2,7 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
+using static UltimateMods.ColorDictionary;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 
@@ -16,56 +17,55 @@ namespace UltimateMods.Patches
         {
             // CustomHatLoader.LaunchHatFetcher();
             var template = GameObject.Find("ExitGameButton");
+            // template.gameObject.SetActive(false);
             if (template == null) return;
 
-            var buttonDiscord = UnityEngine.Object.Instantiate(template, null);
-            buttonDiscord.transform.localPosition = new Vector3(buttonDiscord.transform.localPosition.x, buttonDiscord.transform.localPosition.y + 0.6f, buttonDiscord.transform.localPosition.z);
+            var ButtonDiscord = UnityEngine.Object.Instantiate(template, null);
+            ButtonDiscord.transform.localPosition = new Vector3(ButtonDiscord.transform.localPosition.x, ButtonDiscord.transform.localPosition.y + 0.6f, ButtonDiscord.transform.localPosition.z);
 
-            var textDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+            var TextDiscord = ButtonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
             __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
             {
-                textDiscord.SetText("Discord");
+                TextDiscord.SetText("Discord");
             })));
 
-            PassiveButton passiveButtonDiscord = buttonDiscord.GetComponent<PassiveButton>();
-            SpriteRenderer buttonSpriteDiscord = buttonDiscord.GetComponent<SpriteRenderer>();
+            PassiveButton PassiveButtonDiscord = ButtonDiscord.GetComponent<PassiveButton>();
+            SpriteRenderer ButtonSpriteDiscord = ButtonDiscord.GetComponent<SpriteRenderer>();
 
-            passiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
-            passiveButtonDiscord.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
+            PassiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
+            PassiveButtonDiscord.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
             {
                 Application.OpenURL("https://discord.gg/kZwzNn9qRg");
             });
 
-            Color discordColor = new Color32(88, 101, 242, byte.MaxValue);
-            buttonSpriteDiscord.color = textDiscord.color = discordColor;
-            passiveButtonDiscord.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
+            ButtonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
+            PassiveButtonDiscord.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
             {
-                buttonSpriteDiscord.color = textDiscord.color = discordColor;
+                ButtonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
             });
 
-            var buttonGithub = UnityEngine.Object.Instantiate(template, null);
-            buttonGithub.transform.localPosition = new Vector3(buttonGithub.transform.localPosition.x, buttonGithub.transform.localPosition.y + 1.2f, buttonGithub.transform.localPosition.z);
+            var ButtonGithub = UnityEngine.Object.Instantiate(template, null);
+            ButtonGithub.transform.localPosition = new Vector3(ButtonGithub.transform.localPosition.x, ButtonGithub.transform.localPosition.y + 1.2f, ButtonGithub.transform.localPosition.z);
 
-            var textGithub = buttonGithub.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+            var TextGithub = ButtonGithub.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
             __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
             {
-                textGithub.SetText("Github");
+                TextGithub.SetText("Github");
             })));
 
-            PassiveButton passiveButtonGithub = buttonGithub.GetComponent<PassiveButton>();
-            SpriteRenderer buttonSpriteGithub = buttonGithub.GetComponent<SpriteRenderer>();
+            PassiveButton PassiveButtonGithub = ButtonGithub.GetComponent<PassiveButton>();
+            SpriteRenderer ButtonSpriteGithub = ButtonGithub.GetComponent<SpriteRenderer>();
 
-            passiveButtonGithub.OnClick = new Button.ButtonClickedEvent();
-            passiveButtonGithub.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
+            PassiveButtonGithub.OnClick = new Button.ButtonClickedEvent();
+            PassiveButtonGithub.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
             {
-                Application.OpenURL("https://github.com/Dekokiyo/TheOtherRolesGM-KiyoMugi-Edition");
+                Application.OpenURL("https://github.com/Dekokiyo/UltimateMods");
             });
 
-            Color githubColor = new Color32(186, 187, 189, byte.MaxValue);
-            buttonSpriteGithub.color = textGithub.color = githubColor;
-            passiveButtonGithub.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
+            ButtonSpriteGithub.color = TextGithub.color = GithubGray;
+            PassiveButtonGithub.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
             {
-                buttonSpriteGithub.color = textGithub.color = githubColor;
+                ButtonSpriteGithub.color = TextGithub.color = GithubGray;
             });
 
             // UM credits button

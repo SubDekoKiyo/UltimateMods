@@ -61,6 +61,7 @@ namespace UltimateMods
 
             CustomRolesH.Load();
             CustomOptionsH.Load();
+            // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             SubmergedCompatibility.Initialize();
             RandomGenerator.Initialize();
