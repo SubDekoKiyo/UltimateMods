@@ -13,6 +13,8 @@
 		<ApplicationIcon />
 		<Win32Resource />
 		<AssemblyName>UltimateMods</AssemblyName>
+		<Copyright>GNU General Public License v3.0</Copyright>
+		<UserSecretsId>224cf23a-edb1-4655-98a2-5a7238ecbe50</UserSecretsId>
     </PropertyGroup>
 
 	<ItemGroup>

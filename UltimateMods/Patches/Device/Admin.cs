@@ -75,7 +75,6 @@ namespace UltimateMods.Patches
             }
         }
 
-
         [HarmonyPatch(typeof(MapCountOverlay), nameof(MapCountOverlay.OnDisable))]
         class MapCountOverlayOnDisablePatch
         {

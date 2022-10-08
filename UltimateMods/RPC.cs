@@ -4,6 +4,7 @@ using UltimateMods.Patches;
 using UltimateMods.Modules;
 using System.Linq;
 using System;
+using UnityEngine;
 using static UltimateMods.GameHistory;
 using UltimateMods.Utilities;
 using UltimateMods.Roles;
@@ -30,6 +31,8 @@ namespace UltimateMods
         EngineerFixSubmergedOxygen,
         UncheckedSetTasks,
         ForceEnd,
+        DragPlaceBody,
+        CleanBody,
     }
 
     public static class RPCProcedure
@@ -129,6 +132,14 @@ namespace UltimateMods
                     // 75
                     case (byte)CustomRPC.ForceEnd:
                         RPCProcedure.ForceEnd();
+                        break;
+                    // 76
+                    case (byte)CustomRPC.DragPlaceBody:
+                        RPCProcedure.DragPlaceBody(reader.ReadByte());
+                        break;
+                    // 77
+                    case (byte)CustomRPC.CleanBody:
+                        RPCProcedure.CleanBody(reader.ReadByte());
                         break;
                 }
             }
@@ -303,6 +314,95 @@ namespace UltimateMods
         public static void ForceEnd()
         {
             EndGameManagerSetUpPatch.TriggerForceEnd = true;
+        }
+
+        public static void DragPlaceBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    if (!UnderTaker.DraggingBody)
+                    {
+                        UnderTaker.DraggingBody = true;
+                        UnderTaker.BodyId = playerId;
+                        if (PlayerControl.GameOptions.MapId == 5)
+                        {
+                            GameObject vent = GameObject.Find("LowerCentralVent");
+                            vent.GetComponent<BoxCollider2D>().enabled = false;
+                        }
+                    }
+                    else
+                    {
+                        UnderTaker.DraggingBody = false;
+                        UnderTaker.BodyId = 0;
+                        foreach (var underTaker in UnderTaker.players)
+                        {
+                            var currentPosition = underTaker.player.GetTruePosition();
+                            var velocity = underTaker.player.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
+                            var newPos = ((Vector2)underTaker.player.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
+                            if (!PhysicsHelpers.AnythingBetween(
+                                currentPosition,
+                                newPos,
+                                Constants.ShipAndObjectsMask,
+                                false
+                            ))
+                            {
+                                if (PlayerControl.GameOptions.MapId == 5)
+                                {
+                                    array[i].transform.position = newPos;
+                                    array[i].transform.position += new Vector3(0, 0, -0.5f);
+                                    GameObject vent = GameObject.Find("LowerCentralVent");
+                                    vent.GetComponent<BoxCollider2D>().enabled = true;
+                                }
+                                else
+                                {
+                                    array[i].transform.position = newPos;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public static void UnderTakerResetValues()
+        {
+            // Restore UnderTaker values when rewind time
+            if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody)
+            {
+                UnderTaker.DraggingBody = false;
+                UnderTaker.BodyId = 0;
+            }
+        }
+
+        public static void DevourBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    UnityEngine.Object.Destroy(array[i].gameObject);
+                    if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody && UnderTaker.BodyId == playerId)
+                    {
+                        UnderTakerResetValues();
+                    }
+                }
+            }
+        }
+
+        public static void CleanBody(byte playerId)
+        {
+            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < array.Length; i++)
+            {
+                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                {
+                    UnityEngine.Object.Destroy(array[i].gameObject);
+                }
+            }
         }
     }
 }

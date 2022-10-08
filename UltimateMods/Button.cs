@@ -10,12 +10,14 @@ namespace UltimateMods
         {
             Sheriff.SetButtonCooldowns();
             Engineer.SetButtonCooldowns();
+            UnderTaker.SetButtonCooldowns();
         }
 
         public static void MakeButtons(HudManager hm)
         {
             Sheriff.MakeButtons(hm);
             Engineer.MakeButtons(hm);
+            UnderTaker.MakeButtons(hm);
         }
 
         public static void Postfix(HudManager __instance)

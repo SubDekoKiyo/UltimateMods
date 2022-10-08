@@ -35,6 +35,8 @@ namespace UltimateMods.Roles
         public static RoleInfo jester = new RoleInfo("Jester", JesterPink, CustomRolesH.JesterRate, RoleType.Jester);
         public static RoleInfo sheriff = new RoleInfo("Sheriff", SheriffYellow, CustomRolesH.SheriffRate, RoleType.Sheriff);
         public static RoleInfo engineer = new RoleInfo("Engineer", EngineerBlue, CustomRolesH.EngineerRate, RoleType.Engineer);
+        public static RoleInfo customImpostor = new RoleInfo("CustomImpostor", ImpostorRed, CustomRolesH.CustomImpostorRate, RoleType.CustomImpostor);
+        public static RoleInfo underTaker = new RoleInfo("UnderTaker", ImpostorRed, CustomRolesH.UnderTakerRate, RoleType.UnderTaker);
         public static RoleInfo impostor = new RoleInfo("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new RoleInfo("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -45,6 +47,8 @@ namespace UltimateMods.Roles
             crewmate,
             sheriff,
             engineer,
+            customImpostor,
+            underTaker,
         };
 
         public static string tl(string key)
@@ -61,6 +65,8 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Jester)) infos.Add(jester);
             if (p.isRole(RoleType.Sheriff)) infos.Add(sheriff);
             if (p.isRole(RoleType.Engineer)) infos.Add(engineer);
+            if (p.isRole(RoleType.CustomImpostor)) infos.Add(customImpostor);
+            if (p.isRole(RoleType.UnderTaker)) infos.Add(underTaker);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

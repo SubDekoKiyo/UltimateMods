@@ -101,6 +101,7 @@ namespace UltimateMods.Patches
             Dictionary<byte, (int rate, int count)> crewSettings = new();
 
             impSettings.Add((byte)RoleType.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
+            impSettings.Add((byte)RoleType.UnderTaker, CustomRolesH.UnderTakerRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
 

@@ -1,5 +1,4 @@
 using UnityEngine;
-using HarmonyLib;
 
 namespace UltimateMods
 {
@@ -13,5 +12,8 @@ namespace UltimateMods
         public static Color JesterPink = new Color32(236, 98, 165, byte.MaxValue);
 
         public static Color OpportunistGreen = new Color32(0, 255, 0, byte.MaxValue);
+
+        public static Color DiscordPurple = new Color32(88, 101, 242, byte.MaxValue);
+        public static Color GithubGray = new Color32(186, 187, 189, byte.MaxValue);
     }
 }
