@@ -48,11 +48,11 @@ namespace UltimateMods.Roles
                 {
                     if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == UnderTaker.BodyId)
                     {
-                        foreach (var underTaker in UnderTaker.players)
+                        foreach (var underTaker in UnderTaker.allPlayers)
                         {
-                            var currentPosition = underTaker.player.GetTruePosition();
-                            var velocity = underTaker.player.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
-                            var newPos = ((Vector2)underTaker.player.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
+                            var currentPosition = underTaker.GetTruePosition();
+                            var velocity = underTaker.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
+                            var newPos = ((Vector2)underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
                             if (!PhysicsHelpers.AnythingBetween(
                                 currentPosition,
                                 newPos,
@@ -91,7 +91,7 @@ namespace UltimateMods.Roles
         public static Sprite GetButtonSprite()
         {
             if (UnderTakerButtonSprite) return UnderTakerButtonSprite;
-            UnderTakerButtonSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.UnderTakerButton.png", 115f);
+            UnderTakerButtonSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.UnderTakerMoveButton.png", 115f);
             return UnderTakerButtonSprite;
         }
 
@@ -102,10 +102,19 @@ namespace UltimateMods.Roles
                 {
                     if (UnderTaker.DraggingBody)
                     {
+                        if (HasDuration && UnderTakerButton.IsEffectActive)
+                        {
+                            UnderTakerButton.Timer = 0f;
+                            return;
+                        }
                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.DragPlaceBody, Hazel.SendOption.Reliable, -1);
                         writer.Write(UnderTaker.BodyId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                         RPCProcedure.DragPlaceBody(UnderTaker.BodyId);
+
+                        foreach (var underTaker in UnderTaker.allPlayers)
+                            underTaker.killTimer = KillCooldown;
+                        UnderTakerButton.Timer = UnderTakerButton.MaxTimer = MoveCooldown;
                     }
                     else
                     {
@@ -131,11 +140,6 @@ namespace UltimateMods.Roles
                             }
                         }
                     }
-
-                    foreach (var underTaker in UnderTaker.players)
-                    {
-                        underTaker.player.killTimer = UnderTakerButton.Timer = UnderTakerButton.MaxTimer;
-                    }
                 },
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () =>
@@ -152,7 +156,7 @@ namespace UltimateMods.Roles
                 },
                 () =>
                 {
-                    UnderTakerButton.Timer = MoveCooldown;
+                    UnderTakerButton.Timer = UnderTakerButton.MaxTimer = MoveCooldown;
                     UnderTaker.UnderTakerResetValuesAtDead();
                 },
                 UnderTaker.GetButtonSprite(),
@@ -171,7 +175,14 @@ namespace UltimateMods.Roles
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
                         RPCProcedure.DragPlaceBody(UnderTaker.BodyId);
                     }
-                    UnderTakerButton.Timer = MoveCooldown;
+                    else
+                    {
+                        UnderTaker.DraggingBody = false;
+                        UnderTaker.BodyId = 0;
+                        foreach (var underTaker in UnderTaker.allPlayers)
+                            underTaker.killTimer = KillCooldown;
+                    }
+                    UnderTakerButton.Timer = UnderTakerButton.MaxTimer = MoveCooldown;
                 }
             );
             UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDragText");
@@ -210,9 +221,12 @@ namespace UltimateMods.Roles
                     writer.Write(BodyId);
                     AmongUsClient.Instance.FinishRpcImmediately(writer);
                     RPCProcedure.CleanBody(BodyId);
-
                     DraggingBody = false;
-                    UnderTakerButton.EffectDuration = 0f;
+                    if (HasDuration && UnderTakerButton.IsEffectActive)
+                    {
+                        UnderTakerButton.Timer = 0f;
+                        return;
+                    }
                 }
             }
         }

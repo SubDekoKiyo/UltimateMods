@@ -18,7 +18,7 @@ namespace UltimateMods.Modules
         private Action OnMeetingEnds;
         private Func<bool> HasButton;
         private Func<bool> CouldUse;
-        private Action OnEffectEnds;
+        public Action OnEffectEnds;
         public bool HasEffect;
         public bool IsEffectActive = false;
         public bool ShowButtonText = true;
