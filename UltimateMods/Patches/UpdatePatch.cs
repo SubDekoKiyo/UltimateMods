@@ -17,7 +17,6 @@ namespace UltimateMods.Patches
     }
 
     [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
-    //DebugModeがONの時使用可
     public static class KeyboardClass
     {
         public static void Postfix()
