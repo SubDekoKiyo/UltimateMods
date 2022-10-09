@@ -337,11 +337,11 @@ namespace UltimateMods
                     {
                         UnderTaker.DraggingBody = false;
                         UnderTaker.BodyId = 0;
-                        foreach (var underTaker in UnderTaker.players)
+                        foreach (var underTaker in UnderTaker.allPlayers)
                         {
-                            var currentPosition = underTaker.player.GetTruePosition();
-                            var velocity = underTaker.player.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
-                            var newPos = ((Vector2)underTaker.player.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
+                            var currentPosition = underTaker.GetTruePosition();
+                            var velocity = underTaker.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
+                            var newPos = ((Vector2)underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
                             if (!PhysicsHelpers.AnythingBetween(
                                 currentPosition,
                                 newPos,

@@ -87,7 +87,7 @@ namespace UltimateMods
             CustomImpostorCanUseVents = CustomOption.Create(132, Impostor, ClearWhite, "CanUseVents", true, CustomImpostorRate);
             CustomImpostorCanSabotage = CustomOption.Create(133, Impostor, ClearWhite, "CanSabotage", true, CustomImpostorRate);
 
-            UnderTakerRate = new CustomRoleOption(140, Impostor, ClearWhite, "UnderTaker", ImpostorRed, 15);
+            UnderTakerRate = new CustomRoleOption(140, Impostor, ClearWhite, "UnderTaker", ImpostorRed, 1);
             UnderTakerKillCooldown = CustomOption.Create(141, Impostor, ClearWhite, "KillCooldowns", 35f, 5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
             UnderTakerButtonCooldown = CustomOption.Create(142, Impostor, ClearWhite, "UnderTakerButtonCooldown", 30f, 2.5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
             UnderTakerHasDuration = CustomOption.Create(143, Impostor, ClearWhite, "UnderTakerHasDuration", true, UnderTakerRate);
