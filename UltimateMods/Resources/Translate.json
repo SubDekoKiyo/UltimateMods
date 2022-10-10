@@ -1,6 +1,6 @@
 {
     "BuildNum": {
-        "0": "1004"
+        "0": "1008"
     },
     "ModOptionsText": {
         "0": "UM Options",
@@ -139,7 +139,7 @@
         "11": "\u30aa\u30d5"
     },
     "FormatSeconds": {
-        "0": "{0}Seconds",
+        "0": "{0}Sec",
         "11": "{0}\u79d2"
     },
     "FormatTimes": {
@@ -171,8 +171,8 @@
         "11": "<align=\"center\">\u88fd\u4f5c\u8005\nDekoKiyo\n</align>"
     },
     "CreditsText": {
-        "0": "<align=\"center\"><size=120%>Reference Mod</size></align><size=78%>\n<color=#ff351f>TheOtherRoles</color> from Eisbison\n<color=#ff351f>TheOtherRoles+</color> from tomarai\n<color=#ff351f>TheOtherRolesGM</color> from Yukinogatari\n<color=#ff351f>TheOtherRolesGM Haoming</color> from Haoming\n<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color> from Yoppy\n<color=#ffffff>Town of Plus</color> from tugaru1975\n<color=#4169e1>Town of Super</color> from reitou-mugicha\n<color=#e39804>TownOfUs-R</color> from eDonnes124\n<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color> from TeamToI\n<color=#ffffff>Las Monjas</color> from KiraYamato94\n<color=#ffffff>Extreme Roles</color> from yukieiji\n<color=#00bfff>TownOfHost</color> from Empty Bottle\n</size>",
-        "11": "<align=\"center\"><size=120%>\u53c2\u8003Mod</size></align><size=78%>\nEisbison\u69d8\u306e<color=#ff351f>TheOtherRoles</color>\ntomarai\u69d8\u306e<color=#ff351f>TheOtherRoles+</color>\nYukinogatari\u69d8\u306e<color=#ff351f>TheOtherRolesGM</color>\nHaoming\u69d8\u306e<color=#ff351f>TheOtherRolesGM Haoming</color>\n\u3088\u3063\u30ad\u30f3\u30b0\u306e<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>\ntugaru1975\u69d8\u306e<color=#ffffff>TownOfPlus</color>\neDonnes124\u69d8\u306e<color=#e39804>TownOfUs-R</color>\nToI\u88fd\u4f5c\u30c1\u30fc\u30e0\u69d8\u306e<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color>\nKiraYamato94\u69d8\u306e<color=#ffffff>LasMonjas</color>\n\u51b7\u51cd\u9ea6\u8336\u69d8\u306e<color=#4169e1>TownOfSuper</color>\nyukieiji\u69d8\u306e<color=#ffffff>Extreme Roles</color>\n\u7a7a\u304d\u74f6\u69d8\u306e<color=#00bfff>TownOfHost</color></size></size>"
+        "0": "<align=\"center\"><size=120%>Reference Mod</size></align><size=78%>\n<color=#ff351f>TheOtherRoles</color> from Eisbison\n<color=#ff351f>TheOtherRoles+</color> from tomarai\n<color=#ff351f>TheOtherRolesGM</color> from Dusk\n<color=#ff351f>TheOtherRolesGM Haoming</color> from Haoming\n<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color> from Yoppy\n<color=#ffffff>Town of Plus</color> from tugaru1975\n<color=#4169e1>Town of Super</color> from reitou-mugicha\n<color=#e39804>TownOfUs-R</color> from eDonnes124\n<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color> from TeamToI\n<color=#ffffff>Las Monjas</color> from KiraYamato94\n<color=#ffffff>Extreme Roles</color> from yukieiji\n<color=#00bfff>TownOfHost</color> from Empty Bottle\n<color=#1a33c3>Nebula on the Ship</color> from Dolly\n</size>",
+        "11": "<align=\"center\"><size=120%>\u53c2\u8003Mod</size></align><size=78%>\nEisbison\u69d8\u306e<color=#ff351f>TheOtherRoles</color>\ntomarai\u69d8\u306e<color=#ff351f>TheOtherRoles+</color>\nDusk\u69d8\u306e<color=#ff351f>TheOtherRolesGM</color>\nHaoming\u69d8\u306e<color=#ff351f>TheOtherRolesGM Haoming</color>\n\u3088\u3063\u30ad\u30f3\u30b0\u306e<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>\ntugaru1975\u69d8\u306e<color=#ffffff>TownOfPlus</color>\neDonnes124\u69d8\u306e<color=#e39804>TownOfUs-R</color>\nToI\u88fd\u4f5c\u30c1\u30fc\u30e0\u69d8\u306e<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color>\nKiraYamato94\u69d8\u306e<color=#ffffff>LasMonjas</color>\n\u51b7\u51cd\u9ea6\u8336\u69d8\u306e<color=#4169e1>TownOfSuper</color>\nyukieiji\u69d8\u306e<color=#ffffff>Extreme Roles</color>\n\u7a7a\u304d\u74f6\u69d8\u306e<color=#00bfff>TownOfHost</color>\nDolly\u69d8\u306e<color=#1a33c3>Nebula on the Ship</color></size>"
     },
     "CreditsTitle": {
         "0": "Mod Credits",
