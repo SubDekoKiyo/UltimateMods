@@ -45,6 +45,6 @@ Mention me on my dedicated Discord channel.<br>
 |10|Italiano|Italian|🛑|
 |11|日本語|Japan|✅|
 |12|Español|Spanish|🛑|
-|13|简体中文|SChinese|🟨|
+|13|简体中文|SChinese|✅|
 |14|繁體中文|TChinese|🛑|
 |15|Gaeilge|Irish|🛑|
