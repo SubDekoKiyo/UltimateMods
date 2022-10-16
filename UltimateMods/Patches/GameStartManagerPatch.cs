@@ -72,22 +72,10 @@ namespace UltimateMods.Patches
 
             public static void Postfix(GameStartManager __instance)
             {
-                // Send version as soon as CachedPlayer.LocalPlayer.PlayerControl exists
                 if (PlayerControl.LocalPlayer != null && !versionSent)
                 {
                     versionSent = true;
                     Helpers.ShareGameVersion();
-                }
-
-                if (AmongUsClient.Instance.AmHost)
-                {
-                    foreach (InnerNet.ClientData p in AmongUsClient.Instance.allClients)
-                    {
-                        if (p.PlatformData.Platform is not Platforms.StandaloneEpicPC and not Platforms.StandaloneSteamPC)
-                        {
-                            AmongUsClient.Instance.KickPlayer(p.Id, false);
-                        }
-                    }
                 }
 
                 // Check version handshake infos

@@ -135,7 +135,7 @@ namespace UltimateMods.EndGame
 
             bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
 
-            bool ForceEnd = EndGameManagerSetUpPatch.TriggerForceEnd;
+            bool ForceEnd = EndGameNavigationPatch.EndGameManagerSetUpPatch.TriggerForceEnd;
             bool SaboWin = GameOverReason == GameOverReason.ImpostorBySabotage;
             bool EveryoneLose = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
@@ -146,7 +146,7 @@ namespace UltimateMods.EndGame
                 {
                     WinningPlayerData wpd = new WinningPlayerData(jester.player.Data);
                     TempData.winners.Add(wpd);
-                    jester.player.Data.IsDead = true;
+                    jester.player.Data.IsDead = false;
                 }
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
             }
@@ -160,6 +160,7 @@ namespace UltimateMods.EndGame
                     {
                         WinningPlayerData wpd = new(p.Data);
                         TempData.winners.Add(wpd);
+                        p.Data.IsDead = false;
                     }
                 }
                 AdditionalTempData.winCondition = WinCondition.ForceEnd;
@@ -192,313 +193,330 @@ namespace UltimateMods.EndGame
             // Reset Settings
             RPCProcedure.ResetVariables();
         }
-    }
 
-    [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
-    public class EndGameManagerSetUpPatch
-    {
-        public static bool TriggerForceEnd = false;
-        public static void Postfix(EndGameManager __instance)
+        public class EndGameNavigationPatch
         {
-            // Delete and readd PoolablePlayers always showing the name and role of the player
-            foreach (PoolablePlayer pb in __instance.transform.GetComponentsInChildren<PoolablePlayer>())
+            public static TMPro.TMP_Text textRenderer;
+
+            [HarmonyPatch(typeof(EndGameNavigation), nameof(EndGameNavigation.ShowProgression))]
+            public class ShowProgressionPatch
             {
-                UnityEngine.Object.Destroy(pb.gameObject);
-            }
-            int num = Mathf.CeilToInt(7.5f);
-            List<WinningPlayerData> list = TempData.winners.ToArray().ToList().OrderBy(delegate (WinningPlayerData b)
-            {
-                if (!b.IsYou)
+                public static void Prefix()
                 {
-                    return 0;
-                }
-                return -1;
-            }).ToList<WinningPlayerData>();
-            for (int i = 0; i < list.Count; i++)
-            {
-                WinningPlayerData winningPlayerData2 = list[i];
-                int num2 = (i % 2 == 0) ? -1 : 1;
-                int num3 = (i + 1) / 2;
-                float num4 = (float)num3 / (float)num;
-                float num5 = Mathf.Lerp(1f, 0.75f, num4);
-                float num6 = (float)((i == 0) ? -8 : -1);
-                PoolablePlayer poolablePlayer = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, __instance.transform);
-                poolablePlayer.transform.localPosition = new Vector3(1f * (float)num2 * (float)num3 * num5, FloatRange.SpreadToEdges(-1.125f, 0f, num3, num), num6 + (float)num3 * 0.01f) * 0.9f;
-                float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
-                Vector3 vector = new Vector3(num7, num7, 1f);
-                poolablePlayer.transform.localScale = vector;
-                poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit)winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
-                if (winningPlayerData2.IsDead)
-                {
-                    poolablePlayer.cosmetics.currentBodySprite.BodySprite.sprite = poolablePlayer.cosmetics.currentBodySprite.GhostSprite;
-                    poolablePlayer.SetDeadFlipX(i % 2 == 0);
-                }
-                else
-                {
-                    poolablePlayer.SetFlipX(i % 2 == 0);
-                }
-
-                poolablePlayer.cosmetics.nameText.color = Color.white;
-                poolablePlayer.cosmetics.nameText.lineSpacing *= 0.7f;
-                poolablePlayer.cosmetics.nameText.transform.localScale = new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z);
-                poolablePlayer.cosmetics.nameText.transform.localPosition = new Vector3(poolablePlayer.cosmetics.nameText.transform.localPosition.x, poolablePlayer.cosmetics.nameText.transform.localPosition.y, -15f);
-                poolablePlayer.cosmetics.nameText.text = winningPlayerData2.PlayerName;
-
-                foreach (var data in AdditionalTempData.playerRoles)
-                {
-                    if (data.PlayerName != winningPlayerData2.PlayerName) continue;
-                    poolablePlayer.cosmetics.nameText.text += $"\n<size=80%>{data.RoleString}</size>";
-                }
-            }
-
-            // Additional code
-            GameObject bonusTextObject = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
-            bonusTextObject.transform.position = new Vector3(__instance.WinText.transform.position.x, __instance.WinText.transform.position.y - 0.5f, __instance.WinText.transform.position.z);
-            bonusTextObject.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
-            TMPro.TMP_Text textRenderer = bonusTextObject.GetComponent<TMPro.TMP_Text>();
-            textRenderer.text = "";
-
-            string bonusText = "";
-
-            if (AdditionalTempData.winCondition == WinCondition.JesterWin)
-            {
-                bonusText = ModTranslation.getString("JesterWin");
-                textRenderer.color = JesterPink;
-                __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
-            }
-            else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
-            {
-                bonusText = ModTranslation.getString("CrewmateWin");
-                textRenderer.color = CrewmateBlue;
-            }
-            else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage)
-            {
-                bonusText = ModTranslation.getString("ImpostorWin");
-                textRenderer.color = ImpostorRed;
-            }
-            else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
-            {
-                bonusText = ModTranslation.getString("EveryoneLose");
-                textRenderer.color = Palette.DisabledGrey;
-                __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
-            }
-            else if (AdditionalTempData.winCondition == WinCondition.ForceEnd)
-            {
-                bonusText = ModTranslation.getString("ForceEnd");
-                textRenderer.color = Palette.DisabledGrey;
-                __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
-            }
-
-            string extraText = "";
-            foreach (WinCondition w in AdditionalTempData.additionalWinConditions)
-            {
-                switch (w)
-                {
-                    case WinCondition.OpportunistWin:
-                        extraText += ModTranslation.getString("OpportunistExtra");
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            if (extraText.Length > 0)
-            {
-                textRenderer.text = string.Format(ModTranslation.getString(bonusText + "Extra"), extraText);
-            }
-            else
-            {
-                textRenderer.text = ModTranslation.getString(bonusText);
-            }
-
-            if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageO2)
-            {
-                textRenderer.text += ($"\n" + ModTranslation.getString("O2Win"));
-            }
-            else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageReactor)
-            {
-                textRenderer.text += ($"\n" + ModTranslation.getString("ReactorWin"));
-            }
-            else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.ForceEnd)
-            {
-                textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
-            }
-            AdditionalTempData.clear();
-        }
-    }
-
-    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
-    class CheckEndCriteriaPatch
-    {
-        public static bool Prefix(ShipStatus __instance)
-        {
-            if (!GameData.Instance) return false;
-            if (DestroyableSingleton<TutorialManager>.InstanceExists) // InstanceExists | Don't check Custom Criteria when in Tutorial
-                return true;
-            var statistics = new PlayerStatistics(__instance);
-            if (CheckAndEndGameForJesterWin(__instance)) return false;
-            if (CheckAndEndGameForSabotageWin(__instance)) return false;
-            if (CheckAndEndGameForTaskWin(__instance)) return false;
-            if (CheckAndEndGameForForceEnd(__instance)) return false;
-            if (CheckAndEndGameForImpostorWin(__instance, statistics)) return false;
-            if (CheckAndEndGameForCrewmateWin(__instance, statistics)) return false;
-            return false;
-        }
-
-        private static bool CheckAndEndGameForJesterWin(ShipStatus __instance)
-        {
-            if (Jester.TriggerJesterWin)
-            {
-                __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.JesterExiled, false);
-                return true;
-            }
-            return false;
-        }
-
-        private static bool CheckAndEndGameForForceEnd(ShipStatus __instance)
-        {
-            if (EndGameManagerSetUpPatch.TriggerForceEnd)
-            {
-                __instance.enabled = false;
-                ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.ForceEnd, false);
-                EndGameManagerSetUpPatch.TriggerForceEnd = false;
-                return true;
-            }
-            return false;
-        }
-
-        private static bool CheckAndEndGameForSabotageWin(ShipStatus __instance)
-        {
-            if (MapUtilities.Systems == null) return false;
-            var systemType = MapUtilities.Systems.ContainsKey(SystemTypes.LifeSupp) ? MapUtilities.Systems[SystemTypes.LifeSupp] : null;
-            if (systemType != null)
-            {
-                LifeSuppSystemType lifeSuppSystemType = systemType.TryCast<LifeSuppSystemType>();
-                if (lifeSuppSystemType != null && lifeSuppSystemType.Countdown < 0f)
-                {
-                    EndGameForO2(__instance);
-                    lifeSuppSystemType.Countdown = 10000f;
-                    return true;
-                }
-            }
-            var systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Reactor) ? MapUtilities.Systems[SystemTypes.Reactor] : null;
-            if (systemType2 == null)
-            {
-                systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Laboratory) ? MapUtilities.Systems[SystemTypes.Laboratory] : null;
-            }
-            if (systemType2 != null)
-            {
-                ICriticalSabotage criticalSystem = systemType2.TryCast<ICriticalSabotage>();
-                if (criticalSystem != null && criticalSystem.Countdown < 0f)
-                {
-                    EndGameForReactor(__instance);
-                    criticalSystem.ClearSabotage();
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        private static bool CheckAndEndGameForTaskWin(ShipStatus __instance)
-        {
-            if (GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
-            {
-                __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
-                return true;
-            }
-            return false;
-        }
-
-        private static bool CheckAndEndGameForImpostorWin(ShipStatus __instance, PlayerStatistics statistics)
-        {
-            if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive)
-            {
-                __instance.enabled = false;
-                GameOverReason endReason;
-                switch (TempData.LastDeathReason)
-                {
-                    case DeathReason.Exile:
-                        endReason = GameOverReason.ImpostorByVote;
-                        break;
-                    case DeathReason.Kill:
-                        endReason = GameOverReason.ImpostorByKill;
-                        break;
-                    default:
-                        endReason = GameOverReason.ImpostorByVote;
-                        break;
-                }
-                ShipStatus.RpcEndGame(endReason, false);
-                return true;
-            }
-            return false;
-        }
-
-        private static bool CheckAndEndGameForCrewmateWin(ShipStatus __instance, PlayerStatistics statistics)
-        {
-            if (statistics.TeamImpostorsAlive == 0)
-            {
-                __instance.enabled = false;
-                ShipStatus.RpcEndGame(GameOverReason.HumansByVote, false);
-                return true;
-            }
-            return false;
-        }
-
-        private static void EndGameForO2(ShipStatus __instance)
-        {
-            __instance.enabled = false;
-            ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.SabotageO2, false);
-            return;
-        }
-
-        private static void EndGameForReactor(ShipStatus __instance)
-        {
-            __instance.enabled = false;
-            ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.SabotageReactor, false);
-            return;
-        }
-    }
-
-    internal class PlayerStatistics
-    {
-        public int TeamImpostorsAlive { get; set; }
-        public int TeamCrew { get; set; }
-        public int NeutralAlive { get; set; }
-        public int TotalAlive { get; set; }
-
-        public PlayerStatistics(ShipStatus __instance)
-        {
-            GetPlayerCounts();
-        }
-
-        private void GetPlayerCounts()
-        {
-            int numImpostorsAlive = 0;
-            int numTotalAlive = 0;
-            int numNeutralAlive = 0;
-            int numCrew = 0;
-
-            for (int i = 0; i < GameData.Instance.PlayerCount; i++)
-            {
-                GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
-                if (!playerInfo.Disconnected)
-                {
-                    if (playerInfo.Object.IsCrew()) numCrew++;
-                    if (!playerInfo.IsDead)
+                    if (textRenderer != null)
                     {
-                        numTotalAlive++;
-                        if (playerInfo.Role.IsImpostor) numImpostorsAlive++;
-                        if (playerInfo.Object.IsNeutral()) numNeutralAlive++;
+                        textRenderer.gameObject.SetActive(false);
                     }
                 }
             }
 
-            TeamCrew = numCrew;
-            TeamImpostorsAlive = numImpostorsAlive;
-            NeutralAlive = numNeutralAlive;
-            TotalAlive = numTotalAlive;
+            [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
+            public class EndGameManagerSetUpPatch
+            {
+                public static bool TriggerForceEnd = false;
+                public static void Postfix(EndGameManager __instance)
+                {
+                    // Delete and readd PoolablePlayers always showing the name and role of the player
+                    foreach (PoolablePlayer pb in __instance.transform.GetComponentsInChildren<PoolablePlayer>())
+                    {
+                        UnityEngine.Object.Destroy(pb.gameObject);
+                    }
+                    int num = Mathf.CeilToInt(7.5f);
+                    List<WinningPlayerData> list = TempData.winners.ToArray().ToList().OrderBy(delegate (WinningPlayerData b)
+                    {
+                        if (!b.IsYou)
+                        {
+                            return 0;
+                        }
+                        return -1;
+                    }).ToList<WinningPlayerData>();
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        WinningPlayerData winningPlayerData2 = list[i];
+                        int num2 = (i % 2 == 0) ? -1 : 1;
+                        int num3 = (i + 1) / 2;
+                        float num4 = (float)num3 / (float)num;
+                        float num5 = Mathf.Lerp(1f, 0.75f, num4);
+                        float num6 = (float)((i == 0) ? -8 : -1);
+                        PoolablePlayer poolablePlayer = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, __instance.transform);
+                        poolablePlayer.transform.localPosition = new Vector3(1f * (float)num2 * (float)num3 * num5, FloatRange.SpreadToEdges(-1.125f, 0f, num3, num), num6 + (float)num3 * 0.01f) * 0.9f;
+                        float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
+                        Vector3 vector = new Vector3(num7, num7, 1f);
+                        poolablePlayer.transform.localScale = vector;
+                        poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit)winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
+                        if (winningPlayerData2.IsDead)
+                        {
+                            poolablePlayer.cosmetics.currentBodySprite.BodySprite.sprite = poolablePlayer.cosmetics.currentBodySprite.GhostSprite;
+                            poolablePlayer.SetDeadFlipX(i % 2 == 0);
+                        }
+                        else
+                        {
+                            poolablePlayer.SetFlipX(i % 2 == 0);
+                        }
+
+                        poolablePlayer.cosmetics.nameText.color = Color.white;
+                        poolablePlayer.cosmetics.nameText.lineSpacing *= 0.7f;
+                        poolablePlayer.cosmetics.nameText.transform.localScale = new Vector3(1f / vector.x, 1f / vector.y, 1f / vector.z);
+                        poolablePlayer.cosmetics.nameText.transform.localPosition = new Vector3(poolablePlayer.cosmetics.nameText.transform.localPosition.x, poolablePlayer.cosmetics.nameText.transform.localPosition.y, -15f);
+                        poolablePlayer.cosmetics.nameText.text = winningPlayerData2.PlayerName;
+
+                        foreach (var data in AdditionalTempData.playerRoles)
+                        {
+                            if (data.PlayerName != winningPlayerData2.PlayerName) continue;
+                            poolablePlayer.cosmetics.nameText.text += $"\n<size=80%>{data.RoleString}</size>";
+                        }
+                    }
+
+                    // Additional code
+                    GameObject bonusTextObject = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
+                    bonusTextObject.transform.position = new Vector3(__instance.WinText.transform.position.x, __instance.WinText.transform.position.y - 0.5f, __instance.WinText.transform.position.z);
+                    bonusTextObject.transform.localScale = new Vector3(0.7f, 0.7f, 1f);
+                    TMPro.TMP_Text textRenderer = bonusTextObject.GetComponent<TMPro.TMP_Text>();
+                    textRenderer.text = "";
+
+                    string bonusText = "";
+
+                    if (AdditionalTempData.winCondition == WinCondition.JesterWin)
+                    {
+                        bonusText = ModTranslation.getString("JesterWin");
+                        textRenderer.color = JesterPink;
+                        __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
+                    }
+                    else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
+                    {
+                        bonusText = ModTranslation.getString("CrewmateWin");
+                        textRenderer.color = CrewmateBlue;
+                    }
+                    else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage)
+                    {
+                        bonusText = ModTranslation.getString("ImpostorWin");
+                        textRenderer.color = ImpostorRed;
+                    }
+                    else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
+                    {
+                        bonusText = ModTranslation.getString("EveryoneLose");
+                        textRenderer.color = Palette.DisabledGrey;
+                        __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
+                    }
+                    else if (AdditionalTempData.winCondition == WinCondition.ForceEnd)
+                    {
+                        bonusText = ModTranslation.getString("ForceEnd");
+                        textRenderer.color = Palette.DisabledGrey;
+                        __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
+                    }
+
+                    string extraText = "";
+                    foreach (WinCondition w in AdditionalTempData.additionalWinConditions)
+                    {
+                        switch (w)
+                        {
+                            case WinCondition.OpportunistWin:
+                                extraText += ModTranslation.getString("OpportunistExtra");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    if (extraText.Length > 0)
+                    {
+                        textRenderer.text = string.Format(ModTranslation.getString(bonusText + "Extra"), extraText);
+                    }
+                    else
+                    {
+                        textRenderer.text = ModTranslation.getString(bonusText);
+                    }
+
+                    if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageO2)
+                    {
+                        textRenderer.text += ($"\n" + ModTranslation.getString("O2Win"));
+                    }
+                    else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageReactor)
+                    {
+                        textRenderer.text += ($"\n" + ModTranslation.getString("ReactorWin"));
+                    }
+                    else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.ForceEnd)
+                    {
+                        textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
+                    }
+                    AdditionalTempData.clear();
+                }
+            }
+
+            [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
+            class CheckEndCriteriaPatch
+            {
+                public static bool Prefix(ShipStatus __instance)
+                {
+                    if (!GameData.Instance) return false;
+                    if (DestroyableSingleton<TutorialManager>.InstanceExists) // InstanceExists | Don't check Custom Criteria when in Tutorial
+                        return true;
+                    var statistics = new PlayerStatistics(__instance);
+                    if (CheckAndEndGameForJesterWin(__instance)) return false;
+                    if (CheckAndEndGameForSabotageWin(__instance)) return false;
+                    if (CheckAndEndGameForTaskWin(__instance)) return false;
+                    if (CheckAndEndGameForForceEnd(__instance)) return false;
+                    if (CheckAndEndGameForImpostorWin(__instance, statistics)) return false;
+                    if (CheckAndEndGameForCrewmateWin(__instance, statistics)) return false;
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForJesterWin(ShipStatus __instance)
+                {
+                    if (Jester.TriggerJesterWin)
+                    {
+                        __instance.enabled = false;
+                        ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.JesterExiled, false);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForForceEnd(ShipStatus __instance)
+                {
+                    if (EndGameManagerSetUpPatch.TriggerForceEnd)
+                    {
+                        __instance.enabled = false;
+                        ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.ForceEnd, false);
+                        EndGameManagerSetUpPatch.TriggerForceEnd = false;
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForSabotageWin(ShipStatus __instance)
+                {
+                    if (MapUtilities.Systems == null) return false;
+                    var systemType = MapUtilities.Systems.ContainsKey(SystemTypes.LifeSupp) ? MapUtilities.Systems[SystemTypes.LifeSupp] : null;
+                    if (systemType != null)
+                    {
+                        LifeSuppSystemType lifeSuppSystemType = systemType.TryCast<LifeSuppSystemType>();
+                        if (lifeSuppSystemType != null && lifeSuppSystemType.Countdown < 0f)
+                        {
+                            EndGameForO2(__instance);
+                            lifeSuppSystemType.Countdown = 10000f;
+                            return true;
+                        }
+                    }
+                    var systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Reactor) ? MapUtilities.Systems[SystemTypes.Reactor] : null;
+                    if (systemType2 == null)
+                    {
+                        systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Laboratory) ? MapUtilities.Systems[SystemTypes.Laboratory] : null;
+                    }
+                    if (systemType2 != null)
+                    {
+                        ICriticalSabotage criticalSystem = systemType2.TryCast<ICriticalSabotage>();
+                        if (criticalSystem != null && criticalSystem.Countdown < 0f)
+                        {
+                            EndGameForReactor(__instance);
+                            criticalSystem.ClearSabotage();
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForTaskWin(ShipStatus __instance)
+                {
+                    if (GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
+                    {
+                        __instance.enabled = false;
+                        ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForImpostorWin(ShipStatus __instance, PlayerStatistics statistics)
+                {
+                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive)
+                    {
+                        __instance.enabled = false;
+                        GameOverReason endReason;
+                        switch (TempData.LastDeathReason)
+                        {
+                            case DeathReason.Exile:
+                                endReason = GameOverReason.ImpostorByVote;
+                                break;
+                            case DeathReason.Kill:
+                                endReason = GameOverReason.ImpostorByKill;
+                                break;
+                            default:
+                                endReason = GameOverReason.ImpostorByVote;
+                                break;
+                        }
+                        ShipStatus.RpcEndGame(endReason, false);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForCrewmateWin(ShipStatus __instance, PlayerStatistics statistics)
+                {
+                    if (statistics.TeamImpostorsAlive == 0)
+                    {
+                        __instance.enabled = false;
+                        ShipStatus.RpcEndGame(GameOverReason.HumansByVote, false);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static void EndGameForO2(ShipStatus __instance)
+                {
+                    __instance.enabled = false;
+                    ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.SabotageO2, false);
+                    return;
+                }
+
+                private static void EndGameForReactor(ShipStatus __instance)
+                {
+                    __instance.enabled = false;
+                    ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.SabotageReactor, false);
+                    return;
+                }
+            }
+
+            internal class PlayerStatistics
+            {
+                public int TeamImpostorsAlive { get; set; }
+                public int TeamCrew { get; set; }
+                public int NeutralAlive { get; set; }
+                public int TotalAlive { get; set; }
+
+                public PlayerStatistics(ShipStatus __instance)
+                {
+                    GetPlayerCounts();
+                }
+
+                private void GetPlayerCounts()
+                {
+                    int numImpostorsAlive = 0;
+                    int numTotalAlive = 0;
+                    int numNeutralAlive = 0;
+                    int numCrew = 0;
+
+                    for (int i = 0; i < GameData.Instance.PlayerCount; i++)
+                    {
+                        GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
+                        if (!playerInfo.Disconnected)
+                        {
+                            if (playerInfo.Object.IsCrew()) numCrew++;
+                            if (!playerInfo.IsDead)
+                            {
+                                numTotalAlive++;
+                                if (playerInfo.Role.IsImpostor) numImpostorsAlive++;
+                                if (playerInfo.Object.IsNeutral()) numNeutralAlive++;
+                            }
+                        }
+                    }
+
+                    TeamCrew = numCrew;
+                    TeamImpostorsAlive = numImpostorsAlive;
+                    NeutralAlive = numNeutralAlive;
+                    TotalAlive = numTotalAlive;
+                }
+            }
         }
     }
 }
