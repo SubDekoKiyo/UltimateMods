@@ -33,7 +33,34 @@ namespace UltimateMods.Patches
                     player.cosmetics.nameText.text = data.PlayerName;
                     player.SetFlipX(true);
                     MapOptions.playerIcons[p.PlayerId] = player;
-                    player.gameObject.SetActive(false);
+
+                    foreach (var bountyHunter in BountyHunter.allPlayers)
+                    {
+                        if (PlayerControl.LocalPlayer == bountyHunter)
+                        {
+                            player.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
+                            player.transform.localScale = Vector3.one * 0.4f;
+                            player.gameObject.SetActive(false);
+                        }
+                        else
+                            player.gameObject.SetActive(false);
+                    }
+                }
+            }
+
+            foreach (var bountyHunter in BountyHunter.allPlayers)
+            {
+                if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer == bountyHunter)
+                {
+                    BountyHunter.BountyUpdateTimer = 0f;
+                    if (FastDestroyableSingleton<HudManager>.Instance != null)
+                    {
+                        Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
+                        BountyHunter.CooldownTimer = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
+                        BountyHunter.CooldownTimer.alignment = TMPro.TextAlignmentOptions.Center;
+                        BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
+                        BountyHunter.CooldownTimer.gameObject.SetActive(true);
+                    }
                 }
             }
         }

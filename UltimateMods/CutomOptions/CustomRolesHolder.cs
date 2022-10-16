@@ -43,6 +43,13 @@ namespace UltimateMods
         public static CustomOption UnderTakerDraggingSpeed;
         public static CustomOption UnderTakerCanDumpBodyVents;
 
+        public static CustomRoleOption BountyHunterRate;
+        public static CustomOption BountyHunterSuccessKillCooldown;
+        public static CustomOption BountyHunterAdditionalKillCooldown;
+        public static CustomOption BountyHunterDuration;
+        public static CustomOption BountyHunterShowArrow;
+        public static CustomOption BountyHunterArrowUpdateCooldown;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -94,6 +101,13 @@ namespace UltimateMods
             UnderTakerDuration = CustomOption.Create(144, Impostor, ClearWhite, "UnderTakerDuration", 15f, 2.5f, 30f, 2.5f, UnderTakerHasDuration, format: "FormatSeconds");
             UnderTakerDraggingSpeed = CustomOption.Create(145, Impostor, ClearWhite, "UnderTakerDraggingSpeed", 80f, 75f, 100f, 2.5f, UnderTakerRate, format: "FormatPercent");
             UnderTakerCanDumpBodyVents = CustomOption.Create(146, Impostor, ClearWhite, "UnderTakerCanDumpDeadBodyInVent", false, UnderTakerRate);
+
+            BountyHunterRate = new CustomRoleOption(150, Impostor, ClearWhite, "BountyHunter", ImpostorRed, 1);
+            BountyHunterSuccessKillCooldown = CustomOption.Create(151, Impostor, ClearWhite, "BountyHunterSuccess", 5f, 2.5f, 30f, 2.5f, BountyHunterRate, format: "FormatSeconds");
+            BountyHunterAdditionalKillCooldown = CustomOption.Create(152, Impostor, ClearWhite, "BountyHunterMiss", 20f, 5f, 45f, 2.5f, BountyHunterRate, format: "FormatSeconds");
+            BountyHunterDuration = CustomOption.Create(153, Impostor, ClearWhite, "BountyHunterDuration", 30f, 2.5f, 60f, 2.5f, BountyHunterRate, format: "FormatSeconds");
+            BountyHunterShowArrow = CustomOption.Create(154, Impostor, ClearWhite, "BountyHunterShowArrow", true, BountyHunterRate);
+            BountyHunterArrowUpdateCooldown = CustomOption.Create(155, Impostor, ClearWhite, "BountyHunterArrowUpdateCooldown", 15f, 2.5f, 60f, 2.5f, BountyHunterShowArrow, format: "FormatSeconds");
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, ClearWhite, "Opportunist", OpportunistGreen, 15);

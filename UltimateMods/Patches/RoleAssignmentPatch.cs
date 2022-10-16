@@ -102,6 +102,7 @@ namespace UltimateMods.Patches
 
             impSettings.Add((byte)RoleType.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
             impSettings.Add((byte)RoleType.UnderTaker, CustomRolesH.UnderTakerRate.data);
+            impSettings.Add((byte)RoleType.BountyHunter, CustomRolesH.BountyHunterRate.data);
 
             neutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
 

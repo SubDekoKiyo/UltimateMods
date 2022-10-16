@@ -32,13 +32,14 @@ namespace UltimateMods.Roles
             this.roleType = roleType;
         }
 
-        public static RoleInfo jester = new RoleInfo("Jester", JesterPink, CustomRolesH.JesterRate, RoleType.Jester);
-        public static RoleInfo sheriff = new RoleInfo("Sheriff", SheriffYellow, CustomRolesH.SheriffRate, RoleType.Sheriff);
-        public static RoleInfo engineer = new RoleInfo("Engineer", EngineerBlue, CustomRolesH.EngineerRate, RoleType.Engineer);
-        public static RoleInfo customImpostor = new RoleInfo("CustomImpostor", ImpostorRed, CustomRolesH.CustomImpostorRate, RoleType.CustomImpostor);
-        public static RoleInfo underTaker = new RoleInfo("UnderTaker", ImpostorRed, CustomRolesH.UnderTakerRate, RoleType.UnderTaker);
-        public static RoleInfo impostor = new RoleInfo("Impostor", ImpostorRed, null, RoleType.Impostor);
-        public static RoleInfo crewmate = new RoleInfo("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
+        public static RoleInfo jester = new("Jester", JesterPink, CustomRolesH.JesterRate, RoleType.Jester);
+        public static RoleInfo sheriff = new("Sheriff", SheriffYellow, CustomRolesH.SheriffRate, RoleType.Sheriff);
+        public static RoleInfo engineer = new("Engineer", EngineerBlue, CustomRolesH.EngineerRate, RoleType.Engineer);
+        public static RoleInfo customImpostor = new("CustomImpostor", ImpostorRed, CustomRolesH.CustomImpostorRate, RoleType.CustomImpostor);
+        public static RoleInfo underTaker = new("UnderTaker", ImpostorRed, CustomRolesH.UnderTakerRate, RoleType.UnderTaker);
+        public static RoleInfo bountyHunter = new("BountyHunter", ImpostorRed, CustomRolesH.BountyHunterRate, RoleType.BountyHunter);
+        public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
+        public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
         public static List<RoleInfo> allRoleInfos = new()
         {
@@ -49,6 +50,7 @@ namespace UltimateMods.Roles
             engineer,
             customImpostor,
             underTaker,
+            bountyHunter,
         };
 
         public static string tl(string key)
@@ -67,6 +69,7 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Engineer)) infos.Add(engineer);
             if (p.isRole(RoleType.CustomImpostor)) infos.Add(customImpostor);
             if (p.isRole(RoleType.UnderTaker)) infos.Add(underTaker);
+            if (p.isRole(RoleType.BountyHunter)) infos.Add(bountyHunter);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

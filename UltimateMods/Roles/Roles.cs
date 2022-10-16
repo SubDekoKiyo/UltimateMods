@@ -17,6 +17,7 @@ namespace UltimateMods.Roles
         Impostor = 100,
         CustomImpostor,
         UnderTaker,
+        BountyHunter,
 
         // Neutral Roles
         Jester = 200,
@@ -40,6 +41,7 @@ namespace UltimateMods.Roles
             // Impostor
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
             { RoleType.UnderTaker, typeof(RoleBase<UnderTaker>) },
+            { RoleType.BountyHunter, typeof(RoleBase<BountyHunter>) },
         };
     }
 

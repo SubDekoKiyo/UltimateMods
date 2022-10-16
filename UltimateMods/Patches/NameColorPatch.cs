@@ -59,11 +59,12 @@ namespace UltimateMods.Patches
         static void setNameColors()
         {
             var p = PlayerControl.LocalPlayer;
-            if (p.isRole(RoleType.Jester))
+            var role = p.isRole;
+            if (role(RoleType.Jester))
                 setPlayerNameColor(p, JesterPink);
-            if (p.isRole(RoleType.Sheriff))
+            if (role(RoleType.Sheriff))
                 setPlayerNameColor(p, SheriffYellow);
-            if (p.isRole(RoleType.Engineer))
+            if (role(RoleType.Engineer))
                 setPlayerNameColor(p, EngineerBlue);
         }
 

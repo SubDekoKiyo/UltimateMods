@@ -99,6 +99,9 @@ namespace UltimateMods.Patches
             // MeetingDiscuss.OnMeetingEnd();
             // ClassicAmongUs.DestroyObject();
 
+            if (BountyHunter.exists)
+                BountyHunter.BountyUpdateTimer = 0f;
+
             // Remove DeadBodys
             DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
             for (int i = 0; i < array.Length; i++)
