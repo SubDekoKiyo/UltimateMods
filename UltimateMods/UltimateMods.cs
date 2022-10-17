@@ -18,6 +18,7 @@ namespace UltimateMods
             Engineer.Clear();
             CustomImpostor.Clear();
             UnderTaker.Clear();
+            BountyHunter.Clear();
             Role.ClearAll();
         }
 

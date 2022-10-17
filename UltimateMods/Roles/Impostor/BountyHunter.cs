@@ -33,19 +33,6 @@ namespace UltimateMods.Roles
         public BountyHunter()
         {
             RoleType = roleId = RoleType.BountyHunter;
-
-            Arrow = new CustomArrow(ImpostorRed);
-            Bounty = null;
-            ArrowUpdateTimer = 0f;
-            BountyUpdateTimer = 0f;
-            if (Arrow != null && Arrow.arrow != null) UnityEngine.Object.Destroy(Arrow.arrow);
-            Arrow = null;
-            if (CooldownTimer != null && CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(CooldownTimer.gameObject);
-            CooldownTimer = null;
-            foreach (PoolablePlayer p in MapOptions.playerIcons.Values)
-                if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
-            foreach (var bountyHunter in BountyHunter.allPlayers)
-                KillCooldowns = bountyHunter.killTimer / 2;
         }
 
         public override void OnMeetingStart()
@@ -138,6 +125,19 @@ namespace UltimateMods.Roles
         public static void Clear()
         {
             players = new List<BountyHunter>();
+
+            Arrow = new CustomArrow(ImpostorRed);
+            Bounty = null;
+            ArrowUpdateTimer = 0f;
+            BountyUpdateTimer = 0f;
+            if (Arrow != null && Arrow.arrow != null) UnityEngine.Object.Destroy(Arrow.arrow);
+            Arrow = null;
+            if (CooldownTimer != null && CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(CooldownTimer.gameObject);
+            CooldownTimer = null;
+            foreach (PoolablePlayer p in MapOptions.playerIcons.Values)
+                if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
+            foreach (var bountyHunter in BountyHunter.allPlayers)
+                KillCooldowns = bountyHunter.killTimer / 2;
         }
     }
 }

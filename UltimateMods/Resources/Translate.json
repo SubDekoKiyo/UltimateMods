@@ -1,6 +1,6 @@
 {
     "BuildNum": {
-        "0": "1017"
+        "0": "1021"
     },
     "ModOptionsText": {
         "0": "UM Options",
@@ -746,6 +746,9 @@
         "0": "Can Dump Body in Vent",
         "11": "\u30d9\u30f3\u30c8\u306b\u6b7b\u4f53\u3092\u6368\u3066\u308b\u3053\u3068\u304c\u3067\u304d\u308b",
         "13": "\u9001\u846c\u8005\u53ef\u4ee5\u5c06\u5c38\u4f53\u629b\u5f03\u5728\u7ba1\u9053"
+    },
+    "BountyHunterSuccess": {
+        "0": "Success KillCooldown"
     },
     "ReamingShots": {
         "0": "Shots: {0}",

@@ -41,7 +41,7 @@ namespace UltimateMods.Modules
         public bool isHeader;
         public bool isHidden;
         public CustomOptionType type;
-        public Color BGColor;
+        public Color Color;
 
         public virtual bool enabled
         {
@@ -54,12 +54,12 @@ namespace UltimateMods.Modules
         // Option creation
         public CustomOption() { }
 
-        public CustomOption(int id, CustomOptionType type, Color BGColor, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
+        public CustomOption(int id, CustomOptionType type, Color Color, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
         {
-            Init(id, type, BGColor, name, selections, defaultValue, parent, isHeader, isHidden, format);
+            Init(id, type, Color, name, selections, defaultValue, parent, isHeader, isHidden, format);
         }
 
-        public void Init(int id, CustomOptionType type, Color BGColor, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
+        public void Init(int id, CustomOptionType type, Color Color, string name, System.Object[] selections, System.Object defaultValue, CustomOption parent, bool isHeader, bool isHidden, string format)
         {
             this.id = id;
             this.name = name;
@@ -71,7 +71,7 @@ namespace UltimateMods.Modules
             this.isHeader = isHeader;
             this.isHidden = isHidden;
             this.type = type;
-            this.BGColor = BGColor;
+            this.Color = Color;
 
             this.children = new List<CustomOption>();
             if (parent != null)
@@ -93,22 +93,22 @@ namespace UltimateMods.Modules
             options.Add(this);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, Color BGColor, string name, string[] selections, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color Color, string name, string[] selections, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
-            return new CustomOption(id, type, BGColor, name, selections, "", parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, Color, name, selections, "", parent, isHeader, isHidden, format);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, Color BGColor, string name, float defaultValue, float min, float max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color Color, string name, float defaultValue, float min, float max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
             List<object> selections = new();
             for (float s = min; s <= max; s += step)
                 selections.Add(s);
-            return new CustomOption(id, type, BGColor, name, selections.ToArray(), defaultValue, parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, Color, name, selections.ToArray(), defaultValue, parent, isHeader, isHidden, format);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, Color BGColor, string name, bool defaultValue, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color Color, string name, bool defaultValue, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
-            return new CustomOption(id, type, BGColor, name, new string[] { "OptionOff", "OptionOn" }, defaultValue ? "OptionOn" : "OptionOff", parent, isHeader, isHidden, format);
+            return new CustomOption(id, type, Color, name, new string[] { "OptionOff", "OptionOn" }, defaultValue ? "OptionOn" : "OptionOff", parent, isHeader, isHidden, format);
         }
 
         // Static behaviour
@@ -204,7 +204,7 @@ namespace UltimateMods.Modules
 
         public virtual Color getColor()
         {
-            return BGColor;
+            return Color;
         }
 
         // Option changes
@@ -270,8 +270,8 @@ namespace UltimateMods.Modules
             }
         }
 
-        public CustomRoleOption(int id, CustomOptionType type, Color BGColor, string name, Color color, int max = 15, bool roleEnabled = true) :
-            base(id, type, BGColor, Helpers.cs(color, name), CustomOptionsH.TenRates, "", null, true, false, "")
+        public CustomRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, int max = 15, bool roleEnabled = true) :
+            base(id, type, Color, Helpers.cs(color, name), CustomOptionsH.TenRates, "", null, true, false, "")
         {
             this.roleEnabled = roleEnabled;
 
@@ -282,7 +282,7 @@ namespace UltimateMods.Modules
             }
 
             if (max > 1)
-                countOption = Create(id + 10000, type, BGColor, "RoleNumAssigned", 1f, 1f, 15f, 1f, this, false, isHidden, "FormatPlayer");
+                countOption = Create(id + 10000, type, Color, "RoleNumAssigned", 1f, 1f, 15f, 1f, this, false, isHidden, "FormatPlayer");
         }
     }
 
@@ -297,10 +297,10 @@ namespace UltimateMods.Modules
 
         public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
 
-        public CustomDualRoleOption(int id, CustomOptionType type, Color BGColor, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, type, BGColor, name, color, max, roleEnabled)
+        public CustomDualRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, type, Color, name, color, max, roleEnabled)
         {
-            roleAssignEqually = new CustomOption(id + 15001, type, BGColor, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
-            roleImpChance = Create(id + 15000, type, BGColor, "roleImpChance", CustomOptionsH.TenRates, roleAssignEqually, false, isHidden);
+            roleAssignEqually = new CustomOption(id + 15001, type, Color, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
+            roleImpChance = Create(id + 15000, type, Color, "roleImpChance", CustomOptionsH.TenRates, roleAssignEqually, false, isHidden);
 
             this.roleType = roleType;
             dualRoles.Add(this);
@@ -322,11 +322,11 @@ namespace UltimateMods.Modules
             return Helpers.GenerateTasks(commonTasks, shortTasks, longTasks);
         }
 
-        public CustomTasksOption(int id, CustomOptionType type, Color BGColor, int commonDef, int longDef, int shortDef, CustomOption parent = null)
+        public CustomTasksOption(int id, CustomOptionType type, Color Color, int commonDef, int longDef, int shortDef, CustomOption parent = null)
         {
-            commonTasksOption = Create(id + 20000, type, BGColor, "numCommonTasks", commonDef, 0f, 4f, 1f, parent);
-            longTasksOption = Create(id + 20001, type, BGColor, "numLongTasks", longDef, 0f, 15f, 1f, parent);
-            shortTasksOption = Create(id + 20002, type, BGColor, "numShortTasks", shortDef, 0f, 23f, 1f, parent);
+            commonTasksOption = Create(id + 20000, type, Color, "numCommonTasks", commonDef, 0f, 4f, 1f, parent);
+            longTasksOption = Create(id + 20001, type, Color, "numLongTasks", longDef, 0f, 15f, 1f, parent);
+            shortTasksOption = Create(id + 20002, type, Color, "numShortTasks", shortDef, 0f, 23f, 1f, parent);
         }
     }
 
@@ -342,7 +342,7 @@ namespace UltimateMods.Modules
             }
         }
 
-        public CustomRoleSelectionOption(int id, CustomOptionType type, Color BGColor, string name, List<RoleType> roleTypes = null, CustomOption parent = null)
+        public CustomRoleSelectionOption(int id, CustomOptionType type, Color Color, string name, List<RoleType> roleTypes = null, CustomOption parent = null)
         {
             if (roleTypes == null)
             {
@@ -352,7 +352,7 @@ namespace UltimateMods.Modules
             this.roleTypes = roleTypes;
             var strings = new string[] { "OptionOff" };
 
-            Init(id, type, BGColor, name, strings, 0, parent, false, false, "");
+            Init(id, type, Color, name, strings, 0, parent, false, false, "");
         }
 
         public override void updateSelection(int newSelection)
@@ -688,12 +688,15 @@ namespace UltimateMods.Modules
         public static bool Prefix(StringOption __instance)
         {
             CustomOption option = CustomOption.options.FirstOrDefault(option => option.optionBehaviour == __instance);
+            SpriteRenderer Background = (option.optionBehaviour).transform.Find("Background").GetComponent<SpriteRenderer>();
             if (option == null) return true;
 
             __instance.OnValueChanged = new Action<OptionBehaviour>((o) => { });
             __instance.TitleText.text = option.getName();
             __instance.Value = __instance.oldValue = option.selection;
             __instance.ValueText.text = option.getString();
+
+            Background.color = option.Color;
 
             return false;
         }
