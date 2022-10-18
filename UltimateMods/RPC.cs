@@ -84,7 +84,7 @@ namespace UltimateMods
                         byte roleId = reader.ReadByte();
                         byte playerId = reader.ReadByte();
                         byte flag = reader.ReadByte();
-                        RPCProcedure.setRole(roleId, playerId, flag);
+                        RPCProcedure.SetRole(roleId, playerId, flag);
                         break;
                     // 65
                     case (byte)CustomRPC.AddModifier:
@@ -156,7 +156,7 @@ namespace UltimateMods
             Buttons.SetCustomButtonCooldowns();
             CustomOverlays.ResetOverlays();
             MapBehaviorPatch.ResetIcons();
-            // CustomLobbyPatch.ResetLobbyText();
+            // CustomLobbyPatch.ReSetLobbyText();
         }
 
         public static void ShareOptions(int numberOfOptions, MessageReader reader)
@@ -192,7 +192,7 @@ namespace UltimateMods
             GameStartManagerPatch.playerVersions[clientId] = new GameStartManagerPatch.PlayerVersion(ver, guid);
         }
 
-        public static void setRole(byte roleId, byte playerId, byte flag)
+        public static void SetRole(byte roleId, byte playerId, byte flag)
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
@@ -367,7 +367,7 @@ namespace UltimateMods
             }
         }
 
-        public static void UnderTakerResetValues()
+        public static void UnderTakerReSetValues()
         {
             // Restore UnderTaker values when rewind time
             if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody)
@@ -387,7 +387,7 @@ namespace UltimateMods
                     UnityEngine.Object.Destroy(array[i].gameObject);
                     if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody && UnderTaker.BodyId == playerId)
                     {
-                        UnderTakerResetValues();
+                        UnderTakerReSetValues();
                     }
                 }
             }

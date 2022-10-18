@@ -95,7 +95,7 @@ namespace UltimateMods.EndGame
             AdditionalTempData.clear();
 
             var excludeRoles = new RoleType[] { };
-            foreach (var p in GameData.Instance.AllPlayers.GetFastEnumerator())
+            foreach (var p in GameData.Instance.AllPlayers)
             {
                 var roles = RoleInfo.getRoleInfoForPlayer(p.Object, excludeRoles, includeHidden: true);
                 var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p);
@@ -127,7 +127,7 @@ namespace UltimateMods.EndGame
             notWinners.AddRange(Opportunist.allPlayers);
 
             List<WinningPlayerData> winnersToRemove = new();
-            foreach (WinningPlayerData winner in TempData.winners.GetFastEnumerator())
+            foreach (WinningPlayerData winner in TempData.winners)
             {
                 if (notWinners.Any(x => x.Data.PlayerName == winner.PlayerName)) winnersToRemove.Add(winner);
             }
