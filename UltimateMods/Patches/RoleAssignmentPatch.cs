@@ -381,6 +381,54 @@ namespace UltimateMods.Patches
             return playerId;
         }
 
+        private static void assignModifiers()
+        {
+            var ModifierMin = CustomOptionsH.ModifierCountMin.getSelection();
+            var ModifierMax = CustomOptionsH.ModifierCountMax.getSelection();
+            if (ModifierMin > ModifierMax) ModifierMin = ModifierMax;
+            int ModifierCountSettings = rnd.Next(ModifierMin, ModifierMax + 1);
+            List<PlayerControl> players = PlayerControl.AllPlayerControls.ToArray().ToList();
+            int ModifierCount = Mathf.Min(players.Count, ModifierCountSettings);
+
+            if (ModifierCount == 0) return;
+
+            List<ModifierType> AllModifiers = new();
+            List<ModifierType> EnsuredModifiers = new();
+            List<ModifierType> ChanceModifiers = new();
+            AllModifiers.AddRange(new List<ModifierType> {
+                ModifierType.Opportunist,
+            });
+
+            foreach (ModifierType ModType in AllModifiers)
+            {
+                if (GetSelectionForRoleId(m) == 10) EnsuredModifiers.AddRange(Enumerable.Repeat(ModType, getSelectionForRoleId(m, true) / 10));
+                else ChanceModifiers.AddRange(Enumerable.Repeat(ModType, GetSelectionForRoleId(ModType, true)));
+            }
+
+            assignModifiersToPlayers(EnsuredModifiers, players, ModifierCount); // Assign ensured modifier
+
+            ModifierCount -= EnsuredModifiers.Count;
+            if (ModifierCount <= 0) return;
+            int chanceModifierCount = Mathf.Min(ModifierCount, ChanceModifiers.Count);
+            List<ModifierType> chanceModifierToAssign = new();
+            while (chanceModifierCount > 0 && ChanceModifiers.Count > 0)
+            {
+                var index = rnd.Next(0, ChanceModifiers.Count);
+                ModifierType modType = ChanceModifiers[index];
+                chanceModifierToAssign.Add(modType);
+
+                int modifierSelection = getSelectionForRoleId(modType);
+                while (modifierSelection > 0)
+                {
+                    ChanceModifiers.Remove(modType);
+                    modifierSelection--;
+                }
+                chanceModifierCount--;
+            }
+
+            assignModifiersToPlayers(chanceModifierToAssign, players, ModifierCount); // Assign chance modifier
+        }
+
         private static void assignRoleModifiers(RoleAssignmentData data)
         {/*
             // Madmate
