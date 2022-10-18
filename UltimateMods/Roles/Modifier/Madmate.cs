@@ -8,9 +8,9 @@ using UltimateMods.Modules;
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
-    public class ModifierT : ModifierBase<ModifierT>
+    public class Madmate : ModifierBase<Madmate>
     {
-        public static string Postfix { get { return ModTranslation.getString("ModifierPostfix"); } }
+        public static string Postfix { get { return ModTranslation.getString("MadmatePostfix"); } }
 
         public static List<PlayerControl> Candidates
         {
@@ -20,7 +20,7 @@ namespace UltimateMods.Roles
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (!player.hasModifier(ModifierType.NoModifier))
+                    if (!player.hasModifier(ModifierType.Madmate))
                         validPlayers.Add(player);
                 }
 
@@ -28,9 +28,9 @@ namespace UltimateMods.Roles
             }
         }
 
-        public ModifierT()
+        public Madmate()
         {
-            ModType = modId = ModifierType.NoModifier;
+            ModType = modId = ModifierType.Madmate;
         }
 
         public override void OnMeetingStart() { }
@@ -42,7 +42,7 @@ namespace UltimateMods.Roles
 
         public static void Clear()
         {
-            players = new List<ModifierT>();
+            players = new List<Madmate>();
         }
     }
 }

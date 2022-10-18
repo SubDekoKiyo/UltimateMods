@@ -10,6 +10,7 @@ namespace UltimateMods.Roles
     {
         // don't put anything below this
         Opportunist = 0,
+        Madmate,
         NoModifier = int.MaxValue
     }
 
@@ -19,6 +20,7 @@ namespace UltimateMods.Roles
         public static Dictionary<ModifierType, Type> allModTypes = new()
         {
             { ModifierType.Opportunist, typeof(ModifierBase<Opportunist>) },
+            { ModifierType.Madmate, typeof(ModifierBase<Madmate>) },
         };
     }
 

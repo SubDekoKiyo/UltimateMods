@@ -10,7 +10,7 @@ namespace UltimateMods.Roles
     {
         public static string Postfix { get { return ModTranslation.getString("OpportunistPostfix"); } }
 
-        public static List<PlayerControl> candidates
+        public static List<PlayerControl> Candidates
         {
             get
             {

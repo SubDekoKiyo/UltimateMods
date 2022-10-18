@@ -426,12 +426,12 @@ namespace UltimateMods.Patches
             {
                 if (rnd.Next(1, 100) <= CustomRolesH.OpportunistRate.rate * 10)
                 {
-                    var candidates = Opportunist.candidates;
+                    var candidates = Opportunist.Candidates;
                     if (candidates.Count <= 0)
                     {
                         break;
                     }
-                    setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.candidates);
+                    setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.Candidates);
                 }
             }
         }
