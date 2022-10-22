@@ -34,8 +34,8 @@ namespace UltimateMods
         public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
         // public static ConfigEntry<bool> ShowLighterDarker { get; set; }
-        public static ConfigEntry<bool> HideTaskArrows { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
+        public static ConfigEntry<string> RoomCodeText { get; set; }
         public static ConfigEntry<string> ShowPopUpVersion { get; set; }
 
         public Harmony Harmony { get; } = new Harmony(Id);
@@ -54,8 +54,8 @@ namespace UltimateMods
             GhostsSeeVotes = Config.Bind("Custom", "Ghosts See Votes", true);
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             // ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
-            HideTaskArrows = Config.Bind("Custom", "Hide Task Arrows", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
+            RoomCodeText = Config.Bind("Custom", "Streamer Mode Room Code Text", "Ultimate Mods");
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
             // DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 
@@ -78,31 +78,11 @@ namespace UltimateMods
         }
     }
 
-    [HarmonyPatch(typeof(ChatController), nameof(ChatController.Awake))]
-    public static class ChatControllerAwakePatch
-    {
-        private static void Prefix()
-        {
-            if (!EOSManager.Instance.isKWSMinor)
-            {
-                SaveManager.chatModeType = 1;
-                SaveManager.isGuest = false;
-            }
-        }
-    }
-
     [HarmonyPatch(typeof(ChatController), nameof(ChatController.Update))]
     public static class ChatControllerUpdatePatch
     {
-        public static void Prefix()
-        {
-            SaveManager.chatModeType = 1;
-            SaveManager.isGuest = false;
-        }
         public static void Postfix(ChatController __instance)
         {
-            SaveManager.chatModeType = 1;
-            SaveManager.isGuest = false;
             if (Input.GetKeyDown(KeyCode.F1))
             {
                 if (!__instance.isActiveAndEnabled) return;

@@ -108,6 +108,7 @@ namespace UltimateMods.Patches
 
             crewSettings.Add((byte)RoleType.Sheriff, CustomRolesH.SheriffRate.data);
             crewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);
+            crewSettings.Add((byte)RoleType.Madmate, CustomRolesH.MadmateRate.data);
 
             return new RoleAssignmentData
             {
@@ -383,30 +384,6 @@ namespace UltimateMods.Patches
 
         private static void assignRoleModifiers(RoleAssignmentData data)
         {/*
-            // Madmate
-            for (int i = 0; i < CustomOptionsH.madmateSpawnRate.count; i++)
-            {
-                if (rnd.Next(1, 100) <= CustomOptionsH.madmateSpawnRate.rate * 10)
-                {
-                    var candidates = Madmate.candidates;
-                    if (candidates.Count <= 0)
-                    {
-                        break;
-                    }
-
-                    if (Madmate.madmateType == Madmate.MadmateType.Simple)
-                    {
-                        if (data.maxCrewmateRoles <= 0) break;
-                        setModifierToRandomPlayer((byte)ModifierType.Madmate, Madmate.candidates);
-                        data.maxCrewmateRoles--;
-                    }
-                    else
-                    {
-                        setModifierToRandomPlayer((byte)ModifierType.Madmate, Madmate.candidates);
-                    }
-                }
-            }
-
             // AntiTeleport
             for (int i = 0; i < CustomOptionsH.antiTeleportSpawnRate.count; i++)
             {

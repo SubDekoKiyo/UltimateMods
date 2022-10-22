@@ -68,6 +68,7 @@ namespace UltimateMods.EndGame
             public string PlayerName { get; set; }
             public List<RoleInfo> Roles { get; set; }
             public string RoleString { get; set; }
+            public int ColorId = 0;
             public int TasksCompleted { get; set; }
             public int TasksTotal { get; set; }
             public FinalStatus Status { get; set; }
@@ -113,6 +114,7 @@ namespace UltimateMods.EndGame
                 {
                     PlayerName = p.PlayerName,
                     PlayerId = p.PlayerId,
+                    ColorId = p.DefaultOutfit.ColorId,
                     // NameSuffix = Lovers.getIcon(p.Object),
                     Roles = roles,
                     RoleString = RoleInfo.GetRolesString(p.Object, true, excludeRoles, true),
@@ -125,6 +127,7 @@ namespace UltimateMods.EndGame
             List<PlayerControl> notWinners = new();
             notWinners.AddRange(Jester.allPlayers);
             notWinners.AddRange(Opportunist.allPlayers);
+            notWinners.AddRange(Madmate.allPlayers);
 
             List<WinningPlayerData> winnersToRemove = new();
             foreach (WinningPlayerData winner in TempData.winners)
@@ -135,8 +138,10 @@ namespace UltimateMods.EndGame
 
             bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
 
-            bool ForceEnd = EndGameNavigationPatch.EndGameManagerSetUpPatch.TriggerForceEnd;
-            bool SaboWin = GameOverReason == GameOverReason.ImpostorBySabotage;
+            bool CrewmateWin = GameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote;
+            bool ImpostorWin = GameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorBySabotage or GameOverReason.ImpostorByVote;
+            bool ForceEnd = EndGameNavigationPatch.EndGameManagerSetUpPatch.IsForceEnd;
+            bool SaboWin = GameOverReason is GameOverReason.ImpostorBySabotage;
             bool EveryoneLose = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
             if (JesterWin)
@@ -144,23 +149,53 @@ namespace UltimateMods.EndGame
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
                 foreach (var jester in Jester.players)
                 {
-                    WinningPlayerData wpd = new WinningPlayerData(jester.player.Data);
+                    WinningPlayerData wpd = new(jester.player.Data);
                     TempData.winners.Add(wpd);
                     jester.player.Data.IsDead = false;
                 }
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
             }
 
+            else if (CrewmateWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var player in PlayerControl.AllPlayerControls)
+                {
+                    if (player.IsCrew())
+                    {
+                        WinningPlayerData wpd = new(player.Data);
+                        TempData.winners.Add(wpd);
+                        player.Data.IsDead = false;
+                    }
+                }
+                AdditionalTempData.winCondition = WinCondition.CrewmateWin;
+            }
+
+            else if (ImpostorWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var player in PlayerControl.AllPlayerControls)
+                {
+                    if (player.IsImpostor())
+                    {
+                        WinningPlayerData wpd = new(player.Data);
+                        TempData.winners.Add(wpd);
+                        player.Data.IsDead = false;
+                    }
+                }
+                AdditionalTempData.winCondition = WinCondition.ImpostorWin;
+            }
+
             else if (ForceEnd)
             {
                 TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
-                foreach (PlayerControl p in PlayerControl.AllPlayerControls)
+                foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (p)
+                    if (player != null)
                     {
-                        WinningPlayerData wpd = new(p.Data);
+                        WinningPlayerData wpd = new(player.Data);
                         TempData.winners.Add(wpd);
-                        p.Data.IsDead = false;
+                        player.Data.IsDead = false;
                     }
                 }
                 AdditionalTempData.winCondition = WinCondition.ForceEnd;
@@ -183,6 +218,18 @@ namespace UltimateMods.EndGame
                 }
                 if (oppWin)
                     AdditionalTempData.additionalWinConditions.Add(WinCondition.OpportunistWin);
+            }
+
+            if (Madmate.exists && TempData.winners.ToArray().Any(x => x.IsImpostor))
+            {
+                if (!Madmate.CanWinTaskEnd || (Madmate.HasTasks && Madmate.CanWinTaskEnd && Madmate.TasksComplete(PlayerControl.LocalPlayer)))
+                {
+                    foreach (var p in Madmate.allPlayers)
+                    {
+                        WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                        TempData.winners.Add(wpd);
+                    }
+                }
             }
 
             foreach (WinningPlayerData wpd in TempData.winners)
@@ -213,7 +260,7 @@ namespace UltimateMods.EndGame
             [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
             public class EndGameManagerSetUpPatch
             {
-                public static bool TriggerForceEnd = false;
+                public static bool IsForceEnd = false;
                 public static void Postfix(EndGameManager __instance)
                 {
                     // Delete and readd PoolablePlayers always showing the name and role of the player
@@ -241,7 +288,7 @@ namespace UltimateMods.EndGame
                         PoolablePlayer poolablePlayer = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, __instance.transform);
                         poolablePlayer.transform.localPosition = new Vector3(1f * (float)num2 * (float)num3 * num5, FloatRange.SpreadToEdges(-1.125f, 0f, num3, num), num6 + (float)num3 * 0.01f) * 0.9f;
                         float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
-                        Vector3 vector = new Vector3(num7, num7, 1f);
+                        Vector3 vector = new(num7, num7, 1f);
                         poolablePlayer.transform.localScale = vector;
                         poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit)winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
                         if (winningPlayerData2.IsDead)
@@ -282,12 +329,12 @@ namespace UltimateMods.EndGame
                         textRenderer.color = JesterPink;
                         __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
                     }
-                    else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask || AdditionalTempData.gameOverReason == GameOverReason.HumansByVote)
+                    else if (AdditionalTempData.gameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote)
                     {
                         bonusText = ModTranslation.getString("CrewmateWin");
                         textRenderer.color = CrewmateBlue;
                     }
-                    else if (AdditionalTempData.gameOverReason == GameOverReason.ImpostorByKill || AdditionalTempData.gameOverReason == GameOverReason.ImpostorByVote || AdditionalTempData.gameOverReason == GameOverReason.ImpostorBySabotage)
+                    else if (AdditionalTempData.gameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorByVote or GameOverReason.ImpostorBySabotage)
                     {
                         bonusText = ModTranslation.getString("ImpostorWin");
                         textRenderer.color = ImpostorRed;
@@ -295,14 +342,14 @@ namespace UltimateMods.EndGame
                     else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
                     {
                         bonusText = ModTranslation.getString("EveryoneLose");
-                        textRenderer.color = Palette.DisabledGrey;
-                        __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
+                        textRenderer.color = DisabledGrey;
+                        __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.ForceEnd)
                     {
-                        bonusText = ModTranslation.getString("ForceEnd");
-                        textRenderer.color = Palette.DisabledGrey;
-                        __instance.BackgroundBar.material.SetColor("_Color", Palette.DisabledGrey);
+                        __instance.WinText.text = ModTranslation.getString("ForceEnd");
+                        textRenderer.color = DisabledGrey;
+                        __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
                     }
 
                     string extraText = "";
@@ -335,6 +382,10 @@ namespace UltimateMods.EndGame
                     {
                         textRenderer.text += ($"\n" + ModTranslation.getString("ReactorWin"));
                     }
+                    else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask)
+                    {
+                        textRenderer.text += ($"\n" + ModTranslation.getString("TaskWin"));
+                    }
                     else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.ForceEnd)
                     {
                         textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
@@ -344,7 +395,7 @@ namespace UltimateMods.EndGame
             }
 
             [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
-            class CheckEndCriteriaPatch
+            public class CheckEndCriteriaPatch
             {
                 public static bool Prefix(ShipStatus __instance)
                 {
@@ -365,8 +416,7 @@ namespace UltimateMods.EndGame
                 {
                     if (Jester.TriggerJesterWin)
                     {
-                        __instance.enabled = false;
-                        ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.JesterExiled, false);
+                        UncheckedEndGame(CustomGameOverReason.JesterExiled);
                         return true;
                     }
                     return false;
@@ -374,11 +424,9 @@ namespace UltimateMods.EndGame
 
                 private static bool CheckAndEndGameForForceEnd(ShipStatus __instance)
                 {
-                    if (EndGameManagerSetUpPatch.TriggerForceEnd)
+                    if (EndGameManagerSetUpPatch.IsForceEnd)
                     {
-                        __instance.enabled = false;
-                        ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.ForceEnd, false);
-                        EndGameManagerSetUpPatch.TriggerForceEnd = false;
+                        UncheckedEndGame(CustomGameOverReason.ForceEnd);
                         return true;
                     }
                     return false;
@@ -386,8 +434,8 @@ namespace UltimateMods.EndGame
 
                 private static bool CheckAndEndGameForSabotageWin(ShipStatus __instance)
                 {
-                    if (MapUtilities.Systems == null) return false;
-                    var systemType = MapUtilities.Systems.ContainsKey(SystemTypes.LifeSupp) ? MapUtilities.Systems[SystemTypes.LifeSupp] : null;
+                    if (__instance.Systems == null) return false;
+                    ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.LifeSupp) ? __instance.Systems[SystemTypes.LifeSupp] : null;
                     if (systemType != null)
                     {
                         LifeSuppSystemType lifeSuppSystemType = systemType.TryCast<LifeSuppSystemType>();
@@ -398,10 +446,10 @@ namespace UltimateMods.EndGame
                             return true;
                         }
                     }
-                    var systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Reactor) ? MapUtilities.Systems[SystemTypes.Reactor] : null;
+                    ISystemType systemType2 = __instance.Systems.ContainsKey(SystemTypes.Reactor) ? __instance.Systems[SystemTypes.Reactor] : null;
                     if (systemType2 == null)
                     {
-                        systemType2 = MapUtilities.Systems.ContainsKey(SystemTypes.Laboratory) ? MapUtilities.Systems[SystemTypes.Laboratory] : null;
+                        systemType2 = __instance.Systems.ContainsKey(SystemTypes.Laboratory) ? __instance.Systems[SystemTypes.Laboratory] : null;
                     }
                     if (systemType2 != null)
                     {
@@ -420,8 +468,7 @@ namespace UltimateMods.EndGame
                 {
                     if (GameData.Instance.TotalTasks > 0 && GameData.Instance.TotalTasks <= GameData.Instance.CompletedTasks)
                     {
-                        __instance.enabled = false;
-                        ShipStatus.RpcEndGame(GameOverReason.HumansByTask, false);
+                        UncheckedEndGame(GameOverReason.HumansByTask);
                         return true;
                     }
                     return false;
@@ -431,7 +478,6 @@ namespace UltimateMods.EndGame
                 {
                     if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive)
                     {
-                        __instance.enabled = false;
                         GameOverReason endReason;
                         switch (TempData.LastDeathReason)
                         {
@@ -445,7 +491,7 @@ namespace UltimateMods.EndGame
                                 endReason = GameOverReason.ImpostorByVote;
                                 break;
                         }
-                        ShipStatus.RpcEndGame(endReason, false);
+                        UncheckedEndGame(endReason);
                         return true;
                     }
                     return false;
@@ -453,10 +499,9 @@ namespace UltimateMods.EndGame
 
                 private static bool CheckAndEndGameForCrewmateWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamImpostorsAlive == 0)
+                    if (statistics.TeamCrew > 0 && statistics.TeamImpostorsAlive == 0)
                     {
-                        __instance.enabled = false;
-                        ShipStatus.RpcEndGame(GameOverReason.HumansByVote, false);
+                        UncheckedEndGame(GameOverReason.HumansByVote);
                         return true;
                     }
                     return false;
@@ -464,16 +509,24 @@ namespace UltimateMods.EndGame
 
                 private static void EndGameForO2(ShipStatus __instance)
                 {
-                    __instance.enabled = false;
-                    ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.SabotageO2, false);
+                    UncheckedEndGame(CustomGameOverReason.SabotageO2);
                     return;
                 }
 
                 private static void EndGameForReactor(ShipStatus __instance)
                 {
-                    __instance.enabled = false;
-                    ShipStatus.RpcEndGame((GameOverReason)CustomGameOverReason.SabotageReactor, false);
+                    UncheckedEndGame(CustomGameOverReason.SabotageReactor);
                     return;
+                }
+
+                private static void UncheckedEndGame(GameOverReason reason)
+                {
+                    ShipStatus.RpcEndGame(reason, false);
+                }
+
+                public static void UncheckedEndGame(CustomGameOverReason reason)
+                {
+                    UncheckedEndGame((GameOverReason)reason);
                 }
             }
 
@@ -496,9 +549,8 @@ namespace UltimateMods.EndGame
                     int numNeutralAlive = 0;
                     int numCrew = 0;
 
-                    for (int i = 0; i < GameData.Instance.PlayerCount; i++)
+                    foreach (var playerInfo in GameData.Instance.AllPlayers)
                     {
-                        GameData.PlayerInfo playerInfo = GameData.Instance.AllPlayers[i];
                         if (!playerInfo.Disconnected)
                         {
                             if (playerInfo.Object.IsCrew()) numCrew++;

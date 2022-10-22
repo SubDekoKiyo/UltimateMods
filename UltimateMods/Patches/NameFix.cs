@@ -1,4 +1,5 @@
 using HarmonyLib;
+using AmongUs.Data.Legacy;
 
 namespace UltimateMods.Patches
 {
@@ -10,9 +11,9 @@ namespace UltimateMods.Patches
         {
             static bool Prefix(AccountManager __instance)
             {
-                if (SaveManager.lastPlayerName == null)
+                if (LegacySaveManager.lastPlayerName == null)
                     return true;
-                SaveManager.PlayerName = SaveManager.lastPlayerName;
+                AmongUs.Data.DataManager.Player.Customization.name = LegacySaveManager.lastPlayerName;
                 __instance.accountTab.UpdateNameDisplay();
                 return false; // Don't execute original
             }

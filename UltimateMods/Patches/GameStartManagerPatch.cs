@@ -6,6 +6,9 @@ using Hazel;
 using System;
 using TMPro;
 using UltimateMods.Utilities;
+using AmongUs.Data;
+using InnerNet;
+using static UltimateMods.ColorDictionary;
 // using static UltimateMods.Patches.CustomLobbyPatch;
 
 namespace UltimateMods.Patches
@@ -17,7 +20,6 @@ namespace UltimateMods.Patches
         public static float shareTimer;
         private static float kickingTimer = 0f;
         private static bool versionSent = false;
-        private static string lobbyCodeText = "";
 
         [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.OnPlayerJoined))]
         public class AmongUsClientOnPlayerJoinedPatch
@@ -46,7 +48,6 @@ namespace UltimateMods.Patches
                 // Copy lobby code
                 string code = InnerNet.GameCode.IntToGameName(AmongUsClient.Instance.GameId);
                 GUIUtility.systemCopyBuffer = code;
-                lobbyCodeText = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.RoomCode, new Il2CppReferenceArray<Il2CppSystem.Object>(0)) + "\r\n" + code;
                 ErrorText = GameObject.Instantiate(__instance.GameStartText, __instance.GameStartText.transform);
             }
         }
@@ -60,7 +61,18 @@ namespace UltimateMods.Patches
 
             public static void Prefix(GameStartManager __instance)
             {
-                if (!GameData.Instance) return; // No instance
+                // Lobby code
+                if (DataManager.Settings.Gameplay.StreamerMode)
+                {
+                    __instance.GameRoomNameCode.color = UltimateModsBlue;
+                    __instance.GameRoomNameCode.text = UltimateModsPlugin.RoomCodeText.Value;
+                }
+                else
+                {
+                    __instance.GameRoomNameCode.text = GameCode.IntToGameName(AmongUsClient.Instance.GameId);
+                }
+
+                if (!GameData.Instance && !AmongUsClient.Instance.AmHost) return; // No instance and Host
                 update = GameData.Instance.PlayerCount != __instance.LastPlayerCount;
                 // カウントダウンキャンセル
                 if (Input.GetKeyDown(KeyCode.LeftShift) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
@@ -78,42 +90,44 @@ namespace UltimateMods.Patches
                     Helpers.ShareGameVersion();
                 }
 
-                // Check version handshake infos
-
-                bool versionMismatch = false;
+                bool BlockGameStart = false;
                 string message = "";
-                foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.ToArray())
-                {
-                    if (client.Character == null) continue;
-                    var dummyComponent = client.Character.GetComponent<DummyBehaviour>();
-                    if (dummyComponent != null && dummyComponent.enabled)
-                        continue;
-                    else
-                    {
-                        PlayerVersion PV = playerVersions[client.Id];
-                        int diff = UltimateModsPlugin.Version.CompareTo(PV.version);
-                        if (diff > 0)
-                        {
-                            message += $"<color=#00a2ff>{ModTranslation.getString("ErrorOlderVersion")} {client.Character.Data.PlayerName} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
-                            versionMismatch = true;
-                        }
-                        else if (diff < 0)
-                        {
-                            message += $"<color=#00a2ff>{ModTranslation.getString("ErrorNewerVersion")} {client.Character.Data.PlayerName} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
-                            versionMismatch = true;
-                        }
-                        else if (!PV.GuidMatches())
-                        { // version presumably matches, check if Guid matches
-                            message += $"<color=#00a2ff>{ModTranslation.getString("ErrorWrongVersion")} {client.Character.Data.PlayerName} Version{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
-                            versionMismatch = true;
-                        }
-                    }
-                }
-
-                // Display message to the host
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    if (versionMismatch)
+                    foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.ToArray())
+                    {
+                        if (client.Character == null) continue;
+                        var dummyComponent = client.Character.GetComponent<DummyBehaviour>();
+                        if (dummyComponent != null && dummyComponent.enabled)
+                            continue;
+                        else if (!playerVersions.ContainsKey(client.Id))
+                        {
+                            BlockGameStart = true;
+                            message += $"<color=#00a2ff>{client.Character.Data.PlayerName} {ModTranslation.getString("ErrorNotInstalled")}\n</color>";
+                        }
+                        else
+                        {
+                            PlayerVersion PV = playerVersions[client.Id];
+                            int diff = UltimateModsPlugin.Version.CompareTo(PV.version);
+                            if (diff > 0)
+                            {
+                                message += $"<color=#00a2ff>{ModTranslation.getString("ErrorOlderVersion")} {client.Character.Data.PlayerName} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
+                                BlockGameStart = true;
+                            }
+                            else if (diff < 0)
+                            {
+                                message += $"<color=#00a2ff>{ModTranslation.getString("ErrorNewerVersion")} {client.Character.Data.PlayerName} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
+                                BlockGameStart = true;
+                            }
+                            else if (!PV.GuidMatches())
+                            { // version presumably matches, check if Guid matches
+                                message += $"<color=#00a2ff>{ModTranslation.getString("ErrorWrongVersion")} {client.Character.Data.PlayerName} Version{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
+                                BlockGameStart = true;
+                            }
+                        }
+                    }
+
+                    if (BlockGameStart)
                     {
                         __instance.StartButton.color = __instance.startLabelText.color = Palette.DisabledClear;
                         __instance.GameStartText.text = message;
@@ -127,7 +141,7 @@ namespace UltimateMods.Patches
                 }
 
                 // Client update with handshake infos
-                else
+                if (!AmongUsClient.Instance.AmHost)
                 {
                     if (!playerVersions.ContainsKey(AmongUsClient.Instance.HostId) || UltimateModsPlugin.Version.CompareTo(playerVersions[AmongUsClient.Instance.HostId].version) != 0)
                     {
@@ -142,7 +156,7 @@ namespace UltimateMods.Patches
                         __instance.GameStartText.text = string.Format(ModTranslation.getString("ErrorHostNoVersion"), Math.Round(10 - kickingTimer));
                         __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
                     }
-                    else if (versionMismatch)
+                    else if (BlockGameStart)
                     {
                         __instance.GameStartText.text = $"<color=#00a2ff>{ModTranslation.getString("ErrorHostNoVersion")}\n</color>" + message;
                         __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
@@ -158,27 +172,28 @@ namespace UltimateMods.Patches
                 }
 
                 // Lobby timer
-                if (!GameData.Instance) return; // No instance
-
-                if (update) currentText = __instance.PlayerCounter.text;
-
-                timer = Mathf.Max(0f, timer -= Time.deltaTime);
-
-                int minutes = (int)timer / 60;
-                int seconds = (int)timer % 60;
-                string suffix = $" ({minutes:00}:{seconds:00})";
-
-                __instance.PlayerCounter.text = currentText + suffix;
-                __instance.PlayerCounter.autoSizeTextContainer = true;
-
-                /*if (NewsText.transform.localPosition.x >= -7f)
+                if (GameData.Instance && AmongUsClient.Instance.AmHost) // No instance and Host
                 {
-                    NewsText.transform.localPosition -= new Vector3(0.01f, 0f, 0f);
+                    if (update) currentText = __instance.PlayerCounter.text;
+
+                    timer = Mathf.Max(0f, GameStartManagerPatch.timer -= Time.deltaTime);
+
+                    int minutes = (int)timer / 60;
+                    int seconds = (int)timer % 60;
+                    string suffix = $" ({minutes:00}:{seconds:00})";
+
+                    __instance.PlayerCounter.text = currentText + suffix;
+                    __instance.PlayerCounter.autoSizeTextContainer = true;
+
+                    /*if (NewsText.transform.localPosition.x >= -7f)
+                    {
+                        NewsText.transform.localPosition -= new Vector3(0.01f, 0f, 0f);
+                    }
+                    else
+                    {
+                        NewsText.transform.localPosition = new Vector3(3.5f, NewsText.transform.localPosition.y, NewsText.transform.localPosition.z);
+                    }*/
                 }
-                else
-                {
-                    NewsText.transform.localPosition = new Vector3(3.5f, NewsText.transform.localPosition.y, NewsText.transform.localPosition.z);
-                }*/
             }
         }
 

@@ -1,5 +1,4 @@
 using HarmonyLib;
-using System;
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using UltimateMods.Utilities;
 using BepInEx.IL2CPP.Utils.Collections;
 using UltimateMods.Roles;
-using Hazel;
+using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.Patches
 {
@@ -34,32 +33,32 @@ namespace UltimateMods.Patches
                     player.SetFlipX(true);
                     MapOptions.playerIcons[p.PlayerId] = player;
 
-                    foreach (var bountyHunter in BountyHunter.allPlayers)
+                    if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                     {
-                        if (PlayerControl.LocalPlayer == bountyHunter)
-                        {
-                            player.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
-                            player.transform.localScale = Vector3.one * 0.4f;
-                            player.gameObject.SetActive(false);
-                        }
-                        else
-                            player.gameObject.SetActive(false);
+                        player.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
+                        player.transform.localScale = Vector3.one * 0.4f;
+                        player.gameObject.SetActive(false);
                     }
+                    else
+                        player.gameObject.SetActive(false);
                 }
             }
 
-            foreach (var bountyHunter in BountyHunter.allPlayers)
+            if (BountyHunter.exists)
             {
-                if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer == bountyHunter)
+                foreach (var bountyHunter in BountyHunter.allPlayers)
                 {
-                    BountyHunter.BountyUpdateTimer = 0f;
-                    if (FastDestroyableSingleton<HudManager>.Instance != null)
+                    if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer == bountyHunter)
                     {
-                        Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
-                        BountyHunter.CooldownTimer = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
-                        BountyHunter.CooldownTimer.alignment = TMPro.TextAlignmentOptions.Center;
-                        BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
-                        BountyHunter.CooldownTimer.gameObject.SetActive(true);
+                        BountyHunter.BountyUpdateTimer = 0f;
+                        if (FastDestroyableSingleton<HudManager>.Instance != null)
+                        {
+                            Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
+                            BountyHunter.CooldownTimer = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
+                            BountyHunter.CooldownTimer.alignment = TMPro.TextAlignmentOptions.Center;
+                            BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
+                            BountyHunter.CooldownTimer.gameObject.SetActive(true);
+                        }
                     }
                 }
             }
@@ -95,7 +94,6 @@ namespace UltimateMods.Patches
         }
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
-
         class SetUpRoleTextPatch
         {
             public static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
@@ -118,6 +116,15 @@ namespace UltimateMods.Patches
                 __instance.RoleText.color = roleInfo.color;
                 __instance.RoleBlurbText.text = roleInfo.IntroDescription;
                 __instance.RoleBlurbText.color = roleInfo.color;
+
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Madmate))
+                {
+                    __instance.YouAreText.color = ImpostorRed;
+                    __instance.RoleText.text = ModTranslation.getString("Madmate");
+                    __instance.RoleText.color = ImpostorRed;
+                    __instance.RoleBlurbText.text = ModTranslation.getString("MadmateIntro");
+                    __instance.RoleBlurbText.color = ImpostorRed;
+                }
 
                 // 従来処理
                 SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);

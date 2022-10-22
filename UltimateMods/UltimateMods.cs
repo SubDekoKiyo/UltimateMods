@@ -13,12 +13,17 @@ namespace UltimateMods
         public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks);
         public static void ClearAndReloadRoles()
         {
+            // Roles
             Sheriff.Clear();
             Jester.Clear();
             Engineer.Clear();
             CustomImpostor.Clear();
             UnderTaker.Clear();
             BountyHunter.Clear();
+            Madmate.Clear();
+
+            // Modifiers
+            Opportunist.Clear();
             Role.ClearAll();
         }
 

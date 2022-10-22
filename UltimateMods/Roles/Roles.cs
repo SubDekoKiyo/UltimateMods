@@ -12,6 +12,7 @@ namespace UltimateMods.Roles
         Crewmate = 0,
         Sheriff,
         Engineer,
+        Madmate,
 
         // Impostor Roles
         Impostor = 100,
@@ -21,7 +22,6 @@ namespace UltimateMods.Roles
 
         // Neutral Roles
         Jester = 200,
-
         // don't put anything below this
         NoRole = int.MaxValue
     }
@@ -34,6 +34,7 @@ namespace UltimateMods.Roles
             // Crewmate
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
+            { RoleType.Madmate, typeof(RoleBase<Madmate>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },

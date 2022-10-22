@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using UltimateMods.Patches;
 using UnityEngine;
 using UltimateMods.Modules;
+using AmongUs.Data;
 
 namespace UltimateMods
 {
@@ -76,7 +77,7 @@ namespace UltimateMods
             }
 
             var data = stringData[keyClean];
-            int lang = (int)SaveManager.LastLanguage;
+            int lang = (int)DataManager.Settings.Language.CurrentLanguage;
 
             if (data.ContainsKey(lang))
             {

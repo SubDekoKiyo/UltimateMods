@@ -12,12 +12,13 @@ namespace UltimateMods.Roles
         public static bool TriggerJesterWin = false;
         public static bool CanCallEmergency { get { return CustomRolesH.JesterCanEmergencyMeeting.getBool(); } }
         public static bool CanUseVents { get { return CustomRolesH.JesterCanUseVents.getBool(); } }
+        public static bool CanMoveInVents { get { return CustomRolesH.JesterCanMoveInVents.getBool(); } }
         public static bool CanSabotage { get { return CustomRolesH.JesterCanSabotage.getBool(); } }
         public static bool HasImpostorVision { get { return CustomRolesH.JesterHasImpostorVision.getBool(); } }
         public static bool HasTasks { get { return CustomRolesH.JesterMustFinishTasks.getBool(); } }
-        public static int numCommonTasks { get { return CustomRolesH.JesterTasks.commonTasks; } }
-        public static int numLongTasks { get { return CustomRolesH.JesterTasks.longTasks; } }
-        public static int numShortTasks { get { return CustomRolesH.JesterTasks.shortTasks; } }
+        public static int numCommonTasks { get { return CustomRolesH.JesterTasks.CommonTasks; } }
+        public static int numLongTasks { get { return CustomRolesH.JesterTasks.LongTasks; } }
+        public static int numShortTasks { get { return CustomRolesH.JesterTasks.ShortTasks; } }
 
         public Jester()
         {

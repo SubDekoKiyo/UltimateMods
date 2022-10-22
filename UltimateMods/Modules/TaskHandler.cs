@@ -1,5 +1,5 @@
 using HarmonyLib;
-using static UltimateMods.UltimateMods;
+using UltimateMods.Roles;
 using System;
 
 namespace UltimateMods.Modules
@@ -7,50 +7,6 @@ namespace UltimateMods.Modules
     [HarmonyPatch]
     public static class TasksHandler
     {
-        [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.FixedUpdate))]
-        public static class NormalPlayerTaskPatch
-        {
-            public static void Postfix(NormalPlayerTask __instance)
-            {
-                bool showArrows = !MapOptions.hideTaskArrows && !__instance.IsComplete && __instance.TaskStep > 0;
-                __instance.Arrow?.gameObject?.SetActive(showArrows);
-            }
-        }
-
-        [HarmonyPatch(typeof(AirshipUploadTask), nameof(AirshipUploadTask.FixedUpdate))]
-        public static class AirshipUploadTaskPatch
-        {
-            public static void Postfix(AirshipUploadTask __instance)
-            {
-                bool showArrows = !MapOptions.hideTaskArrows && !__instance.IsComplete && __instance.TaskStep > 0;
-                __instance.Arrows?.DoIf(x => x != null, x => x.gameObject?.SetActive(showArrows));
-            }
-        }
-
-        [HarmonyPatch(typeof(NormalPlayerTask), nameof(NormalPlayerTask.UpdateArrow))]
-        public static class NormalPlayerTaskUpdateArrowPatch
-        {
-            public static void Postfix(NormalPlayerTask __instance)
-            {
-                if (MapOptions.hideTaskArrows)
-                {
-                    __instance.Arrow?.gameObject?.SetActive(false);
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(AirshipUploadTask), nameof(AirshipUploadTask.UpdateArrow))]
-        public static class AirshipUploadTaskUpdateArrowPatch
-        {
-            public static void Postfix(AirshipUploadTask __instance)
-            {
-                if (MapOptions.hideTaskArrows)
-                {
-                    __instance.Arrows?.DoIf(x => x != null, x => x.gameObject?.SetActive(false));
-                }
-            }
-        }
-
         public static Tuple<int, int> taskInfo(GameData.PlayerInfo playerInfo)
         {
             int TotalTasks = 0;
@@ -83,8 +39,11 @@ namespace UltimateMods.Modules
                 for (int i = 0; i < __instance.AllPlayers.Count; i++)
                 {
                     GameData.PlayerInfo playerInfo = __instance.AllPlayers[i];
-                    /*if (playerInfo.Object)
-                        continue;*/
+                    if (playerInfo.Object &&
+                    (
+                        (Madmate.HasTasks && playerInfo.Object?.isRole(RoleType.Madmate) == true))
+                    )
+                        continue;
                     var (playerCompleted, playerTotal) = taskInfo(playerInfo);
                     totalTasks += playerTotal;
                     completedTasks += playerCompleted;

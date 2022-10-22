@@ -38,6 +38,7 @@ namespace UltimateMods.Roles
         public static RoleInfo customImpostor = new("CustomImpostor", ImpostorRed, CustomRolesH.CustomImpostorRate, RoleType.CustomImpostor);
         public static RoleInfo underTaker = new("UnderTaker", ImpostorRed, CustomRolesH.UnderTakerRate, RoleType.UnderTaker);
         public static RoleInfo bountyHunter = new("BountyHunter", ImpostorRed, CustomRolesH.BountyHunterRate, RoleType.BountyHunter);
+        public static RoleInfo madmate = new("Madmate", ImpostorRed, CustomRolesH.MadmateRate, RoleType.Madmate);
         public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -51,6 +52,7 @@ namespace UltimateMods.Roles
             customImpostor,
             underTaker,
             bountyHunter,
+            madmate,
         };
 
         public static string tl(string key)
@@ -70,6 +72,7 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.CustomImpostor)) infos.Add(customImpostor);
             if (p.isRole(RoleType.UnderTaker)) infos.Add(underTaker);
             if (p.isRole(RoleType.BountyHunter)) infos.Add(bountyHunter);
+            if (p.isRole(RoleType.Madmate)) infos.Add(madmate);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

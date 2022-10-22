@@ -10,6 +10,12 @@ namespace UltimateMods.Roles.Patches
             bool isComms = task.TaskType == TaskTypes.FixComms;
             bool isReactor = task.TaskType == TaskTypes.StopCharles || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.ResetReactor;
             bool isO2 = task.TaskType == TaskTypes.RestoreOxy;
+
+            if (pc.isRole(RoleType.Madmate) && (isLights && !Madmate.CanFixBlackout) || (isReactor && !Madmate.CanFixReactor) || (isO2 && !Madmate.CanFixO2) || (isComms && !Madmate.CanFixComms))
+            {
+                return true;
+            }
+
             return false;
         }
 

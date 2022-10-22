@@ -1,4 +1,5 @@
 using HarmonyLib;
+using UltimateMods.Roles;
 using UltimateMods.Roles.Patches;
 
 namespace UltimateMods.Patches
@@ -10,7 +11,6 @@ namespace UltimateMods.Patches
             [HarmonyPatch(typeof(Console), nameof(Console.CanUse))]
             public static class ConsoleCanUsePatch
             {
-
                 public static bool Prefix(ref float __result, Console __instance, [HarmonyArgument(0)] GameData.PlayerInfo pc, [HarmonyArgument(1)] out bool canUse, [HarmonyArgument(2)] out bool couldUse)
                 {
                     canUse = couldUse = false;
@@ -56,6 +56,32 @@ namespace UltimateMods.Patches
                 {
                     return !BlockButtonPatch.IsBlocked(__instance, PlayerControl.LocalPlayer);
                 }
+            }
+        }
+
+        [HarmonyPatch(typeof(Vent), nameof(Vent.Use))]
+        public static class VentUsePatch
+        {
+            public static bool Prefix(Vent __instance)
+            {
+                bool canUse;
+                bool couldUse;
+                __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
+                bool CannotMoveInVents = (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && !Madmate.CanMoveInVents) ||
+                                        (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanMoveInVents);
+                if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
+                bool isEnter = !PlayerControl.LocalPlayer.inVent;
+
+                if (isEnter)
+                {
+                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(__instance.Id);
+                }
+                else
+                {
+                    PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(__instance.Id);
+                }
+                __instance.SetButtons(isEnter && !CannotMoveInVents);
+                return false;
             }
         }
 

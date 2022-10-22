@@ -27,7 +27,6 @@ namespace UltimateMods
         public static bool hideNameplates = false;
         public static bool allowParallelMedBayScans = false;
         // public static bool showLighterDarker = false;
-        public static bool hideTaskArrows = false;
         public static bool enableHorseMode = false;
 
         // Updating values
@@ -64,7 +63,6 @@ namespace UltimateMods
             ghostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value;
             hideNameplates = UltimateModsPlugin.HideNameplates.Value;
             // showLighterDarker = UltimateModsPlugin.ShowLighterDarker.Value;
-            hideTaskArrows = UltimateModsPlugin.HideTaskArrows.Value;
             enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value;
             HorseModePatch.ShouldAlwaysHorseAround.isHorseMode = UltimateModsPlugin.EnableHorseMode.Value;
         }

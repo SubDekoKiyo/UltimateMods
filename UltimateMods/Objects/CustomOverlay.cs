@@ -171,7 +171,14 @@ namespace UltimateMods.Objects
             }
 
             InfoOverlayRoles.text = rolesText;
-            InfoOverlayRoles.enabled = true;
+            if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
+            {
+                InfoOverlayRoles.enabled = true;
+            }
+            else
+            {
+                InfoOverlayRoles.enabled = false;
+            }
 
             var underlayTransparent = new Color(0.1f, 0.1f, 0.1f, 0.0f);
             var underlayOpaque = new Color(0.1f, 0.1f, 0.1f, 0.88f);

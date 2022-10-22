@@ -313,20 +313,20 @@ namespace UltimateMods.Modules
         public CustomOption longTasksOption = null;
         public CustomOption shortTasksOption = null;
 
-        public int commonTasks { get { return Mathf.RoundToInt(commonTasksOption.getSelection()); } }
-        public int longTasks { get { return Mathf.RoundToInt(longTasksOption.getSelection()); } }
-        public int shortTasks { get { return Mathf.RoundToInt(shortTasksOption.getSelection()); } }
+        public int CommonTasks { get { return Mathf.RoundToInt(commonTasksOption.getSelection()); } }
+        public int LongTasks { get { return Mathf.RoundToInt(longTasksOption.getSelection()); } }
+        public int ShortTasks { get { return Mathf.RoundToInt(shortTasksOption.getSelection()); } }
 
         public List<byte> generateTasks()
         {
-            return Helpers.GenerateTasks(commonTasks, shortTasks, longTasks);
+            return Helpers.GenerateTasks(CommonTasks, ShortTasks, LongTasks);
         }
 
         public CustomTasksOption(int id, CustomOptionType type, Color Color, int commonDef, int longDef, int shortDef, CustomOption parent = null)
         {
-            commonTasksOption = Create(id + 20000, type, Color, "numCommonTasks", commonDef, 0f, 4f, 1f, parent);
-            longTasksOption = Create(id + 20001, type, Color, "numLongTasks", longDef, 0f, 15f, 1f, parent);
-            shortTasksOption = Create(id + 20002, type, Color, "numShortTasks", shortDef, 0f, 23f, 1f, parent);
+            commonTasksOption = Create(id + 20000, type, Color, "NumCommonTasks", commonDef, 0f, 4f, 1f, parent);
+            longTasksOption = Create(id + 20001, type, Color, "NumLongTasks", longDef, 0f, 15f, 1f, parent);
+            shortTasksOption = Create(id + 20002, type, Color, "NumShortTasks", shortDef, 0f, 23f, 1f, parent);
         }
     }
 
@@ -1029,26 +1029,6 @@ namespace UltimateMods.Modules
         {
             __result = PlayerControl.GameOptions.NumImpostors;
             return false;
-        }
-    }
-
-    [HarmonyPatch(typeof(SaveManager), "GameHostOptions", MethodType.Getter)]
-    public static class SaveManagerGameHostOptionsPatch
-    {
-        private static int numImpostors;
-        public static void Prefix()
-        {
-            if (SaveManager.hostOptionsData == null)
-            {
-                SaveManager.hostOptionsData = SaveManager.LoadGameOptions("gameHostOptions");
-            }
-
-            numImpostors = SaveManager.hostOptionsData.NumImpostors;
-        }
-
-        public static void Postfix(ref GameOptionsData __result)
-        {
-            __result.NumImpostors = numImpostors;
         }
     }
 

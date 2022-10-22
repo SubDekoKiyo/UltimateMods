@@ -7,6 +7,7 @@ using UnhollowerBaseLib;
 using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Modules;
+using AmongUs.Data;
 using static UltimateMods.UltimateMods;
 
 namespace UltimateMods.Patches
@@ -125,7 +126,7 @@ namespace UltimateMods.Patches
                     // Exile role text
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
-                        switch ((int)SaveManager.LastLanguage)
+                        switch ((int)DataManager.Settings.Language.CurrentLanguage)
                         {
                             case 0:
                                 __result = player.Data.PlayerName + " " + ModTranslation.getString("wasThe") + " " + String.Join(" ", RoleInfo.getRoleInfoForPlayer(player).Select(x => x.Name).ToArray());

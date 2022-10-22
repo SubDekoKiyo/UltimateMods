@@ -313,7 +313,7 @@ namespace UltimateMods
 
         public static void ForceEnd()
         {
-            OnGameEndPatch.EndGameNavigationPatch.EndGameManagerSetUpPatch.TriggerForceEnd = true;
+            OnGameEndPatch.EndGameNavigationPatch.EndGameManagerSetUpPatch.IsForceEnd = true;
         }
 
         public static void DragPlaceBody(byte playerId)
@@ -374,22 +374,6 @@ namespace UltimateMods
             {
                 UnderTaker.DraggingBody = false;
                 UnderTaker.BodyId = 0;
-            }
-        }
-
-        public static void DevourBody(byte playerId)
-        {
-            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-            for (int i = 0; i < array.Length; i++)
-            {
-                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
-                {
-                    UnityEngine.Object.Destroy(array[i].gameObject);
-                    if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody && UnderTaker.BodyId == playerId)
-                    {
-                        UnderTakerReSetValues();
-                    }
-                }
             }
         }
 

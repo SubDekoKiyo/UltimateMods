@@ -15,6 +15,13 @@ namespace UltimateMods.Roles.Patches
                 var roleCanCallEmergency = true;
                 var statusText = "";
 
+                // Jester
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanCallEmergency)
+                {
+                    roleCanCallEmergency = false;
+                    statusText = ModTranslation.getString("JesterMeetingButton");
+                }
+
                 if (!roleCanCallEmergency)
                 {
                     __instance.StatusText.text = statusText;
@@ -23,13 +30,6 @@ namespace UltimateMods.Roles.Patches
                     __instance.OpenLid.gameObject.SetActive(false);
                     __instance.ButtonActive = false;
                     return;
-                }
-
-                // Jester
-                if (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanCallEmergency)
-                {
-                    roleCanCallEmergency = false;
-                    statusText = ModTranslation.getString("JesterMeetingButton");
                 }
 
                 // Handle max number of meetings

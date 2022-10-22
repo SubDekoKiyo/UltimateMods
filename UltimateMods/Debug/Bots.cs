@@ -40,7 +40,7 @@ namespace UltimateMods.Debug
                 playerControl.SetVisor(HatManager.Instance.allVisors[visor].ProductId, color);
                 playerControl.SetSkin(HatManager.Instance.allSkins[skin].ProductId, color);
                 playerControl.SetNamePlate(HatManager.Instance.allNamePlates[nameplate].ProductId);
-                GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[0]);
+                GameData.Instance.RpcSetTasks(playerControl.PlayerId, new byte[3]);
             }
         }
     }

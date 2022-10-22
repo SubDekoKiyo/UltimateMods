@@ -24,8 +24,7 @@ namespace UltimateMods.Modules
                 MeetingHudPatch.nameplatesChanged = true;
                 return MapOptions.hideNameplates;
             }, UltimateModsPlugin.HideNameplates.Value),
-            new SelectionBehaviour("HideTaskArrows", () => MapOptions.hideTaskArrows = UltimateModsPlugin.HideTaskArrows.Value = !UltimateModsPlugin.HideTaskArrows.Value, UltimateModsPlugin.HideTaskArrows.Value),
-        };
+            };
 
         private static GameObject popUp;
         private static TextMeshPro titleText;

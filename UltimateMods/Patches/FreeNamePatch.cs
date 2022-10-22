@@ -33,7 +33,7 @@ namespace UltimateMods.Patches
 
                 textBox.OnChange.AddListener((Action)(() =>
                 {
-                    SaveManager.PlayerName = textBox.text;
+                    AmongUs.Data.DataManager.Player.Customization.name = textBox.text;
                 }));
                 textBox.OnEnter = textBox.OnFocusLost = textBox.OnChange;
 

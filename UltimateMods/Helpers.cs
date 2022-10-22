@@ -11,6 +11,7 @@ using UltimateMods.Roles;
 using UltimateMods.EndGame;
 using static UltimateMods.UltimateMods;
 using static UltimateMods.GameHistory;
+using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods
 {
@@ -174,7 +175,8 @@ namespace UltimateMods
 
         public static bool HasFakeTasks(this PlayerControl player)
         {
-            return (player.IsNeutral() && !player.NeutralHasTasks());
+            return (player.IsNeutral() && !player.NeutralHasTasks()) ||
+            (player.isRole(RoleType.Madmate) && !Madmate.HasTasks);
         }
 
         public static bool NeutralHasTasks(this PlayerControl player)
@@ -253,14 +255,6 @@ namespace UltimateMods
 
                 player.myTasks.Insert(0, task);
             }
-
-            /*if (player.hasModifier(ModifierType.Madmate) || player.hasModifier(ModifierType.CreatedMadmate))
-            {
-                var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
-                task.transform.SetParent(player.transform, false);
-                task.Text = cs(Madmate.color, $"{Madmate.fullName}: " + ModTranslation.getString("madmateShortDesc"));
-                player.myTasks.Insert(0, task);
-            }*/
         }
 
         public static bool HidePlayerName(PlayerControl target)
@@ -292,20 +286,6 @@ namespace UltimateMods
             // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
             // if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick) || target == Jackal.fakeSidekick)) return false; // Members of team Jackal see the names of each other
             return true;
-        }
-
-        public static bool IsSkeld(this PlayerControl player)
-        {
-            if (PlayerControl.GameOptions.MapId == 0)
-                return true;
-            return false;
-        }
-
-        public static bool IsMiraHQ(this PlayerControl player)
-        {
-            if (PlayerControl.GameOptions.MapId == 1)
-                return true;
-            return false;
         }
 
         public static bool IsAirship(this PlayerControl player)
@@ -348,7 +328,9 @@ namespace UltimateMods
             bool roleCouldUse = false;
             if (Engineer.CanUseVents && player.isRole(RoleType.Engineer))
                 roleCouldUse = true;
-            if (Jester.CanUseVents && player.isRole(RoleType.Jester))
+            else if (Jester.CanUseVents && player.isRole(RoleType.Jester))
+                roleCouldUse = true;
+            else if (Madmate.CanUseVents && player.isRole(RoleType.Madmate))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
@@ -364,6 +346,8 @@ namespace UltimateMods
         {
             bool roleCouldUse = false;
             if (Jester.CanSabotage && player.isRole(RoleType.Jester))
+                roleCouldUse = true;
+            else if (Madmate.CanSabotage && player.isRole(RoleType.Madmate))
                 roleCouldUse = true;
             else if (!CustomImpostor.CanSabotage && player.isRole(RoleType.CustomImpostor))
                 roleCouldUse = false;

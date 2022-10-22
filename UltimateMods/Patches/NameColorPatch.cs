@@ -66,6 +66,16 @@ namespace UltimateMods.Patches
                 setPlayerNameColor(p, SheriffYellow);
             if (role(RoleType.Engineer))
                 setPlayerNameColor(p, EngineerBlue);
+
+            if (p.isRole(RoleType.Madmate))
+            {
+                setPlayerNameColor(p, ImpostorRed);
+
+                if (Madmate.KnowsImpostors(p))
+                    foreach (var pc in PlayerControl.AllPlayerControls)
+                        if (pc.IsImpostor())
+                            setPlayerNameColor(p, Palette.ImpostorRed);
+            }
         }
 
         static void Postfix(HudManager __instance)

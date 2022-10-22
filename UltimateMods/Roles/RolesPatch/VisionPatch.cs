@@ -21,7 +21,8 @@ namespace UltimateMods.Roles.Patches
 
             if (player == null || player.IsDead) // IsDead
                 __result = __instance.MaxLightRadius;
-            else if (player.Role.IsImpostor || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)) // Jester with Impostor vision
+            else if ((player.Role.IsImpostor || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)) ||
+             (player.Object.isRole(RoleType.Madmate) && Madmate.HasImpostorVision)) // Jester with Impostor vision
                 __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
             else
                 __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, num) * PlayerControl.GameOptions.CrewLightMod;
