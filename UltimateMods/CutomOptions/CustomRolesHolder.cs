@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
-using UltimateMods.Roles;
 using static UltimateMods.ColorDictionary;
 using static UltimateMods.Modules.CustomOption.CustomOptionType;
 

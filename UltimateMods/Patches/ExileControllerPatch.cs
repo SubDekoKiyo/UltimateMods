@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using HarmonyLib;
-using Hazel;
-using UnhollowerBaseLib;
 using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Modules;
 using AmongUs.Data;
-using static UltimateMods.UltimateMods;
 
 namespace UltimateMods.Patches
 {

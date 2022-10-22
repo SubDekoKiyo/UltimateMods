@@ -1,13 +1,8 @@
 using HarmonyLib;
 using Hazel;
 using System;
-using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
-using static UltimateMods.UltimateMods;
-using static UltimateMods.GameHistory;
-using System.Reflection;
-using UltimateMods.Modules;
 using UltimateMods.Utilities;
 
 namespace UltimateMods.Patches

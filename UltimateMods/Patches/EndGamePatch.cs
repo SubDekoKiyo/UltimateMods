@@ -5,9 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
-using System.Text;
 using UltimateMods.Modules;
-using UltimateMods.Utilities;
 using UltimateMods.Debug;
 using static UltimateMods.ColorDictionary;
 

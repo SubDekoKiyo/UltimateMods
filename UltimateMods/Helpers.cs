@@ -11,7 +11,6 @@ using UltimateMods.Roles;
 using UltimateMods.EndGame;
 using static UltimateMods.UltimateMods;
 using static UltimateMods.GameHistory;
-using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods
 {

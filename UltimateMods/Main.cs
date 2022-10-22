@@ -6,12 +6,7 @@ using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
-using System.Collections.Generic;
-using System.Linq;
-using System;
 using UnityEngine;
-using Hazel;
-using UltimateMods.Roles;
 
 namespace UltimateMods
 {

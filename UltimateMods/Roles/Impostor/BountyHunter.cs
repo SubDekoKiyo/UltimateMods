@@ -1,10 +1,6 @@
-using System.Linq;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
 using TMPro;
 using static UltimateMods.ColorDictionary;
 using UltimateMods.Patches;

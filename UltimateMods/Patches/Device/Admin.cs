@@ -3,8 +3,6 @@ using Hazel;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static UltimateMods.UltimateMods;
-using UltimateMods.Modules;
 using UltimateMods.Utilities;
 
 namespace UltimateMods.Patches

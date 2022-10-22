@@ -1,13 +1,10 @@
-using System.Linq;
 using HarmonyLib;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
 using Hazel;
 using TMPro;
 using UltimateMods.Patches;
-using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.Roles
 {

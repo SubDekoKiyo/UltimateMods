@@ -1,12 +1,9 @@
 using HarmonyLib;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using System.Text.RegularExpressions;
-using UltimateMods.Patches;
-using UnityEngine;
 using UltimateMods.Modules;
 using AmongUs.Data;
 

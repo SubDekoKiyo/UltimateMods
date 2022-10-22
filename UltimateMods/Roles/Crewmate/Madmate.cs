@@ -1,9 +1,5 @@
 using HarmonyLib;
 using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UltimateMods.Roles;
-using UltimateMods.Modules;
 
 namespace UltimateMods.Roles
 {
