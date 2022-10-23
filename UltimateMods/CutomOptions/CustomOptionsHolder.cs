@@ -81,7 +81,7 @@ namespace UltimateMods
 
             RandomGen = CustomOption.Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RandomGen"), true, null, true);
 
-            RememberClassic = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
+            // RememberClassic = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
             EnableMirrorMap = CustomOption.Create(33, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
 
             // Using new id's for the options to not break compatibility with older versions
