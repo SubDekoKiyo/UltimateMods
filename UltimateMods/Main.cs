@@ -7,7 +7,6 @@ using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
 using UnityEngine;
-using UltimateMods.Modules;
 
 namespace UltimateMods
 {
@@ -57,7 +56,6 @@ namespace UltimateMods
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
             // DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 
-            AssetLoader.LoadAssets();
             CustomRolesH.Load();
             CustomOptionsH.Load();
             // DiscordPatch.StartDiscord();

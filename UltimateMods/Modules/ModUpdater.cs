@@ -15,8 +15,14 @@ namespace UltimateMods.Modules
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class ModUpdaterButton
     {
+        public static bool AssetsLoaded = false;
         private static void Prefix(MainMenuManager __instance)
         {
+            if (!AssetsLoaded)
+            {
+                AssetLoader.LoadAssets();
+                AssetsLoaded = true;
+            }
             // CustomHatLoader.LaunchHatFetcher();
             ModUpdater.LaunchUpdater();
             // if (!ModUpdater.hasUpdate) return; // アプデ時のみ表示だが、あえて常時表示にする

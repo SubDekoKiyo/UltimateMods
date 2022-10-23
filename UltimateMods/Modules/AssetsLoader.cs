@@ -7,18 +7,29 @@ namespace UltimateMods.Modules
 {
     public static class AssetLoader
     {
-        private static readonly Assembly sounds = Assembly.GetExecutingAssembly();
+        private static readonly Assembly assets = Assembly.GetExecutingAssembly();
+
         public static AudioClip JesterWinSound;
         public static AudioClip EveryoneLoseSound;
 
+        public static Texture2D ClassicMeetingStart0;
+        public static Texture2D ClassicMeetingStart1;
+        public static Texture2D ClassicMeetingStart2;
+        public static Texture2D ClassicMeetingStart3;
+
         public static void LoadAssets()
         {
-            var ResourceAudioFileStream = sounds.GetManifestResourceStream("UltimateMods.Resources.Sounds.Assets.ultimatesounds");
-            var AssetBundleBundle = AssetBundle.LoadFromMemory(ResourceAudioFileStream.ReadFully());
+            var AssetsResource = assets.GetManifestResourceStream("UltimateMods.Resources.Sounds.Assets.ultimatebundle");
+            var AssetsBundle = AssetBundle.LoadFromMemory(AssetsResource.ReadFully());
 
-            JesterWinSound = AssetBundleBundle.LoadAsset<AudioClip>("JesterWin.wav").DontUnload();
-            EveryoneLoseSound = AssetBundleBundle.LoadAsset<AudioClip>("EveryoneLose.wav").DontUnload();
+            JesterWinSound = AssetsBundle.LoadAsset<AudioClip>("JesterWin.wav").DontUnload();
+            EveryoneLoseSound = AssetsBundle.LoadAsset<AudioClip>("EveryoneLose.wav").DontUnload();
+            ClassicMeetingStart0 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen0.png").DontUnload();
+            ClassicMeetingStart1 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen1.png").DontUnload();
+            ClassicMeetingStart2 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen2.png").DontUnload();
+            ClassicMeetingStart3 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen3.png").DontUnload();
         }
+
         public static byte[] ReadFully(this Stream input)
         {
             using (var ms = new MemoryStream())

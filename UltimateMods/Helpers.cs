@@ -24,9 +24,9 @@ namespace UltimateMods
     public static class Helpers
     {
         public static Dictionary<string, Sprite> CachedSprites = new();
-        public static Sprite LoadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect)
+        public static Sprite LoadSpriteFromTexture2D(Texture2D texture, float pixelsPerUnit)
         {
-            return Sprite.Create(texture, textureRect, new Vector2(0.5f, 0.5f), pixelsPerUnit);
+            return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
         }
 
         public static Sprite LoadSpriteFromResources(Texture2D texture, float pixelsPerUnit, Rect textureRect, Vector2 pivot)
@@ -94,40 +94,6 @@ namespace UltimateMods
                 iCall_LoadImage = IL2CPP.ResolveICall<d_LoadImage>("UnityEngine.ImageConversion::LoadImage");
             var il2cppArray = (Il2CppStructArray<byte>)data;
             return iCall_LoadImage.Invoke(tex.Pointer, il2cppArray.Pointer, markNonReadable);
-        }
-
-        public static AudioClip LoadAudioClipFromResources(string path, string clipName = "UNNAMED_TOR_AUDIO_CLIP")
-        {
-            // must be "raw (headerless) 2-channel signed 32 bit pcm (le)" (can e.g. use Audacity to export)
-            try
-            {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                Stream stream = assembly.GetManifestResourceStream(path);
-                var byteAudio = new byte[stream.Length];
-                _ = stream.Read(byteAudio, 0, (int)stream.Length);
-                float[] samples = new float[byteAudio.Length / 4]; // 4 bytes per sample
-                int offset;
-                for (int i = 0; i < samples.Length; i++)
-                {
-                    offset = i * 4;
-                    samples[i] = (float)BitConverter.ToInt32(byteAudio, offset) / Int32.MaxValue;
-                }
-                int channels = 2;
-                int sampleRate = 48000;
-                AudioClip audioClip = AudioClip.Create(clipName, samples.Length, channels, sampleRate, false);
-                audioClip.SetData(samples, 0);
-                return audioClip;
-            }
-            catch
-            {
-                System.Console.WriteLine("Error loading AudioClip from resources: " + path);
-            }
-            return null;
-
-            /* Usage example:
-            AudioClip exampleClip = Helpers.loadAudioClipFromResources("TheOtherRoles.Resources.exampleClip.raw");
-            if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(exampleClip, false, 0.8f);
-            */
         }
 
         public static PlayerControl PlayerById(byte id)
