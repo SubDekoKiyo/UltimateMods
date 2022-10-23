@@ -313,7 +313,7 @@ namespace UltimateMods
 
         public static void ForceEnd()
         {
-            OnGameEndPatch.EndGameNavigationPatch.EndGameManagerSetUpPatch.IsForceEnd = true;
+            AlivePlayer.IsForceEnd = true;
         }
 
         public static void DragPlaceBody(byte playerId)

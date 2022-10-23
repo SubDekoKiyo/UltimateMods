@@ -138,7 +138,7 @@ namespace UltimateMods.EndGame
 
             bool CrewmateWin = GameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote;
             bool ImpostorWin = GameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorBySabotage or GameOverReason.ImpostorByVote;
-            bool ForceEnd = EndGameNavigationPatch.EndGameManagerSetUpPatch.IsForceEnd;
+            bool ForceEnd = AlivePlayer.IsForceEnd;
             bool SaboWin = GameOverReason is GameOverReason.ImpostorBySabotage;
             bool EveryoneLose = AdditionalTempData.playerRoles.All(x => x.Status != FinalStatus.Alive);
 
@@ -258,7 +258,6 @@ namespace UltimateMods.EndGame
             [HarmonyPatch(typeof(EndGameManager), nameof(EndGameManager.SetEverythingUp))]
             public class EndGameManagerSetUpPatch
             {
-                public static bool IsForceEnd = false;
                 public static void Postfix(EndGameManager __instance)
                 {
                     // Delete and readd PoolablePlayers always showing the name and role of the player
@@ -348,6 +347,9 @@ namespace UltimateMods.EndGame
                         __instance.WinText.text = ModTranslation.getString("ForceEnd");
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
+                        SoundManager.Instance.StopSound(__instance.CrewStinger);
+                        SoundManager.Instance.StopSound(__instance.ImpostorStinger);
+                        SoundManager.Instance.PlaySound(__instance.DisconnectStinger, false, 0.8f);
                     }
 
                     string extraText = "";
@@ -422,7 +424,7 @@ namespace UltimateMods.EndGame
 
                 private static bool CheckAndEndGameForForceEnd(ShipStatus __instance)
                 {
-                    if (EndGameManagerSetUpPatch.IsForceEnd)
+                    if (AlivePlayer.IsForceEnd)
                     {
                         UncheckedEndGame(CustomGameOverReason.ForceEnd);
                         return true;

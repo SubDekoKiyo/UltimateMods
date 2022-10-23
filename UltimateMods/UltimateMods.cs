@@ -24,6 +24,8 @@ namespace UltimateMods
 
             // Modifiers
             Opportunist.Clear();
+
+            AlivePlayer.Clear();
             Role.ClearAll();
         }
 
