@@ -36,7 +36,7 @@ namespace UltimateMods.Roles.Patches
                 if (__instance.state == 1)
                 {
                     int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;
-                    int teamRemaining = Mathf.Max(0, maxNumberOfMeetings - meetingsCount);
+                    int teamRemaining = Mathf.Max(0, MaxNumberOfMeetings - MeetingsCount);
                     int remaining = Mathf.Min(localRemaining, teamRemaining);
 
                     __instance.StatusText.text = String.Format(ModTranslation.getString("MeetingStatus"), PlayerControl.LocalPlayer.name, localRemaining.ToString(), teamRemaining.ToString());

@@ -27,7 +27,7 @@ namespace UltimateMods.Patches
         static void UseVitalsTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictVitalsTime > 0f && PlayerControl.LocalPlayer.IsAlive())
+            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictVitalsTime > 0f && PlayerControl.LocalPlayer.IsAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseVitalsTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(vitalsTimer);
@@ -69,7 +69,7 @@ namespace UltimateMods.Patches
                 if (vitalsTimer > 0.1f)
                     UseVitalsTime();
 
-                if (MapOptions.restrictDevices > 0)
+                if (MapOptions.RestrictDevices > 0)
                 {
                     if (TimeRemaining == null)
                     {
@@ -81,13 +81,13 @@ namespace UltimateMods.Patches
                         TimeRemaining.color = Palette.White;
                     }
 
-                    if (MapOptions.restrictVitalsTime <= 0f)
+                    if (MapOptions.RestrictVitalsTime <= 0f)
                     {
                         __instance.Close();
                         return false;
                     }
 
-                    string timeString = TimeSpan.FromSeconds(MapOptions.restrictVitalsTime).ToString(@"mm\:ss\.ff");
+                    string timeString = TimeSpan.FromSeconds(MapOptions.RestrictVitalsTime).ToString(@"mm\:ss\.ff");
                     TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
                     TimeRemaining.gameObject.SetActive(true);
                 }

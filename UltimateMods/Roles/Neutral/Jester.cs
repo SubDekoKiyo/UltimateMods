@@ -19,7 +19,6 @@ namespace UltimateMods.Roles
 
         public Jester()
         {
-            TriggerJesterWin = false;
             RoleType = roleId = RoleType.Jester;
         }
 
@@ -64,6 +63,7 @@ namespace UltimateMods.Roles
 
         public static void Clear()
         {
+            TriggerJesterWin = false;
             players = new List<Jester>();
         }
     }

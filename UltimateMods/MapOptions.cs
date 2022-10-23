@@ -7,61 +7,63 @@ namespace UltimateMods
     static class MapOptions
     {
         // Set values
-        public static int maxNumberOfMeetings = 10;
-        public static bool blockSkippingInEmergencyMeetings = false;
-        public static bool noVoteIsSelfVote = false;
-        public static bool hideOutOfSightNametags = false;
-        public static bool hidePlayerNames = false;
+        public static int MaxNumberOfMeetings = 10;
+        public static bool BlockSkippingInEmergencyMeetings = false;
+        public static bool NoVoteIsSelfVote = false;
+        public static bool HideOutOfSightNametags = false;
+        public static bool HidePlayerNames = false;
 
-        public static int restrictDevices = 0;
-        public static float restrictAdminTime = 600f;
-        public static float restrictAdminTimeMax = 600f;
-        public static float restrictCamerasTime = 600f;
-        public static float restrictCamerasTimeMax = 600f;
-        public static float restrictVitalsTime = 600f;
-        public static float restrictVitalsTimeMax = 600f;
+        public static int RestrictDevices = 0;
+        public static float RestrictAdminTime = 600f;
+        public static float RestrictAdminTimeMax = 600f;
+        public static float RestrictCamerasTime = 600f;
+        public static float RestrictCamerasTimeMax = 600f;
+        public static float RestrictVitalsTime = 600f;
+        public static float RestrictVitalsTimeMax = 600f;
 
-        public static bool ghostsSeeRoles = true;
-        public static bool ghostsSeeTasks = true;
-        public static bool ghostsSeeVotes = true;
-        public static bool hideNameplates = false;
-        public static bool allowParallelMedBayScans = false;
+        public static bool GhostsSeeRoles = true;
+        public static bool GhostsSeeTasks = true;
+        public static bool GhostsSeeVotes = true;
+        public static bool HideNameplates = false;
+        public static bool AllowParallelMedBayScans = false;
+        public static bool EnableCustomSounds = true;
         // public static bool showLighterDarker = false;
         public static bool enableHorseMode = false;
 
         // Updating values
-        public static int meetingsCount = 0;
-        public static List<SurvCamera> camerasToAdd = new();
-        public static List<Vent> ventsToSeal = new();
-        public static Dictionary<byte, PoolablePlayer> playerIcons = new();
+        public static int MeetingsCount = 0;
+        public static List<SurvCamera> CamerasToAdd = new();
+        public static List<Vent> VentsToSeal = new();
+        public static Dictionary<byte, PoolablePlayer> PlayerIcons = new();
 
         public static void ClearAndReloadMapOptions()
         {
-            meetingsCount = 0;
-            camerasToAdd = new List<SurvCamera>();
-            ventsToSeal = new List<Vent>();
-            playerIcons = new Dictionary<byte, PoolablePlayer>();
+            MeetingsCount = 0;
+            CamerasToAdd = new();
+            VentsToSeal = new();
+            PlayerIcons = new();
 
-            maxNumberOfMeetings = Mathf.RoundToInt(CustomOptionsH.MaxNumberOfMeetings.getSelection());
-            blockSkippingInEmergencyMeetings = CustomOptionsH.BlockSkippingInEmergencyMeetings.getBool();
-            noVoteIsSelfVote = CustomOptionsH.NoVoteIsSelfVote.getBool();
+            MaxNumberOfMeetings = Mathf.RoundToInt(CustomOptionsH.MaxNumberOfMeetings.getSelection());
+            BlockSkippingInEmergencyMeetings = CustomOptionsH.BlockSkippingInEmergencyMeetings.getBool();
+            NoVoteIsSelfVote = CustomOptionsH.NoVoteIsSelfVote.getBool();
 
-            hideOutOfSightNametags = CustomOptionsH.HideOutOfSightNameTags.getBool();
-            hidePlayerNames = CustomOptionsH.HidePlayerNames.getBool();
+            HideOutOfSightNametags = CustomOptionsH.HideOutOfSightNameTags.getBool();
+            HidePlayerNames = CustomOptionsH.HidePlayerNames.getBool();
 
-            restrictDevices = CustomOptionsH.RestrictDevices.getSelection();
-            restrictAdminTime = restrictAdminTimeMax = CustomOptionsH.RestrictAdmin.getFloat();
-            restrictCamerasTime = restrictCamerasTimeMax = CustomOptionsH.RestrictCameras.getFloat();
-            restrictVitalsTime = restrictVitalsTimeMax = CustomOptionsH.RestrictVitals.getFloat();
+            RestrictDevices = CustomOptionsH.RestrictDevices.getSelection();
+            RestrictAdminTime = RestrictAdminTimeMax = CustomOptionsH.RestrictAdmin.getFloat();
+            RestrictCamerasTime = RestrictCamerasTimeMax = CustomOptionsH.RestrictCameras.getFloat();
+            RestrictVitalsTime = RestrictVitalsTimeMax = CustomOptionsH.RestrictVitals.getFloat();
         }
 
         public static void reloadPluginOptions()
         {
-            allowParallelMedBayScans = CustomOptionsH.AllowParallelMedBayScans.getBool();
-            ghostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value;
-            ghostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value;
-            ghostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value;
-            hideNameplates = UltimateModsPlugin.HideNameplates.Value;
+            AllowParallelMedBayScans = CustomOptionsH.AllowParallelMedBayScans.getBool();
+            GhostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value;
+            GhostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value;
+            GhostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value;
+            HideNameplates = UltimateModsPlugin.HideNameplates.Value;
+            EnableCustomSounds = UltimateModsPlugin.EnableCustomSounds.Value;
             // showLighterDarker = UltimateModsPlugin.ShowLighterDarker.Value;
             enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value;
             HorseModePatch.ShouldAlwaysHorseAround.isHorseMode = UltimateModsPlugin.EnableHorseMode.Value;
@@ -69,16 +71,16 @@ namespace UltimateMods
 
         public static void ResetDeviceTimes()
         {
-            restrictAdminTime = restrictAdminTimeMax;
-            restrictCamerasTime = restrictCamerasTimeMax;
-            restrictVitalsTime = restrictVitalsTimeMax;
+            RestrictAdminTime = RestrictAdminTimeMax;
+            RestrictCamerasTime = RestrictCamerasTimeMax;
+            RestrictVitalsTime = RestrictVitalsTimeMax;
         }
 
         public static bool canUseAdmin
         {
             get
             {
-                return restrictDevices == 0 || restrictAdminTime > 0f;
+                return RestrictDevices == 0 || RestrictAdminTime > 0f;
             }
         }
 
@@ -86,7 +88,7 @@ namespace UltimateMods
         {
             get
             {
-                return restrictDevices == 0 || restrictAdminTimeMax > 0f;
+                return RestrictDevices == 0 || RestrictAdminTimeMax > 0f;
             }
         }
 
@@ -94,7 +96,7 @@ namespace UltimateMods
         {
             get
             {
-                return restrictDevices == 0 || restrictCamerasTime > 0f;
+                return RestrictDevices == 0 || RestrictCamerasTime > 0f;
             }
         }
 
@@ -102,7 +104,7 @@ namespace UltimateMods
         {
             get
             {
-                return restrictDevices == 0 || restrictCamerasTimeMax > 0f;
+                return RestrictDevices == 0 || RestrictCamerasTimeMax > 0f;
             }
         }
 
@@ -110,7 +112,7 @@ namespace UltimateMods
         {
             get
             {
-                return restrictDevices == 0 || restrictVitalsTime > 0f;
+                return RestrictDevices == 0 || RestrictVitalsTime > 0f;
             }
         }
 
@@ -118,7 +120,7 @@ namespace UltimateMods
         {
             get
             {
-                return restrictDevices == 0 || restrictVitalsTimeMax > 0f;
+                return RestrictDevices == 0 || RestrictVitalsTimeMax > 0f;
             }
         }
     }

@@ -51,7 +51,7 @@ namespace UltimateMods.Roles
                 if (BountyHunter.CooldownTimer != null && BountyHunter.CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(BountyHunter.CooldownTimer.gameObject);
                 BountyHunter.CooldownTimer = null;
                 BountyHunter.Bounty = null;
-                foreach (PoolablePlayer p in MapOptions.playerIcons.Values)
+                foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
                 {
                     if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
                 }
@@ -78,9 +78,9 @@ namespace UltimateMods.Roles
                 // Show poolable player
                 if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null)
                 {
-                    foreach (PoolablePlayer pp in MapOptions.playerIcons.Values) pp.gameObject.SetActive(false);
-                    if (MapOptions.playerIcons.ContainsKey(BountyHunter.Bounty.PlayerId) && MapOptions.playerIcons[BountyHunter.Bounty.PlayerId].gameObject != null)
-                        MapOptions.playerIcons[BountyHunter.Bounty.PlayerId].gameObject.SetActive(true);
+                    foreach (PoolablePlayer pp in MapOptions.PlayerIcons.Values) pp.gameObject.SetActive(false);
+                    if (MapOptions.PlayerIcons.ContainsKey(BountyHunter.Bounty.PlayerId) && MapOptions.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject != null)
+                        MapOptions.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject.SetActive(true);
                 }
             }
 
@@ -130,7 +130,7 @@ namespace UltimateMods.Roles
             Arrow = null;
             if (CooldownTimer != null && CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(CooldownTimer.gameObject);
             CooldownTimer = null;
-            foreach (PoolablePlayer p in MapOptions.playerIcons.Values)
+            foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
                 if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
             foreach (var bountyHunter in BountyHunter.allPlayers)
                 KillCooldowns = bountyHunter.killTimer / 2;

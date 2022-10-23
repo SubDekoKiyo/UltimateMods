@@ -96,9 +96,43 @@ namespace UltimateMods
             return iCall_LoadImage.Invoke(tex.Pointer, il2cppArray.Pointer, markNonReadable);
         }
 
+        public static AudioClip LoadAudioClipFromResources(string path, string clipName = "UNNAMED_TOR_AUDIO_CLIP")
+        {
+            // must be "raw (headerless) 2-channel signed 32 bit pcm (le)" (can e.g. use Audacity to export)
+            try
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                Stream stream = assembly.GetManifestResourceStream(path);
+                var byteAudio = new byte[stream.Length];
+                _ = stream.Read(byteAudio, 0, (int)stream.Length);
+                float[] samples = new float[byteAudio.Length / 4]; // 4 bytes per sample
+                int offset;
+                for (int i = 0; i < samples.Length; i++)
+                {
+                    offset = i * 4;
+                    samples[i] = (float)BitConverter.ToInt32(byteAudio, offset) / Int32.MaxValue;
+                }
+                int channels = 2;
+                int sampleRate = 48000;
+                AudioClip audioClip = AudioClip.Create(clipName, samples.Length, channels, sampleRate, false);
+                audioClip.SetData(samples, 0);
+                return audioClip;
+            }
+            catch
+            {
+                System.Console.WriteLine("Error loading AudioClip from resources: " + path);
+            }
+            return null;
+
+            /* Usage example:
+            AudioClip exampleClip = Helpers.loadAudioClipFromResources("TheOtherRoles.Resources.exampleClip.raw");
+            if (Constants.ShouldPlaySfx()) SoundManager.Instance.PlaySound(exampleClip, false, 0.8f);
+            */
+        }
+
         public static PlayerControl PlayerById(byte id)
         {
-            foreach (PlayerControl player in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            foreach (PlayerControl player in PlayerControl.AllPlayerControls)
                 if (player.PlayerId == id)
                     return player;
             return null;
@@ -272,7 +306,7 @@ namespace UltimateMods
             // if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
             // if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
             */
-            if (MapOptions.hideOutOfSightNametags && COHelpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
+            if (MapOptions.HideOutOfSightNametags && COHelpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
             {
                 float distMod = 1.025f;
                 float distance = Vector3.Distance(source.transform.position, target.transform.position);
@@ -280,18 +314,11 @@ namespace UltimateMods
 
                 if (distance > ShipStatus.Instance.CalculateLightRadius(source.Data) * distMod || anythingBetween) return true;
             }
-            if (!MapOptions.hidePlayerNames) return false; // All names are visible
+            if (!MapOptions.HidePlayerNames) return false; // All names are visible
             // if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
             // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
             // if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick) || target == Jackal.fakeSidekick)) return false; // Members of team Jackal see the names of each other
             return true;
-        }
-
-        public static bool IsAirship(this PlayerControl player)
-        {
-            if (PlayerControl.GameOptions.MapId == 4)
-                return true;
-            return false;
         }
 
         public static MurderAttemptResult CheckMurderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)

@@ -210,17 +210,17 @@ namespace UltimateMods
 
         public static void UseAdminTime(float time)
         {
-            MapOptions.restrictAdminTime -= time;
+            MapOptions.RestrictAdminTime -= time;
         }
 
         public static void UseCameraTime(float time)
         {
-            MapOptions.restrictCamerasTime -= time;
+            MapOptions.RestrictCamerasTime -= time;
         }
 
         public static void UseVitalsTime(float time)
         {
-            MapOptions.restrictVitalsTime -= time;
+            MapOptions.RestrictVitalsTime -= time;
         }
 
         public static void UncheckedMurderPlayer(byte sourceId, byte targetId, byte showAnimation)

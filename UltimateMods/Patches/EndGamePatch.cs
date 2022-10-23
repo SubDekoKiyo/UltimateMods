@@ -7,6 +7,7 @@ using System.Linq;
 using System;
 using UltimateMods.Modules;
 using UltimateMods.Debug;
+using static UltimateMods.Modules.AssetLoader;
 using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.EndGame
@@ -149,7 +150,7 @@ namespace UltimateMods.EndGame
                 {
                     WinningPlayerData wpd = new(jester.player.Data);
                     TempData.winners.Add(wpd);
-                    jester.player.Data.IsDead = false;
+                    jester.player.Data.IsDead = true;
                 }
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
             }
@@ -163,7 +164,6 @@ namespace UltimateMods.EndGame
                     {
                         WinningPlayerData wpd = new(player.Data);
                         TempData.winners.Add(wpd);
-                        player.Data.IsDead = false;
                     }
                 }
                 AdditionalTempData.winCondition = WinCondition.CrewmateWin;
@@ -178,7 +178,6 @@ namespace UltimateMods.EndGame
                     {
                         WinningPlayerData wpd = new(player.Data);
                         TempData.winners.Add(wpd);
-                        player.Data.IsDead = false;
                     }
                 }
                 AdditionalTempData.winCondition = WinCondition.ImpostorWin;
@@ -325,6 +324,11 @@ namespace UltimateMods.EndGame
                         bonusText = ModTranslation.getString("JesterWin");
                         textRenderer.color = JesterPink;
                         __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
+                        if (MapOptions.EnableCustomSounds)
+                        {
+                            SoundManager.Instance.StopSound(__instance.ImpostorStinger);
+                            SoundManager.Instance.PlaySound(JesterWinSound, false, 0.8f);
+                        }
                     }
                     else if (AdditionalTempData.gameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote)
                     {
@@ -341,13 +345,17 @@ namespace UltimateMods.EndGame
                         bonusText = ModTranslation.getString("EveryoneLose");
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
+                        if (MapOptions.EnableCustomSounds)
+                        {
+                            SoundManager.Instance.StopSound(__instance.ImpostorStinger);
+                            SoundManager.Instance.PlaySound(EveryoneLoseSound, false, 0.8f);
+                        }
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.ForceEnd)
                     {
                         __instance.WinText.text = ModTranslation.getString("ForceEnd");
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
-                        SoundManager.Instance.StopSound(__instance.CrewStinger);
                         SoundManager.Instance.StopSound(__instance.ImpostorStinger);
                         SoundManager.Instance.PlaySound(__instance.DisconnectStinger, false, 0.8f);
                     }

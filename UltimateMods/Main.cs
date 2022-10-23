@@ -7,6 +7,7 @@ using BepInEx.Configuration;
 using BepInEx.IL2CPP;
 using HarmonyLib;
 using UnityEngine;
+using UltimateMods.Modules;
 
 namespace UltimateMods
 {
@@ -28,6 +29,7 @@ namespace UltimateMods
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
+        public static ConfigEntry<bool> EnableCustomSounds { get; set; }
         // public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<string> RoomCodeText { get; set; }
@@ -48,12 +50,14 @@ namespace UltimateMods
             GhostsSeeRoles = Config.Bind("Custom", "Ghosts See Roles", true);
             GhostsSeeVotes = Config.Bind("Custom", "Ghosts See Votes", true);
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
+            EnableCustomSounds = Config.Bind("Custom", "Enable Custom Sounds", true);
             // ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             RoomCodeText = Config.Bind("Custom", "Streamer Mode Room Code Text", "Ultimate Mods");
             ShowPopUpVersion = Config.Bind("Custom", "Show PopUp", "0");
             // DebugRepo = Config.Bind("Custom", "Debug Hat Repo", "");
 
+            AssetLoader.LoadAssets();
             CustomRolesH.Load();
             CustomOptionsH.Load();
             // DiscordPatch.StartDiscord();

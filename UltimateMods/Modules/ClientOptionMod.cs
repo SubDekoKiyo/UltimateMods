@@ -15,14 +15,15 @@ namespace UltimateMods.Modules
     public static class ClientOptionsPatch
     {
         private static SelectionBehaviour[] AllOptions = {
-            new SelectionBehaviour("GhostsSeeTasksButton", () => MapOptions.ghostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value = !UltimateModsPlugin.GhostsSeeTasks.Value, UltimateModsPlugin.GhostsSeeTasks.Value),
-            new SelectionBehaviour("GhostsSeeVotesButton", () => MapOptions.ghostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value = !UltimateModsPlugin.GhostsSeeVotes.Value, UltimateModsPlugin.GhostsSeeVotes.Value),
-            new SelectionBehaviour("GhostsSeeRolesButton", () => MapOptions.ghostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value = !UltimateModsPlugin.GhostsSeeRoles.Value, UltimateModsPlugin.GhostsSeeRoles.Value),
+            new SelectionBehaviour("GhostsSeeTasksButton", () => MapOptions.GhostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value = !UltimateModsPlugin.GhostsSeeTasks.Value, UltimateModsPlugin.GhostsSeeTasks.Value),
+            new SelectionBehaviour("GhostsSeeVotesButton", () => MapOptions.GhostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value = !UltimateModsPlugin.GhostsSeeVotes.Value, UltimateModsPlugin.GhostsSeeVotes.Value),
+            new SelectionBehaviour("GhostsSeeRolesButton", () => MapOptions.GhostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value = !UltimateModsPlugin.GhostsSeeRoles.Value, UltimateModsPlugin.GhostsSeeRoles.Value),
             new SelectionBehaviour("HideNameplates", () => {
-                MapOptions.hideNameplates = UltimateModsPlugin.HideNameplates.Value = !UltimateModsPlugin.HideNameplates.Value;
+                MapOptions.HideNameplates = UltimateModsPlugin.HideNameplates.Value = !UltimateModsPlugin.HideNameplates.Value;
                 MeetingHudPatch.nameplatesChanged = true;
-                return MapOptions.hideNameplates;
+                return MapOptions.HideNameplates;
             }, UltimateModsPlugin.HideNameplates.Value),
+            new SelectionBehaviour("EnableCustomSounds", () => MapOptions.EnableCustomSounds = UltimateModsPlugin.EnableCustomSounds.Value = !UltimateModsPlugin.EnableCustomSounds.Value, UltimateModsPlugin.EnableCustomSounds.Value),
             };
 
         private static GameObject popUp;

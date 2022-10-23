@@ -59,38 +59,12 @@ namespace UltimateMods.Patches
             }
         }
 
-        [HarmonyPatch(typeof(Vent), nameof(Vent.Use))]
-        public static class VentUsePatch
-        {
-            public static bool Prefix(Vent __instance)
-            {
-                bool canUse;
-                bool couldUse;
-                __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool CannotMoveInVents = (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && !Madmate.CanMoveInVents) ||
-                                        (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanMoveInVents);
-                if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
-                bool isEnter = !PlayerControl.LocalPlayer.inVent;
-
-                if (isEnter)
-                {
-                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(__instance.Id);
-                }
-                else
-                {
-                    PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(__instance.Id);
-                }
-                __instance.SetButtons(isEnter && !CannotMoveInVents);
-                return false;
-            }
-        }
-
         [HarmonyPatch(typeof(MedScanMinigame), nameof(MedScanMinigame.FixedUpdate))]
         class MedScanMinigameFixedUpdatePatch
         {
             static void Prefix(MedScanMinigame __instance)
             {
-                if (MapOptions.allowParallelMedBayScans)
+                if (MapOptions.AllowParallelMedBayScans)
                 {
                     __instance.medscan.CurrentUser = PlayerControl.LocalPlayer.PlayerId;
                     __instance.medscan.UsersList.Clear();

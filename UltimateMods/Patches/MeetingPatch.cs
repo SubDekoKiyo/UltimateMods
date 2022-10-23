@@ -18,7 +18,7 @@ namespace UltimateMods.Patches
             blankNameplate = blankNameplate ?? HatManager.Instance.GetNamePlateById("nameplate_NoPlate")?.viewData?.viewData?.Image;
 
             var nameplate = blankNameplate;
-            if (!hideNameplates)
+            if (!HideNameplates)
             {
                 var p = Helpers.PlayerById(playerId != Byte.MaxValue ? playerId : pva.TargetPlayerId);
                 var nameplateId = p?.CurrentOutfit?.NamePlateId;
@@ -54,7 +54,7 @@ namespace UltimateMods.Patches
                     return;
 
                 // Deactivate skip Button if skipping on emergency meetings is disabled
-                if (blockSkippingInEmergencyMeetings)
+                if (BlockSkippingInEmergencyMeetings)
                     __instance.SkipVoteButton?.gameObject?.SetActive(false);
 
                 // This fixes a bug with the original game where pressing the button and a kill happens simultaneously
@@ -84,8 +84,8 @@ namespace UltimateMods.Patches
             public static bool Prefix(ref bool __result, MeetingHud __instance, [HarmonyArgument(0)] int suspectStateIdx)
             {
                 __result = false;
-                if (noVoteIsSelfVote && PlayerControl.LocalPlayer.PlayerId == suspectStateIdx) return false;
-                if (blockSkippingInEmergencyMeetings && suspectStateIdx == -1) return false;
+                if (NoVoteIsSelfVote && PlayerControl.LocalPlayer.PlayerId == suspectStateIdx) return false;
+                if (BlockSkippingInEmergencyMeetings && suspectStateIdx == -1) return false;
 
                 return true;
             }

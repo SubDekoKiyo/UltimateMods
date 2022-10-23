@@ -35,7 +35,7 @@ namespace UltimateMods.Patches
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.restrictDevices > 0 && MapOptions.restrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive())
+            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -102,7 +102,7 @@ namespace UltimateMods.Patches
 
                 playerColors = new Dictionary<SystemTypes, List<Color>>();
 
-                if (MapOptions.restrictDevices > 0)
+                if (MapOptions.RestrictDevices > 0)
                 {
                     if (OutOfTime == null)
                     {
@@ -125,7 +125,7 @@ namespace UltimateMods.Patches
                     }
                     else
                     {*/
-                    if (MapOptions.restrictAdminTime <= 0f)
+                    if (MapOptions.RestrictAdminTime <= 0f)
                     {
                         __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
                         OutOfTime.gameObject.SetActive(true);
@@ -140,9 +140,9 @@ namespace UltimateMods.Patches
 
                     clearedIcons = false;
                     OutOfTime.gameObject.SetActive(false);
-                    string timeString = TimeSpan.FromSeconds(MapOptions.restrictAdminTime).ToString(@"mm\:ss\.ff");
+                    string timeString = TimeSpan.FromSeconds(MapOptions.RestrictAdminTime).ToString(@"mm\:ss\.ff");
                     TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
-                    //TimeRemaining.color = MapOptions.restrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                    //TimeRemaining.color = MapOptions.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
                     TimeRemaining.gameObject.SetActive(true);
                     // }
                 }
@@ -352,12 +352,12 @@ namespace UltimateMods.Patches
     {
         public static void Postfix()
         {
-            if (!CustomOptionsH.EnableRecordsAdmin.getBool() && PlayerControl.LocalPlayer.IsAirship())
+            if (!CustomOptionsH.EnableRecordsAdmin.getBool() && PlayerControl.GameOptions.MapId == 4)
             {
                 Transform recordsAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Records").FindChild("records_admin_map");
                 GameObject.Destroy(recordsAdmin.gameObject);
             }
-            if (!CustomOptionsH.EnableCockpitAdmin.getBool() && PlayerControl.LocalPlayer.IsAirship())
+            if (!CustomOptionsH.EnableCockpitAdmin.getBool() && PlayerControl.GameOptions.MapId == 4)
             {
                 Transform cockpitAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Cockpit").FindChild("panel_cockpit_map");
                 GameObject.Destroy(cockpitAdmin.gameObject);

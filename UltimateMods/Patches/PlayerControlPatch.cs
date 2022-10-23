@@ -64,7 +64,7 @@ namespace UltimateMods.Patches
         // Update functions
         static void SetBasePlayerOutlines()
         {
-            foreach (PlayerControl target in PlayerControl.AllPlayerControls.GetFastEnumerator())
+            foreach (PlayerControl target in PlayerControl.AllPlayerControls)
             {
                 if (target == null || target.cosmetics.currentBodySprite.BodySprite == null) continue;
 
@@ -141,17 +141,17 @@ namespace UltimateMods.Patches
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.ghostsSeeRoles && MapOptions.ghostsSeeTasks)
+                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.ghostsSeeTasks)
+                    else if (MapOptions.GhostsSeeTasks)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.ghostsSeeRoles)
+                    else if (MapOptions.GhostsSeeRoles)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;

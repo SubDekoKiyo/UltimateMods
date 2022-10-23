@@ -31,7 +31,7 @@ namespace UltimateMods.Patches
                     // PlayerControl.SetPetImage(data.DefaultOutfit.PetId, data.DefaultOutfit.ColorId, player.PetSlot);
                     player.cosmetics.nameText.text = data.PlayerName;
                     player.SetFlipX(true);
-                    MapOptions.playerIcons[p.PlayerId] = player;
+                    MapOptions.PlayerIcons[p.PlayerId] = player;
 
                     if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                     {

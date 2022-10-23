@@ -86,7 +86,8 @@ namespace UltimateMods.Roles.Patches
                 bool canUse;
                 bool couldUse;
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool canMoveInVents = PlayerControl.LocalPlayer;
+                bool CannotMoveInVents = (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && !Madmate.CanMoveInVents) ||
+                                        (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanMoveInVents);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;
 
@@ -98,7 +99,7 @@ namespace UltimateMods.Roles.Patches
                 {
                     PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(__instance.Id);
                 }
-                __instance.SetButtons(isEnter && canMoveInVents);
+                __instance.SetButtons(isEnter && !CannotMoveInVents);
                 return false;
             }
         }
