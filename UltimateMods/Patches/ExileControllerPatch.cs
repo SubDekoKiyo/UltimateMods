@@ -5,6 +5,7 @@ using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Modules;
 using AmongUs.Data;
+// using UltimateMods.Classic;
 
 namespace UltimateMods.Patches
 {
@@ -93,8 +94,8 @@ namespace UltimateMods.Patches
             // Custom role post-meeting functions
             UltimateMods.OnMeetingEnd();
 
-            // MeetingDiscuss.OnMeetingEnd();
-            // ClassicAmongUs.DestroyObject();
+            // ClassicMeeting.OnMeetingEnd();
+            // ClassicMeeting.DestroyObject();
 
             if (BountyHunter.exists)
                 BountyHunter.BountyUpdateTimer = 0f;

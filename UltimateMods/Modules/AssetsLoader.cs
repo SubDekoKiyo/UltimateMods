@@ -16,6 +16,7 @@ namespace UltimateMods.Modules
         public static Texture2D ClassicMeetingStart1;
         public static Texture2D ClassicMeetingStart2;
         public static Texture2D ClassicMeetingStart3;
+        public static Texture2D ClassicMeetingDeadBodyReport;
 
         public static void LoadAssets()
         {
@@ -28,6 +29,7 @@ namespace UltimateMods.Modules
             ClassicMeetingStart1 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen1.png").DontUnload();
             ClassicMeetingStart2 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen2.png").DontUnload();
             ClassicMeetingStart3 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen3.png").DontUnload();
+            ClassicMeetingDeadBodyReport = AssetsBundle.LoadAsset<Texture2D>("DeadBodyReport.png").DontUnload();
         }
 
         public static byte[] ReadFully(this Stream input)
