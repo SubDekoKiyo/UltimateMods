@@ -12,16 +12,16 @@ namespace UltimateMods.Patches
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     public class MainMenuPatch
     {
-        private static GameObject bottomTemplate;
-        private static AnnouncementPopUp popUp;
+        private static GameObject ButtonTemplate;
+        private static AnnouncementPopUp PopUp;
         private static void Prefix(MainMenuManager __instance)
         {
             // CustomHatLoader.LaunchHatFetcher();
-            var template = GameObject.Find("ExitGameButton");
-            // template.gameObject.SetActive(false);
-            if (template == null) return;
+            var Template = GameObject.Find("ExitGameButton");
+            // Template.gameObject.SetActive(false);
+            if (Template == null) return;
 
-            var ButtonDiscord = UnityEngine.Object.Instantiate(template, null);
+            var ButtonDiscord = UnityEngine.Object.Instantiate(Template, null);
             ButtonDiscord.transform.localPosition = new Vector3(ButtonDiscord.transform.localPosition.x, ButtonDiscord.transform.localPosition.y + 0.6f, ButtonDiscord.transform.localPosition.z);
 
             var TextDiscord = ButtonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
@@ -45,7 +45,7 @@ namespace UltimateMods.Patches
                 ButtonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
             });
 
-            var ButtonGithub = UnityEngine.Object.Instantiate(template, null);
+            var ButtonGithub = UnityEngine.Object.Instantiate(Template, null);
             ButtonGithub.transform.localPosition = new Vector3(ButtonGithub.transform.localPosition.x, ButtonGithub.transform.localPosition.y + 1.2f, ButtonGithub.transform.localPosition.z);
 
             var TextGithub = ButtonGithub.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
@@ -70,9 +70,9 @@ namespace UltimateMods.Patches
             });
 
             // UM credits button
-            bottomTemplate = GameObject.Find("InventoryButton");
-            if (bottomTemplate == null) return;
-            var creditsButton = Object.Instantiate(bottomTemplate, bottomTemplate.transform.parent);
+            ButtonTemplate = GameObject.Find("InventoryButton");
+            if (ButtonTemplate == null) return;
+            var creditsButton = Object.Instantiate(ButtonTemplate, ButtonTemplate.transform.parent);
             var passiveCreditsButton = creditsButton.GetComponent<PassiveButton>();
             var spriteCreditsButton = creditsButton.GetComponent<SpriteRenderer>();
 
@@ -83,14 +83,14 @@ namespace UltimateMods.Patches
             passiveCreditsButton.OnClick.AddListener((System.Action)delegate
             {
                 // do stuff
-                if (popUp != null) Object.Destroy(popUp);
-                popUp = Object.Instantiate(Object.FindObjectOfType<AnnouncementPopUp>(true));
-                popUp.gameObject.SetActive(true);
-                popUp.Init();
-                // SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, "test");
+                if (PopUp != null) Object.Destroy(PopUp);
+                PopUp = Object.Instantiate(Object.FindObjectOfType<AnnouncementPopUp>(true));
+                PopUp.gameObject.SetActive(true);
+                PopUp.Init();
+                // SelectableHyperLinkHelper.DestroyGOs(PopUp.selectableHyperLinks, "test");
                 string creditsString = ModTranslation.getString("DevName");
                 creditsString += ModTranslation.getString("CreditsText");
-                popUp.AnnounceTextMeshPro.text = creditsString;
+                PopUp.AnnounceTextMeshPro.text = creditsString;
                 __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) =>
                 {
                     if (p == 1)
@@ -102,9 +102,9 @@ namespace UltimateMods.Patches
             });
 
             // How to Play button
-            bottomTemplate = GameObject.Find("InventoryButton");
-            if (bottomTemplate == null) return;
-            var htpButton = Object.Instantiate(bottomTemplate, bottomTemplate.transform.parent);
+            ButtonTemplate = GameObject.Find("InventoryButton");
+            if (ButtonTemplate == null) return;
+            var htpButton = Object.Instantiate(ButtonTemplate, ButtonTemplate.transform.parent);
             var passiveHtPButton = htpButton.GetComponent<PassiveButton>();
             var spriteHtPButton = htpButton.GetComponent<SpriteRenderer>();
 
@@ -123,8 +123,8 @@ namespace UltimateMods.Patches
             {
                 if (p == 1)
                 {
-                    bottomTemplate = GameObject.Find("InventoryButton");
-                    foreach (Transform tf in bottomTemplate.transform.parent.GetComponentsInChildren<Transform>())
+                    ButtonTemplate = GameObject.Find("InventoryButton");
+                    foreach (Transform tf in ButtonTemplate.transform.parent.GetComponentsInChildren<Transform>())
                     {
                         tf.localPosition = new Vector2(tf.localPosition.x * 0.8f, tf.localPosition.y);
                     }

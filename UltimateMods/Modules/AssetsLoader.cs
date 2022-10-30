@@ -1,7 +1,6 @@
 using System.IO;
 using System.Reflection;
 using UnityEngine;
-using Il2CppType = UnhollowerRuntimeLib.Il2CppType;
 
 namespace UltimateMods.Modules
 {

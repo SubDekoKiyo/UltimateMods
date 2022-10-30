@@ -1052,10 +1052,7 @@ namespace UltimateMods.Modules
             if (page != UltimateModsPlugin.OptionsPage)
             {
                 Vector3 position = (Vector3)FastDestroyableSingleton<HudManager>.Instance?.GameSettings?.transform.localPosition;
-                if (position != null)
-                {
-                    FastDestroyableSingleton<HudManager>.Instance.GameSettings.transform.localPosition = new Vector3(position.x, 2.9f, position.z);
-                }
+                FastDestroyableSingleton<HudManager>.Instance.GameSettings.transform.localPosition = new Vector3(position.x, 2.9f, position.z);
             }
         }
     }

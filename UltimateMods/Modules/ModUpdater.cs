@@ -222,7 +222,8 @@ namespace UltimateMods.Modules
                     System.Console.WriteLine("Server returned no data: " + response.StatusCode.ToString());
                     return false;
                 }
-                string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                // string codeBase = Assembly.GetExecutingAssembly().CodeBase;
+                string codeBase = Assembly.GetExecutingAssembly().Location; // .NET6.0滞欧
                 System.UriBuilder uri = new System.UriBuilder(codeBase);
                 string fullname = System.Uri.UnescapeDataString(uri.Path);
                 if (File.Exists(fullname + ".old")) // Clear old file in case it wasnt;
