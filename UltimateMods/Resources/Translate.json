@@ -1,6 +1,6 @@
 {
     "BuildNum": {
-        "0": "1167"
+        "0": "1171"
     },
     "ModOptionsText": {
         "0": "UM Options",
@@ -252,13 +252,13 @@
         "13": "\u5c0f\u4e11\u4e0d\u80fd\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae"
     },
     "GhostsSeeTasksButton": {
-        "0": "Ghosts See Remaining Tasks",
+        "0": "Ghosts See\nRemaining Tasks",
         "11": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u30bf\u30b9\u30af\u6b8b\u91cf\u304c\u898b\u3048\u308b",
         "13": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u4efb\u52a1\u8fdb\u5ea6"
     },
     "GhostsSeeVotesButton": {
         "0": "Ghosts See Roles",
-        "11": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u7d04\u675f\u304c\u898b\u3048\u308b",
+        "11": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u5f79\u8077\u304c\u898b\u3048\u308b",
         "13": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u804c\u4e1a"
     },
     "GhostsSeeRolesButton": {
@@ -270,6 +270,10 @@
         "0": "Hide Nameplates",
         "11": "\u30cd\u30fc\u30e0\u30d7\u30ec\u30fc\u30c8\u3092\n\u975e\u8868\u793a\u306b\u3059\u308b",
         "13": "\u9690\u85cf\u540d\u724c"
+    },
+    "EnableCustomSounds": {
+        "0": "Enable\nCustom Sounds",
+        "11": "\u30ab\u30b9\u30bf\u30e0\u30b5\u30a6\u30f3\u30c9\u3092\n\u4f7f\u7528\u3059\u308b"
     },
     "ErrorNotInstalled": {
         "0": ": has a different or no version of UltimateMods",
@@ -595,10 +599,9 @@
         "11": "\u53cd\u8ee2\u30de\u30c3\u30d7\u3092\u6709\u52b9\u5316",
         "13": "\u542f\u7528\u955c\u50cf\u5730\u56fe"
     },
-    "DieZoom": {
-        "0": "Can Zoom Out If you died",
-        "11": "\u6b7b\u4ea1\u6642\u3001\u30ba\u30fc\u30e0\u30a2\u30a6\u30c8\u3067\u304d\u308b",
-        "13": "\u6b7b\u540e\u83b7\u5f97\u5343\u91cc\u773c"
+    "CanZoomInOutDead": {
+        "0": "Can Zoom In&Out When Player is Dead",
+        "11": "\u6b7b\u4ea1\u6642\u3001\u30ba\u30fc\u30e0\u30a4\u30f3&\u30a2\u30a6\u30c8\u53ef\u80fd"
     },
     "PlayRandomMaps": {
         "0": "Enable Random Maps",

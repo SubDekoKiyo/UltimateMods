@@ -29,11 +29,13 @@ namespace UltimateMods.Patches
                 version.transform.SetParent(amongUsLogo.transform);
 
                 if (UltimateModsPlugin.isBeta)
+                {
                     baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.Beta{UltimateModsPlugin.Version.ToString()}";
+                    __instance.text.text += $"\n<color=#0094ff>UltimateMods</color> BuildNum: " + ModTranslation.getString("BuildNum");
+                }
                 else
                     baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.{UltimateModsPlugin.Version.ToString()}";
 
-                __instance.text.text += $"\n<color=#0094ff>UltimateMods</color> BuildNum: " + ModTranslation.getString("BuildNum");
                 __instance.transform.localPosition = new Vector3(__instance.transform.localPosition.x, __instance.transform.localPosition.y - 0.1f, __instance.transform.localPosition.z);
             }
         }
