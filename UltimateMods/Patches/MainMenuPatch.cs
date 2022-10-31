@@ -2,10 +2,10 @@ using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
-using UnityEngine.SceneManagement;
 using static UltimateMods.ColorDictionary;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Patches
 {
@@ -76,7 +76,7 @@ namespace UltimateMods.Patches
             var passiveCreditsButton = creditsButton.GetComponent<PassiveButton>();
             var spriteCreditsButton = creditsButton.GetComponent<SpriteRenderer>();
 
-            spriteCreditsButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.CreditsButton.png", 75f);
+            spriteCreditsButton.sprite = Helpers.LoadSpriteFromTexture2D(CreditsButton, 75f);
 
             passiveCreditsButton.OnClick = new ButtonClickedEvent();
 
@@ -100,23 +100,8 @@ namespace UltimateMods.Patches
                     }
                 })));
             });
-
-            // How to Play button
-            ButtonTemplate = GameObject.Find("InventoryButton");
-            if (ButtonTemplate == null) return;
-            var htpButton = Object.Instantiate(ButtonTemplate, ButtonTemplate.transform.parent);
-            var passiveHtPButton = htpButton.GetComponent<PassiveButton>();
-            var spriteHtPButton = htpButton.GetComponent<SpriteRenderer>();
-
-            spriteHtPButton.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HelpButton.png", 40f);
-
-            passiveHtPButton.OnClick = new ButtonClickedEvent();
-
-            passiveHtPButton.OnClick.AddListener((System.Action)delegate
-            {
-                SceneManager.LoadScene("HowToPlay");
-            });
         }
+
         public static void Postfix(MainMenuManager __instance)
         {
             __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) =>

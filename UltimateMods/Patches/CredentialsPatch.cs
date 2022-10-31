@@ -2,6 +2,7 @@ using HarmonyLib;
 using System;
 using UnityEngine;
 using UltimateMods.Utilities;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Patches
 {
@@ -85,7 +86,7 @@ namespace UltimateMods.Patches
                 umLogo.transform.position = Vector3.up;
                 renderer = umLogo.AddComponent<SpriteRenderer>();
                 loadSprites();
-                renderer.sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.NormalBanner.png", 200f);
+                renderer.sprite = Helpers.LoadSpriteFromTexture2D(NormalBanner, 200f);
 
                 instance = __instance;
                 loadSprites();
@@ -94,8 +95,8 @@ namespace UltimateMods.Patches
 
             public static void loadSprites()
             {
-                if (bannerSprite == null) bannerSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.NormalBanner.png", 200f);
-                if (horseBannerSprite == null) horseBannerSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HorseBanner.png", 200f);
+                if (bannerSprite == null) bannerSprite = Helpers.LoadSpriteFromTexture2D(NormalBanner, 200f);
+                if (horseBannerSprite == null) horseBannerSprite = Helpers.LoadSpriteFromTexture2D(HorseBanner, 200f);
             }
 
             public static void updateSprite()

@@ -4,7 +4,7 @@
         <LangVersion>latest</LangVersion>
         <DebugType>embedded</DebugType>
 
-        <VersionPrefix>0.0.1</VersionPrefix>
+        <VersionPrefix>1.0.0</VersionPrefix>
         <Description>Ultimate Mods</Description>
 		<Authors>DekoKiyo</Authors>
 
@@ -24,13 +24,15 @@
 	<ItemGroup>
 		<Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
 		<Reference Include="$(AmongUs)/BepInEx/unhollowed/*.dll" />
+        <Reference Include="Reactor">
+          <HintPath>..\..\Assembly\Reactor.dll</HintPath>
+        </Reference>
 	</ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="AmongUs.GameLibs.Steam" Version="2022.10.25" />
         <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.662" />
         <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.0.1" />
-        <PackageReference Include="Reactor" Version="2.0.0" />
     </ItemGroup>
 
     <Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="Exists('$(AmongUsLatest)/BepInEx/plugins/')">

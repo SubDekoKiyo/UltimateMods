@@ -688,16 +688,15 @@ namespace UltimateMods.Modules
         public static bool Prefix(StringOption __instance)
         {
             CustomOption option = CustomOption.options.FirstOrDefault(option => option.optionBehaviour == __instance);
-            SpriteRenderer Background = (option.optionBehaviour).transform.Find("Background").GetComponent<SpriteRenderer>();
+
             if (option == null) return true;
 
+            SpriteRenderer Background = (option.optionBehaviour).transform.Find("Background").GetComponent<SpriteRenderer>();
             __instance.OnValueChanged = new Action<OptionBehaviour>((o) => { });
             __instance.TitleText.text = option.getName();
             __instance.Value = __instance.oldValue = option.selection;
             __instance.ValueText.text = option.getString();
-
             Background.color = option.Color;
-
             return false;
         }
     }

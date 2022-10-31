@@ -1,55 +1,56 @@
 using System.IO;
 using System.Reflection;
 using UnityEngine;
+using Reactor.Utilities.Extensions;
 
 namespace UltimateMods.Modules
 {
-    public static class AssetLoader
+    public static class Assets
     {
-        private static readonly Assembly assets = Assembly.GetExecutingAssembly();
+        private static readonly Assembly AudioAssets = Assembly.GetExecutingAssembly();
+        private static readonly Assembly SpriteAssets = Assembly.GetExecutingAssembly();
+        private static readonly Assembly ButtonAssets = Assembly.GetExecutingAssembly();
 
         public static AudioClip JesterWinSound;
         public static AudioClip EveryoneLoseSound;
 
-        public static Texture2D ClassicMeetingStart0;
-        public static Texture2D ClassicMeetingStart1;
-        public static Texture2D ClassicMeetingStart2;
-        public static Texture2D ClassicMeetingStart3;
-        public static Texture2D ClassicMeetingDeadBodyReport;
+        public static Texture2D Arrow;
+        public static Texture2D NormalBanner;
+        public static Texture2D HorseBanner;
+
+        public static Texture2D CreditsButton;
+        public static Texture2D HorseModeOnButton;
+        public static Texture2D HorseModeOffButton;
+        public static Texture2D EngineerRepairButton;
+        public static Texture2D UnderTakerMoveButton;
 
         public static void LoadAssets()
         {
-            var AssetsResource = assets.GetManifestResourceStream("UltimateMods.Resources.Sounds.Assets.ultimatebundle");
-            var AssetsBundle = AssetBundle.LoadFromMemory(AssetsResource.ReadFully());
+            var AudioAssetsResource = AudioAssets.GetManifestResourceStream("UltimateMods.Resources.AssetsBundlesUM.Assets.ultimateaudio");
+            var AudioAssetsBundle = AssetBundle.LoadFromMemory(AudioAssetsResource.ReadFully());
 
-            JesterWinSound = AssetsBundle.LoadAsset<AudioClip>("JesterWin.wav").DontUnload();
-            EveryoneLoseSound = AssetsBundle.LoadAsset<AudioClip>("EveryoneLose.wav").DontUnload();
-            ClassicMeetingStart0 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen0.png").DontUnload();
-            ClassicMeetingStart1 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen1.png").DontUnload();
-            ClassicMeetingStart2 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen2.png").DontUnload();
-            ClassicMeetingStart3 = AssetsBundle.LoadAsset<Texture2D>("EmergencyScreen3.png").DontUnload();
-            ClassicMeetingDeadBodyReport = AssetsBundle.LoadAsset<Texture2D>("DeadBodyReport.png").DontUnload();
-        }
+            JesterWinSound = AudioAssetsBundle.LoadAsset<AudioClip>("JesterWin.wav").DontUnload();
+            EveryoneLoseSound = AudioAssetsBundle.LoadAsset<AudioClip>("EveryoneLose.wav").DontUnload();
 
-        public static byte[] ReadFully(this Stream input)
-        {
-            using (var ms = new MemoryStream())
-            {
-                input.CopyTo(ms);
-                return ms.ToArray();
-            }
-        }
+            var SpriteAssetsResource = SpriteAssets.GetManifestResourceStream("UltimateMods.Resources.AssetsBundlesUM.Assets.ultimatesprite");
+            var SpriteAssetsBundle = AssetBundle.LoadFromMemory(SpriteAssetsResource.ReadFully());
 
-        public static T LoadAsset<T>(this AssetBundle assetBundle, string name) where T : UnityEngine.Object
-        {
-            return assetBundle.LoadAsset(name, Il2CppType.Of<T>())?.Cast<T>();
-        }
+            Arrow = SpriteAssetsBundle.LoadAsset<Texture2D>("Arrow.png").DontUnload();
+            NormalBanner = SpriteAssetsBundle.LoadAsset<Texture2D>("NormalBanner.png").DontUnload();
+            HorseBanner = SpriteAssetsBundle.LoadAsset<Texture2D>("HorseBanner.png").DontUnload();
 
-        public static T DontUnload<T>(this T obj) where T : Object
-        {
-            obj.hideFlags |= HideFlags.DontUnloadUnusedAsset;
+            var ButtonAssetsResource = ButtonAssets.GetManifestResourceStream("UltimateMods.Resources.AssetsBundlesUM.Assets.ultimatebutton");
+            var ButtonAssetsBundle = AssetBundle.LoadFromMemory(ButtonAssetsResource.ReadFully());
 
-            return obj;
+            CreditsButton = ButtonAssetsBundle.LoadAsset<Texture2D>("CreditsButton.png").DontUnload();
+            HorseModeOnButton = ButtonAssetsBundle.LoadAsset<Texture2D>("HorseModeButtonOn.png").DontUnload();
+            HorseModeOffButton = ButtonAssetsBundle.LoadAsset<Texture2D>("HorseModeButtonOff.png").DontUnload();
+            EngineerRepairButton = ButtonAssetsBundle.LoadAsset<Texture2D>("EngineerRepairButton.png").DontUnload();
+            UnderTakerMoveButton = ButtonAssetsBundle.LoadAsset<Texture2D>("UnderTakerMoveButton.png").DontUnload();
+
+            AudioAssetsBundle.Unload(false);
+            SpriteAssetsBundle.Unload(false);
+            ButtonAssetsBundle.Unload(false);
         }
     }
 }

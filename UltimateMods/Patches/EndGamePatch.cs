@@ -7,7 +7,7 @@ using System.Linq;
 using System;
 using UltimateMods.Modules;
 using UltimateMods.Debug;
-using static UltimateMods.Modules.AssetLoader;
+using static UltimateMods.Modules.Assets;
 using static UltimateMods.ColorDictionary;
 
 namespace UltimateMods.EndGame

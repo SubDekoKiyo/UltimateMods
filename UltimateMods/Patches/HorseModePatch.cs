@@ -5,6 +5,7 @@ using UnityEngine;
 using static UnityEngine.UI.Button;
 using Object = UnityEngine.Object;
 using UltimateMods.Modules;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Patches
 {
@@ -31,12 +32,19 @@ namespace UltimateMods.Patches
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
     class ChangeHorseModePatch
     {
+        public static bool AssetsLoaded = false;
         private static bool horseButtonState = MapOptions.enableHorseMode;
         private static Sprite horseModeOffSprite = null;
         private static Sprite horseModeOnSprite = null;
         private static GameObject bottomTemplate;
         private static void Prefix(MainMenuManager __instance)
         {
+            if (!AssetsLoaded)
+            {
+                LoadAssets();
+                AssetsLoaded = true;
+            }
+
             // Horse Mode
             var horseModeSelectionBehavior = new ClientOptionsPatch.SelectionBehaviour("Enable Horse Mode", () => MapOptions.enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value = !UltimateModsPlugin.EnableHorseMode.Value, UltimateModsPlugin.EnableHorseMode.Value);
 
@@ -46,35 +54,35 @@ namespace UltimateMods.Patches
             var passiveHorseButton = horseButton.GetComponent<PassiveButton>();
             var spriteHorseButton = horseButton.GetComponent<SpriteRenderer>();
 
-            horseModeOffSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HorseModeButtonOff.png", 75f);
-            horseModeOnSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HorseModeButtonOn.png", 75f);
+            horseModeOffSprite = Helpers.LoadSpriteFromTexture2D(HorseModeOffButton, 75f);
+            horseModeOnSprite = Helpers.LoadSpriteFromTexture2D(HorseModeOnButton, 75f);
 
             spriteHorseButton.sprite = horseButtonState ? horseModeOnSprite : horseModeOffSprite;
 
             passiveHorseButton.OnClick = new ButtonClickedEvent();
 
             passiveHorseButton.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
+            {
+                horseButtonState = horseModeSelectionBehavior.OnClick();
+                if (horseButtonState)
                 {
-                    horseButtonState = horseModeSelectionBehavior.OnClick();
-                    if (horseButtonState)
-                    {
-                        if (horseModeOnSprite == null) horseModeOnSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HorseModeButtonOn.png", 75f);
-                        spriteHorseButton.sprite = horseModeOnSprite;
-                    }
-                    else
-                    {
-                        if (horseModeOffSprite == null) horseModeOffSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.HorseModeButtonOff.png", 75f);
-                        spriteHorseButton.sprite = horseModeOffSprite;
-                    }
-                    CredentialsPatch.MainMenuButtonPatch.updateSprite();
-                    // Avoid wrong Player Particles floating around in the background
-                    var particles = GameObject.FindObjectOfType<PlayerParticles>();
-                    if (particles != null)
-                    {
-                        particles.pool.ReclaimAll();
-                        particles.Start();
-                    }
-                });
+                    if (horseModeOnSprite == null) horseModeOnSprite = Helpers.LoadSpriteFromTexture2D(HorseModeOnButton, 75f);
+                    spriteHorseButton.sprite = horseModeOnSprite;
+                }
+                else
+                {
+                    if (horseModeOffSprite == null) horseModeOffSprite = Helpers.LoadSpriteFromTexture2D(HorseModeOffButton, 75f);
+                    spriteHorseButton.sprite = horseModeOffSprite;
+                }
+                CredentialsPatch.MainMenuButtonPatch.updateSprite();
+                // Avoid wrong Player Particles floating around in the background
+                var particles = GameObject.FindObjectOfType<PlayerParticles>();
+                if (particles != null)
+                {
+                    particles.pool.ReclaimAll();
+                    particles.Start();
+                }
+            });
         }
     }
 }

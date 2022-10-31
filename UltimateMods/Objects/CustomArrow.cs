@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Objects
 {
@@ -13,7 +14,7 @@ namespace UltimateMods.Objects
         public static Sprite getSprite()
         {
             if (sprite) return sprite;
-            sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.Arrow.png", 200f);
+            sprite = Helpers.LoadSpriteFromTexture2D(Arrow, 200f);
             return sprite;
         }
 
