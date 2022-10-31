@@ -2,6 +2,7 @@ using HarmonyLib;
 using UnityEngine;
 using System.Collections.Generic;
 using UltimateMods.Utilities;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Patches
 {
@@ -16,7 +17,7 @@ namespace UltimateMods.Patches
         public static Sprite getCorpseSprite()
         {
             if (corpseSprite) return corpseSprite;
-            corpseSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.CorpseIcon.png", 115f);
+            corpseSprite = Helpers.LoadSpriteFromTexture2D(DeadBodySprite, 115f);
             return corpseSprite;
         }
 

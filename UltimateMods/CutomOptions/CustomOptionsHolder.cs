@@ -37,6 +37,7 @@ namespace UltimateMods
         public static CustomOption HidePlayerNames;
         public static CustomOption RefundVotesOnDeath;
         public static CustomOption EnableMirrorMap;
+        public static CustomOption CanZoomInOutWhenPlayerIsDead;
 
         public static CustomOption RandomMap;
         public static CustomOption RandomMapEnableSkeld;
@@ -83,6 +84,7 @@ namespace UltimateMods
 
             RememberClassic = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
             EnableMirrorMap = CustomOption.Create(33, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
+            CanZoomInOutWhenPlayerIsDead = CustomOption.Create(40, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
 
             // Using new id's for the options to not break compatibility with older versions
             CrewmateRolesCountMin = CustomOption.Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");

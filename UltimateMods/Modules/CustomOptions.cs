@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Text;
 using UltimateMods.Utilities;
 using UltimateMods.Roles;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Modules
 {
@@ -480,42 +481,42 @@ namespace UltimateMods.Modules
 
             var umTab = UnityEngine.Object.Instantiate(roleTab, roleTab.transform.parent);
             var umTabHighlight = umTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
-            umTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TabIconSettings.png", 100f);
+            umTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromTexture2D(TabSet, 100f);
 
             var impostorTab = UnityEngine.Object.Instantiate(roleTab, umTab.transform);
             var impostorTabHighlight = impostorTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
-            impostorTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TabIconImpostor.png", 100f);
+            impostorTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromTexture2D(TabImp, 100f);
             impostorTab.name = "ImpostorTab";
 
             var neutralTab = UnityEngine.Object.Instantiate(roleTab, impostorTab.transform);
             var neutralTabHighlight = neutralTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
-            neutralTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TabIconNeutral.png", 100f);
+            neutralTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromTexture2D(TabNeu, 100f);
             neutralTab.name = "NeutralTab";
 
             var crewmateTab = UnityEngine.Object.Instantiate(roleTab, neutralTab.transform);
             var crewmateTabHighlight = crewmateTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
-            crewmateTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TabIconCrewmate.png", 100f);
+            crewmateTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromTexture2D(TabCrew, 100f);
             crewmateTab.name = "CrewmateTab";
 
             var modifierTab = UnityEngine.Object.Instantiate(roleTab, crewmateTab.transform);
             var modifierTabHighlight = modifierTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
-            modifierTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TabIconModifier.png", 100f);
+            modifierTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromTexture2D(TabMod, 100f);
             modifierTab.name = "ModifierTab";
 
             var otherTab = UnityEngine.Object.Instantiate(roleTab, modifierTab.transform);
             var otherTabHighlight = otherTab.transform.FindChild("Hat Button").FindChild("Tab Background").GetComponent<SpriteRenderer>();
-            otherTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TabIconOther.png", 100f);
+            otherTab.transform.FindChild("Hat Button").FindChild("Icon").GetComponent<SpriteRenderer>().sprite = Helpers.LoadSpriteFromTexture2D(TabOth, 100f);
             otherTab.name = "OtherTab";
 
             // Position of Tab Icons
-            gameTab.transform.position += Vector3.left * 3f;
-            roleTab.transform.position += Vector3.left * 3f;
-            umTab.transform.position += Vector3.left * 2f;
-            impostorTab.transform.localPosition = Vector3.right * 1f;
-            neutralTab.transform.localPosition = Vector3.right * 1f;
-            crewmateTab.transform.localPosition = Vector3.right * 1f;
-            modifierTab.transform.localPosition = Vector3.right * 1f;
-            otherTab.transform.localPosition = Vector3.right * 1f;
+            gameTab.transform.position += Vector3.left * 3.2f;
+            roleTab.transform.position += Vector3.left * 3.2f;
+            umTab.transform.position += Vector3.left * 2.1f;
+            impostorTab.transform.localPosition = Vector3.right * 0.9f;
+            neutralTab.transform.localPosition = Vector3.right * 0.9f;
+            crewmateTab.transform.localPosition = Vector3.right * 0.9f;
+            modifierTab.transform.localPosition = Vector3.right * 0.9f;
+            otherTab.transform.localPosition = Vector3.right * 0.9f;
 
             var tabs = new GameObject[] { gameTab, roleTab, umTab, impostorTab, neutralTab, crewmateTab, modifierTab, otherTab };
             for (int i = 0; i < tabs.Length; i++)
@@ -816,45 +817,6 @@ namespace UltimateMods.Modules
         }
     }
 
-    [HarmonyPatch(typeof(GameSettingMenu), nameof(GameSettingMenu.Start))]
-    class GameSettingMenuStartPatch
-    {
-        public static void Prefix(GameSettingMenu __instance)
-        {
-            __instance.HideForOnline = new Transform[] { };
-        }
-
-        public static void Postfix(GameSettingMenu __instance)
-        {
-            // Setup mapNameTransform
-            var mapNameTransform = __instance.AllItems.FirstOrDefault(x => x.name.Equals("MapName", StringComparison.OrdinalIgnoreCase));
-            if (mapNameTransform == null) return;
-
-            var options = new Il2CppSystem.Collections.Generic.List<Il2CppSystem.Collections.Generic.KeyValuePair<string, int>>();
-            for (int i = 0; i < Constants.MapNames.Length; i++)
-            {
-                // Dleks was removed from the game, so remove it from our selections.
-                if (i == (int)MapNames.Dleks) continue;
-
-                var kvp = new Il2CppSystem.Collections.Generic.KeyValuePair<string, int>();
-                kvp.key = Constants.MapNames[i];
-                kvp.value = i;
-                options.Add(kvp);
-            }
-            mapNameTransform.GetComponent<KeyValueOption>().Values = options;
-            mapNameTransform.gameObject.active = true;
-
-            foreach (Transform i in __instance.AllItems.ToList())
-            {
-                float num = -0.5f;
-                if (i.name.Equals("MapName", StringComparison.OrdinalIgnoreCase)) num = -0.25f;
-                if (i.name.Equals("NumImpostors", StringComparison.OrdinalIgnoreCase) || i.name.Equals("ResetToDefault", StringComparison.OrdinalIgnoreCase)) num = 0f;
-                i.position += new Vector3(0, num, 0);
-            }
-            __instance.Scroller.ContentYBounds.max += 0.5F;
-        }
-    }
-
     [HarmonyPatch]
     class GameOptionsDataPatch
     {
@@ -909,6 +871,7 @@ namespace UltimateMods.Modules
             entries.Add(optionToString(CustomOptionsH.ActivateModRoles));
             entries.Add(optionToString(CustomOptionsH.RandomGen));
             entries.Add(optionToString(CustomOptionsH.EnableMirrorMap));
+            entries.Add(optionToString(CustomOptionsH.CanZoomInOutWhenPlayerIsDead));
 
             // entries.Add(optionToString(CustomOptionsH.RememberClassic));
 
@@ -960,6 +923,7 @@ namespace UltimateMods.Modules
                     (option == CustomOptionsH.ActivateModRoles) ||
                     (option == CustomOptionsH.RandomGen) ||
                     (option == CustomOptionsH.EnableMirrorMap) ||
+                    (option == CustomOptionsH.CanZoomInOutWhenPlayerIsDead) ||
                     // (option == CustomOptionsH.RememberClassic) ||
                     (option == CustomOptionsH.CrewmateRolesCountMin) ||
                     (option == CustomOptionsH.CrewmateRolesCountMax) ||

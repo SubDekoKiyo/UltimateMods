@@ -5,6 +5,7 @@ using UltimateMods.Modules;
 using Hazel;
 using TMPro;
 using UltimateMods.Patches;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Roles
 {
@@ -88,7 +89,7 @@ namespace UltimateMods.Roles
         public static Sprite GetButtonSprite()
         {
             if (UnderTakerButtonSprite) return UnderTakerButtonSprite;
-            UnderTakerButtonSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.UnderTakerMoveButton.png", 115f);
+            UnderTakerButtonSprite = Helpers.LoadSpriteFromTexture2D(UnderTakerMoveButton, 115f);
             return UnderTakerButtonSprite;
         }
 

@@ -123,7 +123,7 @@ namespace UltimateMods.Roles
         public static Sprite GetFixButtonSprite()
         {
             if (EngineerRepairButtonSprite) return EngineerRepairButtonSprite;
-            EngineerRepairButtonSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.EngineerRepairButton.png", 115f);
+            EngineerRepairButtonSprite = Helpers.LoadSpriteFromTexture2D(Modules.Assets.EngineerRepairButton, 115f);
             return EngineerRepairButtonSprite;
         }
 

@@ -30,7 +30,7 @@ namespace UltimateMods.Roles
         public static Sprite GetButtonSprite()
         {
             if (TemplateButtonSprite) return TemplateButtonSprite;
-            TemplateButtonSprite = Helpers.LoadSpriteFromResources("UltimateMods.Resources.TemplateButton.png", 115f);
+            // TemplateButtonSprite = Helpers.LoadSpriteFromTexture2D(, 115f);
             return TemplateButtonSprite;
         }
 
