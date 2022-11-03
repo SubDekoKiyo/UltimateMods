@@ -37,6 +37,7 @@ namespace UltimateMods.Patches
         public class GameStartManagerStartPatch
         {
             public static TMP_Text ErrorText;
+
             public static void Postfix(GameStartManager __instance)
             {
                 // Trigger version refresh
@@ -84,6 +85,8 @@ namespace UltimateMods.Patches
 
             public static void Postfix(GameStartManager __instance)
             {
+                string ColorCode = "ffffff";
+
                 if (PlayerControl.LocalPlayer != null && !versionSent)
                 {
                     versionSent = true;
@@ -180,7 +183,21 @@ namespace UltimateMods.Patches
 
                     int minutes = (int)timer / 60;
                     int seconds = (int)timer % 60;
-                    string suffix = $" ({minutes:00}:{seconds:00})";
+                    // string suffix = $" ({minutes:00}:{seconds:00})";
+
+                    switch (minutes)
+                    {
+                        case <= 02:
+                            ColorCode = "d20000";
+                            break;
+                        case <= 05:
+                            ColorCode = "ffff00";
+                            break;
+                        case <= 10:
+                            ColorCode = "00e300";
+                            break;
+                    }
+                    string suffix = $" <color=#{ColorCode}>\n({minutes:00}:{seconds:00})</color>";
 
                     __instance.PlayerCounter.text = currentText + suffix;
                     __instance.PlayerCounter.autoSizeTextContainer = true;

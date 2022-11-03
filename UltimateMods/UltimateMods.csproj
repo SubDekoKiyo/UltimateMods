@@ -25,23 +25,23 @@
 		<Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
 		<Reference Include="$(AmongUs)/BepInEx/unhollowed/*.dll" />
         <Reference Include="Reactor">
-          <HintPath>..\..\Assembly\Reactor.dll</HintPath>
+        <HintPath>..\..\Assembly\Reactor.dll</HintPath>
         </Reference>
 	</ItemGroup>
 
-    <ItemGroup>
-        <PackageReference Include="AmongUs.GameLibs.Steam" Version="2022.10.25" />
-        <PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.662" />
-        <PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.0.1" />
-    </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="AmongUs.GameLibs.Steam" Version="2022.10.25" />
+		<PackageReference Include="BepInEx.Unity.IL2CPP" Version="6.0.0-be.662" />
+		<PackageReference Include="BepInEx.IL2CPP.MSBuild" Version="2.0.1" />
+	</ItemGroup>
 
-    <Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="Exists('$(AmongUsLatest)/BepInEx/plugins/')">
+	<Target Name="CopyCustomContent" AfterTargets="AfterBuild" Condition="Exists('$(AmongUsLatest)/BepInEx/plugins/')">
 		<Message Text="Second occurrence" />
 		<Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\net6.0\$(AssemblyName).dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
 	</Target>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-		<Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
-		<Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" />
+    <Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
+    <!-- <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" /> -->
 	</Target>
 </Project>

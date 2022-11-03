@@ -45,6 +45,16 @@ Mention me on my dedicated Discord channel.<br>
 |10|Italiano|Italian|🛑|
 |11|日本語|Japan|✅|
 |12|Español|Spanish|🛑|
-|13|简体中文|SChinese|✅|
+|13|简体中文|SChinese|🟨|
 |14|繁體中文|TChinese|🛑|
 |15|Gaeilge|Irish|🛑|
+
+## How to make Translation File?
+1. Write translate data in [TranslateFile](https://github.com/Dekokiyo/UltimateMods/blob/main/Translate.xlsx) file.
+2. Download [Converter](https://github.com/Dekokiyo/UltimateMods/blob/main/Dev/Converter.py).
+3. Set the "Translate.xlsx" and "Converter.py" in the same directory and start
+the "Converter.py".
+4. Choose Language Number
+![Translate](./Images/Translate1.png)
+5. Start Convert.
+6. When finished, a file will be generated, so put it in the Language folder and it will be applied.

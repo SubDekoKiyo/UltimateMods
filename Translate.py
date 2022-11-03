@@ -1,7 +1,4 @@
 import os
-import re
-import sys
-import copy
 import json
 from openpyxl import load_workbook
 
@@ -46,7 +43,7 @@ def stringToJson(in_files):
 
 if __name__ == "__main__":
   in_files = [
-    os.path.join(WORKING_DIR, "Translate.xlsx")
+    os.path.join(IN_FILE)
   ]
 
   stringToJson(in_files)

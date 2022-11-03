@@ -1,5 +1,6 @@
 {
     "cSpell.words": [
         "ykundesu"
-    ]
+    ],
+    "python.analysis.typeCheckingMode": "off"
 }

@@ -1,8 +1,9 @@
-using HarmonyLib;
-using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BepInEx.Unity.IL2CPP.Utils.Collections;
+using HarmonyLib;
+using UnityEngine;
 using UltimateMods.Utilities;
 using UltimateMods.Roles;
 using static UltimateMods.ColorDictionary;
@@ -95,7 +96,14 @@ namespace UltimateMods.Patches
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
         class SetUpRoleTextPatch
         {
-            private static IEnumerator setupRole(IntroCutscene __instance)
+            public static bool Prefix(IntroCutscene __instance, ref Il2CppSystem.Collections.IEnumerator __result)
+            {
+                if (!CustomOptionsH.ActivateModRoles.getBool()) return true; // Don't override the intro of the vanilla roles
+                __result = SetupRole(__instance).WrapToIl2Cpp();
+                return false;
+            }
+
+            private static IEnumerator SetupRole(IntroCutscene __instance)
             {
                 List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { });
                 RoleInfo roleInfo = infos.FirstOrDefault();

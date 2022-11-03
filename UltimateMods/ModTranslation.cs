@@ -1,22 +1,24 @@
-using HarmonyLib;
-using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Text;
+using HarmonyLib;
+using Newtonsoft.Json.Linq;
 using System.Reflection;
 using System.Text.RegularExpressions;
 using UltimateMods.Modules;
 using AmongUs.Data;
-
+using UltimateMods.Utilities;
 namespace UltimateMods
 {
     public class ModTranslation
     {
+        public const string LanguageFolder = "Language";
         public static int defaultLanguage = (int)SupportedLangs.English;
-        public static Dictionary<string, Dictionary<int, string>> stringData;
+        public static Dictionary<string, Dictionary<int, string>> TransData = new();
 
         private const string BlankText = "[BLANK]";
-
-        public ModTranslation() { }
 
         public static void Load()
         {
@@ -26,7 +28,6 @@ namespace UltimateMods
             var read = stream.Read(byteArray, 0, (int)stream.Length);
             string json = System.Text.Encoding.UTF8.GetString(byteArray);
 
-            stringData = new Dictionary<string, Dictionary<int, string>>();
             JObject parsed = JObject.Parse(json);
 
             for (int i = 0; i < parsed.Count; i++)
@@ -53,11 +54,21 @@ namespace UltimateMods
                         }
                     }
 
-                    stringData[stringName] = strings;
+                    TransData[stringName] = strings;
                 }
             }
 
-            // UltimateModsPlugin.Instance.Log.LogInfo($"Language: {stringData.Keys}");
+            foreach (var lang in Enum.GetValues(typeof(SupportedLangs)))
+            {
+                if (File.Exists(@$"./{LanguageFolder}/Language{lang}.dat"))
+                {
+                    LoadCustomTranslation($"Language{lang}.dat", (SupportedLangs)lang);
+                }
+                else if (lang is not SupportedLangs.English or SupportedLangs.Japanese && !File.Exists(@$"./{LanguageFolder}/Language{lang}.dat"))
+                {
+                    LoadCustomTranslation($"LanguageEnglish.dat", (SupportedLangs)lang);
+                }
+            }
         }
 
         public static string getString(string key, string def = null)
@@ -68,12 +79,12 @@ namespace UltimateMods
             keyClean = keyClean.Trim();
 
             def = def ?? key;
-            if (!stringData.ContainsKey(keyClean))
+            if (!TransData.ContainsKey(keyClean))
             {
                 return def;
             }
 
-            var data = stringData[keyClean];
+            var data = TransData[keyClean];
             int lang = (int)DataManager.Settings.Language.CurrentLanguage;
 
             if (data.ContainsKey(lang))
@@ -87,6 +98,37 @@ namespace UltimateMods
 
             return key;
         }
+
+        public static void LoadCustomTranslation(string filename, SupportedLangs lang)
+        {
+            string path = @$"./{LanguageFolder}/{filename}";
+            if (File.Exists(path))
+            {
+                UltimateModsPlugin.Logger.LogInfo($"Loading Translation File \"{filename}\"");
+                using StreamReader sr = new(path, Encoding.GetEncoding("UTF-8"));
+                string text;
+                string[] tmp = { };
+                while ((text = sr.ReadLine()) != null)
+                {
+                    tmp = text.Split(":");
+                    if (tmp.Length > 1 && tmp[1] != "")
+                    {
+                        try
+                        {
+                            TransData[tmp[0]][(int)lang] = Regex.Unescape(tmp.Skip(1).Join(delimiter: ":").Replace("\\n", "\n").Replace("\\r", "\r"));
+                        }
+                        catch (KeyNotFoundException)
+                        {
+                            UltimateModsPlugin.Logger.LogWarning($"\"{tmp[0]}\" isn't a valid key.");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                UltimateModsPlugin.Logger.LogError($"Translation File \"{filename}\" isn't found.");
+            }
+        }
     }
 
     [HarmonyPatch(typeof(LanguageSetter), nameof(LanguageSetter.SetLanguage))]
@@ -94,8 +136,15 @@ namespace UltimateMods
     {
         static void Postfix()
         {
-            ClientOptionsPatch.updateTranslations();
-            VanillaOptionsPatch.updateTranslations();
+            try
+            {
+                ClientOptionsPatch.updateTranslations();
+                VanillaOptionsPatch.updateTranslations();
+            }
+            catch
+            {
+                UltimateModsPlugin.Logger.LogError("Keys not found.");
+            }
         }
     }
 }

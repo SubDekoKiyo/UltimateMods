@@ -8,9 +8,9 @@ namespace UltimateMods
 {
     public class CustomOptionsH
     {
-        public static string[] TenRates = new string[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" };
-        public static string[] HundredRates = new string[] { "0%", "100%" };
-        public static string[] Presets = new string[] { "Preset1", "Preset2", "Preset3", "Preset4", "Preset5" };
+        public static string[] TenRates = new[] { "0%", "10%", "20%", "30%", "40%", "50%", "60%", "70%", "80%", "90%", "100%" };
+        public static string[] HundredRates = new[] { "0%", "100%" };
+        public static string[] Presets = new[] { "Preset1", "Preset2", "Preset3", "Preset4", "Preset5" };
 
         public static CustomOption PresetSelection;
         public static CustomOption ActivateModRoles;

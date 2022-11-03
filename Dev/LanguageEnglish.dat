@@ -1,0 +1,180 @@
+﻿ModOptionsText:UM Options
+VanillaOptionsText:AmongUs Options
+GeneralSettings:UM Settings
+ImpostorSettings:Impostor Roles
+NeutralSettings:Neutral Roles
+CrewmateSettings:Crewmate Roles
+ModifierSettings:Modifier Roles
+OtherSettings:Other Settings
+CrewmateWin:Twam Crewmates Win
+ImpostorWin:Team Impostors Win
+JesterWin:Jester Win
+ForceEnd:ForceEnd
+EveryoneLose:Everyone Lose
+CrewWinExtra:Crewmates {0} Win
+ImpostorWinExtra:Impostors {0} Win
+JesterWinExtra:Jester {0} Win
+ReactorWin:<size=80%>Reactor Sabotage was activated.</size>
+O2Win:<size=80%>Oxygen Sabotage was activated,</size>
+TaskWin:<size=80%>All Tasks were completed.</size>
+OpportunistExtra:& <color#00da00>Oppotunist</color>
+FinishedByHost:Force End with Host
+CreditsMain:Created with DekoKiyo
+CreditsVersion:Version.{0}
+CreditsBetaVersion:Version.Beta{0}
+PlatformTitle:===PlayerName : Platform===
+MeetingStatus:<size=100%>Crewmate {0} has\n<color=red>{1} times left, {2} times overall</color>\ncan hold emergency meetings.</size>
+NoUpdate:There is no update.\nThis is latest version.
+Updating:Updating now\u2026
+UpdateManually:Unable to auto-update.\nPlease update manually.
+UpdateInProgress:Update finished.\nQuit Among Us.\nPlease start again.
+UpdateButton:Mod Update
+UpdateRestart:Update finished.\nQuit Among Us.\nPlease start again.
+UpdateFailed:Unable to auto-update.\nPlease update manually.
+OptionOn:On
+OptionOff:Off
+FormatSeconds:{0}Sec
+FormatTimes:{0}Times
+FormatPlayer:{0}Player
+FormatShots:{0}Shots
+FormatPercent:{0}%
+wasThe:was The
+HA:[BLANK]
+DevName:<align="center">Developer\nDekoKiyo\n</align>
+CreditsText:<align="center"><size=120%>Reference Mod</size></align><size=78%>\n<color=#ff351f>TheOtherRoles</color> from Eisbison\n<color=#ff351f>TheOtherRoles+</color> from tomarai\n<color=#ff351f>TheOtherRolesGM</color> from Dusk\n<color=#ff351f>TheOtherRolesGM Haoming</color> from Haoming\n<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color> from Yoppy\n<color=#ffffff>Town of Plus</color> from tugaru1975\n<color=#4169e1>Town of Super</color> from reitou-mugicha\n<color=#e39804>TownOfUs-R</color> from eDonnes124\n<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color> from TeamToI\n<color=#ffffff>Las Monjas</color> from KiraYamato94\n<color=#ffffff>Extreme Roles</color> from yukieiji\n<color=#00bfff>TownOfHost</color> from Empty Bottle\n<color=#9579ce>Nebula on the Ship</color> from Dolly\n</size>
+CreditsTitle:Mod Credits
+Position:Position:
+RestrictOutOfTime:Out Of Time
+TimeRemaining:Remaining: {0}
+ButtonBlocked:BLOCKED
+JesterMeetingButton:Jester can't call meetings...
+GhostsSeeTasksButton:Ghosts See\nRemaining Tasks
+GhostsSeeVotesButton:Ghosts See Roles
+GhostsSeeRolesButton:Ghosts See Votes
+HideNameplates:Hide Nameplates
+EnableCustomSounds:Enable\nCustom Sounds
+ErrorNotInstalled:: has a different or no version of UltimateMods
+ErrorOlderVersion:: has an older version of UltimateMods
+ErrorNewerVersion:: has a newer version of UltimateMods
+ErrorWrongVersion:: has a modified version of UM
+ErrorHostNoVersion:<color=#00a2ff>The host has no or a different version of UltimateMods\nYou will be kicked in {0}s</color>
+Impostor:Impostor
+Crewmate:Crewmate
+Jester:Jester
+Sheriff:Sheriff
+Engineer:Engineer
+CustomImpostor:Custom Impostor
+UnderTaker:Under Taker
+BountyHunter:Bounty Hunter
+Madmate:Madmate
+Opportunist:Opportunist
+OpportunistPostfix:OP
+ImpostorIntro:Sabotage and Kill Everyone
+ImpostorShort:Sabotage and Kill Everyone
+ImpostorFull:A regular Impostor.
+CrewmateIntro:Do Task.
+CrewmateShort:Do Task.
+CrewmateFull:Normal Crewmate.\nLet's do Tasks.
+JesterIntro:Get out of here.
+JesterShort:Get out of here.
+JesterFull:Get out of here to win.\nNot to be killed by <color=#FF1919FF>Impostors</color>.
+SheriffIntro:Shoot the <color=#FF1919FF>Impostors</color>
+SheriffShort:Shoot the <color=#FF1919FF>Impostors</color>
+SheriffFull:Shoot the <color=#FF1919FF>Impostors</color>
+EngineerIntro:Let's Maintenance.
+EngineerShort:Let's Maintenance.
+EngineerFull:You can repair Sabotage with button and\nenter vents.
+CustomImpostorIntro:I was customized!
+CustomImpostorShort:I was customized!
+CustomImpostorFull:This is an individually configurable crook.
+UnderTakerIntro:Kill and Move DeadBody
+UnderTakerShort:Kill and Move DeadBody
+UnderTakerFull:You can Move Dead Body anywere.\nHide Dead Bodies and Kill Everyone.
+MadmateIntro:Help the Impostors
+MadmateShort:Help the Impostors
+MadmateFull:Help the Impostors
+ChangePage:Press < > for Change Pages,
+ActivateRoles:Activate Mod Roles
+PresetSelection:Preset
+RandomGen:Random Generator
+CrewmateRoles:Crewmate Roles
+NeutralRoles:Neutral Roles
+ImpostorRoles:Impostor Roles
+ModifierRoles:Modifier Roles
+RememberClassic:Remember the Past
+CrewmateRolesCountMin:Minimum Crewmate Roles
+CrewmateRolesCountMax:Maximum Crewmate Roles
+NeutralRolesCountMin:Minimum Neutral Roles
+NeutralRolesCountMax:Maximum Neutral Roles
+ImpostorRolesCountMin:Minimum Impostor Roles
+ImpostorRolesCountMax:Maximum Impostor Roles
+ModifierCountMin:Minimum Modifier Roles
+ModifierCountMax:Maximum Modifier Roles
+MaxNumberOfMeetings:Maximum Can Emergency Meetings
+BlockSkip:Can't Skip Vote
+NoVoteIsSelfVote:Can't Self Vote
+NoMedBayLimit:Can Simultaneous Progress Med Bay Scan
+HideOutName:NameTag doesn't Cross the Wall
+HidePlayerName:Hide Player Name
+RefundVoteDeath:Refund Votes on Death Player
+EnableGodMira:Enable God MiraHQ
+MirrorMap:Enable Mirror Maps
+CanZoomInOutDead:Can Zoom In&Out When Player is Dead
+PlayRandomMaps:Enable Random Maps
+RandomMapsEnableSkeld:The Skeld
+RandomMapsEnableMira:MiraHQ
+RandomMapsEnablePolus:Polus
+RandomMapsEnableAirShip:AirShip
+RandomMapsEnableSubmerged:Submerged
+RestrictDevices:Restrict Special Devices
+DisableAdmin:Restrict Admin Table
+DisableCameras:Restrict Security Devices
+DisableVitals:Restrict Vitals Panel
+RestrictPerTurn:Time Per Round
+RestrictPerGame:Time Per Game
+AirShipSettings:AirShipSettings
+OldAirShipAdmin:Old AirShip Admin System
+EnableRecordsAdmin:Enable Archive Admin
+EnableCockpitAdmin:Enable Cockpit Admin
+AirShipReactorDuration:AirShip Reactor Duration
+OptionOn:On
+OptionOff:Off
+RoleNumAssigned:Role Counts
+MaxShots:Max Shots
+CanKillNeutral:Can Kill Neutral
+KillCooldowns:Kill Cooldowns
+MisfireKillsTarget:Misfire Kills Target
+CanSabotage:Can Sabotage
+CanUseVents:Can Use Vents
+CanEmergencyMeeting:Can Emergency Meeting
+HasImpostorVision:Has Impostor Vision
+CanDieToSheriff:Can Killed by Sheriff
+CanFixO2:Can Fix O2
+CanFixComms:Can Fix Comms
+CanFixReactor:Can Fix Reactor
+CanFixBlackout:Can Fix Blackout
+HasTasks:Has Tasks
+NumCommonTasks:Common Tasks
+NumLongTasks:Long Tasks
+NumShortTasks:Short Tasks
+CanMoveInVents:Can Move In Vents
+JesterMustFinishTasks:Must Finish Tasks
+EngineerCanFixSabo:Can Fix Sabotage with Button
+EngineerSaboFixCount:Fix Count
+UnderTakerButtonCooldown:Move Cooldown
+UnderTakerHasDuration:Has Duration Time
+UnderTakerDuration:Duration Time
+UnderTakerDraggingSpeed:Dragging Speed
+UnderTakerCanDumpDeadBodyInVent:Can Dump Body in Vent
+BountyHunterSuccess:Succcess Cooldown
+BountyHunterMiss:Miss Cooldown
+BountyHunterDuration:Target Duration
+BountyHunterShowArrow:Show Arrow
+BountyHunterArrowUpdateCooldown:Arrow Update Cooldown
+MadmateKnowImpostorTaskEnd:Know Impostor When Task End
+MadmateCanWinWhenTaskEnd:Can Win When Task End
+ReamingShots:Shots: {0}
+ReamingCount:Reaming: {0}
+EngineerRepairButtonText:Repair
+UnderTakerDropText:Drop
+UnderTakerDragText:Drag

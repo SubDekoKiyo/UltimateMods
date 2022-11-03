@@ -2,13 +2,13 @@ using HarmonyLib;
 using System.Collections.Generic;
 using System;
 using UnityEngine;
+using static UltimateMods.UltimateMods;
 
 namespace UltimateMods.Debug
 {
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
     public static class DebugBots
     {
-        private static readonly System.Random random = new System.Random((int)DateTime.Now.Ticks);
         private static List<PlayerControl> bots = new();
         public static int BotCount = 0;
         public static void Postfix(KeyboardJoystick __instance)
@@ -23,12 +23,12 @@ namespace UltimateMods.Debug
                 GameData.Instance.AddPlayer(playerControl);
                 AmongUsClient.Instance.Spawn(playerControl, -2, InnerNet.SpawnFlags.None);
 
-                int hat = random.Next(HatManager.Instance.allHats.Count);
-                int pet = random.Next(HatManager.Instance.allPets.Count);
-                int skin = random.Next(HatManager.Instance.allSkins.Count);
-                int visor = random.Next(HatManager.Instance.allVisors.Count);
-                int color = random.Next(Palette.PlayerColors.Length);
-                int nameplate = random.Next(HatManager.Instance.allNamePlates.Count);
+                int hat = rnd.Next(HatManager.Instance.allHats.Count);
+                int pet = rnd.Next(HatManager.Instance.allPets.Count);
+                int skin = rnd.Next(HatManager.Instance.allSkins.Count);
+                int visor = rnd.Next(HatManager.Instance.allVisors.Count);
+                int color = rnd.Next(Palette.PlayerColors.Length);
+                int nameplate = rnd.Next(HatManager.Instance.allNamePlates.Count);
 
                 playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
                 playerControl.GetComponent<DummyBehaviour>().enabled = true;
