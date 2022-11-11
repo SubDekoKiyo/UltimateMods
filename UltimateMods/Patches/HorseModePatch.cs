@@ -74,7 +74,7 @@ namespace UltimateMods.Patches
                     if (horseModeOffSprite == null) horseModeOffSprite = Helpers.LoadSpriteFromTexture2D(HorseModeOffButton, 75f);
                     spriteHorseButton.sprite = horseModeOffSprite;
                 }
-                CredentialsPatch.MainMenuButtonPatch.updateSprite();
+                MainMenuPatch.MainMenuObjects.UpdateSprite();
                 // Avoid wrong Player Particles floating around in the background
                 var particles = GameObject.FindObjectOfType<PlayerParticles>();
                 if (particles != null)

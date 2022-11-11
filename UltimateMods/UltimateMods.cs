@@ -10,7 +10,8 @@ namespace UltimateMods
     [HarmonyPatch]
     public static class UltimateMods
     {
-        public static System.Random rnd = new System.Random((int)DateTime.Now.Ticks);
+        public static Random rnd = new MersenneTwister((int)DateTime.Now.Ticks);
+
         public static void ClearAndReloadRoles()
         {
             // Roles
@@ -21,6 +22,9 @@ namespace UltimateMods
             UnderTaker.Clear();
             BountyHunter.Clear();
             Madmate.Clear();
+            Bakery.Clear();
+            Teleporter.Clear();
+            Altruist.Clear();
 
             // Modifiers
             Opportunist.Clear();

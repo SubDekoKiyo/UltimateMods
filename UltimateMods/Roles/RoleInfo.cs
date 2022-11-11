@@ -15,7 +15,6 @@ namespace UltimateMods.Roles
         public virtual string IntroDescription { get { return ModTranslation.getString(nameKey + "Intro"); } }
         public virtual string ShortDescription { get { return ModTranslation.getString(nameKey + "Short"); } }
         public virtual string FullDescription { get { return ModTranslation.getString(nameKey + "Full"); } }
-        public virtual string Blurb { get { return ModTranslation.getString(nameKey + "Blurb"); } }
         public virtual string RoleOptions { get { return GameOptionsDataPatch.optionsToString(baseOption, true); } }
 
         public bool enabled { get { return CustomOptionsH.ActivateModRoles.getBool() && (baseOption == null || baseOption.enabled); } }
@@ -39,6 +38,9 @@ namespace UltimateMods.Roles
         public static RoleInfo underTaker = new("UnderTaker", ImpostorRed, CustomRolesH.UnderTakerRate, RoleType.UnderTaker);
         public static RoleInfo bountyHunter = new("BountyHunter", ImpostorRed, CustomRolesH.BountyHunterRate, RoleType.BountyHunter);
         public static RoleInfo madmate = new("Madmate", ImpostorRed, CustomRolesH.MadmateRate, RoleType.Madmate);
+        public static RoleInfo bakery = new("Bakery", BakeryYellow, CustomRolesH.BakeryRate, RoleType.Bakery);
+        public static RoleInfo teleporter = new("Teleporter", ImpostorRed, CustomRolesH.TeleporterRate, RoleType.Teleporter);
+        public static RoleInfo altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleType.Altruist);
         public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -53,6 +55,9 @@ namespace UltimateMods.Roles
             underTaker,
             bountyHunter,
             madmate,
+            bakery,
+            teleporter,
+            altruist,
         };
 
         public static string tl(string key)
@@ -73,6 +78,9 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.UnderTaker)) infos.Add(underTaker);
             if (p.isRole(RoleType.BountyHunter)) infos.Add(bountyHunter);
             if (p.isRole(RoleType.Madmate)) infos.Add(madmate);
+            if (p.isRole(RoleType.Bakery)) infos.Add(bakery);
+            if (p.isRole(RoleType.Teleporter)) infos.Add(teleporter);
+            if (p.isRole(RoleType.Altruist)) infos.Add(altruist);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

@@ -5,9 +5,7 @@ using System.Reflection;
 using BepInEx;
 using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
-using UltimateMods.Patches;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace UltimateMods
 {
@@ -66,6 +64,7 @@ namespace UltimateMods
         private static MethodInfo RpcRequestChangeFloorMethod;
         private static Type FloorHandlerType;
         private static MethodInfo GetFloorHandlerMethod;
+        private static FieldInfo OnUpperField;
 
         private static Type Vent_MoveToVent_PatchType;
         private static FieldInfo InTransitionField;
@@ -137,6 +136,7 @@ namespace UltimateMods
             FloorHandlerType = Types.First(t => t.Name == "FloorHandler");
             GetFloorHandlerMethod = AccessTools.Method(FloorHandlerType, "GetFloorHandler", new Type[] { typeof(PlayerControl) });
             RpcRequestChangeFloorMethod = AccessTools.Method(FloorHandlerType, "RpcRequestChangeFloor");
+            OnUpperField = AccessTools.Field(FloorHandlerType, "OnUpper");
 
             Vent_MoveToVent_PatchType = Types.First(t => t.Name == "Vent_MoveToVent_Patch");
             InTransitionField = AccessTools.Field(Vent_MoveToVent_PatchType, "InTransition");
@@ -161,6 +161,20 @@ namespace UltimateMods
         {
             if (!Loaded) return 0;
             return (float)CalculateLightRadiusMethod.Invoke(SubmarineStatus, new object[] { null, true, isImpostor });
+        }
+
+        public static bool GetFloor()
+        {
+            if (!Loaded) return false;
+            MonoBehaviour _floorHandler = ((Component)GetFloorHandlerMethod.Invoke(null, new object[] { PlayerControl.LocalPlayer })) as MonoBehaviour;
+            return (bool)OnUpperField.GetValue(_floorHandler);
+        }
+
+        public static bool GetFloor(PlayerControl p)
+        {
+            if (!Loaded) return false;
+            MonoBehaviour _floorHandler = ((Component)GetFloorHandlerMethod.Invoke(null, new object[] { p })) as MonoBehaviour;
+            return (bool)OnUpperField.GetValue(_floorHandler);
         }
 
         public static void ChangeFloor(bool toUpper)

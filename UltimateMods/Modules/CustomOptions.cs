@@ -869,7 +869,6 @@ namespace UltimateMods.Modules
             // First add the Presets and the role counts
             entries.Add(optionToString(CustomOptionsH.PresetSelection));
             entries.Add(optionToString(CustomOptionsH.ActivateModRoles));
-            entries.Add(optionToString(CustomOptionsH.RandomGen));
             entries.Add(optionToString(CustomOptionsH.EnableMirrorMap));
             entries.Add(optionToString(CustomOptionsH.CanZoomInOutWhenPlayerIsDead));
 
@@ -921,7 +920,6 @@ namespace UltimateMods.Modules
             {
                 if ((option == CustomOptionsH.PresetSelection) ||
                     (option == CustomOptionsH.ActivateModRoles) ||
-                    (option == CustomOptionsH.RandomGen) ||
                     (option == CustomOptionsH.EnableMirrorMap) ||
                     (option == CustomOptionsH.CanZoomInOutWhenPlayerIsDead) ||
                     // (option == CustomOptionsH.RememberClassic) ||

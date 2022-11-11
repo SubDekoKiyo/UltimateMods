@@ -30,7 +30,7 @@ namespace UltimateMods.Roles
         public static Sprite GetButtonSprite()
         {
             if (TemplateButtonSprite) return TemplateButtonSprite;
-            // TemplateButtonSprite = Helpers.LoadSpriteFromTexture2D(, 115f);
+            TemplateButtonSprite = Helpers.LoadSpriteFromTexture2D(TemplateButtonSprite, 115f);
             return TemplateButtonSprite;
         }
 
@@ -43,7 +43,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.NoRole) && !PlayerControl.LocalPlayer.Data.IsDead; }, //使用可能条件
                 () => { return PlayerControl.LocalPlayer.CanMove; }, // 使用時の動作(Text変更等)
                 () => { }, // 会議終了時
-                Template.GetButtonSprite(), //絵
+                GetButtonSprite(), //絵
                 new Vector3(-1.8f, -0.06f, 0), //位置
                 hm, // HudManager
                 hm.KillButton, // 基にするボタン

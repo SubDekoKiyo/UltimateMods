@@ -1,5 +1,6 @@
 using HarmonyLib;
 using UnityEngine;
+using UltimateMods.Utilities;
 
 namespace UltimateMods.Roles.Patches
 {
@@ -10,22 +11,44 @@ namespace UltimateMods.Roles.Patches
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
         public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player)
         {
-            ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) ? __instance.Systems[SystemTypes.Electrical] : null;
-            if (systemType == null) return true;
-            SwitchSystem switchSystem = systemType.TryCast<SwitchSystem>();
-            if (switchSystem == null) return true;
+            if (!__instance.Systems.ContainsKey(SystemTypes.Electrical)) return true;
 
-            float num = (float)switchSystem.Value / 255f;
+            // Has Impostor Vision
+            if (Helpers.HasImpostorVision(player))
+            {
+                __result = GetNeutralLightRadius(__instance, true);
+                return false;
+            }
 
-            if (player == null || player.IsDead) // IsDead
-                __result = __instance.MaxLightRadius;
-            else if ((player.Role.IsImpostor || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)) ||
-             (player.Object.isRole(RoleType.Madmate) && Madmate.HasImpostorVision)) // Jester with Impostor vision
-                __result = __instance.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+            // Default light radius
             else
-                __result = Mathf.Lerp(__instance.MinLightRadius, __instance.MaxLightRadius, num) * PlayerControl.GameOptions.CrewLightMod;
+            {
+                __result = GetNeutralLightRadius(__instance, false);
+            }
 
             return false;
+        }
+
+        public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
+        {
+            if (SubmergedCompatibility.IsSubmerged)
+            {
+                return SubmergedCompatibility.GetSubmergedNeutralLightRadius(isImpostor);
+            }
+
+            if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
+
+            SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+            float lerpValue = switchSystem.Value / 255f;
+
+            return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * PlayerControl.GameOptions.CrewLightMod;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.IsGameOverDueToDeath))]
+        public static void Postfix2(ShipStatus __instance, ref bool __result)
+        {
+            __result = false;
         }
     }
 }

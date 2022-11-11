@@ -46,5 +46,13 @@ namespace UltimateMods
                 return CustomOptionsH.RefundVotesOnDeath.getBool();
             }
         }
+
+        public static bool IsGodMiraHQ
+        {
+            get
+            {
+                return CustomOptionsH.EnableGodMiraHQ.getBool() && PlayerControl.GameOptions.MapId == 1;
+            }
+        }
     }
 }

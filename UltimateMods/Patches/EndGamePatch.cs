@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System;
+using System.Text;
 using UltimateMods.Modules;
 using UltimateMods.Debug;
 using static UltimateMods.Modules.Assets;
@@ -15,6 +16,7 @@ namespace UltimateMods.EndGame
     public enum CustomGameOverReason
     {
         JesterExiled = 10,
+        TaskerTaskEnd,
 
         SabotageReactor,
         SabotageO2,
@@ -32,6 +34,8 @@ namespace UltimateMods.EndGame
         Suicide, // 自殺
         Dead, // 死亡(キル)
         LackO2, // 酸素不足
+        Bomb, // 爆発
+        Revival,
         Disconnected // 切断
     }
 
@@ -43,6 +47,7 @@ namespace UltimateMods.EndGame
         ImpostorWin,
         JesterWin,
         OpportunistWin,
+        TaskerWin,
 
         ForceEnd,
         EveryoneLose
@@ -397,6 +402,55 @@ namespace UltimateMods.EndGame
                     else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.ForceEnd)
                     {
                         textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
+                    }
+
+                    if (MapOptions.ShowRoleSummary)
+                    {
+                        var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
+                        GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
+                        roleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + 0.1f, position.y - 0.1f, -14f);
+                        roleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
+
+                        var RoleSummaryText = new StringBuilder();
+                        RoleSummaryText.AppendLine(ModTranslation.getString("RoleSummaryText"));
+                        AdditionalTempData.playerRoles.Sort((x, y) =>
+                        {
+                            RoleInfo roleX = x.Roles.FirstOrDefault();
+                            RoleInfo roleY = y.Roles.FirstOrDefault();
+                            RoleType idX = roleX == null ? RoleType.NoRole : roleX.roleType;
+                            RoleType idY = roleY == null ? RoleType.NoRole : roleY.roleType;
+
+                            if (x.Status == y.Status)
+                            {
+                                if (idX == idY)
+                                {
+                                    return x.PlayerName.CompareTo(y.PlayerName);
+                                }
+                                return idX.CompareTo(idY);
+                            }
+                            return x.Status.CompareTo(y.Status);
+                        });
+
+                        foreach (var data in AdditionalTempData.playerRoles)
+                        {
+                            var TaskInfo = data.TasksTotal > 0 ? $"<color=#FAD934FF>{data.TasksCompleted}/{data.TasksTotal}</color>" : "";
+                            string AliveDead = ModTranslation.getString("RoleSummary" + data.Status.ToString(), def: "-");
+                            string result = $"{data.PlayerName/* + data.NameSuffix*/}<pos=18.5%>{TaskInfo}<pos=25%>{AliveDead}<pos=34%>{data.RoleString}";
+
+                            RoleSummaryText.AppendLine(result);
+                        }
+
+                        TMPro.TMP_Text RoleSummaryTextMesh = roleSummary.GetComponent<TMPro.TMP_Text>();
+                        RoleSummaryTextMesh.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                        RoleSummaryTextMesh.color = Color.white;
+                        RoleSummaryTextMesh.outlineWidth *= 1.2f;
+                        RoleSummaryTextMesh.fontSizeMin = 1.25f;
+                        RoleSummaryTextMesh.fontSizeMax = 1.25f;
+                        RoleSummaryTextMesh.fontSize = 1.25f;
+
+                        var RoleSummaryTextMeshRectTransform = RoleSummaryTextMesh.GetComponent<RectTransform>();
+                        RoleSummaryTextMeshRectTransform.anchoredPosition = new Vector2(position.x + 3.5f, position.y - 0.1f);
+                        RoleSummaryTextMesh.text = RoleSummaryText.ToString();
                     }
                     AdditionalTempData.clear();
                 }

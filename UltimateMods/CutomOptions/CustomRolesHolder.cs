@@ -50,9 +50,6 @@ namespace UltimateMods
         public static CustomOption BountyHunterShowArrow;
         public static CustomOption BountyHunterArrowUpdateCooldown;
 
-        /* Modifiers */
-        public static CustomRoleOption OpportunistRate;
-
         public static CustomRoleOption MadmateRate;
         public static CustomOption MadmateCanDieToSheriff;
         public static CustomOption MadmateCanEnterVents;
@@ -68,13 +65,20 @@ namespace UltimateMods
         public static CustomOption MadmateCanKnowImpostorWhenTasksEnded;
         public static CustomOption MadmateCanWinWhenTaskEnded;
 
-        internal static Dictionary<byte, byte[]> BlockedRolePairings = new();
+        public static CustomRoleOption BakeryRate;
+        public static CustomOption BakeryBombRate;
 
-        private static byte ToByte(float f)
-        {
-            f = Mathf.Clamp01(f);
-            return (byte)(f * 255);
-        }
+        public static CustomRoleOption TeleporterRate;
+        public static CustomOption TeleporterButtonCooldown;
+        public static CustomOption TeleporterTeleportTo;
+
+        public static CustomRoleOption AltruistRate;
+        public static CustomOption AltruistDuration;
+
+        /* Modifiers */
+        public static CustomRoleOption OpportunistRate;
+
+        internal static Dictionary<byte, byte[]> BlockedRolePairings = new();
 
         public static void Load()
         {
@@ -120,23 +124,33 @@ namespace UltimateMods
             BountyHunterShowArrow = CustomOption.Create(154, Impostor, ImpostorRed, "BountyHunterShowArrow", true, BountyHunterRate);
             BountyHunterArrowUpdateCooldown = CustomOption.Create(155, Impostor, ImpostorRed, "BountyHunterArrowUpdateCooldown", 15f, 2.5f, 60f, 2.5f, BountyHunterShowArrow, format: "FormatSeconds");
 
+            MadmateRate = new CustomRoleOption(160, Crewmate, White, "Madmate", ImpostorRed, 15);
+            MadmateCanDieToSheriff = CustomOption.Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
+            MadmateCanEnterVents = CustomOption.Create(162, Crewmate, ImpostorRed, "CanUseVents", true, MadmateRate);
+            MadmateCanMoveInVents = CustomOption.Create(163, Crewmate, ImpostorRed, "CanMoveInVents", false, MadmateCanEnterVents);
+            MadmateCanSabotage = CustomOption.Create(164, Crewmate, ImpostorRed, "CanSabotage", false, MadmateRate);
+            MadmateHasImpostorVision = CustomOption.Create(165, Crewmate, ImpostorRed, "HasImpostorVision", true, MadmateRate);
+            MadmateCanFixO2 = CustomOption.Create(166, Crewmate, ImpostorRed, "CanFixO2", false, MadmateRate);
+            MadmateCanFixComms = CustomOption.Create(167, Crewmate, ImpostorRed, "CanFixComms", false, MadmateRate);
+            MadmateCanFixReactor = CustomOption.Create(168, Crewmate, ImpostorRed, "CanFixReactor", true, MadmateRate);
+            MadmateCanFixBlackout = CustomOption.Create(169, Crewmate, ImpostorRed, "CanFixBlackout", true, MadmateRate);
+            MadmateHasTasks = CustomOption.Create(170, Crewmate, ImpostorRed, "HasTasks", true, MadmateRate);
+            MadmateTasksCount = new CustomTasksOption(171, Crewmate, ImpostorRed, 1, 2, 3, MadmateHasTasks);
+            MadmateCanKnowImpostorWhenTasksEnded = CustomOption.Create(172, Crewmate, ImpostorRed, "MadmateKnowImpostorTaskEnd", true, MadmateHasTasks);
+            MadmateCanWinWhenTaskEnded = CustomOption.Create(173, Crewmate, ImpostorRed, "MadmateCanWinWhenTaskEnd", true, MadmateHasTasks);
+
+            BakeryRate = new CustomRoleOption(175, Crewmate, White, "Bakery", BakeryYellow, 1);
+            BakeryBombRate = CustomOption.Create(176, Crewmate, BakeryYellow, "BakeryBombRate", 10f, 0f, 100f, 5f, BakeryRate, format: "FormatPercent");
+
+            TeleporterRate = new CustomRoleOption(180, Impostor, White, "Teleporter", ImpostorRed, 15);
+            TeleporterButtonCooldown = CustomOption.Create(181, Impostor, ImpostorRed, "TeleporterButtonCooldown", 40f, 10f, 80f, 2.5f, TeleporterRate, format: "FormatSeconds");
+            TeleporterTeleportTo = CustomOption.Create(182, Impostor, ImpostorRed, "TeleporterTeleportTo", new string[] { "TeleporterAllRandom", "OnlyCrewmate" }, TeleporterRate);
+
+            AltruistRate = new CustomRoleOption(185, Crewmate, White, "Altruist", ImpostorRed, 1);
+            AltruistDuration = CustomOption.Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
+
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
-
-            MadmateRate = new CustomRoleOption(2010, Modifier, White, "Madmate", ImpostorRed, 15);
-            MadmateCanDieToSheriff = CustomOption.Create(2011, Modifier, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
-            MadmateCanEnterVents = CustomOption.Create(2012, Modifier, ImpostorRed, "CanUseVents", true, MadmateRate);
-            MadmateCanMoveInVents = CustomOption.Create(2013, Modifier, ImpostorRed, "CanMoveInVents", false, MadmateCanEnterVents);
-            MadmateCanSabotage = CustomOption.Create(2014, Modifier, ImpostorRed, "CanSabotage", false, MadmateRate);
-            MadmateHasImpostorVision = CustomOption.Create(2015, Modifier, ImpostorRed, "HasImpostorVision", true, MadmateRate);
-            MadmateCanFixO2 = CustomOption.Create(2016, Modifier, ImpostorRed, "CanFixO2", false, MadmateRate);
-            MadmateCanFixComms = CustomOption.Create(2017, Modifier, ImpostorRed, "CanFixComms", false, MadmateRate);
-            MadmateCanFixReactor = CustomOption.Create(2018, Modifier, ImpostorRed, "CanFixReactor", true, MadmateRate);
-            MadmateCanFixBlackout = CustomOption.Create(2019, Modifier, ImpostorRed, "CanFixBlackout", true, MadmateRate);
-            MadmateHasTasks = CustomOption.Create(2020, Modifier, ImpostorRed, "HasTasks", true, MadmateRate);
-            MadmateTasksCount = new CustomTasksOption(2021, Modifier, ImpostorRed, 1, 2, 3, MadmateHasTasks);
-            MadmateCanKnowImpostorWhenTasksEnded = CustomOption.Create(2022, Modifier, ImpostorRed, "MadmateKnowImpostorTaskEnd", true, MadmateHasTasks);
-            MadmateCanWinWhenTaskEnded = CustomOption.Create(2023, Modifier, ImpostorRed, "MadmateCanWinWhenTaskEnd", true, MadmateHasTasks);
         }
     }
 }

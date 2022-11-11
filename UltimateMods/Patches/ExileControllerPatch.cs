@@ -72,8 +72,8 @@ namespace UltimateMods.Patches
 
                 if (SubmergedCompatibility.IsSubmerged)
                 {
-                    var fullscreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
-                    if (fullscreen) fullscreen.SetActive(false);
+                    var FullScreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
+                    if (FullScreen) FullScreen.SetActive(false);
                 }
             }
         }

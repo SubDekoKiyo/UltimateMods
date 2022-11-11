@@ -15,7 +15,6 @@ namespace UltimateMods
         public static CustomOption PresetSelection;
         public static CustomOption ActivateModRoles;
         // public static CustomOption activateModSettings;
-        public static CustomOption RandomGen;
         public static CustomOption CrewmateRolesCountMin;
         public static CustomOption CrewmateRolesCountMax;
         public static CustomOption NeutralRolesCountMin;
@@ -24,7 +23,7 @@ namespace UltimateMods
         public static CustomOption ImpostorRolesCountMax;
         public static CustomOption ModifierCountMin;
         public static CustomOption ModifierCountMax;
-        public static CustomOption RememberClassic;
+        // public static CustomOption RememberClassic;
 
         public static CustomOption SpecialOptions;
         public static CustomOption MaxNumberOfMeetings;
@@ -51,7 +50,7 @@ namespace UltimateMods
         public static CustomOption RestrictCameras;
         public static CustomOption RestrictVitals;
 
-        // public static CustomOption EnableGodMiraHQ;
+        public static CustomOption EnableGodMiraHQ;
 
         public static CustomOption AirShipSettings;
         public static CustomOption OldAirShipAdmin;
@@ -80,33 +79,32 @@ namespace UltimateMods
 
             PresetSelection = CustomOption.Create(3, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "PresetSelection"), Presets, null, true);
 
-            RandomGen = CustomOption.Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RandomGen"), true, null, true);
-
-            RememberClassic = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
-            EnableMirrorMap = CustomOption.Create(33, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
-            CanZoomInOutWhenPlayerIsDead = CustomOption.Create(40, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
+            // RememberClassic = CustomOption.Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
+            EnableMirrorMap = CustomOption.Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
+            CanZoomInOutWhenPlayerIsDead = CustomOption.Create(6, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
+            EnableGodMiraHQ = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
 
             // Using new id's for the options to not break compatibility with older versions
-            CrewmateRolesCountMin = CustomOption.Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
-            CrewmateRolesCountMax = CustomOption.Create(6, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            NeutralRolesCountMin = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            NeutralRolesCountMax = CustomOption.Create(8, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ImpostorRolesCountMin = CustomOption.Create(9, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ImpostorRolesCountMax = CustomOption.Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ModifierCountMin = CustomOption.Create(11, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ModifierCountMax = CustomOption.Create(12, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            CrewmateRolesCountMin = CustomOption.Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
+            CrewmateRolesCountMax = CustomOption.Create(11, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            NeutralRolesCountMin = CustomOption.Create(12, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            NeutralRolesCountMax = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            ImpostorRolesCountMin = CustomOption.Create(14, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            ImpostorRolesCountMax = CustomOption.Create(15, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            ModifierCountMin = CustomOption.Create(16, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            ModifierCountMax = CustomOption.Create(17, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
 
             SpecialOptions = new CustomOptionBlank(null);
             MaxNumberOfMeetings = CustomOption.Create(20, General, White, "MaxNumberOfMeetings", 10f, 0f, 15f, 1f, SpecialOptions, format: "FormatTimes");
             BlockSkippingInEmergencyMeetings = CustomOption.Create(21, General, White, "BlockSkip", false, SpecialOptions);
             NoVoteIsSelfVote = CustomOption.Create(22, General, White, "NoVoteIsSelfVote", false, SpecialOptions);
-            AllowParallelMedBayScans = CustomOption.Create(24, General, White, "NoMedBayLimit", true, SpecialOptions);
+            AllowParallelMedBayScans = CustomOption.Create(23, General, White, "NoMedBayLimit", true, SpecialOptions);
             // onePlayerStart = CustomOption.Create(27, General, "oneStart", false, specialOptions);
             // betterStartButtons = CustomOption.Create(30, General, "betterStart", true, specialOptions);
-            HideOutOfSightNameTags = CustomOption.Create(31, General, White, "HideOutName", true, SpecialOptions);
-            HidePlayerNames = CustomOption.Create(55, General, White, "HidePlayerName", false, SpecialOptions);
-            RefundVotesOnDeath = CustomOption.Create(32, General, White, "RefundVoteDeath", true, SpecialOptions);
-            // EnableGodMiraHQ = CustomOption.Create(35, General, "EnableGodMira", false, SpecialOptions);
+            HideOutOfSightNameTags = CustomOption.Create(24, General, White, "HideOutName", true, SpecialOptions);
+            HidePlayerNames = CustomOption.Create(25, General, White, "HidePlayerName", false, SpecialOptions);
+            RefundVotesOnDeath = CustomOption.Create(26, General, White, "RefundVoteDeath", true, SpecialOptions);
+            // EnableGodMiraHQ = CustomOption.Create(27, General, "EnableGodMira", false, SpecialOptions);
             RandomMap = CustomOption.Create(34, General, White, "PlayRandomMaps", false, SpecialOptions);
             RandomMapEnableSkeld = CustomOption.Create(50, General, White, "RandomMapsEnableSkeld", true, RandomMap, false);
             RandomMapEnableMira = CustomOption.Create(51, General, White, "RandomMapsEnableMira", true, RandomMap, false);

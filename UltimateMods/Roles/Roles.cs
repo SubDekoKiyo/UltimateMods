@@ -13,15 +13,19 @@ namespace UltimateMods.Roles
         Sheriff,
         Engineer,
         Madmate,
+        Bakery,
+        Altruist,
 
         // Impostor Roles
         Impostor = 100,
         CustomImpostor,
         UnderTaker,
         BountyHunter,
+        Teleporter,
 
         // Neutral Roles
         Jester = 200,
+
         // don't put anything below this
         NoRole = int.MaxValue
     }
@@ -35,6 +39,8 @@ namespace UltimateMods.Roles
             { RoleType.Sheriff, typeof(RoleBase<Sheriff>) },
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
             { RoleType.Madmate, typeof(RoleBase<Madmate>) },
+            { RoleType.Bakery, typeof(RoleBase<Bakery>) },
+            { RoleType.Altruist, typeof(RoleBase<Altruist>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },
@@ -43,6 +49,7 @@ namespace UltimateMods.Roles
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },
             { RoleType.UnderTaker, typeof(RoleBase<UnderTaker>) },
             { RoleType.BountyHunter, typeof(RoleBase<BountyHunter>) },
+            { RoleType.Teleporter, typeof(RoleBase<Teleporter>) },
         };
     }
 

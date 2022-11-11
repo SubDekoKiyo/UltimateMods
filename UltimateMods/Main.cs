@@ -19,18 +19,19 @@ namespace UltimateMods
     public class UltimateModsPlugin : BasePlugin
     {
         public const string Id = "jp.DekoKiyo.UltimateMods";
-        public const string VersionString = "1.0.1";
+        public const string VersionString = "1.1.0";
 
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
         public static int OptionsPage = 1;
-        public static bool isBeta = false;
+        public static bool isBeta = true;
 
         public static ConfigEntry<bool> DebugMode { get; private set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
         public static ConfigEntry<bool> GhostsSeeRoles { get; set; }
         public static ConfigEntry<bool> GhostsSeeVotes { get; set; }
         public static ConfigEntry<bool> HideNameplates { get; set; }
+        public static ConfigEntry<bool> ShowRoleSummary { get; set; }
         public static ConfigEntry<bool> EnableCustomSounds { get; set; }
         // public static ConfigEntry<bool> ShowLighterDarker { get; set; }
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
@@ -50,6 +51,7 @@ namespace UltimateMods
             GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);
             GhostsSeeRoles = Config.Bind("Custom", "Ghosts See Roles", true);
             GhostsSeeVotes = Config.Bind("Custom", "Ghosts See Votes", true);
+            ShowRoleSummary = Config.Bind("Custom", "ShowRoleSummary", false);
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             EnableCustomSounds = Config.Bind("Custom", "Enable Custom Sounds", true);
             // ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
@@ -63,7 +65,6 @@ namespace UltimateMods
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             SubmergedCompatibility.Initialize();
-            RandomGenerator.Initialize();
             Harmony.PatchAll();
         }
     }

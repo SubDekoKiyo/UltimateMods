@@ -24,6 +24,7 @@ namespace UltimateMods
         public static bool GhostsSeeRoles = true;
         public static bool GhostsSeeTasks = true;
         public static bool GhostsSeeVotes = true;
+        public static bool ShowRoleSummary = true;
         public static bool HideNameplates = false;
         public static bool AllowParallelMedBayScans = false;
         public static bool EnableCustomSounds = true;
@@ -63,6 +64,7 @@ namespace UltimateMods
             GhostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value;
             GhostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value;
             HideNameplates = UltimateModsPlugin.HideNameplates.Value;
+            ShowRoleSummary = UltimateModsPlugin.ShowRoleSummary.Value;
             EnableCustomSounds = UltimateModsPlugin.EnableCustomSounds.Value;
             // showLighterDarker = UltimateModsPlugin.ShowLighterDarker.Value;
             enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value;

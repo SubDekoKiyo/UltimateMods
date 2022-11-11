@@ -10,9 +10,12 @@ namespace UltimateMods.Modules
         private static readonly Assembly AudioAssets = Assembly.GetExecutingAssembly();
         private static readonly Assembly SpriteAssets = Assembly.GetExecutingAssembly();
         private static readonly Assembly ButtonAssets = Assembly.GetExecutingAssembly();
+        private static readonly Assembly GodMiraHQAssets = Assembly.GetExecutingAssembly();
 
         public static AudioClip JesterWinSound;
         public static AudioClip EveryoneLoseSound;
+        public static AudioClip Bomb;
+        public static AudioClip Teleport;
 
         public static Texture2D Arrow;
         public static Texture2D NormalBanner;
@@ -32,6 +35,11 @@ namespace UltimateMods.Modules
         public static Texture2D UnderTakerMoveButton;
         public static Texture2D ZoomInButton;
         public static Texture2D ZoomOutButton;
+        public static Texture2D TeleporterTeleportButton;
+        public static Texture2D AltruistReviveButton;
+
+        public static GameObject GodMiraHQ;
+        public static GameObject NewDropShip;
 
         public static void LoadAssets()
         {
@@ -40,6 +48,8 @@ namespace UltimateMods.Modules
 
             JesterWinSound = AudioAssetsBundle.LoadAsset<AudioClip>("JesterWin.wav").DontUnload();
             EveryoneLoseSound = AudioAssetsBundle.LoadAsset<AudioClip>("EveryoneLose.wav").DontUnload();
+            Bomb = AudioAssetsBundle.LoadAsset<AudioClip>("Bomb.mp3").DontUnload();
+            Teleport = AudioAssetsBundle.LoadAsset<AudioClip>("Teleport.mp3").DontUnload();
 
             var SpriteAssetsResource = SpriteAssets.GetManifestResourceStream("UltimateMods.Resources.AssetsBundlesUM.Assets.ultimatesprite");
             var SpriteAssetsBundle = AssetBundle.LoadFromMemory(SpriteAssetsResource.ReadFully());
@@ -65,10 +75,19 @@ namespace UltimateMods.Modules
             UnderTakerMoveButton = ButtonAssetsBundle.LoadAsset<Texture2D>("UnderTakerMoveButton.png").DontUnload();
             ZoomInButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ZoomIn.png").DontUnload();
             ZoomOutButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ZoomOut.png").DontUnload();
+            TeleporterTeleportButton = ButtonAssetsBundle.LoadAsset<Texture2D>("TeleporterTeleportButton.png").DontUnload();
+            AltruistReviveButton = ButtonAssetsBundle.LoadAsset<Texture2D>("AltruistReviveButton.png").DontUnload();
+
+            var GodMiraHQAssetsResource = GodMiraHQAssets.GetManifestResourceStream("UltimateMods.GodMiraHQ.Resources.godmirahq");
+            var GodMiraHQAssetsBundle = AssetBundle.LoadFromMemory(GodMiraHQAssetsResource.ReadFully());
+
+            GodMiraHQ = GodMiraHQAssetsBundle.LoadAsset<GameObject>("GodMiraHQ.prefab").DontUnload();
+            NewDropShip = GodMiraHQAssetsBundle.LoadAsset<GameObject>("DropShip.prefab").DontUnload();
 
             AudioAssetsBundle.Unload(false);
             SpriteAssetsBundle.Unload(false);
             ButtonAssetsBundle.Unload(false);
+            GodMiraHQAssetsBundle.Unload(false);
         }
     }
 }

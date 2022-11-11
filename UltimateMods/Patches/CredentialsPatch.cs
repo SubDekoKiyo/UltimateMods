@@ -29,10 +29,7 @@ namespace UltimateMods.Patches
                 version.transform.SetParent(amongUsLogo.transform);
 
                 if (UltimateModsPlugin.isBeta)
-                {
                     baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.Beta{UltimateModsPlugin.Version.ToString()}";
-                    __instance.text.text += $"\n<color=#0094ff>UltimateMods</color> BuildNum: " + ModTranslation.getString("BuildNum");
-                }
                 else
                     baseCredentials = $@"<size=130%><color=#0094ff>Ultimate Mods</color></size> Ver.{UltimateModsPlugin.Version.ToString()}";
 
@@ -62,63 +59,6 @@ namespace UltimateMods.Patches
                 {
                     __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
                     __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.8f, 0.1f, 0.5f);
-                }
-            }
-        }
-
-        [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
-        public static class MainMenuButtonPatch
-        {
-            public static SpriteRenderer renderer;
-            public static Sprite bannerSprite;
-            public static Sprite horseBannerSprite;
-            private static PingTracker instance;
-            static void Postfix(PingTracker __instance)
-            {
-                FastDestroyableSingleton<ModManager>.Instance.ShowModStamp();
-
-                var amongUsLogo = GameObject.Find("bannerLogo_AmongUs");
-                if (amongUsLogo != null)
-                {
-                    amongUsLogo.transform.localScale *= 0.6f;
-                    amongUsLogo.transform.position += Vector3.up * 0.25f;
-                }
-
-                var umLogo = new GameObject("bannerLogo_UM");
-                umLogo.transform.position = Vector3.up;
-                renderer = umLogo.AddComponent<SpriteRenderer>();
-                loadSprites();
-                renderer.sprite = Helpers.LoadSpriteFromTexture2D(NormalBanner, 200f);
-
-                instance = __instance;
-                loadSprites();
-                renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
-            }
-
-            public static void loadSprites()
-            {
-                if (bannerSprite == null) bannerSprite = Helpers.LoadSpriteFromTexture2D(NormalBanner, 200f);
-                if (horseBannerSprite == null) horseBannerSprite = Helpers.LoadSpriteFromTexture2D(HorseBanner, 200f);
-            }
-
-            public static void updateSprite()
-            {
-                loadSprites();
-                if (renderer != null)
-                {
-                    float fadeDuration = 1f;
-                    instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) =>
-                    {
-                        renderer.color = new Color(1, 1, 1, 1 - p);
-                        if (p == 1)
-                        {
-                            renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
-                            instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) =>
-                            {
-                                renderer.color = new Color(1, 1, 1, p);
-                            })));
-                        }
-                    })));
                 }
             }
         }

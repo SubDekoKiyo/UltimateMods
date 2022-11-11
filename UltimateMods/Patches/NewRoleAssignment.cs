@@ -1,4 +1,3 @@
-/*
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -95,11 +94,15 @@ namespace UltimateMods.Patches
             ImpSettings.Add((byte)RoleType.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
             ImpSettings.Add((byte)RoleType.UnderTaker, CustomRolesH.UnderTakerRate.data);
             ImpSettings.Add((byte)RoleType.BountyHunter, CustomRolesH.BountyHunterRate.data);
+            ImpSettings.Add((byte)RoleType.Teleporter, CustomRolesH.TeleporterRate.data);
 
             NeutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
 
             CrewSettings.Add((byte)RoleType.Sheriff, CustomRolesH.SheriffRate.data);
             CrewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);
+            CrewSettings.Add((byte)RoleType.Madmate, CustomRolesH.MadmateRate.data);
+            CrewSettings.Add((byte)RoleType.Bakery, CustomRolesH.BakeryRate.data);
+            CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
 
             ModifierSettings.Add((byte)ModifierType.Opportunist, CustomRolesH.OpportunistRate.data);
 
@@ -149,7 +152,7 @@ namespace UltimateMods.Patches
             {
                 if (isEvilGuesser) data.ImpSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionsH.guesserSpawnRate.getSelection(), 1));
                 else data.CrewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionsH.guesserSpawnRate.getSelection(), 1));
-            }*//*
+            }*/
 
             // Assign any dual Role types
             foreach (var option in CustomDualRoleOption.dualRoles)
@@ -306,10 +309,10 @@ namespace UltimateMods.Patches
         {
             List<byte> EnsuredModifier = data.ModifierSettings.Where(x => x.Value.rate == 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
 
-            while ((data.Impostors.Count > 0 && data.Crewmates.Count > 0) || (data.MaxModifier > 0 && EnsuredModifier.Count > 0))
+            while (data.Crewmates.Count > 0 || (data.MaxModifier > 0 && EnsuredModifier.Count > 0))
             {
                 Dictionary<TeamType, List<byte>> ModifierToAssign = new();
-                if ((data.Impostors.Count > 0 && data.Crewmates.Count > 0) && data.MaxModifier > 0 && EnsuredModifier.Count > 0) ModifierToAssign.Add(TeamType.Modifier, EnsuredModifier);
+                if (data.Crewmates.Count > 0 && data.MaxModifier > 0 && EnsuredModifier.Count > 0) ModifierToAssign.Add(TeamType.Modifier, EnsuredModifier);
 
                 var ModifierType = ModifierToAssign.Keys.ElementAt(rnd.Next(0, ModifierToAssign.Keys.Count()));
                 var Index = rnd.Next(0, ModifierToAssign[ModifierType].Count);
@@ -410,4 +413,3 @@ namespace UltimateMods.Patches
         }
     }
 }
-*/

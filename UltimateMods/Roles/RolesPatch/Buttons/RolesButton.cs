@@ -11,6 +11,8 @@ namespace UltimateMods
             Sheriff.SetButtonCooldowns();
             Engineer.SetButtonCooldowns();
             UnderTaker.SetButtonCooldowns();
+            Teleporter.SetButtonCooldowns();
+            Altruist.SetButtonCooldowns();
         }
 
         public static void MakeButtons(HudManager hm)
@@ -18,6 +20,8 @@ namespace UltimateMods
             Sheriff.MakeButtons(hm);
             Engineer.MakeButtons(hm);
             UnderTaker.MakeButtons(hm);
+            Teleporter.MakeButtons(hm);
+            Altruist.MakeButtons(hm);
         }
 
         public static void Postfix(HudManager __instance)

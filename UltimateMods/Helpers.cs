@@ -23,7 +23,6 @@ namespace UltimateMods
 
     public static class Helpers
     {
-        public static Dictionary<string, Sprite> CachedSprites = new();
         public static Sprite LoadSpriteFromTexture2D(Texture2D texture, float pixelsPerUnit)
         {
             return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
@@ -315,13 +314,6 @@ namespace UltimateMods
             }
         }
 
-        public static bool IsLobby()
-        {
-            if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Joined)
-                return true;
-            return false;
-        }
-
         public static void ClearAllTasks(this PlayerControl player)
         {
             if (player == null) return;
@@ -342,11 +334,6 @@ namespace UltimateMods
             return PlayerById(id);
         }
 
-        public static int GetRandomInt(int max, int min = 0)
-        {
-            return UnityEngine.Random.Range(min, max + 1);
-        }
-
         public static void GenerateAndAssignTasks(this PlayerControl player, int numCommon, int numShort, int numLong)
         {
             if (player == null) return;
@@ -360,22 +347,40 @@ namespace UltimateMods
             RPCProcedure.UncheckedSetTasks(player.PlayerId, taskTypeIds.ToArray());
         }
 
-        public static string MapsName(this PlayerControl player)
+        public static bool HasImpostorVision(GameData.PlayerInfo player)
         {
-            switch (PlayerControl.GameOptions.MapId)
+            return player.Role.IsImpostor
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && Madmate.HasImpostorVision);
+        }
+
+        public static T GetRandom<T>(this List<T> list)
+        {
+            var random = rnd.Next(0, list.Count);
+            return list[random];
+        }
+
+        public static void ShowFlash(Color color, float duration = 1f)
+        {
+            if (FastDestroyableSingleton<HudManager>.Instance == null || FastDestroyableSingleton<HudManager>.Instance.FullScreen == null) return;
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.gameObject.SetActive(true);
+            FastDestroyableSingleton<HudManager>.Instance.FullScreen.enabled = true;
+            FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(duration, new Action<float>((p) =>
             {
-                case 0:
-                    return "TheSkeld";
-                case 1:
-                    return "MiraHQ";
-                case 2:
-                    return "Polus";
-                case 4:
-                    return "AirShip";
-                case 5:
-                    return "Submerged";
-            }
-            return "Unknown Maps";
+                var renderer = FastDestroyableSingleton<HudManager>.Instance.FullScreen;
+
+                if (p < 0.5)
+                {
+                    if (renderer != null)
+                        renderer.color = new(color.r, color.g, color.b, Mathf.Clamp01(p * 2 * 0.75f));
+                }
+                else
+                {
+                    if (renderer != null)
+                        renderer.color = new(color.r, color.g, color.b, Mathf.Clamp01((1 - p) * 2 * 0.75f));
+                }
+                if (p == 1f && renderer != null) renderer.enabled = false;
+            })));
         }
     }
 }

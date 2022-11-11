@@ -10,6 +10,9 @@ using UltimateMods.Utilities;
 using UltimateMods.Roles;
 using UltimateMods.Objects;
 using UltimateMods.EndGame;
+using System.Collections;
+using System.Collections.Generic;
+using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods
 {
@@ -33,6 +36,10 @@ namespace UltimateMods
         ForceEnd,
         DragPlaceBody,
         CleanBody,
+        BakeryBomb,
+        TeleporterTeleport,
+        AltruistKill,
+        AltruistRevive,
     }
 
     public static class RPCProcedure
@@ -140,6 +147,22 @@ namespace UltimateMods
                     // 77
                     case (byte)CustomRPC.CleanBody:
                         RPCProcedure.CleanBody(reader.ReadByte());
+                        break;
+                    // 78
+                    case (byte)CustomRPC.BakeryBomb:
+                        RPCProcedure.BakeryBomb(reader.ReadByte());
+                        break;
+                    // 79
+                    case (byte)CustomRPC.TeleporterTeleport:
+                        RPCProcedure.TeleporterTeleport(reader.ReadByte());
+                        break;
+                    // 80
+                    case (byte)CustomRPC.AltruistKill:
+                        RPCProcedure.AltruistKill(reader.ReadByte());
+                        break;
+                    // 81
+                    case (byte)CustomRPC.AltruistRevive:
+                        RPCProcedure.AltruistRevive(reader.ReadByte(), reader.ReadByte());
                         break;
                 }
             }
@@ -318,10 +341,10 @@ namespace UltimateMods
 
         public static void DragPlaceBody(byte playerId)
         {
-            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-            for (int i = 0; i < array.Length; i++)
+            DeadBody[] Array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < Array.Length; i++)
             {
-                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                if (GameData.Instance.GetPlayerById(Array[i].ParentId).PlayerId == playerId)
                 {
                     if (!UnderTaker.DraggingBody)
                     {
@@ -341,7 +364,7 @@ namespace UltimateMods
                         {
                             var currentPosition = underTaker.GetTruePosition();
                             var velocity = underTaker.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
-                            var newPos = ((Vector2)underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
+                            var newPos = ((Vector2)underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + Array[i].myCollider.offset;
                             if (!PhysicsHelpers.AnythingBetween(
                                 currentPosition,
                                 newPos,
@@ -351,14 +374,14 @@ namespace UltimateMods
                             {
                                 if (PlayerControl.GameOptions.MapId == 5)
                                 {
-                                    array[i].transform.position = newPos;
-                                    array[i].transform.position += new Vector3(0, 0, -0.5f);
+                                    Array[i].transform.position = newPos;
+                                    Array[i].transform.position += new Vector3(0, 0, -0.5f);
                                     GameObject vent = GameObject.Find("LowerCentralVent");
                                     vent.GetComponent<BoxCollider2D>().enabled = true;
                                 }
                                 else
                                 {
-                                    array[i].transform.position = newPos;
+                                    Array[i].transform.position = newPos;
                                 }
                             }
                         }
@@ -379,14 +402,64 @@ namespace UltimateMods
 
         public static void CleanBody(byte playerId)
         {
-            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
-            for (int i = 0; i < array.Length; i++)
+            DeadBody[] Array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            for (int i = 0; i < Array.Length; i++)
             {
-                if (GameData.Instance.GetPlayerById(array[i].ParentId).PlayerId == playerId)
+                if (GameData.Instance.GetPlayerById(Array[i].ParentId).PlayerId == playerId)
                 {
-                    UnityEngine.Object.Destroy(array[i].gameObject);
+                    UnityEngine.Object.Destroy(Array[i].gameObject);
                 }
             }
+        }
+
+        public static void BakeryBomb(byte BakeryId)
+        {
+            var bakery = Helpers.PlayerById(BakeryId);
+
+            bakery.Exiled();
+            SoundManager.Instance.PlaySound(Bomb, false, 0.8f);
+            finalStatuses[BakeryId] = FinalStatus.Bomb;
+            UltimateModsPlugin.Logger.LogInfo("Bakery exploded!");
+        }
+
+        public static void TeleporterTeleport(byte playerId)
+        {
+            var p = Helpers.PlayerById(playerId);
+            PlayerControl.LocalPlayer.transform.position = p.transform.position;
+            if (SubmergedCompatibility.IsSubmerged)
+            {
+                SubmergedCompatibility.ChangeFloor(SubmergedCompatibility.GetFloor(p));
+            }
+            new CustomMessage(string.Format(ModTranslation.getString("TeleporterTeleported"), p.cosmetics.nameText.text), 3);
+            SoundManager.Instance.PlaySound(Teleport, false, 0.8f);
+        }
+
+        public static void AltruistKill(byte AltruistId)
+        {
+            PlayerControl altruist = Helpers.PlayerById(AltruistId);
+            if (altruist == null) return;
+
+            altruist.MurderPlayer(altruist);
+            finalStatuses[AltruistId] = FinalStatus.Suicide;
+        }
+
+        public static void AltruistRevive(byte AltruistId, byte DeadBodyId)
+        {
+            PlayerControl Body = Helpers.PlayerById(DeadBodyId);
+            PlayerControl Altruist = Helpers.PlayerById(AltruistId);
+            var position = Body;
+            Body.Revive();
+
+            PlayerControl.LocalPlayer.transform.position = new Vector2(Body.transform.position.x, Body.transform.position.y + 0.3636f);
+            if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == Body.PlayerId)
+            {
+                SubmergedCompatibility.ChangeFloor(Body.transform.position.y > -7);
+            }
+
+            if (Body == null || Altruist == null) return;
+            finalStatuses[DeadBodyId] = FinalStatus.Revival;
+            CleanBody(Body.PlayerId);
+            CleanBody(Altruist.PlayerId);
         }
     }
 }

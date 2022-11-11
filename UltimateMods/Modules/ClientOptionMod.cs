@@ -18,6 +18,7 @@ namespace UltimateMods.Modules
             new SelectionBehaviour("GhostsSeeTasksButton", () => MapOptions.GhostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value = !UltimateModsPlugin.GhostsSeeTasks.Value, UltimateModsPlugin.GhostsSeeTasks.Value),
             new SelectionBehaviour("GhostsSeeVotesButton", () => MapOptions.GhostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value = !UltimateModsPlugin.GhostsSeeVotes.Value, UltimateModsPlugin.GhostsSeeVotes.Value),
             new SelectionBehaviour("GhostsSeeRolesButton", () => MapOptions.GhostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value = !UltimateModsPlugin.GhostsSeeRoles.Value, UltimateModsPlugin.GhostsSeeRoles.Value),
+            new SelectionBehaviour("ShowRoleSummaryButton", () => MapOptions.ShowRoleSummary = UltimateModsPlugin.ShowRoleSummary.Value = !UltimateModsPlugin.ShowRoleSummary.Value, UltimateModsPlugin.ShowRoleSummary.Value),
             new SelectionBehaviour("HideNameplates", () => {
                 MapOptions.HideNameplates = UltimateModsPlugin.HideNameplates.Value = !UltimateModsPlugin.HideNameplates.Value;
                 MeetingHudPatch.nameplatesChanged = true;
