@@ -71,6 +71,7 @@ namespace UltimateMods.Patches
                 target.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f);
             }
         }
+
         public static void UpdatePlayerInfo()
         {
             bool commsActive = false;
@@ -141,17 +142,17 @@ namespace UltimateMods.Patches
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks)
+                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks && !Altruist.exists)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeTasks)
+                    else if (MapOptions.GhostsSeeTasks && !Altruist.exists)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeRoles)
+                    else if (MapOptions.GhostsSeeRoles && !Altruist.exists)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;

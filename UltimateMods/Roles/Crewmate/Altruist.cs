@@ -2,8 +2,8 @@ using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
-using TMPro;
 using Hazel;
+using static UltimateMods.ColorDictionary;
 using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Roles
@@ -15,6 +15,7 @@ namespace UltimateMods.Roles
         public static Sprite AltruistButtonSprite;
         public static byte BodyId = 0;
         public static bool Ended = false;
+        public static DeadBody Target;
 
         public static float Duration { get { return CustomRolesH.AltruistDuration.getFloat(); } }
 
@@ -67,10 +68,10 @@ namespace UltimateMods.Roles
                 () =>
                 {
                     MessageWriter killWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.AltruistRevive, Hazel.SendOption.Reliable, -1);
-                    killWriter.Write(PlayerControl.LocalPlayer.Data.PlayerId);
+                    killWriter.Write(Target);
                     killWriter.Write(Altruist.BodyId);
                     AmongUsClient.Instance.FinishRpcImmediately(killWriter);
-                    RPCProcedure.AltruistRevive(PlayerControl.LocalPlayer.Data.PlayerId, Altruist.BodyId);
+                    RPCProcedure.AltruistRevive(Target, Altruist.BodyId);
                     Ended = true;
                 }
             );
