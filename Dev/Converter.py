@@ -19,6 +19,7 @@ print("13: Spanish")
 print("14: SChinese")
 print("15: TChinese")
 print("16: Irish")
+print("17: Indonesia")
 print("")
 print("Please Choose 1~16")
 LanguageNum = int(input())
@@ -57,6 +58,8 @@ elif (LanguageNum == 15):
   LanguageText = "TChinese"
 elif (LanguageNum == 16):
   LanguageText = "Irish"
+elif (LanguageNum == 17):
+  LanguageText = "Indonesia"
 
 WORKING_DIR = os.path.dirname(os.path.realpath(__file__))
 IN_FILE = os.path.join(WORKING_DIR, "Translate.xlsx")
