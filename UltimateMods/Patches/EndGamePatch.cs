@@ -88,7 +88,7 @@ namespace UltimateMods.EndGame
             AdditionalTempData.gameOverReason = endGameResult.GameOverReason;
             if ((int)endGameResult.GameOverReason >= 10) endGameResult.GameOverReason = GameOverReason.ImpostorByKill;
 
-            if (UltimateModsPlugin.DebugMode.Value)
+            if (UltimateModsPlugin.DebugMode.Value || UltimateModsPlugin.isBeta)
             {
                 DebugBots.BotCount = 0;
             }

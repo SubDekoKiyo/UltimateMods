@@ -5,6 +5,7 @@ using UltimateMods.Modules;
 using Hazel;
 using static UltimateMods.ColorDictionary;
 using static UltimateMods.Modules.Assets;
+using static UltimateMods.Roles.Patches.OutlinePatch;
 
 namespace UltimateMods.Roles
 {
