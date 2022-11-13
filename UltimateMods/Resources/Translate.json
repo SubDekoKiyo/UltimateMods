@@ -631,45 +631,25 @@
         "11": "\u904e\u53bb\u3092\u601d\u3044\u51fa\u3059",
         "13": "\u8f7d\u5165\u4e0a\u6b21\u6e38\u620f\u7684\u8bbe\u7f6e"
     },
-    "CrewmateRolesCountMin": {
-        "0": "Minimum Crewmate Roles",
-        "11": "\u6700\u5c0f\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u5f79\u8077\u6570",
-        "13": "\u6700\u5c11\u8239\u5458\u804c\u4e1a\u6570"
+    "CrewmateRolesCount": {
+        "0": "Crewmate Roles Count",
+        "11": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u5f79\u8077\u6570",
+        "13": "\u8239\u5458\u804c\u4e1a\u6570"
     },
-    "CrewmateRolesCountMax": {
-        "0": "Maximum Crewmate Roles",
-        "11": "\u6700\u5927\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u5f79\u8077\u6570",
-        "13": "\u6700\u591a\u8239\u5458\u804c\u4e1a\u6570"
+    "NeutralRolesCount": {
+        "0": "Neutral Roles Count",
+        "11": "\u7b2c\u4e09\u9663\u55b6\u5f79\u8077\u6570",
+        "13": "\u72ec\u7acb\u804c\u4e1a\u6570"
     },
-    "NeutralRolesCountMin": {
-        "0": "Minimum Neutral Roles",
-        "11": "\u6700\u5c0f\u7b2c\u4e09\u9663\u55b6\u5f79\u8077\u6570",
-        "13": "\u6700\u5c11\u72ec\u7acb\u804c\u4e1a\u6570"
+    "ImpostorRolesCount": {
+        "0": "Impostor Roles Count",
+        "11": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u5f79\u8077\u6570",
+        "13": "\u5185\u9b3c\u804c\u4e1a\u6570"
     },
-    "NeutralRolesCountMax": {
-        "0": "Maximum Neutral Roles",
-        "11": "\u6700\u5927\u7b2c\u4e09\u9663\u55b6\u5f79\u8077\u6570",
-        "13": "\u6700\u591a\u72ec\u7acb\u804c\u4e1a\u6570"
-    },
-    "ImpostorRolesCountMin": {
-        "0": "Minimum Impostor Roles",
-        "11": "\u6700\u5c0f\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u5f79\u8077\u6570",
-        "13": "\u6700\u5c11\u5185\u9b3c\u804c\u4e1a\u6570"
-    },
-    "ImpostorRolesCountMax": {
-        "0": "Maximum Impostor Roles",
-        "11": "\u6700\u5927\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u9663\u55b6\u5f79\u8077\u6570",
-        "13": "\u6700\u591a\u5185\u9b3c\u804c\u4e1a\u6570"
-    },
-    "ModifierCountMin": {
-        "0": "Minimum Modifier Roles",
-        "11": "\u6700\u5c0f\u5c5e\u6027\u5f79\u8077\u6570",
-        "13": "\u6700\u5c11\u9644\u52a0\u804c\u4e1a\u6570"
-    },
-    "ModifierCountMax": {
-        "0": "Maximum Modifier Roles",
-        "11": "\u6700\u5927\u5c5e\u6027\u5f79\u8077\u6570",
-        "13": "\u6700\u591a\u9644\u52a0\u804c\u4e1a\u6570"
+    "ModifierCount": {
+        "0": "Modifier Roles Count",
+        "11": "\u5c5e\u6027\u5f79\u8077\u6570",
+        "13": "\u9644\u52a0\u804c\u4e1a\u6570"
     },
     "MaxNumberOfMeetings": {
         "0": "Maximum Can Emergency Meetings",
