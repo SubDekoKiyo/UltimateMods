@@ -38,7 +38,7 @@ namespace UltimateMods.Patches
             EnabledModRoles.Clear();
 
             // Crewmates
-            if (CustomRolesH.AltruistRate.getBool()) EnabledCrewRoles.Add(RoleType.Altruist);
+            // if (CustomRolesH.AltruistRate.getBool()) EnabledCrewRoles.Add(RoleType.Altruist);
             if (CustomRolesH.BakeryRate.getBool()) EnabledCrewRoles.Add(RoleType.Bakery);
             if (CustomRolesH.SheriffRate.getBool()) EnabledCrewRoles.Add(RoleType.Sheriff);
             if (CustomRolesH.EngineerRate.getBool()) EnabledCrewRoles.Add(RoleType.Engineer);

@@ -82,17 +82,17 @@ namespace UltimateMods.Patches
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks && !Altruist.exists)
+                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks /*&& !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeTasks && !Altruist.exists)
+                    else if (MapOptions.GhostsSeeTasks/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeRoles && !Altruist.exists)
+                    else if (MapOptions.GhostsSeeRoles/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;
