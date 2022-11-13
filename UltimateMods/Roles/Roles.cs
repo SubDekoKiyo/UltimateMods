@@ -14,7 +14,7 @@ namespace UltimateMods.Roles
         Engineer,
         Madmate,
         Bakery,
-        Altruist,
+        // Altruist,
 
         // Impostor Roles
         Impostor = 100,
@@ -40,7 +40,7 @@ namespace UltimateMods.Roles
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
             { RoleType.Madmate, typeof(RoleBase<Madmate>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
-            { RoleType.Altruist, typeof(RoleBase<Altruist>) },
+            // { RoleType.Altruist, typeof(RoleBase<Altruist>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },

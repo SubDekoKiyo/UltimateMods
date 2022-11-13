@@ -24,7 +24,7 @@ namespace UltimateMods
             Madmate.Clear();
             Bakery.Clear();
             Teleporter.Clear();
-            Altruist.Clear();
+            // Altruist.Clear();
 
             // Modifiers
             Opportunist.Clear();

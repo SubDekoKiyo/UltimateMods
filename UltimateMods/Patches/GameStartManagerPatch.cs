@@ -4,20 +4,17 @@ using System.Reflection;
 using System.Collections.Generic;
 using Hazel;
 using System;
-using TMPro;
 using UltimateMods.Utilities;
 using AmongUs.Data;
 using InnerNet;
 using static UltimateMods.ColorDictionary;
-// using static UltimateMods.Patches.CustomLobbyPatch;
 
 namespace UltimateMods.Patches
 {
     public class GameStartManagerPatch
     {
         public static Dictionary<int, PlayerVersion> playerVersions = new();
-        public static float timer = 600f;
-        public static float shareTimer;
+        private static float timer = 600f;
         private static float kickingTimer = 0f;
         private static bool versionSent = false;
 
@@ -36,8 +33,6 @@ namespace UltimateMods.Patches
         [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.Start))]
         public class GameStartManagerStartPatch
         {
-            public static TMP_Text ErrorText;
-
             public static void Postfix(GameStartManager __instance)
             {
                 // Trigger version refresh
@@ -49,7 +44,6 @@ namespace UltimateMods.Patches
                 // Copy lobby code
                 string code = InnerNet.GameCode.IntToGameName(AmongUsClient.Instance.GameId);
                 GUIUtility.systemCopyBuffer = code;
-                ErrorText = GameObject.Instantiate(__instance.GameStartText, __instance.GameStartText.transform);
             }
         }
 
@@ -58,7 +52,6 @@ namespace UltimateMods.Patches
         {
             private static bool update = false;
             private static string currentText = "";
-            // private static GameObject LobbyText = GameObject.Find("Main Camera/Hud/GameStartManager/TaskText_TMP(Clone)");
 
             public static void Prefix(GameStartManager __instance)
             {
@@ -73,8 +66,9 @@ namespace UltimateMods.Patches
                     __instance.GameRoomNameCode.text = GameCode.IntToGameName(AmongUsClient.Instance.GameId);
                 }
 
-                if (!GameData.Instance && !AmongUsClient.Instance.AmHost) return; // No instance and Host
+                if (!AmongUsClient.Instance.AmHost || !GameData.Instance) return; // Not host or no instance
                 update = GameData.Instance.PlayerCount != __instance.LastPlayerCount;
+
                 // カウントダウンキャンセル
                 if (Input.GetKeyDown(KeyCode.LeftShift) && GameStartManager.Instance.startState == GameStartManager.StartingStates.Countdown)
                     GameStartManager.Instance.ResetStartState();
@@ -93,10 +87,10 @@ namespace UltimateMods.Patches
                     Helpers.ShareGameVersion();
                 }
 
-                bool BlockGameStart = false;
-                string message = "";
                 if (AmongUsClient.Instance.AmHost)
                 {
+                    bool BlockGameStart = false;
+                    string message = "";
                     foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.ToArray())
                     {
                         if (client.Character == null) continue;
@@ -156,12 +150,7 @@ namespace UltimateMods.Patches
                             SceneChanger.ChangeScene("MainMenu");
                         }
 
-                        __instance.GameStartText.text = string.Format(ModTranslation.getString("ErrorHostNoVersion"), Math.Round(10 - kickingTimer));
-                        __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
-                    }
-                    else if (BlockGameStart)
-                    {
-                        __instance.GameStartText.text = $"<color=#00a2ff>{ModTranslation.getString("ErrorHostNoVersion")}\n</color>" + message;
+                        __instance.GameStartText.text = String.Format(ModTranslation.getString("ErrorHostNoVersion"), Math.Round(10 - kickingTimer));
                         __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
                     }
                     else
@@ -175,42 +164,31 @@ namespace UltimateMods.Patches
                 }
 
                 // Lobby timer
-                if (GameData.Instance && AmongUsClient.Instance.AmHost) // No instance and Host
+                if (!AmongUsClient.Instance.AmHost || !GameData.Instance) return; // Not host or no instance
+
+                if (update) currentText = __instance.PlayerCounter.text;
+
+                timer = Mathf.Max(0f, timer -= Time.deltaTime);
+                int minutes = (int)timer / 60;
+                int seconds = (int)timer % 60;
+                // string suffix = $" ({minutes:00}:{seconds:00})";
+
+                switch (minutes)
                 {
-                    if (update) currentText = __instance.PlayerCounter.text;
-
-                    timer = Mathf.Max(0f, GameStartManagerPatch.timer -= Time.deltaTime);
-
-                    int minutes = (int)timer / 60;
-                    int seconds = (int)timer % 60;
-                    // string suffix = $" ({minutes:00}:{seconds:00})";
-
-                    switch (minutes)
-                    {
-                        case <= 02:
-                            ColorCode = "d20000";
-                            break;
-                        case <= 05:
-                            ColorCode = "ffff00";
-                            break;
-                        case <= 10:
-                            ColorCode = "00e300";
-                            break;
-                    }
-                    string suffix = $" <color=#{ColorCode}>\n({minutes:00}:{seconds:00})</color>";
-
-                    __instance.PlayerCounter.text = currentText + suffix;
-                    __instance.PlayerCounter.autoSizeTextContainer = true;
-
-                    /*if (NewsText.transform.localPosition.x >= -7f)
-                    {
-                        NewsText.transform.localPosition -= new Vector3(0.01f, 0f, 0f);
-                    }
-                    else
-                    {
-                        NewsText.transform.localPosition = new Vector3(3.5f, NewsText.transform.localPosition.y, NewsText.transform.localPosition.z);
-                    }*/
+                    case <= 02:
+                        ColorCode = "d20000";
+                        break;
+                    case <= 05:
+                        ColorCode = "ffff00";
+                        break;
+                    case <= 10:
+                        ColorCode = "00e300";
+                        break;
                 }
+                string suffix = $" <color=#{ColorCode}>\n({minutes:00}:{seconds:00})</color>";
+
+                __instance.PlayerCounter.text = currentText + suffix;
+                __instance.PlayerCounter.autoSizeTextContainer = true;
             }
         }
 
@@ -273,6 +251,23 @@ namespace UltimateMods.Patches
                     }
                 }
                 return continueStart;
+            }
+        }
+
+        [HarmonyPatch(typeof(GameStartManager), nameof(GameStartManager.SetStartCounter))]
+        public static class SetStartCounterPatch
+        {
+            public static void Postfix(GameStartManager __instance, sbyte sec)
+            {
+                if (sec > 0)
+                {
+                    __instance.startState = GameStartManager.StartingStates.Countdown;
+                }
+
+                if (sec <= 0)
+                {
+                    __instance.startState = GameStartManager.StartingStates.NotStarting;
+                }
             }
         }
 

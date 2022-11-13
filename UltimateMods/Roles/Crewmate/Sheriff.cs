@@ -5,7 +5,7 @@ using UnityEngine;
 using UltimateMods.Modules;
 using Hazel;
 using static UltimateMods.ColorDictionary;
-using static UltimateMods.Patches.PlayerControlFixedUpdatePatch;
+using static UltimateMods.Roles.Patches.OutlinePatch;
 
 namespace UltimateMods.Roles
 {
