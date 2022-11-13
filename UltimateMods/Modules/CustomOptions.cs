@@ -241,11 +241,11 @@ namespace UltimateMods.Modules
             }
         }
 
-        public int rate
+        public bool enable
         {
             get
             {
-                return enabled ? selection : 0;
+                return enabled ? true : false;
             }
         }
 
@@ -263,16 +263,16 @@ namespace UltimateMods.Modules
             }
         }
 
-        public (int, int) data
+        public (bool, int) data
         {
             get
             {
-                return (rate, count);
+                return (enable, count);
             }
         }
 
         public CustomRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, int max = 15, bool roleEnabled = true) :
-            base(id, type, Color, Helpers.cs(color, name), CustomOptionsH.TenRates, "", null, true, false, "")
+            base(id, type, Color, Helpers.cs(color, name), new string[] { "OptionOff", "OptionOn" }, "OptionOff", null, true, false, "")
         {
             this.roleEnabled = roleEnabled;
 
@@ -874,33 +874,10 @@ namespace UltimateMods.Modules
 
             // entries.Add(optionToString(CustomOptionsH.RememberClassic));
 
-            var optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("CrewmateRoles"));
-            var min = CustomOptionsH.CrewmateRolesCountMin.getSelection();
-            var max = CustomOptionsH.CrewmateRolesCountMax.getSelection();
-            if (min > max) min = max;
-            var optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
-
-            optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("NeutralRoles"));
-            min = CustomOptionsH.NeutralRolesCountMin.getSelection();
-            max = CustomOptionsH.NeutralRolesCountMax.getSelection();
-            if (min > max) min = max;
-            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
-
-            optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("ImpostorRoles"));
-            min = CustomOptionsH.ImpostorRolesCountMin.getSelection();
-            max = CustomOptionsH.ImpostorRolesCountMax.getSelection();
-            if (min > max) min = max;
-            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
-
-            optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("ModifierRoles"));
-            min = CustomOptionsH.ModifierCountMin.getSelection();
-            max = CustomOptionsH.ModifierCountMax.getSelection();
-            if (min > max) min = max;
-            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
+            entries.Add(optionToString(CustomOptionsH.CrewmateRolesCount));
+            entries.Add(optionToString(CustomOptionsH.ImpostorRolesCount));
+            entries.Add(optionToString(CustomOptionsH.NeutralRolesCount));
+            entries.Add(optionToString(CustomOptionsH.ModifierCount));
 
             entries.Add(entry.ToString().Trim('\r', '\n'));
 
@@ -922,15 +899,12 @@ namespace UltimateMods.Modules
                     (option == CustomOptionsH.ActivateModRoles) ||
                     (option == CustomOptionsH.EnableMirrorMap) ||
                     (option == CustomOptionsH.CanZoomInOutWhenPlayerIsDead) ||
+                    (option == CustomOptionsH.EnableGodMiraHQ) ||
                     // (option == CustomOptionsH.RememberClassic) ||
-                    (option == CustomOptionsH.CrewmateRolesCountMin) ||
-                    (option == CustomOptionsH.CrewmateRolesCountMax) ||
-                    (option == CustomOptionsH.NeutralRolesCountMin) ||
-                    (option == CustomOptionsH.NeutralRolesCountMax) ||
-                    (option == CustomOptionsH.ImpostorRolesCountMin) ||
-                    (option == CustomOptionsH.ImpostorRolesCountMax) ||
-                    (option == CustomOptionsH.ModifierCountMin) ||
-                    (option == CustomOptionsH.ModifierCountMax))
+                    (option == CustomOptionsH.CrewmateRolesCount) ||
+                    (option == CustomOptionsH.ImpostorRolesCount) ||
+                    (option == CustomOptionsH.NeutralRolesCount) ||
+                    (option == CustomOptionsH.ModifierCount))
                 {
                     continue;
                 }
