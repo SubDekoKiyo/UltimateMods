@@ -46,7 +46,7 @@ namespace UltimateMods
         public static CustomOption RestrictCameras;
         public static CustomOption RestrictVitals;
 
-        public static CustomOption EnableGodMiraHQ;
+        // public static CustomOption EnableGodMiraHQ;
 
         public static CustomOption AirShipSettings;
         public static CustomOption OldAirShipAdmin;
@@ -78,7 +78,7 @@ namespace UltimateMods
             // RememberClassic = CustomOption.Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
             EnableMirrorMap = CustomOption.Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
             CanZoomInOutWhenPlayerIsDead = CustomOption.Create(6, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
-            EnableGodMiraHQ = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
+            // EnableGodMiraHQ = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
 
             // Using new id's for the options to not break compatibility with older versions
             CrewmateRolesCount = CustomOption.Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCount"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");

@@ -899,7 +899,7 @@ namespace UltimateMods.Modules
                     (option == CustomOptionsH.ActivateModRoles) ||
                     (option == CustomOptionsH.EnableMirrorMap) ||
                     (option == CustomOptionsH.CanZoomInOutWhenPlayerIsDead) ||
-                    (option == CustomOptionsH.EnableGodMiraHQ) ||
+                    // (option == CustomOptionsH.EnableGodMiraHQ) ||
                     // (option == CustomOptionsH.RememberClassic) ||
                     (option == CustomOptionsH.CrewmateRolesCount) ||
                     (option == CustomOptionsH.ImpostorRolesCount) ||
