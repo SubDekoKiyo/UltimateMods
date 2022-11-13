@@ -20,6 +20,7 @@ namespace UltimateMods.Patches
             if (CustomOptionsH.ActivateModRoles.getBool()) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
         }
     }
+
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
     public static class RoleAssignmentPatch
     {
