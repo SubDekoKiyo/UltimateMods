@@ -111,7 +111,7 @@ namespace UltimateMods.Patches
             crewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);
             crewSettings.Add((byte)RoleType.Madmate, CustomRolesH.MadmateRate.data);
             crewSettings.Add((byte)RoleType.Bakery, CustomRolesH.BakeryRate.data);
-            crewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
+            // crewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
 
             return new RoleAssignmentData
             {

@@ -42,7 +42,7 @@ namespace UltimateMods
         BakeryBomb,
         TeleporterTeleport,
         AltruistKill,
-        AltruistRevive,
+        // AltruistRevive,
     }
 
     public static class RPCProcedure
@@ -163,18 +163,18 @@ namespace UltimateMods
                     case (byte)CustomRPC.AltruistKill:
                         RPCProcedure.AltruistKill(reader.ReadByte());
                         break;
-                    // 81
-                    case (byte)CustomRPC.AltruistRevive:
-                        var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                        foreach (var body in DeadBodies)
-                        {
-                            if (body.ParentId == reader.ReadByte())
-                            {
-                                if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
-                                    RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                            }
-                        }
-                        break;
+                    // // 81
+                    // case (byte)CustomRPC.AltruistRevive:
+                    //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
+                    //     foreach (var body in DeadBodies)
+                    //     {
+                    //         if (body.ParentId == reader.ReadByte())
+                    //         {
+                    //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
+                    //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                    //         }
+                    //     }
+                    //     break;
                 }
             }
         }
@@ -454,35 +454,35 @@ namespace UltimateMods
             finalStatuses[AltruistId] = FinalStatus.Suicide;
         }
 
-        public static void AltruistRevive(DeadBody deadBodyTarget, byte altruistId)
-        {
-            PlayerControl AltruistId = Helpers.PlayerById(altruistId);
-            var DeadBodyId = deadBodyTarget.ParentId;
-            var DeadBodyPos = deadBodyTarget.TruePosition;
-            var RevivePlayer = Helpers.PlayerById(DeadBodyId);
+        // public static void AltruistRevive(byte deadBodyTarget, byte altruistId)
+        // {
+        //     PlayerControl AltruistId = Helpers.PlayerById(altruistId);
+        //     var DeadBodyId = deadBodyTarget.ParentId;
+        //     var DeadBodyPos = deadBodyTarget.TruePosition;
+        //     var RevivePlayer = Helpers.PlayerById(DeadBodyId);
 
-            Altruist role = Altruist.getRole(AltruistId);
+        //     Altruist role = Altruist.getRole(AltruistId);
 
-            if (deadBodyTarget != null || role != null)
-            {
-                foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
-                {
-                    if (deadBody.ParentId == deadBodyTarget.ParentId) deadBody.gameObject.Destroy();
-                    if (deadBody.ParentId == role.player.PlayerId) deadBody.gameObject.Destroy();
-                }
-            }
+        //     if (deadBodyTarget != null || role != null)
+        //     {
+        //         foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+        //         {
+        //             if (deadBody.ParentId == deadBodyTarget.ParentId) deadBody.gameObject.Destroy();
+        //             if (deadBody.ParentId == role.player.PlayerId) deadBody.gameObject.Destroy();
+        //         }
+        //     }
 
-            RevivePlayer.Revive();
-            RevivePlayer.NetTransform.SnapTo(new Vector2(DeadBodyPos.x, DeadBodyPos.y + 0.3636f));
+        //     RevivePlayer.Revive();
+        //     RevivePlayer.NetTransform.SnapTo(new Vector2(DeadBodyPos.x, DeadBodyPos.y + 0.3636f));
 
-            if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == RevivePlayer.PlayerId)
-            {
-                SubmergedCompatibility.ChangeFloor(RevivePlayer.transform.position.y > -7);
-            }
+        //     if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == RevivePlayer.PlayerId)
+        //     {
+        //         SubmergedCompatibility.ChangeFloor(RevivePlayer.transform.position.y > -7);
+        //     }
 
-            if (deadBodyTarget != null) Object.Destroy(deadBodyTarget.gameObject);
+        //     if (deadBodyTarget != null) Object.Destroy(deadBodyTarget.gameObject);
 
-            finalStatuses[DeadBodyId] = FinalStatus.Revival;
-        }
+        //     finalStatuses[DeadBodyId] = FinalStatus.Revival;
+        // }
     }
 }
