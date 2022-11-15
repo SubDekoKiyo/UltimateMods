@@ -99,14 +99,14 @@ namespace UltimateMods.Patches
             while (Crewmates.Count > 0 && ModifierCount > 0)
             {
                 List<PlayerControl> TargetPlayers = new();
-                var AssignRole = EnabledModRoles[rnd.Next(0, EnabledModRoles.Count - 1)];
+                var AssignModifier = EnabledModRoles[rnd.Next(0, EnabledModRoles.Count - 1)];
                 TargetPlayers.AddRange(Crewmates);
-                var AssignedPlayer = SetRoleToRandomPlayer((byte)AssignRole, TargetPlayers);
+                var AssignedPlayer = SetModifierToRandomPlayer((byte)AssignModifier, TargetPlayers);
                 ModifierCount--;
             }
         }
 
-        private static byte SetRoleToRandomPlayer(byte RoleId, List<PlayerControl> PlayerList, byte Flag = 0, bool RemovePlayer = true)
+        private static byte SetRoleToRandomPlayer(byte RoleId, List<PlayerControl> PlayerList, bool RemovePlayer = true)
         {
             var Index = rnd.Next(0, PlayerList.Count);
             byte PlayerId = PlayerList[Index].PlayerId;
@@ -116,13 +116,12 @@ namespace UltimateMods.Patches
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetRole, Hazel.SendOption.Reliable, -1);
             writer.Write(RoleId);
             writer.Write(PlayerId);
-            writer.Write(Flag);
             AmongUsClient.Instance.FinishRpcImmediately(writer);
-            RPCProcedure.SetRole(RoleId, PlayerId, Flag);
+            RPCProcedure.SetRole(RoleId, PlayerId);
             return PlayerId;
         }
 
-        private static byte setModifierToRandomPlayer(byte modId, List<PlayerControl> playerList)
+        private static byte SetModifierToRandomPlayer(byte modId, List<PlayerControl> playerList)
         {
             if (playerList.Count <= 0)
             {

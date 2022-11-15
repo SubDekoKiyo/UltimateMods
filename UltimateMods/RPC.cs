@@ -93,8 +93,7 @@ namespace UltimateMods
                     case (byte)CustomRPC.SetRole:
                         byte roleId = reader.ReadByte();
                         byte playerId = reader.ReadByte();
-                        byte flag = reader.ReadByte();
-                        RPCProcedure.SetRole(roleId, playerId, flag);
+                        RPCProcedure.SetRole(roleId, playerId);
                         break;
                     // 65
                     case (byte)CustomRPC.AddModifier:
@@ -226,7 +225,7 @@ namespace UltimateMods
             GameStartManagerPatch.playerVersions[clientId] = new GameStartManagerPatch.PlayerVersion(ver, guid);
         }
 
-        public static void SetRole(byte roleId, byte playerId, byte flag)
+        public static void SetRole(byte roleId, byte playerId)
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
