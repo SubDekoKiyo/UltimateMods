@@ -41,6 +41,7 @@ namespace UltimateMods.Roles
         public static RoleInfo bakery = new("Bakery", BakeryYellow, CustomRolesH.BakeryRate, RoleType.Bakery);
         public static RoleInfo teleporter = new("Teleporter", ImpostorRed, CustomRolesH.TeleporterRate, RoleType.Teleporter);
         // public static RoleInfo altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleType.Altruist);
+        public static RoleInfo evilHacker = new("EvilHacker", ImpostorRed, CustomRolesH.EvilHackerRate, RoleType.EvilHacker);
         public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -58,6 +59,7 @@ namespace UltimateMods.Roles
             bakery,
             teleporter,
             // altruist,
+            evilHacker,
         };
 
         public static string tl(string key)
@@ -81,6 +83,7 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Bakery)) infos.Add(bakery);
             if (p.isRole(RoleType.Teleporter)) infos.Add(teleporter);
             // if (p.isRole(RoleType.Altruist)) infos.Add(altruist);
+            if (p.isRole(RoleType.EvilHacker)) infos.Add(evilHacker);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

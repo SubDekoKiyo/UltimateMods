@@ -22,6 +22,7 @@ namespace UltimateMods.Roles
         UnderTaker,
         BountyHunter,
         Teleporter,
+        EvilHacker,
 
         // Neutral Roles
         Jester = 200,
@@ -50,6 +51,7 @@ namespace UltimateMods.Roles
             { RoleType.UnderTaker, typeof(RoleBase<UnderTaker>) },
             { RoleType.BountyHunter, typeof(RoleBase<BountyHunter>) },
             { RoleType.Teleporter, typeof(RoleBase<Teleporter>) },
+            { RoleType.EvilHacker, typeof(RoleBase<EvilHacker>) },
         };
     }
 
