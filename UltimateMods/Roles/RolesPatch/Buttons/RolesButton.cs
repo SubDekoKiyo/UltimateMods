@@ -22,6 +22,7 @@ namespace UltimateMods
             UnderTaker.MakeButtons(hm);
             Teleporter.MakeButtons(hm);
             // Altruist.MakeButtons(hm);
+            EvilHacker.MakeButtons(hm);
         }
 
         public static void Postfix(HudManager __instance)

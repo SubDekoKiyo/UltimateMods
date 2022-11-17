@@ -25,9 +25,9 @@
 	<ItemGroup>
 		<Reference Include="$(AmongUs)/BepInEx/core/*.dll" />
 		<Reference Include="$(AmongUs)/BepInEx/unhollowed/*.dll" />
-        <Reference Include="Reactor">
-        <HintPath>..\..\Assembly\Reactor.dll</HintPath>
-        </Reference>
+	<Reference Include="Reactor">
+	<HintPath>..\..\Assembly\Reactor.dll</HintPath>
+	</Reference>
 	</ItemGroup> <!-- (コピペ用)
 
     <ItemGroup>

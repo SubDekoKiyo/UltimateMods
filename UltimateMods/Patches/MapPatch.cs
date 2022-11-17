@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UltimateMods.Utilities;
 using static UltimateMods.Modules.Assets;
+using UltimateMods.Roles;
 
 namespace UltimateMods.Patches
 {
@@ -107,6 +108,20 @@ namespace UltimateMods.Patches
             static void Postfix(MapBehaviour __instance)
             {
                 FastDestroyableSingleton<HudManager>.Instance.transform.FindChild("TaskDisplay").FindChild("TaskPanel").gameObject.SetActive(true);
+            }
+        }
+
+        [HarmonyPatch(typeof(MapBehaviour), "get_IsOpenStopped")]
+        class MapBehaviorGetIsOpenStoppedPatch
+        {
+            static bool Prefix(ref bool __result, MapBehaviour __instance)
+            {
+                if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && CustomRolesH.EvilHackerCanMoveEvenIfUsesAdmin.getBool())
+                {
+                    __result = false;
+                    return false;
+                }
+                return true;
             }
         }
     }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Utilities;
+using UltimateMods.Roles;
 
 namespace UltimateMods.Patches
 {
@@ -35,7 +36,7 @@ namespace UltimateMods.Patches
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive())
+            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive() && !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -118,33 +119,33 @@ namespace UltimateMods.Patches
                         TimeRemaining.transform.localPosition = new Vector3(3.25f, 5.25f);
                         TimeRemaining.transform.localScale *= 2f;
                         TimeRemaining.color = Palette.White;
-                    }/*
+                    }
                     if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker))
                     {
                         TimeRemaining.gameObject.SetActive(false);
                     }
                     else
-                    {*/
-                    if (MapOptions.RestrictAdminTime <= 0f)
                     {
-                        __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
-                        OutOfTime.gameObject.SetActive(true);
-                        TimeRemaining.gameObject.SetActive(false);
-                        if (clearedIcons == false)
+                        if (MapOptions.RestrictAdminTime <= 0f)
                         {
-                            foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
-                            clearedIcons = true;
+                            __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
+                            OutOfTime.gameObject.SetActive(true);
+                            TimeRemaining.gameObject.SetActive(false);
+                            if (clearedIcons == false)
+                            {
+                                foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
+                                clearedIcons = true;
+                            }
+                            return false;
                         }
-                        return false;
-                    }
 
-                    clearedIcons = false;
-                    OutOfTime.gameObject.SetActive(false);
-                    string timeString = TimeSpan.FromSeconds(MapOptions.RestrictAdminTime).ToString(@"mm\:ss\.ff");
-                    TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
-                    //TimeRemaining.color = MapOptions.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
-                    TimeRemaining.gameObject.SetActive(true);
-                    // }
+                        clearedIcons = false;
+                        OutOfTime.gameObject.SetActive(false);
+                        string timeString = TimeSpan.FromSeconds(MapOptions.RestrictAdminTime).ToString(@"mm\:ss\.ff");
+                        TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                        //TimeRemaining.color = MapOptions.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                        TimeRemaining.gameObject.SetActive(true);
+                    }
                 }
 
                 bool commsActive = false;
@@ -289,21 +290,14 @@ namespace UltimateMods.Patches
                                     renderer.material.SetColor("_BackColor", Palette.ShadowColors[id]);
                                 }
                                 renderer.material.SetColor("_VisorColor", Palette.VisorColor);
-                            }
-                            else if ((PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin))
+                            }*/
+                            if ((PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin))
                             {
                                 renderer.material = newMat;
                                 var color = colors[i];
                                 if (impostorColors.Contains(color))
                                 {
-                                    if (mimicKColors.Contains(color))
-                                    {
-                                        color = Palette.PlayerColors[3];
-                                    }
-                                    else
-                                    {
-                                        color = Palette.ImpostorRed;
-                                    }
+                                    color = Palette.ImpostorRed;
                                     renderer.material.SetColor("_BodyColor", color);
                                     var id = Palette.PlayerColors.IndexOf(color);
                                     if (id < 0)
@@ -337,9 +331,9 @@ namespace UltimateMods.Patches
                                 }
                             }
                             else
-                            {*/
-                            renderer.material = defaultMat;
-                            //}
+                            {
+                                renderer.material = defaultMat;
+                            }
                         }
                     }
                 }
