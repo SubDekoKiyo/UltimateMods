@@ -143,42 +143,42 @@ namespace UltimateMods
 
         /// <summary>
         /// Returns the next pseudo-random <see cref="UInt32"/>
-        /// up to <paramref name="maxValue"/>.
+        /// up to <paramref name="MaxValue"/>.
         /// </summary>
-        /// <param name="maxValue">
-        /// The maximum value of the pseudo-random number to create.
+        /// <param name="MaxValue">
+        /// The Maximum value of the pseudo-random number to create.
         /// </param>
         /// <returns>
-        /// A pseudo-random <see cref="UInt32"/> value which is at most <paramref name="maxValue"/>.
+        /// A pseudo-random <see cref="UInt32"/> value which is at most <paramref name="MaxValue"/>.
         /// </returns>
         /// [CLSCompliant(false)]
-        public virtual UInt32 NextUInt32(UInt32 maxValue)
+        public virtual UInt32 NextUInt32(UInt32 MaxValue)
         {
-            return (UInt32)(GenerateUInt32() / ((Double)UInt32.MaxValue / maxValue));
+            return (UInt32)(GenerateUInt32() / ((Double)UInt32.MaxValue / MaxValue));
         }
 
         /// <summary>
         /// Returns the next pseudo-random <see cref="UInt32"/> at least
-        /// <paramref name="minValue"/> and up to <paramref name="maxValue"/>.
+        /// <paramref name="minValue"/> and up to <paramref name="MaxValue"/>.
         /// </summary>
         /// <param name="minValue">The minimum value of the pseudo-random number to create.</param>
-        /// <param name="maxValue">The maximum value of the pseudo-random number to create.</param>
+        /// <param name="MaxValue">The Maximum value of the pseudo-random number to create.</param>
         /// <returns>
         /// A pseudo-random <see cref="UInt32"/> value which is at least
-        /// <paramref name="minValue"/> and at most <paramref name="maxValue"/>.
+        /// <paramref name="minValue"/> and at most <paramref name="MaxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// If <c><paramref name="minValue"/> &gt;= <paramref name="maxValue"/></c>.
+        /// If <c><paramref name="minValue"/> &gt;= <paramref name="MaxValue"/></c>.
         /// </exception>
         /// [CLSCompliant(false)]
-        public virtual UInt32 NextUInt32(UInt32 minValue, UInt32 maxValue) /* throws ArgumentOutOfRangeException */
+        public virtual UInt32 NextUInt32(UInt32 minValue, UInt32 MaxValue) /* throws ArgumentOutOfRangeException */
         {
-            if (minValue >= maxValue)
+            if (minValue >= MaxValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            return (UInt32)(GenerateUInt32() / ((Double)UInt32.MaxValue / (maxValue - minValue)) + minValue);
+            return (UInt32)(GenerateUInt32() / ((Double)UInt32.MaxValue / (MaxValue - minValue)) + minValue);
         }
 
         /// <summary>
@@ -191,22 +191,22 @@ namespace UltimateMods
         }
 
         /// <summary>
-        /// Returns the next pseudo-random <see cref="Int32"/> up to <paramref name="maxValue"/>.
+        /// Returns the next pseudo-random <see cref="Int32"/> up to <paramref name="MaxValue"/>.
         /// </summary>
-        /// <param name="maxValue">The maximum value of the pseudo-random number to create.</param>
+        /// <param name="MaxValue">The Maximum value of the pseudo-random number to create.</param>
         /// <returns>
-        /// A pseudo-random <see cref="Int32"/> value which is at most <paramref name="maxValue"/>.
+        /// A pseudo-random <see cref="Int32"/> value which is at most <paramref name="MaxValue"/>.
         /// </returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// When <paramref name="maxValue"/> &lt; 0.
+        /// When <paramref name="MaxValue"/> &lt; 0.
         /// </exception>
         // ADDON DR:
         // THERE IS A PROBLEM WITH RANGES in this implementation of MT FIXME
-        public override Int32 Next(Int32 maxValue)
+        public override Int32 Next(Int32 MaxValue)
         {
-            if (maxValue <= 1)
+            if (MaxValue <= 1)
             {
-                if (maxValue < 0)
+                if (MaxValue < 0)
                 {
                     throw new ArgumentOutOfRangeException();
                 }
@@ -215,36 +215,36 @@ namespace UltimateMods
             }
 
             // DR: I changed THIS:
-            // return (Int32)(NextDouble() * (maxValue));
+            // return (Int32)(NextDouble() * (MaxValue));
             // with THIS:
-            return (Int32)(NextDouble() * (maxValue + 1));
+            return (Int32)(NextDouble() * (MaxValue + 1));
         }
 
         /// <summary>
         /// Returns the next pseudo-random <see cref="Int32"/>
         /// at least <paramref name="minValue"/>
-        /// and up to <paramref name="maxValue"/>.
+        /// and up to <paramref name="MaxValue"/>.
         /// </summary>
         /// <param name="minValue">The minimum value of the pseudo-random number to create.</param>
-        /// <param name="maxValue">The maximum value of the pseudo-random number to create.</param>
+        /// <param name="MaxValue">The Maximum value of the pseudo-random number to create.</param>
         /// <returns>A pseudo-random Int32 value which is at least <paramref name="minValue"/> and at
-        /// most <paramref name="maxValue"/>.</returns>
+        /// most <paramref name="MaxValue"/>.</returns>
         /// <exception cref="ArgumentOutOfRangeException">
-        /// If <c><paramref name="minValue"/> &gt;= <paramref name="maxValue"/></c>.
+        /// If <c><paramref name="minValue"/> &gt;= <paramref name="MaxValue"/></c>.
         /// </exception>
-        public override Int32 Next(Int32 minValue, Int32 maxValue)
+        public override Int32 Next(Int32 minValue, Int32 MaxValue)
         {
-            if (maxValue <= minValue)
+            if (MaxValue <= minValue)
             {
                 throw new ArgumentOutOfRangeException();
             }
 
-            if (maxValue == minValue)
+            if (MaxValue == minValue)
             {
                 return minValue;
             }
 
-            return Next(maxValue - minValue) + minValue;
+            return Next(MaxValue - minValue) + minValue;
         }
 
         /// <summary>
@@ -507,7 +507,7 @@ namespace UltimateMods
         }
 
 
-        // 9007199254740991.0 is the maximum double value which the 53 significand
+        // 9007199254740991.0 is the Maximum double value which the 53 significand
         // can hold when the exponent is 0.
         private const Double FiftyThreeBitsOf1s = 9007199254740991.0;
         // Multiply by inverse to (vainly?) try to avoid a division.

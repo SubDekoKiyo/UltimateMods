@@ -208,17 +208,17 @@ namespace UltimateMods.Patches
             float addition = 0f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
 
-            float max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
-            __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, max), max);
+            float Max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
+            __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, Max), Max);
             return false;
         }
 
-        public static void SetKillTimerUnchecked(this PlayerControl player, float time, float max = float.NegativeInfinity)
+        public static void SetKillTimerUnchecked(this PlayerControl player, float time, float Max = float.NegativeInfinity)
         {
-            if (max == float.NegativeInfinity) max = time;
+            if (Max == float.NegativeInfinity) Max = time;
 
             player.killTimer = time;
-            FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(time, max);
+            FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(time, Max);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace UltimateMods.Roles.Patches
         {
             public static bool Prefix(Vent __instance, ref float __result, [HarmonyArgument(0)] GameData.PlayerInfo pc, [HarmonyArgument(1)] out bool canUse, [HarmonyArgument(2)] out bool couldUse)
             {
-                float num = float.MaxValue;
+                float Num = float.MaxValue;
                 PlayerControl @object = pc.Object;
                 bool roleCouldUse = @object.RoleCanUseVents();
 
@@ -18,7 +18,7 @@ namespace UltimateMods.Roles.Patches
                 if (__instance.name.StartsWith("SealedVent_"))
                 {
                     canUse = couldUse = false;
-                    __result = num;
+                    __result = Num;
                     return false;
                 }
 
@@ -58,11 +58,11 @@ namespace UltimateMods.Roles.Patches
                 {
                     Vector2 truePosition = @object.GetTruePosition();
                     Vector3 position = __instance.transform.position;
-                    num = Vector2.Distance(truePosition, position);
+                    Num = Vector2.Distance(truePosition, position);
 
-                    canUse &= (num <= usableDistance && !PhysicsHelpers.AnythingBetween(truePosition, position, Constants.ShipOnlyMask, false));
+                    canUse &= (Num <= usableDistance && !PhysicsHelpers.AnythingBetween(truePosition, position, Constants.ShipOnlyMask, false));
                 }
-                __result = num;
+                __result = Num;
                 return false;
             }
         }

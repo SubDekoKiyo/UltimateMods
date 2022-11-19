@@ -12,7 +12,7 @@ namespace UltimateMods.Roles.Patches
         public static PlayerControl SetTarget(bool onlyCrewmates = false, bool targetPlayersInVents = false, List<PlayerControl> untargetablePlayers = null, PlayerControl targetingPlayer = null)
         {
             PlayerControl result = null;
-            float num = GameOptionsData.KillDistances[Mathf.Clamp(PlayerControl.GameOptions.KillDistance, 0, 2)];
+            float Num = GameOptionsData.KillDistances[Mathf.Clamp(PlayerControl.GameOptions.KillDistance, 0, 2)];
             if (!MapUtilities.CachedShipStatus) return result;
             if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
 
@@ -39,10 +39,10 @@ namespace UltimateMods.Roles.Patches
                     {
                         Vector2 vector = @object.GetTruePosition() - truePosition;
                         float magnitude = vector.magnitude;
-                        if (magnitude <= num && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
+                        if (magnitude <= Num && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
                         {
                             result = @object;
-                            num = magnitude;
+                            Num = magnitude;
                         }
                     }
                 }

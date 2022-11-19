@@ -225,12 +225,6 @@ namespace UltimateMods.Roles
             {
                 t.Value.GetMethod("eraseRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player });
             }
-
-            // Crewmate roles
-
-            // Impostor roles
-
-            // Neutral roles
         }
 
         public static void swapRoles(this PlayerControl player, PlayerControl target)
