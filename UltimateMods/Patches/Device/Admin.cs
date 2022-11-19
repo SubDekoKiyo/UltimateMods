@@ -181,14 +181,14 @@ namespace UltimateMods.Patches
 
                         if (plainShipRoom != null && plainShipRoom.roomArea)
                         {
-                            int num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
-                            int num2 = num;
+                            int Num = plainShipRoom.roomArea.OverlapCollider(__instance.filter, __instance.buffer);
+                            int Num2 = Num;
                             //アプデ前アドミン仕様
                             if (CustomOptionsH.OldAirShipAdmin.getBool() && (counterArea.RoomType == SystemTypes.Ventilation || counterArea.RoomType == SystemTypes.HallOfPortraits))
                             {
-                                num2 = 0;
+                                Num2 = 0;
                             }
-                            for (int j = 0; j < num; j++)
+                            for (int j = 0; j < Num; j++)
                             {
                                 Collider2D collider2D = __instance.buffer[j];
                                 if (!(collider2D.tag == "DeadBody"))
@@ -196,7 +196,7 @@ namespace UltimateMods.Patches
                                     PlayerControl component = collider2D.GetComponent<PlayerControl>();
                                     if (!component || component.Data == null || component.Data.Disconnected || component.Data.IsDead)
                                     {
-                                        num2--;
+                                        Num2--;
                                     }
                                     else if (component?.cosmetics.currentBodySprite.BodySprite?.material != null)
                                     {
@@ -225,7 +225,7 @@ namespace UltimateMods.Patches
                                     }
                                 }
                             }
-                            counterArea.UpdateCount(num2);
+                            counterArea.UpdateCount(Num2);
                         }
                         else
                         {

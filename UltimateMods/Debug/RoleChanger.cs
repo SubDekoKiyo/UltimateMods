@@ -24,7 +24,7 @@ namespace UltimateMods.Debug
 
         public static void Postfix()
         {
-            if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started && AmongUsClient.Instance.AmHost && 
+            if (AmongUsClient.Instance.GameState == AmongUsClient.GameStates.Started && AmongUsClient.Instance.AmHost &&
                 UltimateModsPlugin.isBeta && Input.GetKey(KeyCode.RightShift))
             {
                 var key = (KeyCode)System.Enum.Parse(typeof(KeyCode), Input.inputString.ToUpper());
