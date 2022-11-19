@@ -54,7 +54,7 @@ namespace UltimateMods
         public static CustomOption EnableRecordsAdmin;
         public static CustomOption EnableCockpitAdmin;
 
-        internal static Dictionary<byte, byte[]> blockedRolePairings = new();
+        internal static Dictionary<byte, byte[]> BlockedRolePairings = new();
 
         public static string cs(Color c, string s)
         {

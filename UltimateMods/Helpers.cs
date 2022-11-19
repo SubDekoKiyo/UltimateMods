@@ -58,11 +58,11 @@ namespace UltimateMods
             return (byte)(f * 255);
         }
 
-        public static List<byte> GenerateTasks(int numCommon, int numShort, int numLong)
+        public static List<byte> GenerateTasks(int NumCommon, int NumShort, int NumLong)
         {
-            if (numCommon + numShort + numLong <= 0)
+            if (NumCommon + NumShort + NumLong <= 0)
             {
-                numShort = 1;
+                NumShort = 1;
             }
 
             var tasks = new Il2CppSystem.Collections.Generic.List<byte>();
@@ -78,13 +78,13 @@ namespace UltimateMods
             foreach (var task in ShipStatus.Instance.LongTasks.OrderBy(x => rnd.Next())) longTasks.Add(task);
 
             int start = 0;
-            ShipStatus.Instance.AddTasksFromList(ref start, numCommon, tasks, hashSet, commonTasks);
+            ShipStatus.Instance.AddTasksFromList(ref start, NumCommon, tasks, hashSet, commonTasks);
 
             start = 0;
-            ShipStatus.Instance.AddTasksFromList(ref start, numShort, tasks, hashSet, shortTasks);
+            ShipStatus.Instance.AddTasksFromList(ref start, NumShort, tasks, hashSet, shortTasks);
 
             start = 0;
-            ShipStatus.Instance.AddTasksFromList(ref start, numLong, tasks, hashSet, longTasks);
+            ShipStatus.Instance.AddTasksFromList(ref start, NumLong, tasks, hashSet, longTasks);
 
             return tasks.ToArray().ToList();
         }
@@ -219,7 +219,7 @@ namespace UltimateMods
             return true;
         }
 
-        public static MurderAttemptResult CheckMurderAttempt(PlayerControl killer, PlayerControl target, bool blockRewind = false)
+        public static MurderAttemptResult CheckMurderAttempt(PlayerControl killer, PlayerControl target, bool BlockRewind = false)
         {
             // Modified vanilla checks
             if (AmongUsClient.Instance.IsGameOver) return MurderAttemptResult.SuppressKill;
@@ -334,11 +334,11 @@ namespace UltimateMods
             return PlayerById(id);
         }
 
-        public static void GenerateAndAssignTasks(this PlayerControl player, int numCommon, int numShort, int numLong)
+        public static void GenerateAndAssignTasks(this PlayerControl player, int NumCommon, int NumShort, int NumLong)
         {
             if (player == null) return;
 
-            List<byte> taskTypeIds = GenerateTasks(numCommon, numShort, numLong);
+            List<byte> taskTypeIds = GenerateTasks(NumCommon, NumShort, NumLong);
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedSetTasks, Hazel.SendOption.Reliable, -1);
             writer.Write(player.PlayerId);

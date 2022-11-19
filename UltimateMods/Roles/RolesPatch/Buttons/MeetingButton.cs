@@ -32,7 +32,7 @@ namespace UltimateMods.Roles.Patches
                     return;
                 }
 
-                // Handle max number of meetings
+                // Handle max Number of meetings
                 if (__instance.state == 1)
                 {
                     int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;

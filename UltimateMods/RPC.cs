@@ -93,7 +93,8 @@ namespace UltimateMods
                     case (byte)CustomRPC.SetRole:
                         byte roleId = reader.ReadByte();
                         byte playerId = reader.ReadByte();
-                        RPCProcedure.SetRole(roleId, playerId);
+                        byte flag = reader.ReadByte();
+                        RPCProcedure.SetRole(roleId, playerId, flag);
                         break;
                     // 65
                     case (byte)CustomRPC.AddModifier:
@@ -162,18 +163,18 @@ namespace UltimateMods
                     case (byte)CustomRPC.AltruistKill:
                         RPCProcedure.AltruistKill(reader.ReadByte());
                         break;
-                    // // 81
-                    // case (byte)CustomRPC.AltruistRevive:
-                    //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                    //     foreach (var body in DeadBodies)
-                    //     {
-                    //         if (body.ParentId == reader.ReadByte())
-                    //         {
-                    //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
-                    //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                    //         }
-                    //     }
-                    //     break;
+                        // // 81
+                        // case (byte)CustomRPC.AltruistRevive:
+                        //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
+                        //     foreach (var body in DeadBodies)
+                        //     {
+                        //         if (body.ParentId == reader.ReadByte())
+                        //         {
+                        //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
+                        //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                        //         }
+                        //     }
+                        //     break;
                 }
             }
         }
@@ -192,11 +193,11 @@ namespace UltimateMods
             // CustomLobbyPatch.ReSetLobbyText();
         }
 
-        public static void ShareOptions(int numberOfOptions, MessageReader reader)
+        public static void ShareOptions(int NumberOfOptions, MessageReader reader)
         {
             try
             {
-                for (int i = 0; i < numberOfOptions; i++)
+                for (int i = 0; i < NumberOfOptions; i++)
                 {
                     uint optionId = reader.ReadPackedUInt32();
                     uint selection = reader.ReadPackedUInt32();
@@ -225,7 +226,7 @@ namespace UltimateMods
             GameStartManagerPatch.playerVersions[clientId] = new GameStartManagerPatch.PlayerVersion(ver, guid);
         }
 
-        public static void SetRole(byte roleId, byte playerId)
+        public static void SetRole(byte roleId, byte playerId, byte flag)
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
