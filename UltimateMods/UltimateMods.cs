@@ -26,6 +26,7 @@ namespace UltimateMods
             Bakery.Clear();
             Teleporter.Clear();
             // Altruist.Clear();
+            Adversity.Clear();
 
             // Modifiers
             Opportunist.Clear();

@@ -50,6 +50,7 @@ namespace UltimateMods.Patches
             if (CustomRolesH.CustomImpostorRate.getBool()) EnabledImpRoles.Add(RoleType.CustomImpostor);
             if (CustomRolesH.BountyHunterRate.getBool()) EnabledImpRoles.Add(RoleType.BountyHunter);
             if (CustomRolesH.EvilHackerRate.getBool()) EnabledImpRoles.Add(RoleType.EvilHacker);
+            if (CustomRolesH.AdversityRate.getBool()) EnabledImpRoles.Add(RoleType.Adversity);
 
             // Neutrals
             if (CustomRolesH.JesterRate.getBool()) EnabledNeuRoles.Add(RoleType.Jester);
