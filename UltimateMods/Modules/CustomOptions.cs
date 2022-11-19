@@ -271,6 +271,11 @@ namespace UltimateMods.Modules
             }
         }
 
+        public virtual int getCount()
+        {
+            return count;
+        }
+
         public CustomRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, int max = 15, bool roleEnabled = true) :
             base(id, type, Color, Helpers.cs(color, name), new string[] { "OptionOff", "OptionOn" }, "OptionOff", null, true, false, "")
         {
