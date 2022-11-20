@@ -4,3 +4,6 @@
 [submodule "GodMiraHQ-UM"]
 	path = UltimateMods/GodMiraHQ
 	url = https://github.com/Dekokiyo/GodMiraHQ-UM
+[submodule "UM-TranslateFiles"]
+	path = UltimateMods/Translate
+	url = https://github.com/Dekokiyo/UM-TranslateFiles
