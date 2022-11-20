@@ -168,6 +168,11 @@ namespace UltimateMods.Patches
             if (target.HasFakeTasks())
                 target.ClearAllTasks();
 
+            if (target.IsImpostor() && AmongUsClient.Instance.AmHost)
+            {
+                Adversity.CheckAndAdversityState();
+            }
+
             __instance.OnKill(target);
             target.OnDeath(__instance);
         }
@@ -185,6 +190,9 @@ namespace UltimateMods.Patches
             // Remove fake tasks when player dies
             if (__instance.HasFakeTasks())
                 __instance.ClearAllTasks();
+
+            if (__instance.IsImpostor())
+                Adversity.CheckAndAdversityState();
 
             __instance.OnDeath(killer: null);
         }

@@ -79,6 +79,11 @@ namespace UltimateMods
         public static CustomOption EvilHackerCanMoveEvenIfUsesAdmin;
         public static CustomOption EvilHackerCanHasBetterAdmin;
 
+        public static CustomRoleOption AdversityRate;
+        public static CustomOption AdversityAdversityStateKillCooldown;
+        public static CustomOption AdversityAdversityStateCanFindMadmate;
+        public static CustomOption AdversityAdversityStateCanSeeVotes;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -156,6 +161,11 @@ namespace UltimateMods
             EvilHackerRate = new CustomRoleOption(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
             EvilHackerCanMoveEvenIfUsesAdmin = CustomOption.Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);
             EvilHackerCanHasBetterAdmin = CustomOption.Create(192, Impostor, ImpostorRed, "EvilHackerCanHasBetterAdmin", false, EvilHackerRate);
+
+            AdversityRate = new CustomRoleOption(195, Impostor, White, "Adversity", ImpostorRed, 1);
+            AdversityAdversityStateKillCooldown = CustomOption.Create(196, Impostor, ImpostorRed, "AdversityStateKillCooldown", 20f, 2.5f, 60f, 2.5f, AdversityRate, format: "FormatSeconds");
+            AdversityAdversityStateCanFindMadmate = CustomOption.Create(197, Impostor, ImpostorRed, "AdversityStateCanFindMadmate", false, AdversityRate);
+            AdversityAdversityStateCanSeeVotes = CustomOption.Create(198, Impostor, ImpostorRed, "AdversityStateCanSeeVotes", false, AdversityRate);
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
