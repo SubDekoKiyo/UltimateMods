@@ -37,6 +37,7 @@ namespace UltimateMods
         public static ConfigEntry<bool> EnableHorseMode { get; set; }
         public static ConfigEntry<string> RoomCodeText { get; set; }
         public static ConfigEntry<string> ShowPopUpVersion { get; set; }
+        public static ConfigEntry<int> LanguageNum { get; set; }
 
         public Harmony Harmony { get; } = new Harmony(Id);
         public static UltimateModsPlugin Instance;
@@ -65,6 +66,7 @@ namespace UltimateMods
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             SubmergedCompatibility.Initialize();
+            // Menu.LanguageMenuPatch.Initialize();
             Harmony.PatchAll();
         }
     }

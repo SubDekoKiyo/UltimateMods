@@ -93,7 +93,7 @@ def GenerateLanguageFile(InFiles):
 
         for string in Row[LanguageNum-1:]:
           if string.value:
-            Data = string.value.replace("\\r", "\r").replace("_x000D_", "").replace("\\n", "\n").encode('unicode-escape').decode('ascii')
+            Data = string.value.replace("\\r", "\r").replace("_x000D_", "").replace("\\n", "\n")
 
         WriteData = [f'{str(Name)}',':',f'{str(Data)}','\n']
 
