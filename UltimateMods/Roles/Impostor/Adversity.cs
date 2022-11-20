@@ -32,8 +32,7 @@ namespace UltimateMods.Roles
         }
         public override void FixedUpdate() 
         { 
-            if (player == PlayerControl.LocalPlayer && isLast && canFindMad && Madmate.exists)
-            arrowUpdate();
+            if (PlayerControl.LocalPlayer.isRole(RoleType.Adversity) && isLast && canFindMad && Madmate.exists) arrowUpdate();
         }
         public override void OnKill(PlayerControl target) 
         { 
