@@ -45,17 +45,6 @@ namespace UltimateMods.Patches
             }
         }
 
-        // Workaround to add a "postfix" to the destroying of the exile controller (i.e. cutscene) of submerged
-        [HarmonyPatch(typeof(UnityEngine.Object), nameof(UnityEngine.Object.Destroy), new Type[] { typeof(GameObject) })]
-        public static void Prefix(GameObject obj)
-        {
-            if (!SubmergedCompatibility.IsSubmerged) return;
-            if (obj != null && obj.name.Contains("ExileCutscene"))
-            {
-                WrapUpPostfix(ExileControllerBeginPatch.lastExiled);
-            }
-        }
-
         static void WrapUpPostfix(GameData.PlayerInfo exiled)
         {
             if (exiled != null)
@@ -68,12 +57,6 @@ namespace UltimateMods.Patches
                     {
                         Jester.TriggerJesterWin = true;
                     }
-                }
-
-                if (SubmergedCompatibility.IsSubmerged)
-                {
-                    var FullScreen = UnityEngine.GameObject.Find("FullScreen500(Clone)");
-                    if (FullScreen) FullScreen.SetActive(false);
                 }
             }
         }
@@ -133,7 +116,7 @@ namespace UltimateMods.Patches
                                 break;
                         }
                     }
-                    // Hide number of remaining impostors on Jester win
+                    // Hide Number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
                         if (PlayerControl.LocalPlayer.isRole(RoleType.Jester)) __result = "";

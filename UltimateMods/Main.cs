@@ -1,12 +1,10 @@
-﻿global using Il2CppInterop.Runtime;
-global using Il2CppInterop.Runtime.Attributes;
-global using Il2CppInterop.Runtime.InteropTypes;
-global using Il2CppInterop.Runtime.InteropTypes.Arrays;
-global using Il2CppInterop.Runtime.Injection;
+﻿global using UnhollowerBaseLib;
+global using UnhollowerBaseLib.Attributes;
+global using UnhollowerRuntimeLib;
 
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.Unity.IL2CPP;
+using BepInEx.IL2CPP;
 using HarmonyLib;
 using System;
 using UnityEngine;
@@ -14,7 +12,6 @@ using UnityEngine;
 namespace UltimateMods
 {
     [BepInPlugin(Id, "UltimateMods", VersionString)]
-    [BepInDependency(SubmergedCompatibility.SUBMERGED_GUID, BepInDependency.DependencyFlags.SoftDependency)]
     [BepInProcess("Among Us.exe")]
     public class UltimateModsPlugin : BasePlugin
     {
@@ -65,7 +62,6 @@ namespace UltimateMods
             CustomOptionsH.Load();
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
-            SubmergedCompatibility.Initialize();
             // Menu.LanguageMenuPatch.Initialize();
             Harmony.PatchAll();
         }

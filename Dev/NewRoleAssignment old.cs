@@ -24,7 +24,7 @@ namespace UltimateMods.Patches
     [HarmonyPatch(typeof(RoleManager), nameof(RoleManager.SelectRoles))]
     class RoleManagerSelectRolesPatch
     {
-        // private static List<byte> blockLovers = new();
+        // private static List<byte> BlockLovers = new();
         public static int BlockedAssignments = 0;
         public static int MaxBlocks = 10;
 
@@ -58,20 +58,47 @@ namespace UltimateMods.Patches
             List<PlayerControl> Impostors = PlayerControl.AllPlayerControls.ToArray().ToList().OrderBy(x => Guid.NewGuid()).ToList();
             Impostors.RemoveAll(x => !x.Data.Role.IsImpostor);
 
-            var CrewmateMin = CustomOptionsH.CrewmateRolesCountMin.getSelection();
-            var CrewmateMax = CustomOptionsH.CrewmateRolesCountMax.getSelection();
-            var NeutralMin = CustomOptionsH.NeutralRolesCountMin.getSelection();
-            var NeutralMax = CustomOptionsH.NeutralRolesCountMax.getSelection();
-            var ImpostorMin = CustomOptionsH.ImpostorRolesCountMin.getSelection();
-            var ImpostorMax = CustomOptionsH.ImpostorRolesCountMax.getSelection();
-            var ModifierMin = CustomOptionsH.ModifierCountMin.getSelection();
-            var ModifierMax = CustomOptionsH.ModifierCountMax.getSelection();
+            var CrewmateCount = CustomOptionsH.CrewmateRolesCount.getSelection();
+            var ImpostorCount = CustomOptionsH.ImpostorRolesCount.getSelection();
+            var NeutralCount = CustomOptionsH.NeutralRolesCount.getSelection();
+            var ModifierCount = CustomOptionsH.ModifierCount.getSelection();
 
             // Make sure Min is less or equal to Max
-            if (CrewmateMin > CrewmateMax) CrewmateMin = CrewmateMax;
-            if (NeutralMin > NeutralMax) NeutralMin = NeutralMax;
-            if (ImpostorMin > ImpostorMax) ImpostorMin = ImpostorMax;
-            if (ModifierMin > ModifierMax) ModifierMin = ModifierMax;
+            while (Crewmates.Count > 0 && CrewmateCount > 0)
+            {
+                List<PlayerControl> TargetPlayers = new();
+                var AssignRole = EnabledCrewRoles[rnd.Next(0, EnabledCrewRoles.Count - 1)];
+                TargetPlayers.AddRange(Crewmates);
+                var AssignedPlayer = SetRoleToRandomPlayer((byte)AssignRole, TargetPlayers);
+                CrewmateCount--;
+            }
+
+            while (Impostors.Count > 0 && ImpostorCount > 0)
+            {
+                List<PlayerControl> TargetPlayers = new();
+                var AssignRole = EnabledImpRoles[rnd.Next(0, EnabledImpRoles.Count - 1)];
+                TargetPlayers.AddRange(Impostors);
+                var AssignedPlayer = SetRoleToRandomPlayer((byte)AssignRole, TargetPlayers);
+                ImpostorCount--;
+            }
+
+            while (Crewmates.Count > 0 && NeutralCount > 0)
+            {
+                List<PlayerControl> TargetPlayers = new();
+                var AssignRole = EnabledNeuRoles[rnd.Next(0, EnabledNeuRoles.Count - 1)];
+                TargetPlayers.AddRange(Crewmates);
+                var AssignedPlayer = SetRoleToRandomPlayer((byte)AssignRole, TargetPlayers);
+                NeutralCount--;
+            }
+
+            while (Crewmates.Count > 0 && ModifierCount > 0)
+            {
+                List<PlayerControl> TargetPlayers = new();
+                var AssignModifier = EnabledModRoles[rnd.Next(0, EnabledModRoles.Count - 1)];
+                TargetPlayers.AddRange(Crewmates);
+                var AssignedPlayer = SetModifierToRandomPlayer((byte)AssignModifier, TargetPlayers);
+                ModifierCount--;
+            }
 
             // Get the Maximum allowed count of each Role type based on the Minimum and Maximum option
             int CrewCountSettings = rnd.Next(CrewmateMin, CrewmateMax + 1);
@@ -95,6 +122,7 @@ namespace UltimateMods.Patches
             ImpSettings.Add((byte)RoleType.UnderTaker, CustomRolesH.UnderTakerRate.data);
             ImpSettings.Add((byte)RoleType.BountyHunter, CustomRolesH.BountyHunterRate.data);
             ImpSettings.Add((byte)RoleType.Teleporter, CustomRolesH.TeleporterRate.data);
+            ImpSettings.Add((byte)RoleType.EvilHacker, CustomRolesH.EvilHackerRate.data);
 
             NeutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
 
@@ -133,16 +161,16 @@ namespace UltimateMods.Patches
                     {
                         if (data.Impostors.Count > 0 && data.MaxImpostorRoles > 0)
                         {
-                            byte evilGuesser = SetRoleToRandomPlayer((byte)RoleType.EvilGuesser, data.Impostors);
-                            data.Impostors.ToList().RemoveAll(x => x.PlayerId == evilGuesser);
+                            byte EvilGuesser = SetRoleToRandomPlayer((byte)RoleType.EvilGuesser, data.Impostors);
+                            data.Impostors.ToList().RemoveAll(x => x.PlayerId == EvilGuesser);
                             data.MaxImpostorRoles--;
                             data.CrewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionsH.guesserSpawnBothRate.getSelection(), 1));
                         }
                     }
                     else if (data.Crewmates.Count > 0 && data.MaxCrewmateRoles > 0)
                     {
-                        byte niceGuesser = SetRoleToRandomPlayer((byte)RoleType.NiceGuesser, data.Crewmates);
-                        data.Crewmates.ToList().RemoveAll(x => x.PlayerId == niceGuesser);
+                        byte NiceGuesser = SetRoleToRandomPlayer((byte)RoleType.NiceGuesser, data.Crewmates);
+                        data.Crewmates.ToList().RemoveAll(x => x.PlayerId == NiceGuesser);
                         data.MaxCrewmateRoles--;
                         data.ImpSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionsH.guesserSpawnBothRate.getSelection(), 1));
                     }
@@ -159,28 +187,28 @@ namespace UltimateMods.Patches
             {
                 if (option.count <= 0 || !option.roleEnabled) continue;
 
-                int niceCount = 0;
-                int evilCount = 0;
-                while (niceCount + evilCount < option.count)
+                int NiceCount = 0;
+                int EvilCount = 0;
+                while (NiceCount + EvilCount < option.count)
                 {
                     if (option.assignEqually)
                     {
-                        niceCount++;
-                        evilCount++;
+                        NiceCount++;
+                        EvilCount++;
                     }
                     else
                     {
                         bool isEvil = rnd.Next(1, 101) <= option.impChance * 10;
-                        if (isEvil) evilCount++;
-                        else niceCount++;
+                        if (isEvil) EvilCount++;
+                        else NiceCount++;
                     }
                 }
 
-                if (niceCount > 0)
-                    data.CrewSettings.Add((byte)option.roleType, (option.rate, niceCount));
+                if (NiceCount > 0)
+                    data.CrewSettings.Add((byte)option.roleType, (option.rate, NiceCount));
 
-                if (evilCount > 0)
-                    data.ImpSettings.Add((byte)option.roleType, (option.rate, evilCount));
+                if (EvilCount > 0)
+                    data.ImpSettings.Add((byte)option.roleType, (option.rate, EvilCount));
             }
         }
 
@@ -218,9 +246,9 @@ namespace UltimateMods.Patches
 
                 RolesToAssign[RoleType].RemoveAt(Index);
 
-                if (CustomOptionsH.blockedRolePairings.ContainsKey(RoleId))
+                if (CustomOptionsH.BlockedRolePairings.ContainsKey(RoleId))
                 {
-                    foreach (var BlockedRoleId in CustomOptionsH.blockedRolePairings[RoleId])
+                    foreach (var BlockedRoleId in CustomOptionsH.BlockedRolePairings[RoleId])
                     {
                         // Set chance for the Blocked Roles to 0 for chances less than 100%
                         if (data.ImpSettings.ContainsKey(BlockedRoleId)) data.ImpSettings[BlockedRoleId] = (0, 0);
@@ -284,9 +312,9 @@ namespace UltimateMods.Patches
 
                 RolesToAssign[RoleType].RemoveAll(x => x == RoleId);
 
-                if (CustomOptionsH.blockedRolePairings.ContainsKey(RoleId))
+                if (CustomOptionsH.BlockedRolePairings.ContainsKey(RoleId))
                 {
-                    foreach (var BlockedRoleId in CustomOptionsH.blockedRolePairings[RoleId])
+                    foreach (var BlockedRoleId in CustomOptionsH.BlockedRolePairings[RoleId])
                     {
                         // Remove tickets of Blocked Roles from all pools
                         CrewmateTickets.RemoveAll(x => x == BlockedRoleId);

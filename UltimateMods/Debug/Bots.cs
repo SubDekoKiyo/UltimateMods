@@ -13,7 +13,7 @@ namespace UltimateMods.Debug
         public static int BotCount = 0;
         public static void Postfix(KeyboardJoystick __instance)
         {
-            if (Input.GetKeyDown(KeyCode.F))
+            if (AmongUsClient.Instance.AmHost && UltimateModsPlugin.isBeta && Input.GetKeyDown(KeyCode.F))
             {
                 BotCount++;
                 var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);

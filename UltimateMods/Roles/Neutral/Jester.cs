@@ -13,9 +13,9 @@ namespace UltimateMods.Roles
         public static bool CanSabotage { get { return CustomRolesH.JesterCanSabotage.getBool(); } }
         public static bool HasImpostorVision { get { return CustomRolesH.JesterHasImpostorVision.getBool(); } }
         public static bool HasTasks { get { return CustomRolesH.JesterMustFinishTasks.getBool(); } }
-        public static int numCommonTasks { get { return CustomRolesH.JesterTasks.CommonTasks; } }
-        public static int numLongTasks { get { return CustomRolesH.JesterTasks.LongTasks; } }
-        public static int numShortTasks { get { return CustomRolesH.JesterTasks.ShortTasks; } }
+        public static int NumCommonTasks { get { return CustomRolesH.JesterTasks.CommonTasks; } }
+        public static int NumLongTasks { get { return CustomRolesH.JesterTasks.LongTasks; } }
+        public static int NumShortTasks { get { return CustomRolesH.JesterTasks.ShortTasks; } }
 
         public Jester()
         {
@@ -24,7 +24,7 @@ namespace UltimateMods.Roles
 
         public void assignTasks()
         {
-            player.GenerateAndAssignTasks(numCommonTasks, numShortTasks, numLongTasks);
+            player.GenerateAndAssignTasks(NumCommonTasks, NumShortTasks, NumLongTasks);
         }
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.BeginCrewmate))]
@@ -42,7 +42,7 @@ namespace UltimateMods.Roles
         public static bool TasksComplete(PlayerControl p)
         {
             int FinishedTasks = 0;
-            int TasksCount = numCommonTasks + numLongTasks + numShortTasks;
+            int TasksCount = NumCommonTasks + NumLongTasks + NumShortTasks;
             if (TasksCount == 0) return true;
             foreach (var task in p.Data.Tasks)
             {

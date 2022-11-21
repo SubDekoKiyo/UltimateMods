@@ -15,14 +15,10 @@ namespace UltimateMods
         public static CustomOption PresetSelection;
         public static CustomOption ActivateModRoles;
         // public static CustomOption activateModSettings;
-        public static CustomOption CrewmateRolesCountMin;
-        public static CustomOption CrewmateRolesCountMax;
-        public static CustomOption NeutralRolesCountMin;
-        public static CustomOption NeutralRolesCountMax;
-        public static CustomOption ImpostorRolesCountMin;
-        public static CustomOption ImpostorRolesCountMax;
-        public static CustomOption ModifierCountMin;
-        public static CustomOption ModifierCountMax;
+        public static CustomOption CrewmateRolesCount;
+        public static CustomOption ImpostorRolesCount;
+        public static CustomOption NeutralRolesCount;
+        public static CustomOption ModifierCount;
         // public static CustomOption RememberClassic;
 
         public static CustomOption SpecialOptions;
@@ -50,7 +46,7 @@ namespace UltimateMods
         public static CustomOption RestrictCameras;
         public static CustomOption RestrictVitals;
 
-        public static CustomOption EnableGodMiraHQ;
+        // public static CustomOption EnableGodMiraHQ;
 
         public static CustomOption AirShipSettings;
         public static CustomOption OldAirShipAdmin;
@@ -58,7 +54,7 @@ namespace UltimateMods
         public static CustomOption EnableRecordsAdmin;
         public static CustomOption EnableCockpitAdmin;
 
-        internal static Dictionary<byte, byte[]> blockedRolePairings = new();
+        internal static Dictionary<byte, byte[]> BlockedRolePairings = new();
 
         public static string cs(Color c, string s)
         {
@@ -82,17 +78,13 @@ namespace UltimateMods
             // RememberClassic = CustomOption.Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
             EnableMirrorMap = CustomOption.Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
             CanZoomInOutWhenPlayerIsDead = CustomOption.Create(6, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
-            EnableGodMiraHQ = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
+            // EnableGodMiraHQ = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
 
             // Using new id's for the options to not break compatibility with older versions
-            CrewmateRolesCountMin = CustomOption.Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMin"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
-            CrewmateRolesCountMax = CustomOption.Create(11, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            NeutralRolesCountMin = CustomOption.Create(12, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            NeutralRolesCountMax = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ImpostorRolesCountMin = CustomOption.Create(14, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ImpostorRolesCountMax = CustomOption.Create(15, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ModifierCountMin = CustomOption.Create(16, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCountMin"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ModifierCountMax = CustomOption.Create(17, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCountMax"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            CrewmateRolesCount = CustomOption.Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCount"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
+            ImpostorRolesCount = CustomOption.Create(11, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            NeutralRolesCount = CustomOption.Create(12, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            ModifierCount = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
 
             SpecialOptions = new CustomOptionBlank(null);
             MaxNumberOfMeetings = CustomOption.Create(20, General, White, "MaxNumberOfMeetings", 10f, 0f, 15f, 1f, SpecialOptions, format: "FormatTimes");

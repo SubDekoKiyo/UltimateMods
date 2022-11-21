@@ -88,7 +88,7 @@ namespace UltimateMods.EndGame
             AdditionalTempData.gameOverReason = endGameResult.GameOverReason;
             if ((int)endGameResult.GameOverReason >= 10) endGameResult.GameOverReason = GameOverReason.ImpostorByKill;
 
-            if (UltimateModsPlugin.DebugMode.Value)
+            if (UltimateModsPlugin.DebugMode.Value || UltimateModsPlugin.isBeta)
             {
                 DebugBots.BotCount = 0;
             }
@@ -269,7 +269,7 @@ namespace UltimateMods.EndGame
                     {
                         UnityEngine.Object.Destroy(pb.gameObject);
                     }
-                    int num = Mathf.CeilToInt(7.5f);
+                    int Num = Mathf.CeilToInt(7.5f);
                     List<WinningPlayerData> list = TempData.winners.ToArray().ToList().OrderBy(delegate (WinningPlayerData b)
                     {
                         if (!b.IsYou)
@@ -281,15 +281,15 @@ namespace UltimateMods.EndGame
                     for (int i = 0; i < list.Count; i++)
                     {
                         WinningPlayerData winningPlayerData2 = list[i];
-                        int num2 = (i % 2 == 0) ? -1 : 1;
-                        int num3 = (i + 1) / 2;
-                        float num4 = (float)num3 / (float)num;
-                        float num5 = Mathf.Lerp(1f, 0.75f, num4);
-                        float num6 = (float)((i == 0) ? -8 : -1);
+                        int Num2 = (i % 2 == 0) ? -1 : 1;
+                        int Num3 = (i + 1) / 2;
+                        float Num4 = (float)Num3 / (float)Num;
+                        float Num5 = Mathf.Lerp(1f, 0.75f, Num4);
+                        float Num6 = (float)((i == 0) ? -8 : -1);
                         PoolablePlayer poolablePlayer = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, __instance.transform);
-                        poolablePlayer.transform.localPosition = new Vector3(1f * (float)num2 * (float)num3 * num5, FloatRange.SpreadToEdges(-1.125f, 0f, num3, num), num6 + (float)num3 * 0.01f) * 0.9f;
-                        float num7 = Mathf.Lerp(1f, 0.65f, num4) * 0.9f;
-                        Vector3 vector = new(num7, num7, 1f);
+                        poolablePlayer.transform.localPosition = new Vector3(1f * (float)Num2 * (float)Num3 * Num5, FloatRange.SpreadToEdges(-1.125f, 0f, Num3, Num), Num6 + (float)Num3 * 0.01f) * 0.9f;
+                        float Num7 = Mathf.Lerp(1f, 0.65f, Num4) * 0.9f;
+                        Vector3 vector = new(Num7, Num7, 1f);
                         poolablePlayer.transform.localScale = vector;
                         poolablePlayer.UpdateFromPlayerOutfit((GameData.PlayerOutfit)winningPlayerData2, PlayerMaterial.MaskType.ComplexUI, winningPlayerData2.IsDead, true);
                         if (winningPlayerData2.IsDead)
@@ -606,29 +606,29 @@ namespace UltimateMods.EndGame
 
                 private void GetPlayerCounts()
                 {
-                    int numImpostorsAlive = 0;
-                    int numTotalAlive = 0;
-                    int numNeutralAlive = 0;
-                    int numCrew = 0;
+                    int NumImpostorsAlive = 0;
+                    int NumTotalAlive = 0;
+                    int NumNeutralAlive = 0;
+                    int NumCrew = 0;
 
                     foreach (var playerInfo in GameData.Instance.AllPlayers)
                     {
                         if (!playerInfo.Disconnected)
                         {
-                            if (playerInfo.Object.IsCrew()) numCrew++;
+                            if (playerInfo.Object.IsCrew()) NumCrew++;
                             if (!playerInfo.IsDead)
                             {
-                                numTotalAlive++;
-                                if (playerInfo.Role.IsImpostor) numImpostorsAlive++;
-                                if (playerInfo.Object.IsNeutral()) numNeutralAlive++;
+                                NumTotalAlive++;
+                                if (playerInfo.Role.IsImpostor) NumImpostorsAlive++;
+                                if (playerInfo.Object.IsNeutral()) NumNeutralAlive++;
                             }
                         }
                     }
 
-                    TeamCrew = numCrew;
-                    TeamImpostorsAlive = numImpostorsAlive;
-                    NeutralAlive = numNeutralAlive;
-                    TotalAlive = numTotalAlive;
+                    TeamCrew = NumCrew;
+                    TeamImpostorsAlive = NumImpostorsAlive;
+                    NeutralAlive = NumNeutralAlive;
+                    TotalAlive = NumTotalAlive;
                 }
             }
         }

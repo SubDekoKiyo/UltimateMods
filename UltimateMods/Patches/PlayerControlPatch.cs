@@ -12,65 +12,6 @@ namespace UltimateMods.Patches
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
     public static class PlayerControlFixedUpdatePatch
     {
-        public static PlayerControl SetTarget(bool onlyCrewmates = false, bool targetPlayersInVents = false, List<PlayerControl> untargetablePlayers = null, PlayerControl targetingPlayer = null)
-        {
-            PlayerControl result = null;
-            float num = GameOptionsData.KillDistances[Mathf.Clamp(PlayerControl.GameOptions.KillDistance, 0, 2)];
-            if (!MapUtilities.CachedShipStatus) return result;
-            if (targetingPlayer == null) targetingPlayer = PlayerControl.LocalPlayer;
-
-            if (untargetablePlayers == null)
-            {
-                untargetablePlayers = new List<PlayerControl>();
-            }
-
-            Vector2 truePosition = targetingPlayer.GetTruePosition();
-            Il2CppSystem.Collections.Generic.List<GameData.PlayerInfo> allPlayers = GameData.Instance.AllPlayers;
-            for (int i = 0; i < allPlayers.Count; i++)
-            {
-                GameData.PlayerInfo playerInfo = allPlayers[i];
-                if (!playerInfo.Disconnected && playerInfo.PlayerId != targetingPlayer.PlayerId && !playerInfo.IsDead && (!onlyCrewmates || !playerInfo.Role.IsImpostor))
-                {
-                    PlayerControl @object = playerInfo.Object;
-                    if (untargetablePlayers.Any(x => x == @object))
-                    {
-                        // if that player is not targetable: skip check
-                        continue;
-                    }
-
-                    if (@object && (!@object.inVent || targetPlayersInVents))
-                    {
-                        Vector2 vector = @object.GetTruePosition() - truePosition;
-                        float magnitude = vector.magnitude;
-                        if (magnitude <= num && !PhysicsHelpers.AnyNonTriggersBetween(truePosition, vector.normalized, magnitude, Constants.ShipAndObjectsMask))
-                        {
-                            result = @object;
-                            num = magnitude;
-                        }
-                    }
-                }
-            }
-            return result;
-        }
-
-        public static void SetPlayerOutline(PlayerControl target, Color color)
-        {
-            if (target == null || target.cosmetics.currentBodySprite.BodySprite == null) return;
-
-            target.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 1f);
-            target.cosmetics.currentBodySprite.BodySprite.material.SetColor("_OutlineColor", color);
-        }
-
-        // Update functions
-        static void SetBasePlayerOutlines()
-        {
-            foreach (PlayerControl target in PlayerControl.AllPlayerControls)
-            {
-                if (target == null || target.cosmetics.currentBodySprite.BodySprite == null) continue;
-
-                target.cosmetics.currentBodySprite.BodySprite.material.SetFloat("_Outline", 0f);
-            }
-        }
         public static void UpdatePlayerInfo()
         {
             bool commsActive = false;
@@ -141,17 +82,17 @@ namespace UltimateMods.Patches
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks)
+                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks /*&& !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeTasks)
+                    else if (MapOptions.GhostsSeeTasks/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeRoles)
+                    else if (MapOptions.GhostsSeeRoles/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;
@@ -171,7 +112,8 @@ namespace UltimateMods.Patches
             if (PlayerControl.LocalPlayer == __instance)
             {
                 // Update player outlines
-                SetBasePlayerOutlines();
+                Roles.Patches.OutlinePatch.SetBasePlayerOutlines();
+                Roles.Patches.OutlinePatch.ImpostorSetTarget();
 
                 // Update Role Description
                 Helpers.RefreshRoleDescription(__instance);
@@ -226,6 +168,11 @@ namespace UltimateMods.Patches
             if (target.HasFakeTasks())
                 target.ClearAllTasks();
 
+            if (target.IsImpostor() && AmongUsClient.Instance.AmHost)
+            {
+                Adversity.CheckAndAdversityState();
+            }
+
             __instance.OnKill(target);
             target.OnDeath(__instance);
         }
@@ -244,6 +191,9 @@ namespace UltimateMods.Patches
             if (__instance.HasFakeTasks())
                 __instance.ClearAllTasks();
 
+            if (__instance.IsImpostor())
+                Adversity.CheckAndAdversityState();
+
             __instance.OnDeath(killer: null);
         }
     }
@@ -258,17 +208,17 @@ namespace UltimateMods.Patches
             float addition = 0f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
 
-            float max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
-            __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, max), max);
+            float Max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
+            __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, Max), Max);
             return false;
         }
 
-        public static void SetKillTimerUnchecked(this PlayerControl player, float time, float max = float.NegativeInfinity)
+        public static void SetKillTimerUnchecked(this PlayerControl player, float time, float Max = float.NegativeInfinity)
         {
-            if (max == float.NegativeInfinity) max = time;
+            if (Max == float.NegativeInfinity) Max = time;
 
             player.killTimer = time;
-            FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(time, max);
+            FastDestroyableSingleton<HudManager>.Instance.KillButton.SetCoolDown(time, Max);
         }
     }
 }

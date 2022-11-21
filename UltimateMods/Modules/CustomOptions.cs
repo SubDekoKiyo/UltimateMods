@@ -99,10 +99,10 @@ namespace UltimateMods.Modules
             return new CustomOption(id, type, Color, name, selections, "", parent, isHeader, isHidden, format);
         }
 
-        public static CustomOption Create(int id, CustomOptionType type, Color Color, string name, float defaultValue, float min, float max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
+        public static CustomOption Create(int id, CustomOptionType type, Color Color, string name, float defaultValue, float min, float Max, float step, CustomOption parent = null, bool isHeader = false, bool isHidden = false, string format = "")
         {
             List<object> selections = new();
-            for (float s = min; s <= max; s += step)
+            for (float s = min; s <= Max; s += step)
                 selections.Add(s);
             return new CustomOption(id, type, Color, name, selections.ToArray(), defaultValue, parent, isHeader, isHidden, format);
         }
@@ -241,11 +241,11 @@ namespace UltimateMods.Modules
             }
         }
 
-        public int rate
+        public bool enable
         {
             get
             {
-                return enabled ? selection : 0;
+                return enabled ? true : false;
             }
         }
 
@@ -263,26 +263,26 @@ namespace UltimateMods.Modules
             }
         }
 
-        public (int, int) data
+        public (bool, int) data
         {
             get
             {
-                return (rate, count);
+                return (enable, count);
             }
         }
 
-        public CustomRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, int max = 15, bool roleEnabled = true) :
-            base(id, type, Color, Helpers.cs(color, name), CustomOptionsH.TenRates, "", null, true, false, "")
+        public CustomRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, int Max = 15, bool roleEnabled = true) :
+            base(id, type, Color, Helpers.cs(color, name), new string[] { "OptionOff", "OptionOn" }, "OptionOff", null, true, false, "")
         {
             this.roleEnabled = roleEnabled;
 
-            if (max <= 0 || !roleEnabled)
+            if (Max <= 0 || !roleEnabled)
             {
                 isHidden = true;
                 this.roleEnabled = false;
             }
 
-            if (max > 1)
+            if (Max > 1)
                 countOption = Create(id + 10000, type, Color, "RoleNumAssigned", 1f, 1f, 15f, 1f, this, false, isHidden, "FormatPlayer");
         }
     }
@@ -298,7 +298,7 @@ namespace UltimateMods.Modules
 
         public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
 
-        public CustomDualRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, RoleType roleType, int max = 15, bool roleEnabled = true) : base(id, type, Color, name, color, max, roleEnabled)
+        public CustomDualRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, RoleType roleType, int Max = 15, bool roleEnabled = true) : base(id, type, Color, name, color, Max, roleEnabled)
         {
             roleAssignEqually = new CustomOption(id + 15001, type, Color, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
             roleImpChance = Create(id + 15000, type, Color, "roleImpChance", CustomOptionsH.TenRates, roleAssignEqually, false, isHidden);
@@ -648,8 +648,8 @@ namespace UltimateMods.Modules
             otherMenu.Children = otherOptions.ToArray();
             otherSettings.gameObject.SetActive(false);
 
-            /*var numImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
-            if (numImpostorsOption != null) numImpostorsOption.ValidRange = new FloatRange(0f, 15f);*/
+            /*var NumImpostorsOption = __instance.Children.FirstOrDefault(x => x.name == "NumImpostors").TryCast<NumberOption>();
+            if (NumImpostorsOption != null) NumImpostorsOption.ValidRange = new FloatRange(0f, 15f);*/
 
             var killCoolOption = __instance.Children.FirstOrDefault(x => x.name == "KillCooldown").TryCast<NumberOption>();
             if (killCoolOption != null) killCoolOption.ValidRange = new FloatRange(2.5f, 60f);
@@ -763,7 +763,7 @@ namespace UltimateMods.Modules
             if (timer < 0.1f) return;
             timer = 0f;
 
-            float numItems = __instance.Children.Length;
+            float NumItems = __instance.Children.Length;
 
             float offset = 2.75f;
             foreach (CustomOption option in CustomOption.options)
@@ -804,16 +804,16 @@ namespace UltimateMods.Modules
 
                         if (option.isHeader)
                         {
-                            numItems += 0.5f;
+                            NumItems += 0.5f;
                         }
                     }
                     else
                     {
-                        numItems--;
+                        NumItems--;
                     }
                 }
             }
-            __instance.GetComponentInParent<Scroller>().ContentYBounds.max = -4.0f + numItems * 0.5f;
+            __instance.GetComponentInParent<Scroller>().ContentYBounds.max = -4.0f + NumItems * 0.5f;
         }
     }
 
@@ -874,33 +874,10 @@ namespace UltimateMods.Modules
 
             // entries.Add(optionToString(CustomOptionsH.RememberClassic));
 
-            var optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("CrewmateRoles"));
-            var min = CustomOptionsH.CrewmateRolesCountMin.getSelection();
-            var max = CustomOptionsH.CrewmateRolesCountMax.getSelection();
-            if (min > max) min = max;
-            var optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
-
-            optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("NeutralRoles"));
-            min = CustomOptionsH.NeutralRolesCountMin.getSelection();
-            max = CustomOptionsH.NeutralRolesCountMax.getSelection();
-            if (min > max) min = max;
-            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
-
-            optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("ImpostorRoles"));
-            min = CustomOptionsH.ImpostorRolesCountMin.getSelection();
-            max = CustomOptionsH.ImpostorRolesCountMax.getSelection();
-            if (min > max) min = max;
-            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
-
-            optionName = CustomOptionsH.cs(new Color(204f / 255f, 204f / 255f, 0, 1f), tl("ModifierRoles"));
-            min = CustomOptionsH.ModifierCountMin.getSelection();
-            max = CustomOptionsH.ModifierCountMax.getSelection();
-            if (min > max) min = max;
-            optionValue = (min == max) ? $"{max}" : $"{min} - {max}";
-            entry.AppendLine($"{optionName}: {optionValue}");
+            entries.Add(optionToString(CustomOptionsH.CrewmateRolesCount));
+            entries.Add(optionToString(CustomOptionsH.ImpostorRolesCount));
+            entries.Add(optionToString(CustomOptionsH.NeutralRolesCount));
+            entries.Add(optionToString(CustomOptionsH.ModifierCount));
 
             entries.Add(entry.ToString().Trim('\r', '\n'));
 
@@ -922,15 +899,12 @@ namespace UltimateMods.Modules
                     (option == CustomOptionsH.ActivateModRoles) ||
                     (option == CustomOptionsH.EnableMirrorMap) ||
                     (option == CustomOptionsH.CanZoomInOutWhenPlayerIsDead) ||
+                    // (option == CustomOptionsH.EnableGodMiraHQ) ||
                     // (option == CustomOptionsH.RememberClassic) ||
-                    (option == CustomOptionsH.CrewmateRolesCountMin) ||
-                    (option == CustomOptionsH.CrewmateRolesCountMax) ||
-                    (option == CustomOptionsH.NeutralRolesCountMin) ||
-                    (option == CustomOptionsH.NeutralRolesCountMax) ||
-                    (option == CustomOptionsH.ImpostorRolesCountMin) ||
-                    (option == CustomOptionsH.ImpostorRolesCountMax) ||
-                    (option == CustomOptionsH.ModifierCountMin) ||
-                    (option == CustomOptionsH.ModifierCountMax))
+                    (option == CustomOptionsH.CrewmateRolesCount) ||
+                    (option == CustomOptionsH.ImpostorRolesCount) ||
+                    (option == CustomOptionsH.NeutralRolesCount) ||
+                    (option == CustomOptionsH.ModifierCount))
                 {
                     continue;
                 }
@@ -951,14 +925,14 @@ namespace UltimateMods.Modules
                 }
             }
 
-            int maxLines = 28;
+            int MaxLines = 28;
             int lineCount = 0;
             string page = "";
             foreach (var e in entries)
             {
                 int lines = e.Count(c => c == '\n') + 1;
 
-                if (lineCount + lines > maxLines)
+                if (lineCount + lines > MaxLines)
                 {
                     pages.Add(page);
                     page = "";
@@ -975,11 +949,11 @@ namespace UltimateMods.Modules
                 pages.Add(page);
             }
 
-            int numPages = pages.Count;
-            MaxPage = numPages;
-            int counter = UltimateModsPlugin.OptionsPage = UltimateModsPlugin.OptionsPage % numPages;
+            int NumPages = pages.Count;
+            MaxPage = NumPages;
+            int counter = UltimateModsPlugin.OptionsPage = UltimateModsPlugin.OptionsPage % NumPages;
 
-            __result = pages[counter].Trim('\r', '\n') + "\n\n" + tl("ChangePage") + $" ({counter + 1}/{numPages})";
+            __result = pages[counter].Trim('\r', '\n') + "\n\n" + tl("ChangePage") + $" ({counter + 1}/{NumPages})";
         }
     }
 

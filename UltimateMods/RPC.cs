@@ -13,6 +13,8 @@ using UltimateMods.EndGame;
 using System.Collections;
 using System.Collections.Generic;
 using static UltimateMods.Modules.Assets;
+using Object = UnityEngine.Object;
+using Il2CppSystem.Collections.Generic;
 
 namespace UltimateMods
 {
@@ -31,7 +33,6 @@ namespace UltimateMods
         SheriffKill = 70,
         EngineerFixLights,
         EngineerUsedRepair,
-        EngineerFixSubmergedOxygen,
         UncheckedSetTasks,
         ForceEnd,
         DragPlaceBody,
@@ -39,7 +40,7 @@ namespace UltimateMods
         BakeryBomb,
         TeleporterTeleport,
         AltruistKill,
-        AltruistRevive,
+        // AltruistRevive,
     }
 
     public static class RPCProcedure
@@ -129,41 +130,45 @@ namespace UltimateMods
                         RPCProcedure.EngineerUsedRepair(reader.ReadByte());
                         break;
                     // 73
-                    case (byte)CustomRPC.EngineerFixSubmergedOxygen:
-                        RPCProcedure.EngineerFixSubmergedOxygen();
-                        break;
-                    // 74
                     case (byte)CustomRPC.UncheckedSetTasks:
                         RPCProcedure.UncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;
-                    // 75
+                    // 74
                     case (byte)CustomRPC.ForceEnd:
                         RPCProcedure.ForceEnd();
                         break;
-                    // 76
+                    // 75
                     case (byte)CustomRPC.DragPlaceBody:
                         RPCProcedure.DragPlaceBody(reader.ReadByte());
                         break;
-                    // 77
+                    // 76
                     case (byte)CustomRPC.CleanBody:
                         RPCProcedure.CleanBody(reader.ReadByte());
                         break;
-                    // 78
+                    // 77
                     case (byte)CustomRPC.BakeryBomb:
                         RPCProcedure.BakeryBomb(reader.ReadByte());
                         break;
-                    // 79
+                    // 78
                     case (byte)CustomRPC.TeleporterTeleport:
                         RPCProcedure.TeleporterTeleport(reader.ReadByte());
                         break;
-                    // 80
+                    // 79
                     case (byte)CustomRPC.AltruistKill:
                         RPCProcedure.AltruistKill(reader.ReadByte());
                         break;
-                    // 81
-                    case (byte)CustomRPC.AltruistRevive:
-                        RPCProcedure.AltruistRevive(reader.ReadByte(), reader.ReadByte());
-                        break;
+                    // // 80
+                    // case (byte)CustomRPC.AltruistRevive:
+                    //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
+                    //     foreach (var body in DeadBodies)
+                    //     {
+                    //         if (body.ParentId == reader.ReadByte())
+                    //         {
+                    //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
+                    //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                    //         }
+                    //     }
+                    //     break;
                 }
             }
         }
@@ -182,11 +187,11 @@ namespace UltimateMods
             // CustomLobbyPatch.ReSetLobbyText();
         }
 
-        public static void ShareOptions(int numberOfOptions, MessageReader reader)
+        public static void ShareOptions(int NumberOfOptions, MessageReader reader)
         {
             try
             {
-                for (int i = 0; i < numberOfOptions; i++)
+                for (int i = 0; i < NumberOfOptions; i++)
                 {
                     uint optionId = reader.ReadPackedUInt32();
                     uint selection = reader.ReadPackedUInt32();
@@ -321,11 +326,6 @@ namespace UltimateMods
                 role.RemainingFixes--;
         }
 
-        public static void EngineerFixSubmergedOxygen()
-        {
-            SubmergedCompatibility.RepairOxygen();
-        }
-
         public static void UncheckedSetTasks(byte playerId, byte[] taskTypeIds)
         {
             var player = Helpers.PlayerById(playerId);
@@ -426,10 +426,6 @@ namespace UltimateMods
         {
             var p = Helpers.PlayerById(playerId);
             PlayerControl.LocalPlayer.transform.position = p.transform.position;
-            if (SubmergedCompatibility.IsSubmerged)
-            {
-                SubmergedCompatibility.ChangeFloor(SubmergedCompatibility.GetFloor(p));
-            }
             new CustomMessage(string.Format(ModTranslation.getString("TeleporterTeleported"), p.cosmetics.nameText.text), 3);
             SoundManager.Instance.PlaySound(Teleport, false, 0.8f);
         }
@@ -443,23 +439,35 @@ namespace UltimateMods
             finalStatuses[AltruistId] = FinalStatus.Suicide;
         }
 
-        public static void AltruistRevive(byte AltruistId, byte DeadBodyId)
-        {
-            PlayerControl Body = Helpers.PlayerById(DeadBodyId);
-            PlayerControl Altruist = Helpers.PlayerById(AltruistId);
-            var position = Body;
-            Body.Revive();
+        // public static void AltruistRevive(byte deadBodyTarget, byte altruistId)
+        // {
+        //     PlayerControl AltruistId = Helpers.PlayerById(altruistId);
+        //     var DeadBodyId = deadBodyTarget.ParentId;
+        //     var DeadBodyPos = deadBodyTarget.TruePosition;
+        //     var RevivePlayer = Helpers.PlayerById(DeadBodyId);
 
-            PlayerControl.LocalPlayer.transform.position = new Vector2(Body.transform.position.x, Body.transform.position.y + 0.3636f);
-            if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == Body.PlayerId)
-            {
-                SubmergedCompatibility.ChangeFloor(Body.transform.position.y > -7);
-            }
+        //     Altruist role = Altruist.getRole(AltruistId);
 
-            if (Body == null || Altruist == null) return;
-            finalStatuses[DeadBodyId] = FinalStatus.Revival;
-            CleanBody(Body.PlayerId);
-            CleanBody(Altruist.PlayerId);
-        }
+        //     if (deadBodyTarget != null || role != null)
+        //     {
+        //         foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+        //         {
+        //             if (deadBody.ParentId == deadBodyTarget.ParentId) deadBody.gameObject.Destroy();
+        //             if (deadBody.ParentId == role.player.PlayerId) deadBody.gameObject.Destroy();
+        //         }
+        //     }
+
+        //     RevivePlayer.Revive();
+        //     RevivePlayer.NetTransform.SnapTo(new Vector2(DeadBodyPos.x, DeadBodyPos.y + 0.3636f));
+
+        //     if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == RevivePlayer.PlayerId)
+        //     {
+        //         SubmergedCompatibility.ChangeFloor(RevivePlayer.transform.position.y > -7);
+        //     }
+
+        //     if (deadBodyTarget != null) Object.Destroy(deadBodyTarget.gameObject);
+
+        //     finalStatuses[DeadBodyId] = FinalStatus.Revival;
+        // }
     }
 }

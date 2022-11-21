@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
+using BepInEx.IL2CPP.Utils.Collections;
 using HarmonyLib;
 using UnityEngine;
 using UltimateMods.Utilities;
@@ -61,6 +61,11 @@ namespace UltimateMods.Patches
                         }
                     }
                 }
+            }
+
+            if (AmongUsClient.Instance.AmHost)
+            {
+                Adversity.CheckAndAdversityState();
             }
         }
     }

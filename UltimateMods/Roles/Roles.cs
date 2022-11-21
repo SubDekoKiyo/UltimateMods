@@ -14,7 +14,7 @@ namespace UltimateMods.Roles
         Engineer,
         Madmate,
         Bakery,
-        Altruist,
+        // Altruist,
 
         // Impostor Roles
         Impostor = 100,
@@ -22,6 +22,8 @@ namespace UltimateMods.Roles
         UnderTaker,
         BountyHunter,
         Teleporter,
+        EvilHacker,
+        Adversity,
 
         // Neutral Roles
         Jester = 200,
@@ -40,7 +42,7 @@ namespace UltimateMods.Roles
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
             { RoleType.Madmate, typeof(RoleBase<Madmate>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
-            { RoleType.Altruist, typeof(RoleBase<Altruist>) },
+            // { RoleType.Altruist, typeof(RoleBase<Altruist>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },
@@ -50,6 +52,8 @@ namespace UltimateMods.Roles
             { RoleType.UnderTaker, typeof(RoleBase<UnderTaker>) },
             { RoleType.BountyHunter, typeof(RoleBase<BountyHunter>) },
             { RoleType.Teleporter, typeof(RoleBase<Teleporter>) },
+            { RoleType.EvilHacker, typeof(RoleBase<EvilHacker>) },
+            { RoleType.Adversity, typeof(RoleBase<Adversity>) },
         };
     }
 
@@ -221,12 +225,6 @@ namespace UltimateMods.Roles
             {
                 t.Value.GetMethod("eraseRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player });
             }
-
-            // Crewmate roles
-
-            // Impostor roles
-
-            // Neutral roles
         }
 
         public static void swapRoles(this PlayerControl player, PlayerControl target)
