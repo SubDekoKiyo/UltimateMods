@@ -15,7 +15,6 @@ using System.Collections.Generic;
 using static UltimateMods.Modules.Assets;
 using Object = UnityEngine.Object;
 using Il2CppSystem.Collections.Generic;
-using Reactor.Utilities.Extensions;
 
 namespace UltimateMods
 {
@@ -34,7 +33,6 @@ namespace UltimateMods
         SheriffKill = 70,
         EngineerFixLights,
         EngineerUsedRepair,
-        EngineerFixSubmergedOxygen,
         UncheckedSetTasks,
         ForceEnd,
         DragPlaceBody,
@@ -132,49 +130,45 @@ namespace UltimateMods
                         RPCProcedure.EngineerUsedRepair(reader.ReadByte());
                         break;
                     // 73
-                    case (byte)CustomRPC.EngineerFixSubmergedOxygen:
-                        RPCProcedure.EngineerFixSubmergedOxygen();
-                        break;
-                    // 74
                     case (byte)CustomRPC.UncheckedSetTasks:
                         RPCProcedure.UncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;
-                    // 75
+                    // 74
                     case (byte)CustomRPC.ForceEnd:
                         RPCProcedure.ForceEnd();
                         break;
-                    // 76
+                    // 75
                     case (byte)CustomRPC.DragPlaceBody:
                         RPCProcedure.DragPlaceBody(reader.ReadByte());
                         break;
-                    // 77
+                    // 76
                     case (byte)CustomRPC.CleanBody:
                         RPCProcedure.CleanBody(reader.ReadByte());
                         break;
-                    // 78
+                    // 77
                     case (byte)CustomRPC.BakeryBomb:
                         RPCProcedure.BakeryBomb(reader.ReadByte());
                         break;
-                    // 79
+                    // 78
                     case (byte)CustomRPC.TeleporterTeleport:
                         RPCProcedure.TeleporterTeleport(reader.ReadByte());
                         break;
-                    // 80
+                    // 79
                     case (byte)CustomRPC.AltruistKill:
                         RPCProcedure.AltruistKill(reader.ReadByte());
                         break;
-                        // // 81
-                        // case (byte)CustomRPC.AltruistRevive:
-                        //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                        //     foreach (var body in DeadBodies)
-                        //     {
-                        //         if (body.ParentId == reader.ReadByte())
-                        //         {
-                        //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
-                        //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                        //         }
-                        //     }
-                        //     break;
+                    // // 80
+                    // case (byte)CustomRPC.AltruistRevive:
+                    //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
+                    //     foreach (var body in DeadBodies)
+                    //     {
+                    //         if (body.ParentId == reader.ReadByte())
+                    //         {
+                    //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
+                    //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                    //         }
+                    //     }
+                    //     break;
                 }
             }
         }
@@ -332,11 +326,6 @@ namespace UltimateMods
                 role.RemainingFixes--;
         }
 
-        public static void EngineerFixSubmergedOxygen()
-        {
-            SubmergedCompatibility.RepairOxygen();
-        }
-
         public static void UncheckedSetTasks(byte playerId, byte[] taskTypeIds)
         {
             var player = Helpers.PlayerById(playerId);
@@ -437,10 +426,6 @@ namespace UltimateMods
         {
             var p = Helpers.PlayerById(playerId);
             PlayerControl.LocalPlayer.transform.position = p.transform.position;
-            if (SubmergedCompatibility.IsSubmerged)
-            {
-                SubmergedCompatibility.ChangeFloor(SubmergedCompatibility.GetFloor(p));
-            }
             new CustomMessage(string.Format(ModTranslation.getString("TeleporterTeleported"), p.cosmetics.nameText.text), 3);
             SoundManager.Instance.PlaySound(Teleport, false, 0.8f);
         }

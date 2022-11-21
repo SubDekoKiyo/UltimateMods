@@ -9,11 +9,6 @@ namespace UltimateMods.Patches
     {
         public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
         {
-            if (SubmergedCompatibility.IsSubmerged)
-            {
-                return SubmergedCompatibility.GetSubmergedNeutralLightRadius(isImpostor);
-            }
-
             if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
 
             SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
