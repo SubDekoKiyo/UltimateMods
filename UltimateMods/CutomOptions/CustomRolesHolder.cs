@@ -75,6 +75,15 @@ namespace UltimateMods
         public static CustomRoleOption AltruistRate;
         public static CustomOption AltruistDuration;
 
+        public static CustomRoleOption EvilHackerRate;
+        public static CustomOption EvilHackerCanMoveEvenIfUsesAdmin;
+        public static CustomOption EvilHackerCanHasBetterAdmin;
+
+        public static CustomRoleOption AdversityRate;
+        public static CustomOption AdversityAdversityStateKillCooldown;
+        public static CustomOption AdversityAdversityStateCanFindMadmate;
+        public static CustomOption AdversityAdversityStateCanSeeVotes;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -148,6 +157,15 @@ namespace UltimateMods
 
             AltruistRate = new CustomRoleOption(185, Crewmate, White, "Altruist", ImpostorRed, 1);
             AltruistDuration = CustomOption.Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
+
+            EvilHackerRate = new CustomRoleOption(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
+            EvilHackerCanMoveEvenIfUsesAdmin = CustomOption.Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);
+            EvilHackerCanHasBetterAdmin = CustomOption.Create(192, Impostor, ImpostorRed, "EvilHackerCanHasBetterAdmin", false, EvilHackerRate);
+
+            AdversityRate = new CustomRoleOption(195, Impostor, White, "Adversity", ImpostorRed, 1);
+            AdversityAdversityStateKillCooldown = CustomOption.Create(196, Impostor, ImpostorRed, "AdversityStateKillCooldown", 20f, 2.5f, 60f, 2.5f, AdversityRate, format: "FormatSeconds");
+            AdversityAdversityStateCanFindMadmate = CustomOption.Create(197, Impostor, ImpostorRed, "AdversityStateCanFindMadmate", false, AdversityRate);
+            AdversityAdversityStateCanSeeVotes = CustomOption.Create(198, Impostor, ImpostorRed, "AdversityStateCanSeeVotes", false, AdversityRate);
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);

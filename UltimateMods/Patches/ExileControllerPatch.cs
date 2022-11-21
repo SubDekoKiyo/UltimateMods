@@ -116,7 +116,7 @@ namespace UltimateMods.Patches
                                 break;
                         }
                     }
-                    // Hide number of remaining impostors on Jester win
+                    // Hide Number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
                         if (PlayerControl.LocalPlayer.isRole(RoleType.Jester)) __result = "";

@@ -22,6 +22,8 @@ namespace UltimateMods.Roles
         UnderTaker,
         BountyHunter,
         Teleporter,
+        EvilHacker,
+        Adversity,
 
         // Neutral Roles
         Jester = 200,
@@ -50,6 +52,8 @@ namespace UltimateMods.Roles
             { RoleType.UnderTaker, typeof(RoleBase<UnderTaker>) },
             { RoleType.BountyHunter, typeof(RoleBase<BountyHunter>) },
             { RoleType.Teleporter, typeof(RoleBase<Teleporter>) },
+            { RoleType.EvilHacker, typeof(RoleBase<EvilHacker>) },
+            { RoleType.Adversity, typeof(RoleBase<Adversity>) },
         };
     }
 
@@ -221,12 +225,6 @@ namespace UltimateMods.Roles
             {
                 t.Value.GetMethod("eraseRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player });
             }
-
-            // Crewmate roles
-
-            // Impostor roles
-
-            // Neutral roles
         }
 
         public static void swapRoles(this PlayerControl player, PlayerControl target)

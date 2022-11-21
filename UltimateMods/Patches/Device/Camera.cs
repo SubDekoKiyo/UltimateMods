@@ -109,7 +109,7 @@ namespace UltimateMods.Patches
                     }
                     // Update normal and securityGuard cameras
                     timer += Time.deltaTime;
-                    int numberOfPages = Mathf.CeilToInt(ShipStatus.Instance.AllCameras.Length / 4f);
+                    int NumberOfPages = Mathf.CeilToInt(ShipStatus.Instance.AllCameras.Length / 4f);
 
                     bool update = false;
 
@@ -117,11 +117,11 @@ namespace UltimateMods.Patches
                     {
                         update = true;
                         timer = 0f;
-                        page = (page + 1) % numberOfPages;
+                        page = (page + 1) % NumberOfPages;
                     }
                     else if (Input.GetKeyDown(KeyCode.LeftArrow))
                     {
-                        page = (page + numberOfPages - 1) % numberOfPages;
+                        page = (page + NumberOfPages - 1) % NumberOfPages;
                         update = true;
                         timer = 0f;
                     }

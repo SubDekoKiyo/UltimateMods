@@ -187,11 +187,11 @@ namespace UltimateMods
             // CustomLobbyPatch.ReSetLobbyText();
         }
 
-        public static void ShareOptions(int numberOfOptions, MessageReader reader)
+        public static void ShareOptions(int NumberOfOptions, MessageReader reader)
         {
             try
             {
-                for (int i = 0; i < numberOfOptions; i++)
+                for (int i = 0; i < NumberOfOptions; i++)
                 {
                     uint optionId = reader.ReadPackedUInt32();
                     uint selection = reader.ReadPackedUInt32();

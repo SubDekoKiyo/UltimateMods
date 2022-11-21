@@ -62,6 +62,11 @@ namespace UltimateMods.Patches
                     }
                 }
             }
+
+            if (AmongUsClient.Instance.AmHost)
+            {
+                Adversity.CheckAndAdversityState();
+            }
         }
     }
 
