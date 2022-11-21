@@ -342,7 +342,7 @@ namespace UltimateMods
         /// A single-precision floating point number greater than or equal to 0.0,
         /// and less than 1.0.
         /// </returns>
-        public new Single NextSingle()
+        public Single NextSingle()
         {
             return (Single)NextDouble();
         }
