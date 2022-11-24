@@ -33,7 +33,6 @@ namespace UltimateMods.Modules
         private static ToggleButtonBehaviour moreOptions;
         private static List<ToggleButtonBehaviour> modButtons;
         private static TextMeshPro titleTextTitle;
-        public static Vector3? _origin;
 
         public static ToggleButtonBehaviour buttonPrefab;
 
@@ -95,13 +94,9 @@ namespace UltimateMods.Modules
         private static void InitializeMoreButton(OptionsMenuBehaviour __instance)
         {
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
-            var transform = __instance.CensorChatButton.transform;
-            _origin ??= transform.localPosition;
-            transform.localPosition = _origin.Value + Vector3.left * 1.3f;
-            moreOptions.transform.localPosition = _origin.Value + Vector3.right * 2.6f;
-            var trans = moreOptions.transform.localPosition;
+            moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.right * 2.6f;
+
             moreOptions.gameObject.SetActive(true);
-            trans = moreOptions.transform.position;
             moreOptions.Text.text = ModTranslation.getString("ModOptionsText");
             var moreOptionsButton = moreOptions.GetComponent<PassiveButton>();
             moreOptionsButton.OnClick = new ButtonClickedEvent();

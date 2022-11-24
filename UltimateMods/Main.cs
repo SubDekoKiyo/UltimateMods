@@ -8,6 +8,7 @@ using BepInEx.IL2CPP;
 using HarmonyLib;
 using System;
 using UnityEngine;
+using UltimateMods.Modules;
 
 namespace UltimateMods
 {
@@ -52,6 +53,7 @@ namespace UltimateMods
             ShowRoleSummary = Config.Bind("Custom", "ShowRoleSummary", false);
             HideNameplates = Config.Bind("Custom", "Hide Nameplates", false);
             EnableCustomSounds = Config.Bind("Custom", "Enable Custom Sounds", true);
+            LanguageNum = Config.Bind("Custom", "Language Number", 0);
             // ShowLighterDarker = Config.Bind("Custom", "Show Lighter / Darker", false);
             EnableHorseMode = Config.Bind("Custom", "Enable Horse Mode", false);
             RoomCodeText = Config.Bind("Custom", "Streamer Mode Room Code Text", "Ultimate Mods");
@@ -62,7 +64,7 @@ namespace UltimateMods
             CustomOptionsH.Load();
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
-            // Menu.LanguageMenuPatch.Initialize();
+            ModLanguageSelector.Initialize();
             Harmony.PatchAll();
         }
     }
