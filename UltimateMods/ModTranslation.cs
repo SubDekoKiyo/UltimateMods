@@ -1,72 +1,66 @@
+// Source Code with TownOfHost
+
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using HarmonyLib;
-using Newtonsoft.Json.Linq;
-using System.Reflection;
 using System.Text.RegularExpressions;
 using UltimateMods.Modules;
 using AmongUs.Data;
-using UltimateMods.Utilities;
+
 namespace UltimateMods
 {
-    public class ModTranslation
+    public static class ModTranslation
     {
-        public const string LanguageFolder = "Language";
-        public static int defaultLanguage = (int)SupportedLangs.English;
+        public static int DefaultLanguage = (int)SupportedLang.Japanese;
         public static Dictionary<string, Dictionary<int, string>> TransData = new();
 
         private const string BlankText = "[BLANK]";
 
         public static void Load()
         {
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            Stream stream = assembly.GetManifestResourceStream("UltimateMods.Resources.Translate.json");
-            var byteArray = new byte[stream.Length];
-            var read = stream.Read(byteArray, 0, (int)stream.Length);
-            string json = System.Text.Encoding.UTF8.GetString(byteArray);
+            var assembly = System.Reflection.Assembly.GetExecutingAssembly();
+            var stream = assembly.GetManifestResourceStream("UltimateMods.Translate.StringData.csv");
+            var streamReader = new StreamReader(stream);
 
-            JObject parsed = JObject.Parse(json);
+            string[] Header = streamReader.ReadLine().Split(',');
+            int CurrentLine = 1;
 
-            for (int i = 0; i < parsed.Count; i++)
+            while (!streamReader.EndOfStream)
             {
-                JProperty token = parsed.ChildrenTokens[i].TryCast<JProperty>();
-                if (token == null) continue;
-
-                string stringName = token.Name;
-                var val = token.Value.TryCast<JObject>();
-
-                if (token.HasValues)
+                CurrentLine++;
+                string line = streamReader.ReadLine();
+                if (line == "" || line[0] == '#') continue;
+                string[] values = line.Split(',');
+                List<string> fields = new(values);
+                Dictionary<int, string> tmp = new();
+                try
                 {
-                    var strings = new Dictionary<int, string>();
-
-                    for (int j = 0; j < (int)SupportedLangs.Irish + 1; j++)
+                    for (var i = 1; i < fields.Count; ++i)
                     {
-                        string key = j.ToString();
-                        var text = val[key]?.TryCast<JValue>().Value.ToString();
-
-                        if (text != null && text.Length > 0)
+                        if (fields[i] != string.Empty && fields[i].TrimStart()[0] == '"')
                         {
-                            if (text == BlankText) strings[j] = "";
-                            else strings[j] = text;
+                            while (fields[i].TrimEnd()[^1] != '"')
+                            {
+                                fields[i] = fields[i] + "," + fields[i + 1];
+                                fields.RemoveAt(i + 1);
+                            }
                         }
                     }
-
-                    TransData[stringName] = strings;
+                    for (var i = 1; i < fields.Count; i++)
+                    {
+                        var tmp_str = fields[i].Replace("\\n", "\n").Trim('"');
+                        tmp.Add(Int32.Parse(Header[i]), tmp_str);
+                    }
+                    if (TransData.ContainsKey(fields[0])) { UltimateModsPlugin.Logger.LogWarning($"翻訳用CSVに重複があります。{CurrentLine}行目: \"{fields[0]}\""); continue; }
+                    TransData.Add(fields[0], tmp);
                 }
-            }
-
-            foreach (var lang in Enum.GetValues(typeof(SupportedLangs)))
-            {
-                if (File.Exists(@$"./{LanguageFolder}/Language{lang}.dat"))
+                catch
                 {
-                    LoadCustomTranslation($"Language{lang}.dat", (SupportedLangs)lang);
-                }
-                else if (lang is not SupportedLangs.English or SupportedLangs.Japanese && !File.Exists(@$"./{LanguageFolder}/Language{lang}.dat"))
-                {
-                    LoadCustomTranslation($"LanguageEnglish.dat", (SupportedLangs)lang);
+                    var err = $"翻訳用CSVファイルに誤りがあります。{CurrentLine}行目:";
+                    foreach (var c in fields) err += $" [{c}]";
+                    UltimateModsPlugin.Logger.LogError(err);
+                    continue;
                 }
             }
         }
@@ -85,49 +79,18 @@ namespace UltimateMods
             }
 
             var data = TransData[keyClean];
-            int lang = (int)DataManager.Settings.Language.CurrentLanguage;
+            int lang = ModLanguageSelector.LanguageNum;
 
             if (data.ContainsKey(lang))
             {
                 return key.Replace(keyClean, data[lang]);
             }
-            else if (data.ContainsKey(defaultLanguage))
+            else if (data.ContainsKey(DefaultLanguage))
             {
-                return key.Replace(keyClean, data[defaultLanguage]);
+                return key.Replace(keyClean, data[DefaultLanguage]);
             }
 
             return key;
-        }
-
-        public static void LoadCustomTranslation(string filename, SupportedLangs lang)
-        {
-            string path = @$"./{LanguageFolder}/{filename}";
-            if (File.Exists(path))
-            {
-                UltimateModsPlugin.Logger.LogInfo($"Loading Translation File \"{filename}\"");
-                using StreamReader sr = new(path, Encoding.GetEncoding("UTF-8"));
-                string text;
-                string[] tmp = { };
-                while ((text = sr.ReadLine()) != null)
-                {
-                    tmp = text.Split(":");
-                    if (tmp.Length > 1 && tmp[1] != "")
-                    {
-                        try
-                        {
-                            TransData[tmp[0]][(int)lang] = Regex.Unescape(tmp.Skip(1).Join(delimiter: ":").Replace("\\n", "\n").Replace("\\r", "\r"));
-                        }
-                        catch (KeyNotFoundException)
-                        {
-                            UltimateModsPlugin.Logger.LogWarning($"\"{tmp[0]}\" isn't a valid key.");
-                        }
-                    }
-                }
-            }
-            else
-            {
-                UltimateModsPlugin.Logger.LogError($"Translation File \"{filename}\" isn't found.");
-            }
         }
     }
 

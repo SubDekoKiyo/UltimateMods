@@ -20,7 +20,6 @@ namespace UltimateMods.Modules
         private static TextMeshPro titleTextTitle;
 
         public static ToggleButtonBehaviour buttonPrefab;
-        public static Vector3? _origin;
 
         [HarmonyPostfix]
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
@@ -91,13 +90,9 @@ namespace UltimateMods.Modules
         private static void InitializeMoreButton(OptionsMenuBehaviour __instance)
         {
             moreOptions = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
-            var transform = __instance.CensorChatButton.transform;
-            _origin ??= transform.localPosition;
-            transform.localPosition = _origin.Value + Vector3.left * 2.6f;
-            moreOptions.transform.localPosition = _origin.Value + Vector3.right * 1.3f;
-            var trans = moreOptions.transform.localPosition;
+            moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition;
+
             moreOptions.gameObject.SetActive(true);
-            trans = moreOptions.transform.position;
             moreOptions.Text.text = ModTranslation.getString("VanillaOptionsText");
             var moreOptionsButton = moreOptions.GetComponent<PassiveButton>();
             moreOptionsButton.OnClick = new ButtonClickedEvent();
@@ -252,6 +247,8 @@ namespace UltimateMods.Modules
             {
                 modButtons[0].Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsCensorChat);
                 modButtons[1].Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsEnableFriendInvites);
+                modButtons[2].Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsStreamerMode);
+                modButtons[3].Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsColorblind);
             }
             catch { }
         }

@@ -19,6 +19,7 @@
 
 	<ItemGroup>
 		<EmbeddedResource Include="Resources\**" />
+		<EmbeddedResource Include="Translate\**" />
 		<EmbeddedResource Include="GodMiraHQ\Resources\**" />
 	</ItemGroup>
 
@@ -39,7 +40,7 @@
 	</Target>
 
 	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
-    <!-- <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" /> -->
+    <!--<Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
+    <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" /> -->
 	</Target>
 </Project>

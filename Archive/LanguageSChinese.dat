@@ -1,0 +1,210 @@
+﻿ModOptionsText:极限职业选项
+VanillaOptionsText:原版选项
+GeneralSettings:极限职业设置
+ImpostorSettings:内鬼职业设置
+NeutralSettings:独立职业设置
+CrewmateSettings:船员职业设置
+ModifierSettings:附加职业设置
+OtherSettings:其他职业设置
+CrewmateWin:船员阵营获胜
+ImpostorWin:内鬼阵营获胜
+JesterWin:小丑竟是我自己
+ForceEnd:强制结束
+EveryoneLose:无人生还
+CrewWinExtra:船员阵营{0}获胜
+ImpostorWinExtra:内鬼阵营{0}获胜
+JesterWinExtra:小丑{0}获胜
+ReactorWin:<size=80%>反应堆爆炸了</size>
+O2Win:<size=80%>氧气耗尽了</size>
+TaskWin:
+OpportunistExtra:和<color#00da00>投机者</color>
+FinishedByHost:房主强制结束游戏
+CreditsMain:模组作者：DekoKiyo
+CreditsVersion:V.{0}
+CreditsBetaVersion:测试版 V.{0}
+PlatformTitle:===玩家名称：游戏设备===
+MeetingStatus:<size=100%>{0} 还能召开
+<color=red>{1}次会议 .所有人还能召开 {2} 次</color>
+紧急会议.</size>
+NoUpdate:目前不需要更新。
+已更新至最新版本。
+Updating:正在更新中..
+UpdateManually:无法自动更新。
+请尝试手动更新。
+UpdateInProgress:更新完成。
+请退出游戏，
+并再次启动。
+UpdateButton:模组更新
+UpdateRestart:更新完成。
+请退出游戏，
+并再次启动。
+UpdateFailed:无法自动更新。
+请尝试手动更新。
+OptionOn:开启
+OptionOff:关闭
+FormatSeconds:{0}秒
+FormatTimes:{0}次
+FormatPlayer:{0}人
+FormatShots:{0}次
+FormatPercent:{0}%
+wasThe:的身份是
+HA:。
+DevName:<align="center">制作者：
+DekoKiyo
+</align>
+CreditsText:<align="center"><size=120%>参考模组</size></align><size=78%>
+Eisbison 创作的<color=#ff351f>TheOtherRoles</color>
+tomarai 创作的<color=#ff351f>TheOtherRoles+</color>
+Dusk 创作的<color=#ff351f>TheOtherRolesGM</color>
+Haoming 创作的<color=#ff351f>TheOtherRolesGM Haoming</color>
+ykundesu 创作的<color=#ffa500>Super</color><color=#ff0000>New</color><color=#00ff00>Roles</color>
+tugaru1975 创作的<color=#ffffff>TownOfPlus</color>
+eDonnes124 创作的<color=#e39804>TownOfUs-R</color>
+TOI集体作者创作的<color=#00bdff>Town</color><color=#ffffff>Of</color><color=#ff0000>Impostors</color>
+KiraYamato94 创作的<color=#ffffff>LasMonjas</color>
+冷凍麦茶 创作的<color=#4169e1>TownOfSuper</color>
+yukieiji 创作的<color=#ffffff>Extreme Roles</color>
+Empty Bottle 创作的<color=#00bfff>TownOfHost</color>
+Dolly 创作的<color=#9579ce>Nebula on the Ship</color>
+中文翻译：<color=#ff0000>四个憨批汉化组 旧事 氢氧则名</color></size>
+CreditsTitle:鸣谢
+Position:位置：
+RestrictOutOfTime:超时
+TimeRemaining:剩余时间:{0}
+ButtonBlocked:不能使用
+JesterMeetingButton:小丑不能召开紧急会议
+GhostsSeeTasksButton:幽灵可见他人任务进度
+GhostsSeeVotesButton:幽灵可见他人职业
+GhostsSeeRolesButton:幽灵可见他人投票
+HideNameplates:隐藏名牌
+EnableCustomSounds:
+ErrorNotInstalled:没有极限职业模组或模组版本不同
+ErrorOlderVersion:极限职业模组版本较旧
+ErrorNewerVersion:极限职业模组版本较新
+ErrorWrongVersion:极限职业模组为修改过的版本
+ErrorHostNoVersion:房主没有极限职业模组或模组版本不同
+您将在{0}秒后被踢出
+Impostor:内鬼
+Crewmate:船员
+Jester:小丑
+Sheriff:警长
+Engineer:工程师
+CustomImpostor:自定义内鬼
+UnderTaker:送葬者
+BountyHunter:
+Madmate:
+Opportunist:投机者
+OpportunistPostfix:投机
+ImpostorIntro:破坏飞船并杀死所有人
+ImpostorShort:破坏飞船并杀死所有人
+ImpostorFull:普通内鬼
+CrewmateIntro:找出内鬼
+CrewmateShort:找出内鬼
+CrewmateFull:普通船员
+JesterIntro:想办法被投出去
+JesterShort:想办法被投出去
+JesterFull:小丑属于独立阵营。如果小丑在会议中被投出，小丑单独获胜。
+小丑不会被内鬼击杀。
+SheriffIntro:干掉<color=#FF1919FF>内鬼</color>
+SheriffShort:干掉<color=#FF1919FF>内鬼</color>
+SheriffFull:警长拥有击杀内鬼的能力。
+如果警长试图击杀一名船员，他会以死谢罪。
+EngineerIntro:维修飞船上的重要设备
+EngineerShort:修理飞船
+EngineerFull:工程师存活时每局游戏可以在任何位置修理若干次飞船破坏。
+工程师可以使用管道。
+CustomImpostorIntro:你的能力由房间设置决定
+CustomImpostorShort:你的能力由房间设置决定
+CustomImpostorFull:自定义内鬼的各项内鬼功能可以自由配置。
+UnderTakerIntro:拖动并隐藏尸体
+UnderTakerShort:拖动并隐藏尸体
+UnderTakerFull:你可以移动到尸体任何地方。
+悄无声息的隐藏尸体并杀死所有人。
+MadmateIntro:
+MadmateShort:
+MadmateFull:
+ChangePage:按 < > 以便查看其他内容
+ActivateRoles:启用模组职业
+PresetSelection:预设
+RandomGen:启用强随机生成模式
+CrewmateRoles:船员职业数
+NeutralRoles:独立职业数
+ImpostorRoles:内鬼职业数
+ModifierRoles:附加职业数
+RememberClassic:载入上次游戏的设置
+CrewmateRolesCountMin:最少船员职业数
+CrewmateRolesCountMax:最多船员职业数
+NeutralRolesCountMin:最少独立职业数
+NeutralRolesCountMax:最多独立职业数
+ImpostorRolesCountMin:最少内鬼职业数
+ImpostorRolesCountMax:最多内鬼职业数
+ModifierCountMin:最少附加职业数
+ModifierCountMax:最多附加职业数
+MaxNumberOfMeetings:最大紧急会议次数
+BlockSkip:禁止弃票
+NoVoteIsSelfVote:禁止自票
+NoMedBayLimit:允许同时进行扫描
+HideOutName:玩家名字不会穿过墙壁
+HidePlayerName:
+RefundVoteDeath:若投票的人在会议时死亡可再次投票
+EnableGodMira:启用 God MiraHQ
+MirrorMap:启用镜像地图
+CanZoomInOutDead:
+PlayRandomMaps:随机游玩地图
+RandomMapsEnableSkeld:可随机到 The Skled
+RandomMapsEnableMira:可随机到 Mira HQ
+RandomMapsEnablePolus:可随机到 Polus
+RandomMapsEnableAirShip:可随机到 Airship
+RandomMapsEnableSubmerged:可随机到 Submerged
+RestrictDevices:限制特殊装置可使用时间
+DisableAdmin:管理室地图使用时间
+DisableCameras:限制监控使用时间
+DisableVitals:限制生命检测装置使用时间
+RestrictPerTurn:每轮行动阶段的限制时间时间
+RestrictPerGame:每局游戏的限制时间
+AirShipSettings:飞艇地图设定
+OldAirShipAdmin:使用旧版飞艇管理室地图
+EnableRecordsAdmin:启用位于档案室的地图
+EnableCockpitAdmin:启用位于驾驶舱的地图
+AirShipReactorDuration:飞艇地图调整航线破坏限制时间
+OptionOn:开启
+OptionOff:关闭
+RoleNumAssigned:可存在数量
+MaxShots:最多击杀次数
+CanKillNeutral:可以击杀独立阵营玩家
+KillCooldowns:击杀冷却
+MisfireKillsTarget:走火时连带目标一同死亡
+CanSabotage:可以破坏
+CanUseVents:可以使用管道
+CanEmergencyMeeting:可以召开紧急会议
+HasImpostorVision:拥有内鬼视野
+CanDieToSheriff:
+CanFixO2:
+CanFixComms:
+CanFixReactor:
+CanFixBlackout:
+HasTasks:
+NumCommonTasks:
+NumLongTasks:
+NumShortTasks:
+CanMoveInVents:
+JesterMustFinishTasks:小丑需要完成任务才能获胜
+EngineerCanFixSabo:工程师可以修理破坏
+EngineerSaboFixCount:工程师可修理次数
+UnderTakerButtonCooldown:送葬者拖曳尸体冷却
+UnderTakerHasDuration:限制送葬者拖曳尸体的时间
+UnderTakerDuration:送葬者拖曳尸体的最大时间
+UnderTakerDraggingSpeed:送葬者拖曳尸体时的速度
+UnderTakerCanDumpDeadBodyInVent:送葬者可以将尸体抛弃在管道
+BountyHunterSuccess:
+BountyHunterMiss:
+BountyHunterDuration:
+BountyHunterShowArrow:
+BountyHunterArrowUpdateCooldown:
+MadmateKnowImpostorTaskEnd:
+MadmateCanWinWhenTaskEnd:
+ReamingShots:剩余次数：{0}
+ReamingCount:剩余回数：{0}
+EngineerRepairButtonText:维修
+UnderTakerDropText:放下
+UnderTakerDragText:拖曳
