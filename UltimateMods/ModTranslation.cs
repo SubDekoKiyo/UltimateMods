@@ -30,7 +30,7 @@ namespace UltimateMods
             {
                 CurrentLine++;
                 string line = streamReader.ReadLine();
-                if (line == "" || line[0] == '#') continue;
+                if (line == "" || line[0] == ',' || (line[0] == '#' && line[1] == '"')) continue;
                 string[] values = line.Split(',');
                 List<string> fields = new(values);
                 Dictionary<int, string> tmp = new();

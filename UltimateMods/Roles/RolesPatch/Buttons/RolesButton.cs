@@ -12,6 +12,8 @@ namespace UltimateMods
             Engineer.SetButtonCooldowns();
             UnderTaker.SetButtonCooldowns();
             Teleporter.SetButtonCooldowns();
+            Jackal.SetButtonCooldowns();
+            Sidekick.SetButtonCooldowns();
             // Altruist.SetButtonCooldowns();
         }
 
@@ -21,6 +23,8 @@ namespace UltimateMods
             Engineer.MakeButtons(hm);
             UnderTaker.MakeButtons(hm);
             Teleporter.MakeButtons(hm);
+            Jackal.MakeButtons(hm);
+            Sidekick.MakeButtons(hm);
             // Altruist.MakeButtons(hm);
             EvilHacker.MakeButtons(hm);
         }

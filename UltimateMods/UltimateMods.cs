@@ -27,6 +27,9 @@ namespace UltimateMods
             Teleporter.Clear();
             // Altruist.Clear();
             Adversity.Clear();
+            Snitch.Clear();
+            Jackal.Clear();
+            Sidekick.Clear();
 
             // Modifiers
             Opportunist.Clear();

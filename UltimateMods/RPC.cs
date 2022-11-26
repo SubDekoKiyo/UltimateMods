@@ -39,7 +39,9 @@ namespace UltimateMods
         CleanBody,
         BakeryBomb,
         TeleporterTeleport,
-        AltruistKill,
+        JackalCreatesSidekick,
+        SidekickPromotes,
+        // AltruistKill,
         // AltruistRevive,
     }
 
@@ -154,21 +156,29 @@ namespace UltimateMods
                         RPCProcedure.TeleporterTeleport(reader.ReadByte());
                         break;
                     // 79
-                    case (byte)CustomRPC.AltruistKill:
-                        RPCProcedure.AltruistKill(reader.ReadByte());
+                    case (byte)CustomRPC.JackalCreatesSidekick:
+                        RPCProcedure.JackalCreatesSidekick(reader.ReadByte());
                         break;
-                    // // 80
-                    // case (byte)CustomRPC.AltruistRevive:
-                    //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                    //     foreach (var body in DeadBodies)
-                    //     {
-                    //         if (body.ParentId == reader.ReadByte())
-                    //         {
-                    //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
-                    //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                    //         }
-                    //     }
-                    //     break;
+                    // 80
+                    case (byte)CustomRPC.SidekickPromotes:
+                        RPCProcedure.SidekickPromotes(reader.ReadByte());
+                        break;
+                        // // 79
+                        // case (byte)CustomRPC.AltruistKill:
+                        //     RPCProcedure.AltruistKill(reader.ReadByte());
+                        //     break;
+                        // // 80
+                        // case (byte)CustomRPC.AltruistRevive:
+                        //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
+                        //     foreach (var body in DeadBodies)
+                        //     {
+                        //         if (body.ParentId == reader.ReadByte())
+                        //         {
+                        //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
+                        //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                        //         }
+                        //     }
+                        //     break;
                 }
             }
         }
@@ -430,14 +440,52 @@ namespace UltimateMods
             SoundManager.Instance.PlaySound(Teleport, false, 0.8f);
         }
 
-        public static void AltruistKill(byte AltruistId)
+        public static void ErasePlayerRoles(byte playerId, bool ClearNeutralTasks = true)
         {
-            PlayerControl altruist = Helpers.PlayerById(AltruistId);
-            if (altruist == null) return;
+            PlayerControl player = Helpers.PlayerById(playerId);
+            if (player == null) return;
 
-            altruist.MurderPlayer(altruist);
-            finalStatuses[AltruistId] = FinalStatus.Suicide;
+            // Don't give a former neutral role tasks because that destroys the balance.
+            if (player.IsNeutral() && ClearNeutralTasks)
+                player.ClearAllTasks();
+
+            player.eraseAllRoles();
+            player.eraseAllModifiers();
         }
+
+        public static void JackalCreatesSidekick(byte targetId)
+        {
+            PlayerControl Player = Helpers.PlayerById(targetId);
+            if (Player == null) return;
+
+            bool WasImpostor = Player.Data.Role.IsImpostor;
+            bool WasMadmate = Player.isRole(RoleType.Madmate);
+            FastDestroyableSingleton<RoleManager>.Instance.SetRole(Player, RoleTypes.Crewmate);
+            ErasePlayerRoles(Player.PlayerId, true);
+            Player.setRole(RoleType.Sidekick);
+            if (Player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
+            if (WasImpostor) Sidekick.WasTeamRed = true;
+            Sidekick.WasImp = WasImpostor;
+            Sidekick.WasMadmate = WasMadmate;
+
+            Jackal.CanSidekick = false;
+        }
+
+        public static void SidekickPromotes(byte sidekickId)
+        {
+            PlayerControl sidekick = Helpers.PlayerById(sidekickId);
+            ErasePlayerRoles(sidekickId);
+            sidekick.setRole(RoleType.Jester);
+        }
+
+        // public static void AltruistKill(byte AltruistId)
+        // {
+        //     PlayerControl altruist = Helpers.PlayerById(AltruistId);
+        //     if (altruist == null) return;
+
+        //     altruist.MurderPlayer(altruist);
+        //     finalStatuses[AltruistId] = FinalStatus.Suicide;
+        // }
 
         // public static void AltruistRevive(byte deadBodyTarget, byte altruistId)
         // {

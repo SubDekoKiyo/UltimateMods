@@ -96,11 +96,13 @@ namespace UltimateMods.Patches
             ImpSettings.Add((byte)RoleType.Adversity, CustomRolesH.AdversityRate.data);
 
             NeutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
+            NeutralSettings.Add((byte)RoleType.Jackal, CustomRolesH.JackalRate.data);
 
             CrewSettings.Add((byte)RoleType.Sheriff, CustomRolesH.SheriffRate.data);
             CrewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);
             CrewSettings.Add((byte)RoleType.Madmate, CustomRolesH.MadmateRate.data);
             CrewSettings.Add((byte)RoleType.Bakery, CustomRolesH.BakeryRate.data);
+            CrewSettings.Add((byte)RoleType.Snitch, CustomRolesH.SnitchRate.data);
             // CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
 
             return new RoleAssignmentData

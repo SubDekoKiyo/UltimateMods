@@ -256,6 +256,10 @@ namespace UltimateMods
                 roleCouldUse = true;
             else if (Madmate.CanUseVents && player.isRole(RoleType.Madmate))
                 roleCouldUse = true;
+            else if (Jackal.CanUseVents && player.isRole(RoleType.Jackal))
+                roleCouldUse = true;
+            else if (Sidekick.CanUseVents && player.isRole(RoleType.Sidekick))
+                roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
                 if (!CustomImpostor.CanUseVents && player.isRole(RoleType.CustomImpostor))
@@ -351,7 +355,9 @@ namespace UltimateMods
         {
             return player.Role.IsImpostor
                 || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)
-                || (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && Madmate.HasImpostorVision);
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && Madmate.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Jackal) && Jackal.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) && Sidekick.HasImpostorVision);
         }
 
         public static T GetRandom<T>(this List<T> list)

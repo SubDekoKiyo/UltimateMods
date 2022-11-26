@@ -1,0 +1,66 @@
+using HarmonyLib;
+using System.Collections.Generic;
+using UnityEngine;
+using UltimateMods.Modules;
+
+namespace UltimateMods.Roles
+{
+    [HarmonyPatch]
+    public class Sidekick : RoleBase<Sidekick>
+    {
+        public static PlayerControl CurrentTarget;
+        private static CustomButton SidekickKillButton;
+
+        public static float Cooldown { get { return CustomRolesH.JackalKillCooldown.getFloat(); } }
+        public static bool CanUseVents { get { return CustomRolesH.SidekickCanUseVents.getBool(); } }
+        public static bool CanKill { get { return CustomRolesH.SidekickCanKill.getBool(); } }
+        public static bool PromotesToJackal { get { return CustomRolesH.SidekickPromotesToJackal.getBool(); } }
+        public static bool HasImpostorVision { get { return CustomRolesH.JackalAndSidekickHaveImpostorVision.getBool(); } }
+        public static bool WasTeamRed, WasImp, WasMadmate = false;
+
+        public Sidekick()
+        {
+            RoleType = roleId = RoleType.Sidekick;
+        }
+
+        public override void OnMeetingStart() { }
+        public override void OnMeetingEnd() { }
+        public override void FixedUpdate() { }
+        public override void OnKill(PlayerControl target) { }
+        public override void OnDeath(PlayerControl killer = null) { }
+        public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
+
+        public static void MakeButtons(HudManager hm)
+        {
+            SidekickKillButton = new CustomButton(
+                () =>
+                {
+                    if (Helpers.CheckMurderAttemptAndKill(PlayerControl.LocalPlayer, CurrentTarget) == MurderAttemptResult.SuppressKill) return;
+
+                    SidekickKillButton.Timer = SidekickKillButton.MaxTimer;
+                    CurrentTarget = null;
+                },
+                () => { return CanKill && PlayerControl.LocalPlayer.isRole(RoleType.Jackal) && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return CurrentTarget && PlayerControl.LocalPlayer.CanMove; },
+                () => { SidekickKillButton.Timer = SidekickKillButton.MaxTimer; },
+                hm.KillButton.graphic.sprite,
+                new Vector3(0, 1f, 0),
+                hm,
+                hm.KillButton,
+                KeyCode.Q,
+                false
+            );
+        }
+
+        public static void SetButtonCooldowns()
+        {
+            SidekickKillButton.MaxTimer = Cooldown;
+        }
+
+        public static void Clear()
+        {
+            CurrentTarget = null;
+            players = new List<Sidekick>();
+        }
+    }
+}
