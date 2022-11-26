@@ -16,10 +16,12 @@ namespace UltimateMods.Patches
         static TMPro.TextMeshPro OutOfTime;
         static TMPro.TextMeshPro TimeRemaining;
         static bool clearedIcons = false;
+        public static bool isUseAdmin = false;
 
         public static void ResetData()
         {
             adminTimer = 0f;
+            isUseAdmin = false;
             if (TimeRemaining != null)
             {
                 UnityEngine.Object.Destroy(TimeRemaining);
@@ -131,6 +133,7 @@ namespace UltimateMods.Patches
                             __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
                             OutOfTime.gameObject.SetActive(true);
                             TimeRemaining.gameObject.SetActive(false);
+                            isUseAdmin = false;
                             if (clearedIcons == false)
                             {
                                 foreach (CounterArea ca in __instance.CountAreas) ca.UpdateCount(0);
@@ -144,6 +147,7 @@ namespace UltimateMods.Patches
                         string timeString = TimeSpan.FromSeconds(MapOptions.RestrictAdminTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
                         //TimeRemaining.color = MapOptions.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                        isUseAdmin = true;
                         TimeRemaining.gameObject.SetActive(true);
                     }
                 }
