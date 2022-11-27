@@ -103,6 +103,7 @@ namespace UltimateMods.Patches
             CrewSettings.Add((byte)RoleType.Madmate, CustomRolesH.MadmateRate.data);
             CrewSettings.Add((byte)RoleType.Bakery, CustomRolesH.BakeryRate.data);
             CrewSettings.Add((byte)RoleType.Snitch, CustomRolesH.SnitchRate.data);
+            CrewSettings.Add((byte)RoleType.Seer, CustomRolesH.SeerRate.data);
             // CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
 
             return new RoleAssignmentData

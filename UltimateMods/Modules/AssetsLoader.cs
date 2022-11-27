@@ -26,6 +26,7 @@ namespace UltimateMods.Modules
         public static Texture2D TabNeu;
         public static Texture2D TabMod;
         public static Texture2D TabOth;
+        public static Texture2D Soul;
 
         public static Texture2D CreditsButton;
         public static Texture2D HorseModeOnButton;
@@ -64,6 +65,7 @@ namespace UltimateMods.Modules
             TabNeu = SpriteAssetsBundle.LoadAsset<Texture2D>("NeutralSettings.png").DontUnload();
             TabMod = SpriteAssetsBundle.LoadAsset<Texture2D>("ModifierSettings.png").DontUnload();
             TabOth = SpriteAssetsBundle.LoadAsset<Texture2D>("OtherSettings.png").DontUnload();
+            Soul = SpriteAssetsBundle.LoadAsset<Texture2D>("Soul.png").DontUnload();
 
             var ButtonAssetsResource = ButtonAssets.GetManifestResourceStream("UltimateMods.Resources.AssetsBundlesUM.Assets.ultimatebutton");
             var ButtonAssetsBundle = AssetBundle.LoadFromMemory(ButtonAssetsResource.ReadFully());

@@ -15,6 +15,7 @@ namespace UltimateMods.Roles
         Madmate,
         Bakery,
         Snitch,
+        Seer,
         // Altruist,
 
         // Impostor Roles
@@ -46,6 +47,7 @@ namespace UltimateMods.Roles
             { RoleType.Madmate, typeof(RoleBase<Madmate>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
             { RoleType.Snitch, typeof(RoleBase<Snitch>) },
+            { RoleType.Seer, typeof(RoleBase<Seer>) },
             // { RoleType.Altruist, typeof(RoleBase<Altruist>) },
 
             // Neutral

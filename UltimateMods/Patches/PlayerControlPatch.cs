@@ -174,6 +174,16 @@ namespace UltimateMods.Patches
                 Adversity.CheckAndAdversityState();
             }
 
+            // Seer show flash and add dead player position
+            foreach (var seer in Seer.allPlayers)
+            {
+                if (PlayerControl.LocalPlayer.isRole(RoleType.Seer) && !seer.Data.IsDead && seer != target && Seer.Mode <= 1)
+                {
+                    Helpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
+                }
+                if (Seer.DeadBodyPositions != null) Seer.DeadBodyPositions.Add(target.transform.position);
+            }
+
             __instance.OnKill(target);
             target.OnDeath(__instance);
         }

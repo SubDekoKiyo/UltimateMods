@@ -100,6 +100,11 @@ namespace UltimateMods
         public static CustomOption JackalPromotedFromSidekickCanCreateSidekick;
         public static CustomOption JackalAndSidekickHaveImpostorVision;
 
+        public static CustomRoleOption SeerRate;
+        public static CustomOption SeerMode;
+        public static CustomOption SeerSoulDuration;
+        public static CustomOption SeerLimitSoulDuration;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -198,6 +203,11 @@ namespace UltimateMods
             SidekickCanKill = CustomOption.Create(217, Neutral, JackalBlue, "SidekickCanKill", false, JackalCanCreateSidekick);
             SidekickCanUseVents = CustomOption.Create(218, Neutral, JackalBlue, "SidekickCanUseVents", true, JackalCanCreateSidekick);
             JackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(219, Neutral, JackalBlue, "JackalPromotedFromSidekickCanCreateSidekick", true, JackalCanCreateSidekick);
+
+            SeerRate = new CustomRoleOption(230, Crewmate, White, "Seer", SeerGreen, 15);
+            SeerMode = CustomOption.Create(231, Crewmate, SeerGreen, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerRate);
+            SeerLimitSoulDuration = CustomOption.Create(232, Crewmate, SeerGreen, "SeerLimitSoulDuration", false, SeerRate);
+            SeerSoulDuration = CustomOption.Create(233, Crewmate, SeerGreen, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "FormatSeconds");
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
