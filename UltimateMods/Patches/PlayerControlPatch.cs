@@ -6,6 +6,7 @@ using UnityEngine;
 using UltimateMods.Utilities;
 using UltimateMods.Modules;
 using UltimateMods.Roles;
+using Hazel;
 
 namespace UltimateMods.Patches
 {

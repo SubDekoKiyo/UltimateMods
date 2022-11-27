@@ -17,18 +17,18 @@ namespace UltimateMods.Roles
         private static CustomButton JackalKillButton;
         private static CustomButton JackalMakeSidekickButton;
         public static Sprite JackalSidekickButtonSprite;
+        public static List<PlayerControl> BlockTarget = new();
 
         public static float Cooldown { get { return CustomRolesH.JackalKillCooldown.getFloat(); } }
         public static float CreateSideKickCooldown { get { return CustomRolesH.JackalCreateSidekickCooldown.getFloat(); } }
         public static bool CanUseVents { get { return CustomRolesH.JackalCanUseVents.getBool(); } }
         public static bool CanCreateSidekick { get { return CustomRolesH.JackalCanCreateSidekick.getBool(); } }
+        public static bool JackalPromotedFromSidekickCanCreateSidekick { get { return CustomRolesH.JackalPromotedFromSidekickCanCreateSidekick.getBool(); } }
         public static bool HasImpostorVision { get { return CustomRolesH.JackalAndSidekickHaveImpostorVision.getBool(); } }
-        public static bool WasTeamRed, WasImp, WasMadmate = false;
         public static bool CanSidekick = true;
 
         public Jackal()
         {
-            CanSidekick = CanCreateSidekick;
             RoleType = roleId = RoleType.Jackal;
         }
 
@@ -38,7 +38,13 @@ namespace UltimateMods.Roles
         {
             if (player == PlayerControl.LocalPlayer)
             {
-                CurrentTarget = SetTarget();
+                foreach (var pc in PlayerControl.AllPlayerControls)
+                {
+                    if (pc.IsTeamJackal())
+                        BlockTarget.Add(pc);
+                }
+
+                CurrentTarget = SetTarget(untargetablePlayers: BlockTarget);
                 SetPlayerOutline(CurrentTarget, JackalBlue);
             }
         }
@@ -104,6 +110,7 @@ namespace UltimateMods.Roles
 
         public static void Clear()
         {
+            CanSidekick = CanCreateSidekick;
             CurrentTarget = null;
             players = new List<Jackal>();
         }

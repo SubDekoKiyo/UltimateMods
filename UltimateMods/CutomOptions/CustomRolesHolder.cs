@@ -98,7 +98,6 @@ namespace UltimateMods
         public static CustomOption SidekickCanKill;
         public static CustomOption SidekickCanUseVents;
         public static CustomOption JackalPromotedFromSidekickCanCreateSidekick;
-        public static CustomOption JackalCanCreateSidekickFromImpostor;
         public static CustomOption JackalAndSidekickHaveImpostorVision;
 
         /* Modifiers */
@@ -195,11 +194,10 @@ namespace UltimateMods
             JackalAndSidekickHaveImpostorVision = CustomOption.Create(213, Neutral, JackalBlue, "JackalAndSidekickHaveImpostorVision", false, JackalRate);
             JackalCanCreateSidekick = CustomOption.Create(214, Neutral, JackalBlue, "JackalCanCreateSidekick", false, JackalRate);
             JackalCreateSidekickCooldown = CustomOption.Create(215, Neutral, JackalBlue, "JackalCreateSidekickCooldown", 30f, 2.5f, 60f, 2.5f, JackalCanCreateSidekick, format: "FormatSeconds");
-            SidekickPromotesToJackal = CustomOption.Create(216, Neutral, JackalBlue, "SidekickPromotesToJackal", false, JackalCanCreateSidekick);
+            SidekickPromotesToJackal = CustomOption.Create(216, Neutral, JackalBlue, "SidekickPromotesToJackal", true, JackalCanCreateSidekick);
             SidekickCanKill = CustomOption.Create(217, Neutral, JackalBlue, "SidekickCanKill", false, JackalCanCreateSidekick);
             SidekickCanUseVents = CustomOption.Create(218, Neutral, JackalBlue, "SidekickCanUseVents", true, JackalCanCreateSidekick);
             JackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(219, Neutral, JackalBlue, "JackalPromotedFromSidekickCanCreateSidekick", true, JackalCanCreateSidekick);
-            JackalCanCreateSidekickFromImpostor = CustomOption.Create(220, Neutral, JackalBlue, "JackalCanCreateSidekickFromImpostor", true, JackalCanCreateSidekick);
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);

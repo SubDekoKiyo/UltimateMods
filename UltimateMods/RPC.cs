@@ -458,24 +458,19 @@ namespace UltimateMods
             PlayerControl Player = Helpers.PlayerById(targetId);
             if (Player == null) return;
 
-            bool WasImpostor = Player.Data.Role.IsImpostor;
-            bool WasMadmate = Player.isRole(RoleType.Madmate);
             FastDestroyableSingleton<RoleManager>.Instance.SetRole(Player, RoleTypes.Crewmate);
             ErasePlayerRoles(Player.PlayerId, true);
             Player.setRole(RoleType.Sidekick);
             if (Player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
-            if (WasImpostor) Sidekick.WasTeamRed = true;
-            Sidekick.WasImp = WasImpostor;
-            Sidekick.WasMadmate = WasMadmate;
 
-            Jackal.CanSidekick = false;
+            if (!Jackal.JackalPromotedFromSidekickCanCreateSidekick) Jackal.CanSidekick = false;
         }
 
         public static void SidekickPromotes(byte sidekickId)
         {
             PlayerControl sidekick = Helpers.PlayerById(sidekickId);
             ErasePlayerRoles(sidekickId);
-            sidekick.setRole(RoleType.Jester);
+            sidekick.setRole(RoleType.Jackal);
         }
 
         // public static void AltruistKill(byte AltruistId)

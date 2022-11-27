@@ -26,6 +26,7 @@ namespace UltimateMods.Patches
         {
             var p = PlayerControl.LocalPlayer;
             var role = p.isRole;
+
             if (role(RoleType.Jester))
                 setPlayerNameColor(p, JesterPink);
             if (role(RoleType.Sheriff))
@@ -33,7 +34,7 @@ namespace UltimateMods.Patches
             if (role(RoleType.Engineer))
                 setPlayerNameColor(p, EngineerBlue);
 
-            if (p.isRole(RoleType.Madmate))
+            if (role(RoleType.Madmate))
             {
                 setPlayerNameColor(p, ImpostorRed);
 
@@ -41,6 +42,14 @@ namespace UltimateMods.Patches
                     foreach (var pc in PlayerControl.AllPlayerControls)
                         if (pc.IsImpostor())
                             setPlayerNameColor(p, Palette.ImpostorRed);
+            }
+
+            if (p.IsTeamJackal())
+            {
+                foreach (var jk in Jackal.allPlayers)
+                    setPlayerNameColor(jk, JackalBlue);
+                foreach (var sk in Sidekick.allPlayers)
+                    setPlayerNameColor(sk, JackalBlue);
             }
         }
 

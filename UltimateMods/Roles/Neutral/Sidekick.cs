@@ -2,6 +2,9 @@ using HarmonyLib;
 using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
+using Hazel;
+using static UltimateMods.ColorDictionary;
+using static UltimateMods.Roles.Patches.OutlinePatch;
 
 namespace UltimateMods.Roles
 {
@@ -16,7 +19,6 @@ namespace UltimateMods.Roles
         public static bool CanKill { get { return CustomRolesH.SidekickCanKill.getBool(); } }
         public static bool PromotesToJackal { get { return CustomRolesH.SidekickPromotesToJackal.getBool(); } }
         public static bool HasImpostorVision { get { return CustomRolesH.JackalAndSidekickHaveImpostorVision.getBool(); } }
-        public static bool WasTeamRed, WasImp, WasMadmate = false;
 
         public Sidekick()
         {
@@ -25,7 +27,33 @@ namespace UltimateMods.Roles
 
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
-        public override void FixedUpdate() { }
+        public override void FixedUpdate()
+        {
+            foreach (var sidekick in Sidekick.allPlayers)
+            {
+                if (sidekick != PlayerControl.LocalPlayer) return;
+                var BlockTarget = new List<PlayerControl>();
+                foreach (var jackal in Jackal.allPlayers)
+                    if (jackal != null) BlockTarget.Add(jackal);
+
+                CurrentTarget = SetTarget(untargetablePlayers: BlockTarget);
+                if (CanKill) SetPlayerOutline(CurrentTarget, ImpostorRed);
+            }
+
+            foreach (var jackal in Jackal.allPlayers)
+            {
+                if (Sidekick.PromotesToJackal &&
+                    PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) &&
+                    PlayerControl.LocalPlayer.IsAlive() &&
+                    !(Jackal.livingPlayers.Count > 0))
+                {
+                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SidekickPromotes, Hazel.SendOption.Reliable, -1);
+                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                    AmongUsClient.Instance.FinishRpcImmediately(writer);
+                    RPCProcedure.SidekickPromotes(PlayerControl.LocalPlayer.PlayerId);
+                }
+            }
+        }
         public override void OnKill(PlayerControl target) { }
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
