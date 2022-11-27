@@ -14,6 +14,7 @@ namespace UltimateMods
             Teleporter.SetButtonCooldowns();
             Jackal.SetButtonCooldowns();
             Sidekick.SetButtonCooldowns();
+            Arsonist.SetButtonCooldowns();
             // Altruist.SetButtonCooldowns();
         }
 
@@ -27,6 +28,7 @@ namespace UltimateMods
             Sidekick.MakeButtons(hm);
             // Altruist.MakeButtons(hm);
             EvilHacker.MakeButtons(hm);
+            Arsonist.MakeButtons(hm);
         }
 
         public static void Postfix(HudManager __instance)

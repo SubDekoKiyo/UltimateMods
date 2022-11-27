@@ -97,6 +97,7 @@ namespace UltimateMods.Patches
 
             NeutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
             NeutralSettings.Add((byte)RoleType.Jackal, CustomRolesH.JackalRate.data);
+            NeutralSettings.Add((byte)RoleType.Arsonist, CustomRolesH.ArsonistRate.data);
 
             CrewSettings.Add((byte)RoleType.Sheriff, CustomRolesH.SheriffRate.data);
             CrewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);

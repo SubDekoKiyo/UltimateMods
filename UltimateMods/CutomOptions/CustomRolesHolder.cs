@@ -105,6 +105,10 @@ namespace UltimateMods
         public static CustomOption SeerSoulDuration;
         public static CustomOption SeerLimitSoulDuration;
 
+        public static CustomRoleOption ArsonistRate;
+        public static CustomOption ArsonistCooldown;
+        public static CustomOption ArsonistDuration;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -208,6 +212,10 @@ namespace UltimateMods
             SeerMode = CustomOption.Create(231, Crewmate, SeerGreen, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerRate);
             SeerLimitSoulDuration = CustomOption.Create(232, Crewmate, SeerGreen, "SeerLimitSoulDuration", false, SeerRate);
             SeerSoulDuration = CustomOption.Create(233, Crewmate, SeerGreen, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "FormatSeconds");
+
+            ArsonistRate = new CustomRoleOption(240, Neutral, White, "Arsonist", ArsonistOrange, 1);
+            ArsonistCooldown = CustomOption.Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
+            ArsonistDuration = CustomOption.Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);

@@ -40,7 +40,9 @@ namespace UltimateMods
         BakeryBomb,
         TeleporterTeleport,
         JackalCreatesSidekick,
-        SidekickPromotes,
+        SidekickPromotes = 80,
+        ArsonistDouse,
+        ArsonistWin,
         // AltruistKill,
         // AltruistRevive,
     }
@@ -162,6 +164,14 @@ namespace UltimateMods
                     // 80
                     case (byte)CustomRPC.SidekickPromotes:
                         RPCProcedure.SidekickPromotes(reader.ReadByte());
+                        break;
+                    // 81
+                    case (byte)CustomRPC.ArsonistDouse:
+                        RPCProcedure.ArsonistDouse(reader.ReadByte());
+                        break;
+                    // 82
+                    case (byte)CustomRPC.ArsonistWin:
+                        RPCProcedure.ArsonistWin();
                         break;
                         // // 79
                         // case (byte)CustomRPC.AltruistKill:
@@ -471,6 +481,22 @@ namespace UltimateMods
             PlayerControl sidekick = Helpers.PlayerById(sidekickId);
             ErasePlayerRoles(sidekickId);
             sidekick.setRole(RoleType.Jackal);
+        }
+
+        public static void ArsonistDouse(byte playerId)
+        {
+            Arsonist.DousedPlayers.Add(Helpers.PlayerById(playerId));
+        }
+
+        public static void ArsonistWin()
+        {
+            Arsonist.TriggerArsonistWin = true;
+            var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.isRole(RoleType.Arsonist) && p.IsAlive());
+            foreach (PlayerControl p in livingPlayers)
+            {
+                p.Exiled();
+                finalStatuses[p.PlayerId] = FinalStatus.Torched;
+            }
         }
 
         // public static void AltruistKill(byte AltruistId)

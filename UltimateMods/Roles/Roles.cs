@@ -31,6 +31,7 @@ namespace UltimateMods.Roles
         Jester = 200,
         Jackal,
         Sidekick,
+        Arsonist,
 
         // don't put anything below this
         NoRole = int.MaxValue
@@ -54,6 +55,7 @@ namespace UltimateMods.Roles
             { RoleType.Jester, typeof(RoleBase<Jester>) },
             { RoleType.Jackal, typeof(RoleBase<Jackal>) },
             { RoleType.Sidekick, typeof(RoleBase<Sidekick>) },
+            { RoleType.Arsonist, typeof(RoleBase<Arsonist>) },
 
             // Impostor
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },

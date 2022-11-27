@@ -17,7 +17,7 @@ namespace UltimateMods.EndGame
     {
         JesterExiled = 10,
         TeamJackalWin,
-        TaskerTaskEnd,
+        ArsonistWin,
 
         SabotageReactor,
         SabotageO2,
@@ -36,6 +36,7 @@ namespace UltimateMods.EndGame
         Dead, // 死亡(キル)
         LackO2, // 酸素不足
         Bomb, // 爆発
+        Torched, // 焼殺
         Revival,
         Disconnected // 切断
     }
@@ -49,7 +50,7 @@ namespace UltimateMods.EndGame
         JesterWin,
         OpportunistWin,
         JackalWin,
-        TaskerWin,
+        ArsonistWin,
 
         ForceEnd,
         EveryoneLose
@@ -136,6 +137,7 @@ namespace UltimateMods.EndGame
             notWinners.AddRange(Madmate.allPlayers);
             notWinners.AddRange(Jackal.allPlayers);
             notWinners.AddRange(Sidekick.allPlayers);
+            notWinners.AddRange(Arsonist.allPlayers);
 
             List<WinningPlayerData> winnersToRemove = new();
             foreach (WinningPlayerData winner in TempData.winners)
@@ -146,6 +148,7 @@ namespace UltimateMods.EndGame
 
             bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
             bool TeamJackalWin = GameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin && (Jackal.livingPlayers.Count > 0 || ((Sidekick.allPlayers.Count > 0 && Sidekick.livingPlayers.Count >= 0) || Sidekick.allPlayers.Count <= 0));
+            bool ArsonistWin = Arsonist.exists && GameOverReason == (GameOverReason)CustomGameOverReason.ArsonistWin;
 
             bool CrewmateWin = GameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote;
             bool ImpostorWin = GameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorBySabotage or GameOverReason.ImpostorByVote;
@@ -182,6 +185,17 @@ namespace UltimateMods.EndGame
                     TempData.winners.Add(wpd);
                 }
                 AdditionalTempData.winCondition = WinCondition.JackalWin;
+            }
+
+            else if (ArsonistWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var arsonist in Arsonist.players)
+                {
+                    WinningPlayerData wpd = new(arsonist.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                AdditionalTempData.winCondition = WinCondition.ArsonistWin;
             }
 
             else if (CrewmateWin)
@@ -365,6 +379,12 @@ namespace UltimateMods.EndGame
                         textRenderer.color = JackalBlue;
                         __instance.BackgroundBar.material.SetColor("_Color", JackalBlue);
                     }
+                    else if (AdditionalTempData.winCondition == WinCondition.ArsonistWin)
+                    {
+                        bonusText = ModTranslation.getString("ArsonistWin");
+                        textRenderer.color = ArsonistOrange;
+                        __instance.BackgroundBar.material.SetColor("_Color", ArsonistOrange);
+                    }
                     else if (AdditionalTempData.gameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote)
                     {
                         bonusText = ModTranslation.getString("CrewmateWin");
@@ -497,6 +517,7 @@ namespace UltimateMods.EndGame
                     var statistics = new PlayerStatistics(__instance);
                     if (CheckAndEndGameForJesterWin(__instance)) return false;
                     if (CheckAndEndGameForJackalWin(__instance, statistics)) return false;
+                    if (CheckAndEndGameForArsonistWin(__instance)) return false;
                     if (CheckAndEndGameForSabotageWin(__instance)) return false;
                     if (CheckAndEndGameForTaskWin(__instance)) return false;
                     if (CheckAndEndGameForForceEnd(__instance)) return false;
@@ -521,6 +542,16 @@ namespace UltimateMods.EndGame
                         statistics.TeamImpostorsAlive == 0)
                     {
                         UncheckedEndGame(CustomGameOverReason.TeamJackalWin);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForArsonistWin(ShipStatus __instance)
+                {
+                    if (Arsonist.TriggerArsonistWin)
+                    {
+                        UncheckedEndGame(CustomGameOverReason.ArsonistWin);
                         return true;
                     }
                     return false;

@@ -33,6 +33,14 @@ namespace UltimateMods.Patches
                 setPlayerNameColor(p, SheriffYellow);
             if (role(RoleType.Engineer))
                 setPlayerNameColor(p, EngineerBlue);
+            if (role(RoleType.Arsonist))
+                setPlayerNameColor(p, ArsonistOrange);
+            if (role(RoleType.Seer))
+                setPlayerNameColor(p, SeerGreen);
+            if (role(RoleType.Snitch))
+                setPlayerNameColor(p, SnitchGreen);
+            if (role(RoleType.Bakery))
+                setPlayerNameColor(p, BakeryYellow);
 
             if (role(RoleType.Madmate))
             {

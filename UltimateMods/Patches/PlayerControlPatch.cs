@@ -184,6 +184,8 @@ namespace UltimateMods.Patches
                 if (Seer.DeadBodyPositions != null) Seer.DeadBodyPositions.Add(target.transform.position);
             }
 
+            Arsonist.UpdateStatus();
+
             __instance.OnKill(target);
             target.OnDeath(__instance);
         }

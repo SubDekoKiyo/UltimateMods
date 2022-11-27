@@ -38,6 +38,8 @@ namespace UltimateMods.Modules
         public static Texture2D TeleporterTeleportButton;
         public static Texture2D AltruistReviveButton;
         public static Texture2D JackalSidekickButton;
+        public static Texture2D ArsonistDouseButton;
+        public static Texture2D ArsonistIgniteButton;
 
         public static GameObject GodMiraHQ;
         public static GameObject NewDropShip;
@@ -80,6 +82,8 @@ namespace UltimateMods.Modules
             TeleporterTeleportButton = ButtonAssetsBundle.LoadAsset<Texture2D>("TeleporterTeleportButton.png").DontUnload();
             AltruistReviveButton = ButtonAssetsBundle.LoadAsset<Texture2D>("AltruistReviveButton.png").DontUnload();
             JackalSidekickButton = ButtonAssetsBundle.LoadAsset<Texture2D>("JackalSidekickButton.png").DontUnload();
+            ArsonistDouseButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ArsonistDouse.png").DontUnload();
+            ArsonistIgniteButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ArsonistIgnite.png").DontUnload();
 
             var GodMiraHQAssetsResource = GodMiraHQAssets.GetManifestResourceStream("UltimateMods.GodMiraHQ.Resources.godmirahq");
             var GodMiraHQAssetsBundle = AssetBundle.LoadFromMemory(GodMiraHQAssetsResource.ReadFully());

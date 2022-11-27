@@ -47,6 +47,7 @@ namespace UltimateMods.Roles
         public static RoleInfo jackal = new("Jackal", JackalBlue, CustomRolesH.JackalRate, RoleType.Jackal);
         public static RoleInfo sidekick = new("Sidekick", JackalBlue, CustomRolesH.JackalRate, RoleType.Sidekick);
         public static RoleInfo seer = new("Seer", SeerGreen, CustomRolesH.SeerRate, RoleType.Seer);
+        public static RoleInfo arsonist = new("Arsonist", ArsonistOrange, CustomRolesH.ArsonistRate, RoleType.Arsonist);
         public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -70,6 +71,7 @@ namespace UltimateMods.Roles
             jackal,
             sidekick,
             seer,
+            arsonist,
         };
 
         public static string tl(string key)
@@ -99,6 +101,7 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Jackal)) infos.Add(jackal);
             if (p.isRole(RoleType.Sidekick)) infos.Add(sidekick);
             if (p.isRole(RoleType.Seer)) infos.Add(seer);
+            if (p.isRole(RoleType.Arsonist)) infos.Add(arsonist);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

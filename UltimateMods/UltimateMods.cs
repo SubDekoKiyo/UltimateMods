@@ -30,6 +30,8 @@ namespace UltimateMods
             Snitch.Clear();
             Jackal.Clear();
             Sidekick.Clear();
+            Seer.Clear();
+            Arsonist.Clear();
 
             // Modifiers
             Opportunist.Clear();

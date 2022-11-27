@@ -120,6 +120,7 @@ namespace UltimateMods
         {
             return (player != null &&
                     (player.isRole(RoleType.Jester) ||
+                    player.isRole(RoleType.Arsonist) ||
                     player.IsTeamJackal()));
         }
 
@@ -388,6 +389,14 @@ namespace UltimateMods
                 }
                 if (p == 1f && renderer != null) renderer.enabled = false;
             })));
+        }
+
+        public static void SetSemiTransparent(this PoolablePlayer player, bool value)
+        {
+            float alpha = value ? 0.25f : 1f;
+            foreach (SpriteRenderer r in player.gameObject.GetComponentsInChildren<SpriteRenderer>())
+                r.color = new Color(r.color.r, r.color.g, r.color.b, alpha);
+            player.cosmetics.nameText.color = new Color(player.cosmetics.nameText.color.r, player.cosmetics.nameText.color.g, player.cosmetics.nameText.color.b, alpha);
         }
     }
 }
