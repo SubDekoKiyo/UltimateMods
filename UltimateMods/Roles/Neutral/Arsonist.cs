@@ -19,6 +19,7 @@ namespace UltimateMods.Roles
         public static PlayerControl DouseTarget;
         public static List<PlayerControl> DousedPlayers = new();
         private static CustomButton ArsonistButton;
+        private static CustomButton IgniteButton;
 
         public static float Cooldown { get { return CustomRolesH.ArsonistCooldown.getFloat(); } }
         public static float Duration { get { return CustomRolesH.ArsonistDuration.getFloat(); } }
@@ -136,22 +137,14 @@ namespace UltimateMods.Roles
             ArsonistButton = new CustomButton(
                 () =>
                 {
-                    if (DousedEveryone)
-                    {
-                        MessageWriter winWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ArsonistWin, Hazel.SendOption.Reliable, -1);
-                        AmongUsClient.Instance.FinishRpcImmediately(winWriter);
-                        RPCProcedure.ArsonistWin();
-                    }
-
                     if (CurrentTarget != null)
                     {
                         DouseTarget = CurrentTarget;
                     }
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Arsonist) && TriggerArsonistWin && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Arsonist) && !DousedEveryone && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () =>
                 {
-
                     if (DousedEveryone)
                         ArsonistButton.ButtonText = ModTranslation.getString("IgniteText");
                     else
@@ -173,7 +166,7 @@ namespace UltimateMods.Roles
                     DouseTarget = null;
                     UpdateStatus();
                 },
-                GetArsonistButtonSprite(),
+                GetDouseSprite(),
                 new Vector3(-1.8f, -0.06f, 0),
                 hm,
                 hm.KillButton,
@@ -204,11 +197,33 @@ namespace UltimateMods.Roles
                 }
             );
             ArsonistButton.ButtonText = ModTranslation.getString("DouseText");
+
+            IgniteButton = new CustomButton(
+                () =>
+                {
+                    if (DousedEveryone)
+                    {
+                        MessageWriter winWriter = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.ArsonistWin, Hazel.SendOption.Reliable, -1);
+                        AmongUsClient.Instance.FinishRpcImmediately(winWriter);
+                        RPCProcedure.ArsonistWin();
+                    }
+                },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Arsonist) && !PlayerControl.LocalPlayer.Data.IsDead && DousedEveryone && !TriggerArsonistWin; },
+                () => { return PlayerControl.LocalPlayer.CanMove && DousedEveryone; },
+                () => { },
+                GetIgniteSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                hm,
+                hm.KillButton,
+                KeyCode.F
+            );
+            IgniteButton.ButtonText = ModTranslation.getString("IgniteText");
         }
 
         public static void SetButtonCooldowns()
         {
             ArsonistButton.MaxTimer = Cooldown;
+            IgniteButton.MaxTimer = 0f;
         }
 
         public static void Clear()
