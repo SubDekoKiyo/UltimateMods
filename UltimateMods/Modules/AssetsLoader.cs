@@ -26,6 +26,7 @@ namespace UltimateMods.Modules
         public static Texture2D TabNeu;
         public static Texture2D TabMod;
         public static Texture2D TabOth;
+        public static Texture2D Soul;
 
         public static Texture2D CreditsButton;
         public static Texture2D HorseModeOnButton;
@@ -36,6 +37,9 @@ namespace UltimateMods.Modules
         public static Texture2D ZoomOutButton;
         public static Texture2D TeleporterTeleportButton;
         public static Texture2D AltruistReviveButton;
+        public static Texture2D JackalSidekickButton;
+        public static Texture2D ArsonistDouseButton;
+        public static Texture2D ArsonistIgniteButton;
 
         public static GameObject GodMiraHQ;
         public static GameObject NewDropShip;
@@ -63,6 +67,7 @@ namespace UltimateMods.Modules
             TabNeu = SpriteAssetsBundle.LoadAsset<Texture2D>("NeutralSettings.png").DontUnload();
             TabMod = SpriteAssetsBundle.LoadAsset<Texture2D>("ModifierSettings.png").DontUnload();
             TabOth = SpriteAssetsBundle.LoadAsset<Texture2D>("OtherSettings.png").DontUnload();
+            Soul = SpriteAssetsBundle.LoadAsset<Texture2D>("Soul.png").DontUnload();
 
             var ButtonAssetsResource = ButtonAssets.GetManifestResourceStream("UltimateMods.Resources.AssetsBundlesUM.Assets.ultimatebutton");
             var ButtonAssetsBundle = AssetBundle.LoadFromMemory(ButtonAssetsResource.ReadFully());
@@ -76,6 +81,9 @@ namespace UltimateMods.Modules
             ZoomOutButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ZoomOut.png").DontUnload();
             TeleporterTeleportButton = ButtonAssetsBundle.LoadAsset<Texture2D>("TeleporterTeleportButton.png").DontUnload();
             AltruistReviveButton = ButtonAssetsBundle.LoadAsset<Texture2D>("AltruistReviveButton.png").DontUnload();
+            JackalSidekickButton = ButtonAssetsBundle.LoadAsset<Texture2D>("JackalSidekickButton.png").DontUnload();
+            ArsonistDouseButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ArsonistDouse.png").DontUnload();
+            ArsonistIgniteButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ArsonistIgnite.png").DontUnload();
 
             var GodMiraHQAssetsResource = GodMiraHQAssets.GetManifestResourceStream("UltimateMods.GodMiraHQ.Resources.godmirahq");
             var GodMiraHQAssetsBundle = AssetBundle.LoadFromMemory(GodMiraHQAssetsResource.ReadFully());

@@ -67,6 +67,8 @@ namespace UltimateMods.Patches
             {
                 Adversity.CheckAndAdversityState();
             }
+
+            Arsonist.UpdateIcons();
         }
     }
 

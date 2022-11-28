@@ -78,6 +78,7 @@ namespace UltimateMods.Roles.Patches
             }
 
             PlayerControl target = null;
+            List<PlayerControl> UnTargetPlayer = new();
             target = SetTarget(true, true, new List<PlayerControl>() { null });
             FastDestroyableSingleton<HudManager>.Instance.KillButton.SetTarget(target); // Includes setPlayerOutline(target, Palette.ImpstorRed);
         }

@@ -14,6 +14,8 @@ namespace UltimateMods.Roles
         Engineer,
         Madmate,
         Bakery,
+        Snitch,
+        Seer,
         // Altruist,
 
         // Impostor Roles
@@ -27,6 +29,9 @@ namespace UltimateMods.Roles
 
         // Neutral Roles
         Jester = 200,
+        Jackal,
+        Sidekick,
+        Arsonist,
 
         // don't put anything below this
         NoRole = int.MaxValue
@@ -42,10 +47,15 @@ namespace UltimateMods.Roles
             { RoleType.Engineer, typeof(RoleBase<Engineer>) },
             { RoleType.Madmate, typeof(RoleBase<Madmate>) },
             { RoleType.Bakery, typeof(RoleBase<Bakery>) },
+            { RoleType.Snitch, typeof(RoleBase<Snitch>) },
+            { RoleType.Seer, typeof(RoleBase<Seer>) },
             // { RoleType.Altruist, typeof(RoleBase<Altruist>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },
+            { RoleType.Jackal, typeof(RoleBase<Jackal>) },
+            { RoleType.Sidekick, typeof(RoleBase<Sidekick>) },
+            { RoleType.Arsonist, typeof(RoleBase<Arsonist>) },
 
             // Impostor
             { RoleType.CustomImpostor, typeof(RoleBase<CustomImpostor>) },

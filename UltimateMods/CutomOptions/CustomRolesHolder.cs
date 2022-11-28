@@ -84,6 +84,31 @@ namespace UltimateMods
         public static CustomOption AdversityAdversityStateCanFindMadmate;
         public static CustomOption AdversityAdversityStateCanSeeVotes;
 
+        public static CustomRoleOption SnitchRate;
+        public static CustomOption SnitchLeftTasksForReveal;
+        public static CustomOption SnitchIncludeTeamJackal;
+        public static CustomOption SnitchTeamJackalUseDifferentArrowColor;
+
+        public static CustomRoleOption JackalRate;
+        public static CustomOption JackalKillCooldown;
+        public static CustomOption JackalCreateSidekickCooldown;
+        public static CustomOption JackalCanUseVents;
+        public static CustomOption JackalCanCreateSidekick;
+        public static CustomOption SidekickPromotesToJackal;
+        public static CustomOption SidekickCanKill;
+        public static CustomOption SidekickCanUseVents;
+        public static CustomOption JackalPromotedFromSidekickCanCreateSidekick;
+        public static CustomOption JackalAndSidekickHaveImpostorVision;
+
+        public static CustomRoleOption SeerRate;
+        public static CustomOption SeerMode;
+        public static CustomOption SeerSoulDuration;
+        public static CustomOption SeerLimitSoulDuration;
+
+        public static CustomRoleOption ArsonistRate;
+        public static CustomOption ArsonistCooldown;
+        public static CustomOption ArsonistDuration;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -166,6 +191,31 @@ namespace UltimateMods
             AdversityAdversityStateKillCooldown = CustomOption.Create(196, Impostor, ImpostorRed, "AdversityStateKillCooldown", 20f, 2.5f, 60f, 2.5f, AdversityRate, format: "FormatSeconds");
             AdversityAdversityStateCanFindMadmate = CustomOption.Create(197, Impostor, ImpostorRed, "AdversityStateCanFindMadmate", false, AdversityRate);
             AdversityAdversityStateCanSeeVotes = CustomOption.Create(198, Impostor, ImpostorRed, "AdversityStateCanSeeVotes", false, AdversityRate);
+
+            SnitchRate = new CustomRoleOption(200, Impostor, White, "Snitch", SnitchGreen, 15);
+            SnitchLeftTasksForReveal = CustomOption.Create(201, Crewmate, SnitchGreen, "SnitchLeftTasksForReveal", 1f, 0f, 5f, 1f, SnitchRate);
+            SnitchIncludeTeamJackal = CustomOption.Create(202, Crewmate, SnitchGreen, "SnitchIncludeTeamJackal", false, SnitchRate);
+            SnitchTeamJackalUseDifferentArrowColor = CustomOption.Create(203, Crewmate, SnitchGreen, "SnitchTeamJackalUseDifferentArrowColor", true, SnitchIncludeTeamJackal);
+
+            JackalRate = new CustomRoleOption(210, Neutral, White, "Jackal", JackalBlue, 1);
+            JackalKillCooldown = CustomOption.Create(211, Neutral, JackalBlue, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, JackalRate, format: "FormatSeconds");
+            JackalCanUseVents = CustomOption.Create(212, Neutral, JackalBlue, "JackalCanUseVents", true, JackalRate);
+            JackalAndSidekickHaveImpostorVision = CustomOption.Create(213, Neutral, JackalBlue, "JackalAndSidekickHaveImpostorVision", false, JackalRate);
+            JackalCanCreateSidekick = CustomOption.Create(214, Neutral, JackalBlue, "JackalCanCreateSidekick", false, JackalRate);
+            JackalCreateSidekickCooldown = CustomOption.Create(215, Neutral, JackalBlue, "JackalCreateSidekickCooldown", 30f, 2.5f, 60f, 2.5f, JackalCanCreateSidekick, format: "FormatSeconds");
+            SidekickPromotesToJackal = CustomOption.Create(216, Neutral, JackalBlue, "SidekickPromotesToJackal", true, JackalCanCreateSidekick);
+            SidekickCanKill = CustomOption.Create(217, Neutral, JackalBlue, "SidekickCanKill", false, JackalCanCreateSidekick);
+            SidekickCanUseVents = CustomOption.Create(218, Neutral, JackalBlue, "SidekickCanUseVents", true, JackalCanCreateSidekick);
+            JackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(219, Neutral, JackalBlue, "JackalPromotedFromSidekickCanCreateSidekick", true, JackalCanCreateSidekick);
+
+            SeerRate = new CustomRoleOption(230, Crewmate, White, "Seer", SeerGreen, 15);
+            SeerMode = CustomOption.Create(231, Crewmate, SeerGreen, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerRate);
+            SeerLimitSoulDuration = CustomOption.Create(232, Crewmate, SeerGreen, "SeerLimitSoulDuration", false, SeerRate);
+            SeerSoulDuration = CustomOption.Create(233, Crewmate, SeerGreen, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "FormatSeconds");
+
+            ArsonistRate = new CustomRoleOption(240, Neutral, White, "Arsonist", ArsonistOrange, 1);
+            ArsonistCooldown = CustomOption.Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
+            ArsonistDuration = CustomOption.Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);

@@ -16,7 +16,8 @@ namespace UltimateMods.EndGame
     public enum CustomGameOverReason
     {
         JesterExiled = 10,
-        TaskerTaskEnd,
+        TeamJackalWin,
+        ArsonistWin,
 
         SabotageReactor,
         SabotageO2,
@@ -35,6 +36,7 @@ namespace UltimateMods.EndGame
         Dead, // 死亡(キル)
         LackO2, // 酸素不足
         Bomb, // 爆発
+        Torched, // 焼殺
         Revival,
         Disconnected // 切断
     }
@@ -47,7 +49,8 @@ namespace UltimateMods.EndGame
         ImpostorWin,
         JesterWin,
         OpportunistWin,
-        TaskerWin,
+        JackalWin,
+        ArsonistWin,
 
         ForceEnd,
         EveryoneLose
@@ -132,6 +135,9 @@ namespace UltimateMods.EndGame
             notWinners.AddRange(Jester.allPlayers);
             notWinners.AddRange(Opportunist.allPlayers);
             notWinners.AddRange(Madmate.allPlayers);
+            notWinners.AddRange(Jackal.allPlayers);
+            notWinners.AddRange(Sidekick.allPlayers);
+            notWinners.AddRange(Arsonist.allPlayers);
 
             List<WinningPlayerData> winnersToRemove = new();
             foreach (WinningPlayerData winner in TempData.winners)
@@ -141,6 +147,8 @@ namespace UltimateMods.EndGame
             foreach (var winner in winnersToRemove) TempData.winners.Remove(winner);
 
             bool JesterWin = Jester.exists && GameOverReason == (GameOverReason)CustomGameOverReason.JesterExiled;
+            bool TeamJackalWin = GameOverReason == (GameOverReason)CustomGameOverReason.TeamJackalWin && (Jackal.livingPlayers.Count > 0 || ((Sidekick.allPlayers.Count > 0 && Sidekick.livingPlayers.Count >= 0) || Sidekick.allPlayers.Count <= 0));
+            bool ArsonistWin = Arsonist.exists && GameOverReason == (GameOverReason)CustomGameOverReason.ArsonistWin;
 
             bool CrewmateWin = GameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote;
             bool ImpostorWin = GameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorBySabotage or GameOverReason.ImpostorByVote;
@@ -158,6 +166,36 @@ namespace UltimateMods.EndGame
                     jester.player.Data.IsDead = true;
                 }
                 AdditionalTempData.winCondition = WinCondition.JesterWin;
+            }
+
+            else if (TeamJackalWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var jackal in Jackal.players)
+                {
+                    WinningPlayerData wpd = new(jackal.player.Data);
+                    wpd.IsImpostor = false;
+                    TempData.winners.Add(wpd);
+                }
+
+                foreach (var sidekick in Sidekick.players)
+                {
+                    WinningPlayerData wpd = new(sidekick.player.Data);
+                    wpd.IsImpostor = false;
+                    TempData.winners.Add(wpd);
+                }
+                AdditionalTempData.winCondition = WinCondition.JackalWin;
+            }
+
+            else if (ArsonistWin)
+            {
+                TempData.winners = new Il2CppSystem.Collections.Generic.List<WinningPlayerData>();
+                foreach (var arsonist in Arsonist.players)
+                {
+                    WinningPlayerData wpd = new(arsonist.player.Data);
+                    TempData.winners.Add(wpd);
+                }
+                AdditionalTempData.winCondition = WinCondition.ArsonistWin;
             }
 
             else if (CrewmateWin)
@@ -335,6 +373,18 @@ namespace UltimateMods.EndGame
                             SoundManager.Instance.PlaySound(JesterWinSound, false, 0.8f);
                         }
                     }
+                    else if (AdditionalTempData.winCondition == WinCondition.JackalWin)
+                    {
+                        bonusText = ModTranslation.getString("TeamJackalWin");
+                        textRenderer.color = JackalBlue;
+                        __instance.BackgroundBar.material.SetColor("_Color", JackalBlue);
+                    }
+                    else if (AdditionalTempData.winCondition == WinCondition.ArsonistWin)
+                    {
+                        bonusText = ModTranslation.getString("ArsonistWin");
+                        textRenderer.color = ArsonistOrange;
+                        __instance.BackgroundBar.material.SetColor("_Color", ArsonistOrange);
+                    }
                     else if (AdditionalTempData.gameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote)
                     {
                         bonusText = ModTranslation.getString("CrewmateWin");
@@ -466,6 +516,8 @@ namespace UltimateMods.EndGame
                         return true;
                     var statistics = new PlayerStatistics(__instance);
                     if (CheckAndEndGameForJesterWin(__instance)) return false;
+                    if (CheckAndEndGameForJackalWin(__instance, statistics)) return false;
+                    if (CheckAndEndGameForArsonistWin(__instance)) return false;
                     if (CheckAndEndGameForSabotageWin(__instance)) return false;
                     if (CheckAndEndGameForTaskWin(__instance)) return false;
                     if (CheckAndEndGameForForceEnd(__instance)) return false;
@@ -479,6 +531,27 @@ namespace UltimateMods.EndGame
                     if (Jester.TriggerJesterWin)
                     {
                         UncheckedEndGame(CustomGameOverReason.JesterExiled);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForJackalWin(ShipStatus __instance, PlayerStatistics statistics)
+                {
+                    if (statistics.TeamJackalAlive >= statistics.TotalAlive - statistics.TeamJackalAlive &&
+                        statistics.TeamImpostorsAlive == 0)
+                    {
+                        UncheckedEndGame(CustomGameOverReason.TeamJackalWin);
+                        return true;
+                    }
+                    return false;
+                }
+
+                private static bool CheckAndEndGameForArsonistWin(ShipStatus __instance)
+                {
+                    if (Arsonist.TriggerArsonistWin)
+                    {
+                        UncheckedEndGame(CustomGameOverReason.ArsonistWin);
                         return true;
                     }
                     return false;
@@ -538,7 +611,8 @@ namespace UltimateMods.EndGame
 
                 private static bool CheckAndEndGameForImpostorWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive)
+                    if (statistics.TeamImpostorsAlive >= statistics.TotalAlive - statistics.TeamImpostorsAlive &&
+                        statistics.TeamJackalAlive == 0)
                     {
                         GameOverReason endReason;
                         switch (TempData.LastDeathReason)
@@ -561,7 +635,7 @@ namespace UltimateMods.EndGame
 
                 private static bool CheckAndEndGameForCrewmateWin(ShipStatus __instance, PlayerStatistics statistics)
                 {
-                    if (statistics.TeamCrew > 0 && statistics.TeamImpostorsAlive == 0)
+                    if (statistics.TeamCrew > 0 && statistics.TeamImpostorsAlive == 0 && statistics.TeamJackalAlive == 0)
                     {
                         UncheckedEndGame(GameOverReason.HumansByVote);
                         return true;
@@ -596,6 +670,7 @@ namespace UltimateMods.EndGame
             {
                 public int TeamImpostorsAlive { get; set; }
                 public int TeamCrew { get; set; }
+                public int TeamJackalAlive { get; set; }
                 public int NeutralAlive { get; set; }
                 public int TotalAlive { get; set; }
 
@@ -606,6 +681,7 @@ namespace UltimateMods.EndGame
 
                 private void GetPlayerCounts()
                 {
+                    int NumJackalAlive = 0;
                     int NumImpostorsAlive = 0;
                     int NumTotalAlive = 0;
                     int NumNeutralAlive = 0;
@@ -621,12 +697,14 @@ namespace UltimateMods.EndGame
                                 NumTotalAlive++;
                                 if (playerInfo.Role.IsImpostor) NumImpostorsAlive++;
                                 if (playerInfo.Object.IsNeutral()) NumNeutralAlive++;
+                                if (playerInfo.Object.IsTeamJackal()) NumJackalAlive++;
                             }
                         }
                     }
 
                     TeamCrew = NumCrew;
                     TeamImpostorsAlive = NumImpostorsAlive;
+                    TeamJackalAlive = NumJackalAlive;
                     NeutralAlive = NumNeutralAlive;
                     TotalAlive = NumTotalAlive;
                 }

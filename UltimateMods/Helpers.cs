@@ -119,7 +119,16 @@ namespace UltimateMods
         public static bool IsNeutral(this PlayerControl player)
         {
             return (player != null &&
-                    player.isRole(RoleType.Jester));
+                    (player.isRole(RoleType.Jester) ||
+                    player.isRole(RoleType.Arsonist) ||
+                    player.IsTeamJackal()));
+        }
+
+        public static bool IsTeamJackal(this PlayerControl player)
+        {
+            return (player != null &&
+                        (player.isRole(RoleType.Jackal) ||
+                        player.isRole(RoleType.Sidekick)));
         }
 
         public static void ShareGameVersion()
@@ -168,21 +177,14 @@ namespace UltimateMods
                 var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
                 task.transform.SetParent(player.transform, false);
 
-                /*if (roleInfo.roleType == RoleType.Jackal)
+                if (roleInfo.roleType == RoleType.Jackal && Jackal.CanSidekick)
                 {
-                    if (Jackal.canCreateSidekick)
-                    {
-                        task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalWithSidekick"));
-                    }
-                    else
-                    {
-                        task.Text = cs(roleInfo.color, $"{roleInfo.name}: " + ModTranslation.getString("jackalShortDesc"));
-                    }
+                    task.Text += cs(roleInfo.color, ModTranslation.getString("JackalWithSidekick"));
                 }
                 else
-                {*/
-                task.Text = cs(roleInfo.color, $"{roleInfo.Name}: {roleInfo.ShortDescription}");
-                // }
+                {
+                    task.Text = cs(roleInfo.color, $"{roleInfo.Name}: {roleInfo.ShortDescription}");
+                }
 
                 player.myTasks.Insert(0, task);
             }
@@ -199,7 +201,7 @@ namespace UltimateMods
             if (source == null || target == null) return true;
             if (source.IsDead()) return false;
             if (target.IsDead()) return true;
-            else if (source.Data.Role.IsImpostor && target.Data.Role.IsImpostor)/* || target == Spy.spy || target == Sidekick.sidekick && Sidekick.wasTeamRed || target == Jackal.jackal && Jackal.wasTeamRed))*/ return false;/* // Members of team Impostors see the names of Impostors/Spies
+            else if (source.Data.Role.IsImpostor && (target.Data.Role.IsImpostor)) return false;/* // Members of team Impostors see the names of Impostors/Spies
             // if (Camouflager.camouflageTimer > 0f) return true; // No names are visible
             // if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
             // if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
@@ -213,9 +215,9 @@ namespace UltimateMods
                 if (distance > ShipStatus.Instance.CalculateLightRadius(source.Data) * distMod || anythingBetween) return true;
             }
             if (!MapOptions.HidePlayerNames) return false; // All names are visible
-            // if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
-            // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
-            // if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick) || target == Jackal.fakeSidekick)) return false; // Members of team Jackal see the names of each other
+                                                           // if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
+                                                           // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
+            if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick))) return false; // Members of team Jackal see the names of each other
             return true;
         }
 
@@ -255,6 +257,10 @@ namespace UltimateMods
             else if (Jester.CanUseVents && player.isRole(RoleType.Jester))
                 roleCouldUse = true;
             else if (Madmate.CanUseVents && player.isRole(RoleType.Madmate))
+                roleCouldUse = true;
+            else if (Jackal.CanUseVents && player.isRole(RoleType.Jackal))
+                roleCouldUse = true;
+            else if (Sidekick.CanUseVents && player.isRole(RoleType.Sidekick))
                 roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
@@ -351,7 +357,9 @@ namespace UltimateMods
         {
             return player.Role.IsImpostor
                 || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)
-                || (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && Madmate.HasImpostorVision);
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && Madmate.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Jackal) && Jackal.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) && Sidekick.HasImpostorVision);
         }
 
         public static T GetRandom<T>(this List<T> list)
@@ -381,6 +389,14 @@ namespace UltimateMods
                 }
                 if (p == 1f && renderer != null) renderer.enabled = false;
             })));
+        }
+
+        public static void SetSemiTransparent(this PoolablePlayer player, bool value)
+        {
+            float alpha = value ? 0.25f : 1f;
+            foreach (SpriteRenderer r in player.gameObject.GetComponentsInChildren<SpriteRenderer>())
+                r.color = new Color(r.color.r, r.color.g, r.color.b, alpha);
+            player.cosmetics.nameText.color = new Color(player.cosmetics.nameText.color.r, player.cosmetics.nameText.color.g, player.cosmetics.nameText.color.b, alpha);
         }
     }
 }
