@@ -223,7 +223,7 @@ namespace UltimateMods.Roles
         public static void SetButtonCooldowns()
         {
             ArsonistButton.MaxTimer = Cooldown;
-            IgniteButton.MaxTimer = 0f;
+            IgniteButton.Timer = IgniteButton.MaxTimer = 0f;
         }
 
         public static void Clear()
