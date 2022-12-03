@@ -192,10 +192,9 @@ namespace UltimateMods
             AdversityAdversityStateCanFindMadmate = CustomOption.Create(197, Impostor, ImpostorRed, "AdversityStateCanFindMadmate", false, AdversityRate);
             AdversityAdversityStateCanSeeVotes = CustomOption.Create(198, Impostor, ImpostorRed, "AdversityStateCanSeeVotes", false, AdversityRate);
 
-            SnitchRate = new CustomRoleOption(200, Impostor, White, "Snitch", SnitchGreen, 15);
+            SnitchRate = new CustomRoleOption(200, Crewmate, White, "Snitch", SnitchGreen, 15);
             SnitchLeftTasksForReveal = CustomOption.Create(201, Crewmate, SnitchGreen, "SnitchLeftTasksForReveal", 1f, 0f, 5f, 1f, SnitchRate);
             SnitchIncludeTeamJackal = CustomOption.Create(202, Crewmate, SnitchGreen, "SnitchIncludeTeamJackal", false, SnitchRate);
-            SnitchTeamJackalUseDifferentArrowColor = CustomOption.Create(203, Crewmate, SnitchGreen, "SnitchTeamJackalUseDifferentArrowColor", true, SnitchIncludeTeamJackal);
 
             JackalRate = new CustomRoleOption(210, Neutral, White, "Jackal", JackalBlue, 1);
             JackalKillCooldown = CustomOption.Create(211, Neutral, JackalBlue, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, JackalRate, format: "FormatSeconds");

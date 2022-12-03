@@ -68,20 +68,21 @@ namespace UltimateMods.Modules
 
         private static void ChangeNextLang()
         {
-            if (LanguageNum == (int)SupportedLang.Indonesia)
+            try
             {
-                LanguageNum = UltimateModsPlugin.LanguageNum.Value = (int)SupportedLang.Japanese;
+                if (LanguageNum == (int)SupportedLang.Indonesia) LanguageNum = UltimateModsPlugin.LanguageNum.Value = (int)SupportedLang.Japanese;
+                else LanguageNum++;
+                ClientOptionsPatch.updateTranslations();
+                VanillaOptionsPatch.updateTranslations();
+                Language = ModTranslation.getString("AllLanguage");
+                LangOption.Text.text = String.Format(ModTranslation.getString("Language"), Language);
+                UltimateModsPlugin.Logger.LogInfo("Changed Language");
+                UltimateModsPlugin.LanguageNum.Value++;
             }
-            else
+            catch (Exception e)
             {
-                LanguageNum++;
+                UltimateModsPlugin.Logger.LogError(e);
             }
-            ClientOptionsPatch.updateTranslations();
-            VanillaOptionsPatch.updateTranslations();
-            Language = ModTranslation.getString("AllLanguage");
-            LangOption.Text.text = String.Format(ModTranslation.getString("Language"), Language);
-            UltimateModsPlugin.Logger.LogInfo("Changed Language");
-            UltimateModsPlugin.LanguageNum.Value++;
         }
     }
 }

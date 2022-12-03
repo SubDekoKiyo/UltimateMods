@@ -15,7 +15,6 @@ namespace UltimateMods.Roles
         public static List<CustomArrow> LocalArrows = new();
         public static int TaskCountForReveal { get { return Mathf.RoundToInt(CustomRolesH.SnitchLeftTasksForReveal.getFloat()); } }
         public static bool IncludeTeamJackal { get { return CustomRolesH.SnitchIncludeTeamJackal.getBool(); } }
-        public static bool TeamJackalUseDifferentArrowColor { get { return CustomRolesH.SnitchTeamJackalUseDifferentArrowColor.getBool(); } }
 
         public Snitch()
         {
@@ -32,8 +31,6 @@ namespace UltimateMods.Roles
 
             foreach (var snitch in Snitch.allPlayers)
             {
-                if (snitch == null) return;
-
                 var (PlayerCompleted, PlayerTotal) = TasksHandler.taskInfo(snitch.Data);
                 int NumberOfTasks = PlayerTotal - PlayerCompleted;
 
