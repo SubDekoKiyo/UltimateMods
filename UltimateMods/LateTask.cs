@@ -1,4 +1,4 @@
-// Source Code from TownOfHost
+// Source Code by TownOfHost
 
 using System;
 using System.Collections.Generic;
