@@ -1,4 +1,4 @@
-// Source Code with Town of Plus & Town of Super
+// Source Code from Town of Plus & Town of Super
 
 using HarmonyLib;
 using System;
