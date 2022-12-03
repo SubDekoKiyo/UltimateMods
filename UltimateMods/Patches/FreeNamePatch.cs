@@ -1,5 +1,5 @@
 // Taken from https://github.com/NuclearPowered/Reactor/ , licensed under the LGPLv3
-// Source Code with TheOtherRoles(https://github.com/Eisbison/TheOtherRoles)
+// Source Code from TheOtherRoles(https://github.com/Eisbison/TheOtherRoles)
 
 using System;
 using System.Collections.Generic;

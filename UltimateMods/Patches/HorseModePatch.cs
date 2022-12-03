@@ -1,4 +1,4 @@
-// Source Code with TheOtherRoles
+// Source Code from TheOtherRoles
 
 using HarmonyLib;
 using UnityEngine;
