@@ -10,6 +10,7 @@ namespace UltimateMods
         public static GameObject MiraHQ;
         public static GameObject Polus;
         public static GameObject AirShip;
+
         public static void Prefix(SpawnInMinigame.SpawnLocation __instance)
         {
             if (PlayerControl.GameOptions.MapId == 0 && CustomOptionsH.EnableMirrorMap.getBool())
