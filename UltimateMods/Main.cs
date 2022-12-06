@@ -62,6 +62,7 @@ namespace UltimateMods
 
             CustomRolesH.Load();
             CustomOptionsH.Load();
+            CustomColors.Load();
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             ModLanguageSelector.Initialize();
