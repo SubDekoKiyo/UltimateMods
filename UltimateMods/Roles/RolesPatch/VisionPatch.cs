@@ -11,6 +11,13 @@ namespace UltimateMods.Roles.Patches
         [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
         public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player)
         {
+            ISystemType systemType = __instance.Systems.ContainsKey(SystemTypes.Electrical) ? __instance.Systems[SystemTypes.Electrical] : null;
+            if (systemType == null) return true;
+            SwitchSystem switchSystem = systemType.TryCast<SwitchSystem>();
+            if (switchSystem == null) return true;
+
+            float num = (float)switchSystem.Value / 255f;
+
             if (!__instance.Systems.ContainsKey(SystemTypes.Electrical)) return true;
 
             // Has Impostor Vision
@@ -19,6 +26,8 @@ namespace UltimateMods.Roles.Patches
                 __result = GetNeutralLightRadius(__instance, true);
                 return false;
             }
+            else if (PlayerControl.LocalPlayer.isRole(RoleType.Lighter) && Lighter.IsLightActive(PlayerControl.LocalPlayer)) // if player is Lighter and Lighter has his ability active
+                __result = Mathf.Lerp(__instance.MaxLightRadius * Lighter.LighterModeLightsOffVision, __instance.MaxLightRadius * Lighter.LighterModeLightsOnVision, num);
 
             // Default light radius
             else

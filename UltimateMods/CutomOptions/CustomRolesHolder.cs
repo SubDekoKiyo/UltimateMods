@@ -109,6 +109,12 @@ namespace UltimateMods
         public static CustomOption ArsonistCooldown;
         public static CustomOption ArsonistDuration;
 
+        public static CustomRoleOption LighterRate;
+        public static CustomOption LighterModeLightsOnVision;
+        public static CustomOption LighterModeLightsOffVision;
+        public static CustomOption LighterCooldown;
+        public static CustomOption LighterDuration;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -215,6 +221,12 @@ namespace UltimateMods
             ArsonistRate = new CustomRoleOption(240, Neutral, White, "Arsonist", ArsonistOrange, 1);
             ArsonistCooldown = CustomOption.Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
             ArsonistDuration = CustomOption.Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
+
+            LighterRate = new CustomRoleOption(250, Crewmate, White, "Lighter", LighterYellow, 15);
+            LighterModeLightsOnVision = CustomOption.Create(251, Crewmate, LighterYellow, "LighterModeLightsOnVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+            LighterModeLightsOffVision = CustomOption.Create(252, Crewmate, LighterYellow, "LighterModeLightsOffVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+            LighterCooldown = CustomOption.Create(253, Crewmate, LighterYellow, "LighterCooldowns", 30f, 5f, 120f, 5f, LighterRate, format: "FormatSeconds");
+            LighterDuration = CustomOption.Create(254, Crewmate, LighterYellow, "LighterDurations", 5f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);

@@ -17,6 +17,7 @@ namespace UltimateMods
         public static Color JackalBlue = new Color32(0, 180, 235, byte.MaxValue);
         public static Color SeerGreen = new Color32(97, 178, 108, byte.MaxValue);
         public static Color ArsonistOrange = new Color32(238, 112, 46, byte.MaxValue);
+        public static Color LighterYellow = new Color32(238, 229, 190, byte.MaxValue);
 
         public static Color OpportunistGreen = new Color32(0, 255, 0, byte.MaxValue);
 

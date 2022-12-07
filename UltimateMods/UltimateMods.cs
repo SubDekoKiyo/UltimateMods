@@ -32,6 +32,7 @@ namespace UltimateMods
             Sidekick.Clear();
             Seer.Clear();
             Arsonist.Clear();
+            Lighter.Clear();
 
             // Modifiers
             Opportunist.Clear();
