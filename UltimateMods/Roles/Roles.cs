@@ -141,7 +141,7 @@ namespace UltimateMods.Roles
 
         public static bool exists
         {
-            get { return COHelpers.RolesEnabled && players.Count > 0; }
+            get { return Helpers.RolesEnabled && players.Count > 0; }
         }
 
         public static T getRole(PlayerControl player = null)

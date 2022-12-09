@@ -23,6 +23,66 @@ namespace UltimateMods
 
     public static class Helpers
     {
+
+        public static bool ShowButtons
+        {
+            get
+            {
+                return !(MapBehaviour.Instance && MapBehaviour.Instance.IsOpen) &&
+                        !MeetingHud.Instance &&
+                        !ExileController.Instance;
+            }
+        }
+
+        public static bool ShowMeetingText
+        {
+            get
+            {
+                return MeetingHud.Instance != null &&
+                    (MeetingHud.Instance.state == MeetingHud.VoteStates.Voted ||
+                    MeetingHud.Instance.state == MeetingHud.VoteStates.NotVoted ||
+                    MeetingHud.Instance.state == MeetingHud.VoteStates.Discussion);
+            }
+        }
+
+        public static bool GameStarted
+        {
+            get
+            {
+                return AmongUsClient.Instance != null && AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started;
+            }
+        }
+
+        public static bool RolesEnabled
+        {
+            get
+            {
+                return CustomOptionsH.ActivateModRoles.getBool();
+            }
+        }
+
+        public static bool RefundVotes
+        {
+            get
+            {
+                return CustomOptionsH.RefundVotesOnDeath.getBool();
+            }
+        }
+
+        public static bool IsMirrorMap
+        {
+            get
+            { return CustomOptionsH.EnableMirrorMap.getBool(); }
+        }/*
+
+        public static bool IsGodMiraHQ
+        {
+            get
+            {
+                return CustomOptionsH.EnableGodMiraHQ.getBool() && PlayerControl.GameOptions.MapId == 1;
+            }
+        }*/
+
         public static Sprite LoadSpriteFromTexture2D(Texture2D texture, float pixelsPerUnit)
         {
             return Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f), pixelsPerUnit);
@@ -222,7 +282,7 @@ namespace UltimateMods
             // if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
             // if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
             */
-            if (MapOptions.HideOutOfSightNametags && COHelpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
+            if (MapOptions.HideOutOfSightNametags && Helpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
             {
                 float distMod = 1.025f;
                 float distance = Vector3.Distance(source.transform.position, target.transform.position);

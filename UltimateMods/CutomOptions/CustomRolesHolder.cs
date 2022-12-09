@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
 using static UltimateMods.ColorDictionary;
+using static UltimateMods.Modules.CustomOption;
 using static UltimateMods.Modules.CustomOption.CustomOptionType;
 
 namespace UltimateMods
@@ -130,120 +131,107 @@ namespace UltimateMods
         public static void Load()
         {
             /* Roles */
-            JesterRate = new CustomRoleOption(100, Neutral, White, "Jester", JesterPink, 1);
-            JesterCanEmergencyMeeting = CustomOption.Create(101, Neutral, JesterPink, "CanEmergencyMeeting", false, JesterRate);
-            JesterCanUseVents = CustomOption.Create(102, Neutral, JesterPink, "CanUseVents", false, JesterRate);
-            JesterCanMoveInVents = CustomOption.Create(103, Neutral, JesterPink, "CanMoveInVents", false, JesterCanUseVents);
-            JesterCanSabotage = CustomOption.Create(104, Neutral, JesterPink, "CanSabotage", false, JesterRate);
-            JesterHasImpostorVision = CustomOption.Create(105, Neutral, JesterPink, "HasImpostorVision", false, JesterRate);
-            JesterMustFinishTasks = CustomOption.Create(106, Neutral, JesterPink, "JesterMustFinishTasks", false, JesterRate);
+            JesterRate = new(100, Neutral, White, "Jester", JesterPink, 1);
+            JesterCanEmergencyMeeting = Create(101, Neutral, JesterPink, "CanEmergencyMeeting", false, JesterRate);
+            JesterCanUseVents = Create(102, Neutral, JesterPink, "CanUseVents", false, JesterRate);
+            JesterCanMoveInVents = Create(103, Neutral, JesterPink, "CanMoveInVents", false, JesterCanUseVents);
+            JesterCanSabotage = Create(104, Neutral, JesterPink, "CanSabotage", false, JesterRate);
+            JesterHasImpostorVision = Create(105, Neutral, JesterPink, "HasImpostorVision", false, JesterRate);
+            JesterMustFinishTasks = Create(106, Neutral, JesterPink, "JesterMustFinishTasks", false, JesterRate);
             JesterTasks = new CustomTasksOption(107, Neutral, JesterPink, 1, 1, 3, JesterMustFinishTasks);
 
-            SheriffRate = new CustomRoleOption(110, Crewmate, White, "Sheriff", SheriffYellow, 15);
-            SheriffMaxShots = CustomOption.Create(111, Crewmate, SheriffYellow, "MaxShots", 2f, 1f, 15f, 1f, SheriffRate, format: "FormatShots");
-            SheriffCooldowns = CustomOption.Create(112, Crewmate, SheriffYellow, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, SheriffRate, format: "FormatSeconds");
-            SheriffCanKillNeutral = CustomOption.Create(113, Crewmate, SheriffYellow, "CanKillNeutral", true, SheriffRate);
-            SheriffMisfireKillsTarget = CustomOption.Create(114, Crewmate, SheriffYellow, "MisfireKillsTarget", false, SheriffRate);
+            SheriffRate = new(110, Crewmate, White, "Sheriff", SheriffYellow, 15);
+            SheriffMaxShots = Create(111, Crewmate, SheriffYellow, "MaxShots", 2f, 1f, 15f, 1f, SheriffRate, format: "FormatShots");
+            SheriffCooldowns = Create(112, Crewmate, SheriffYellow, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, SheriffRate, format: "FormatSeconds");
+            SheriffCanKillNeutral = Create(113, Crewmate, SheriffYellow, "CanKillNeutral", true, SheriffRate);
+            SheriffMisfireKillsTarget = Create(114, Crewmate, SheriffYellow, "MisfireKillsTarget", false, SheriffRate);
 
-            EngineerRate = new CustomRoleOption(120, Crewmate, White, "Engineer", EngineerBlue, 15);
-            EngineerCanFixSabo = CustomOption.Create(121, Crewmate, EngineerBlue, "EngineerCanFixSabo", true, EngineerRate);
-            EngineerMaxFixCount = CustomOption.Create(122, Crewmate, EngineerBlue, "EngineerSaboFixCount", 2f, 1f, 15f, 1f, EngineerCanFixSabo, format: "FormatTimes");
-            EngineerCanUseVents = CustomOption.Create(123, Crewmate, EngineerBlue, "CanUseVents", true, EngineerRate);
-            // EngineerVentCooldown = CustomOption.Create(124, Crewmate, "EngineerVentCooldown", 20f, 0f, 60f, 2.5f, EngineerCanUseVents, format: "FormatSeconds");
+            EngineerRate = new(120, Crewmate, White, "Engineer", EngineerBlue, 15);
+            EngineerCanFixSabo = Create(121, Crewmate, EngineerBlue, "EngineerCanFixSabo", true, EngineerRate);
+            EngineerMaxFixCount = Create(122, Crewmate, EngineerBlue, "EngineerSaboFixCount", 2f, 1f, 15f, 1f, EngineerCanFixSabo, format: "FormatTimes");
+            EngineerCanUseVents = Create(123, Crewmate, EngineerBlue, "CanUseVents", true, EngineerRate);
+            // EngineerVentCooldown = Create(124, Crewmate, "EngineerVentCooldown", 20f, 0f, 60f, 2.5f, EngineerCanUseVents, format: "FormatSeconds");
 
-            CustomImpostorRate = new CustomRoleOption(130, Impostor, White, "CustomImpostor", ImpostorRed, 15);
-            CustomImpostorKillCooldown = CustomOption.Create(131, Impostor, ImpostorRed, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, CustomImpostorRate, format: "FormatSeconds");
-            CustomImpostorCanUseVents = CustomOption.Create(132, Impostor, ImpostorRed, "CanUseVents", true, CustomImpostorRate);
-            CustomImpostorCanSabotage = CustomOption.Create(133, Impostor, ImpostorRed, "CanSabotage", true, CustomImpostorRate);
+            CustomImpostorRate = new(130, Impostor, White, "CustomImpostor", ImpostorRed, 15);
+            CustomImpostorKillCooldown = Create(131, Impostor, ImpostorRed, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, CustomImpostorRate, format: "FormatSeconds");
+            CustomImpostorCanUseVents = Create(132, Impostor, ImpostorRed, "CanUseVents", true, CustomImpostorRate);
+            CustomImpostorCanSabotage = Create(133, Impostor, ImpostorRed, "CanSabotage", true, CustomImpostorRate);
 
-            UnderTakerRate = new CustomRoleOption(140, Impostor, White, "UnderTaker", ImpostorRed, 1);
-            UnderTakerKillCooldown = CustomOption.Create(141, Impostor, ImpostorRed, "KillCooldowns", 35f, 5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
-            UnderTakerButtonCooldown = CustomOption.Create(142, Impostor, ImpostorRed, "UnderTakerButtonCooldown", 30f, 2.5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
-            UnderTakerHasDuration = CustomOption.Create(143, Impostor, ImpostorRed, "UnderTakerHasDuration", true, UnderTakerRate);
-            UnderTakerDuration = CustomOption.Create(144, Impostor, ImpostorRed, "UnderTakerDuration", 15f, 2.5f, 30f, 2.5f, UnderTakerHasDuration, format: "FormatSeconds");
-            UnderTakerDraggingSpeed = CustomOption.Create(145, Impostor, ImpostorRed, "UnderTakerDraggingSpeed", 80f, 75f, 100f, 2.5f, UnderTakerRate, format: "FormatPercent");
-            UnderTakerCanDumpBodyVents = CustomOption.Create(146, Impostor, ImpostorRed, "UnderTakerCanDumpDeadBodyInVent", false, UnderTakerRate);
+            UnderTakerRate = new(140, Impostor, White, "UnderTaker", ImpostorRed, 1);
+            UnderTakerKillCooldown = Create(141, Impostor, ImpostorRed, "KillCooldowns", 35f, 5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
+            UnderTakerButtonCooldown = Create(142, Impostor, ImpostorRed, "UnderTakerButtonCooldown", 30f, 2.5f, 60f, 2.5f, UnderTakerRate, format: "FormatSeconds");
+            UnderTakerHasDuration = Create(143, Impostor, ImpostorRed, "UnderTakerHasDuration", true, UnderTakerRate);
+            UnderTakerDuration = Create(144, Impostor, ImpostorRed, "UnderTakerDuration", 15f, 2.5f, 30f, 2.5f, UnderTakerHasDuration, format: "FormatSeconds");
+            UnderTakerDraggingSpeed = Create(145, Impostor, ImpostorRed, "UnderTakerDraggingSpeed", 80f, 75f, 100f, 2.5f, UnderTakerRate, format: "FormatPercent");
+            UnderTakerCanDumpBodyVents = Create(146, Impostor, ImpostorRed, "UnderTakerCanDumpDeadBodyInVent", false, UnderTakerRate);
 
-            BountyHunterRate = new CustomRoleOption(150, Impostor, White, "BountyHunter", ImpostorRed, 1);
-            BountyHunterSuccessKillCooldown = CustomOption.Create(151, Impostor, ImpostorRed, "BountyHunterSuccess", 5f, 2.5f, 30f, 2.5f, BountyHunterRate, format: "FormatSeconds");
-            BountyHunterAdditionalKillCooldown = CustomOption.Create(152, Impostor, ImpostorRed, "BountyHunterMiss", 20f, 5f, 45f, 2.5f, BountyHunterRate, format: "FormatSeconds");
-            BountyHunterDuration = CustomOption.Create(153, Impostor, ImpostorRed, "BountyHunterDuration", 30f, 2.5f, 60f, 2.5f, BountyHunterRate, format: "FormatSeconds");
-            BountyHunterShowArrow = CustomOption.Create(154, Impostor, ImpostorRed, "BountyHunterShowArrow", true, BountyHunterRate);
-            BountyHunterArrowUpdateCooldown = CustomOption.Create(155, Impostor, ImpostorRed, "BountyHunterArrowUpdateCooldown", 15f, 2.5f, 60f, 2.5f, BountyHunterShowArrow, format: "FormatSeconds");
+            BountyHunterRate = new(150, Impostor, White, "BountyHunter", ImpostorRed, 1);
+            BountyHunterSuccessKillCooldown = Create(151, Impostor, ImpostorRed, "BountyHunterSuccess", 5f, 2.5f, 30f, 2.5f, BountyHunterRate, format: "FormatSeconds");
+            BountyHunterAdditionalKillCooldown = Create(152, Impostor, ImpostorRed, "BountyHunterMiss", 20f, 5f, 45f, 2.5f, BountyHunterRate, format: "FormatSeconds");
+            BountyHunterDuration = Create(153, Impostor, ImpostorRed, "BountyHunterDuration", 30f, 2.5f, 60f, 2.5f, BountyHunterRate, format: "FormatSeconds");
+            BountyHunterShowArrow = Create(154, Impostor, ImpostorRed, "BountyHunterShowArrow", true, BountyHunterRate);
+            BountyHunterArrowUpdateCooldown = Create(155, Impostor, ImpostorRed, "BountyHunterArrowUpdateCooldown", 15f, 2.5f, 60f, 2.5f, BountyHunterShowArrow, format: "FormatSeconds");
 
-            MadmateRate = new CustomRoleOption(160, Crewmate, White, "Madmate", ImpostorRed, 15);
-            MadmateCanDieToSheriffOrYakuza = CustomOption.Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
-            MadmateCanEnterVents = CustomOption.Create(162, Crewmate, ImpostorRed, "CanUseVents", true, MadmateRate);
-            MadmateCanMoveInVents = CustomOption.Create(163, Crewmate, ImpostorRed, "CanMoveInVents", false, MadmateCanEnterVents);
-            MadmateCanSabotage = CustomOption.Create(164, Crewmate, ImpostorRed, "CanSabotage", false, MadmateRate);
-            MadmateHasImpostorVision = CustomOption.Create(165, Crewmate, ImpostorRed, "HasImpostorVision", true, MadmateRate);
-            MadmateCanFixO2 = CustomOption.Create(166, Crewmate, ImpostorRed, "CanFixO2", false, MadmateRate);
-            MadmateCanFixComms = CustomOption.Create(167, Crewmate, ImpostorRed, "CanFixComms", false, MadmateRate);
-            MadmateCanFixReactor = CustomOption.Create(168, Crewmate, ImpostorRed, "CanFixReactor", true, MadmateRate);
-            MadmateCanFixBlackout = CustomOption.Create(169, Crewmate, ImpostorRed, "CanFixBlackout", true, MadmateRate);
-            MadmateHasTasks = CustomOption.Create(170, Crewmate, ImpostorRed, "HasTasks", true, MadmateRate);
+            MadmateRate = new(160, Crewmate, White, "Madmate", ImpostorRed, 15);
+            MadmateCanDieToSheriffOrYakuza = Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
+            MadmateCanEnterVents = Create(162, Crewmate, ImpostorRed, "CanUseVents", true, MadmateRate);
+            MadmateCanMoveInVents = Create(163, Crewmate, ImpostorRed, "CanMoveInVents", false, MadmateCanEnterVents);
+            MadmateCanSabotage = Create(164, Crewmate, ImpostorRed, "CanSabotage", false, MadmateRate);
+            MadmateHasImpostorVision = Create(165, Crewmate, ImpostorRed, "HasImpostorVision", true, MadmateRate);
+            MadmateCanFixO2 = Create(166, Crewmate, ImpostorRed, "CanFixO2", false, MadmateRate);
+            MadmateCanFixComms = Create(167, Crewmate, ImpostorRed, "CanFixComms", false, MadmateRate);
+            MadmateCanFixReactor = Create(168, Crewmate, ImpostorRed, "CanFixReactor", true, MadmateRate);
+            MadmateCanFixBlackout = Create(169, Crewmate, ImpostorRed, "CanFixBlackout", true, MadmateRate);
+            MadmateHasTasks = Create(170, Crewmate, ImpostorRed, "HasTasks", true, MadmateRate);
             MadmateTasksCount = new CustomTasksOption(171, Crewmate, ImpostorRed, 1, 2, 3, MadmateHasTasks);
-            MadmateCanKnowImpostorWhenTasksEnded = CustomOption.Create(172, Crewmate, ImpostorRed, "MadmateKnowImpostorTaskEnd", true, MadmateHasTasks);
-            MadmateCanWinWhenTaskEnded = CustomOption.Create(173, Crewmate, ImpostorRed, "MadmateCanWinWhenTaskEnd", true, MadmateHasTasks);
+            MadmateCanKnowImpostorWhenTasksEnded = Create(172, Crewmate, ImpostorRed, "MadmateKnowImpostorTaskEnd", true, MadmateHasTasks);
+            MadmateCanWinWhenTaskEnded = Create(173, Crewmate, ImpostorRed, "MadmateCanWinWhenTaskEnd", true, MadmateHasTasks);
 
-            BakeryRate = new CustomRoleOption(175, Crewmate, White, "Bakery", BakeryYellow, 1);
-            BakeryBombRate = CustomOption.Create(176, Crewmate, BakeryYellow, "BakeryBombRate", 10f, 0f, 100f, 5f, BakeryRate, format: "FormatPercent");
+            BakeryRate = new(175, Crewmate, White, "Bakery", BakeryYellow, 1);
+            BakeryBombRate = Create(176, Crewmate, BakeryYellow, "BakeryBombRate", 10f, 0f, 100f, 5f, BakeryRate, format: "FormatPercent");
 
-            TeleporterRate = new CustomRoleOption(180, Impostor, White, "Teleporter", ImpostorRed, 15);
-            TeleporterButtonCooldown = CustomOption.Create(181, Impostor, ImpostorRed, "TeleporterButtonCooldown", 40f, 10f, 80f, 2.5f, TeleporterRate, format: "FormatSeconds");
-            TeleporterTeleportTo = CustomOption.Create(182, Impostor, ImpostorRed, "TeleporterTeleportTo", new string[] { "TeleporterAllRandom", "OnlyCrewmate" }, TeleporterRate);
+            TeleporterRate = new(180, Impostor, White, "Teleporter", ImpostorRed, 15);
+            TeleporterButtonCooldown = Create(181, Impostor, ImpostorRed, "TeleporterButtonCooldown", 40f, 10f, 80f, 2.5f, TeleporterRate, format: "FormatSeconds");
+            TeleporterTeleportTo = Create(182, Impostor, ImpostorRed, "TeleporterTeleportTo", new string[] { "TeleporterAllRandom", "OnlyCrewmate" }, TeleporterRate);
 
-            AltruistRate = new CustomRoleOption(185, Crewmate, White, "Altruist", ImpostorRed, 1);
-            AltruistDuration = CustomOption.Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
+            AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
+            AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
 
-            EvilHackerRate = new CustomRoleOption(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
-            EvilHackerCanMoveEvenIfUsesAdmin = CustomOption.Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);
-            EvilHackerCanHasBetterAdmin = CustomOption.Create(192, Impostor, ImpostorRed, "EvilHackerCanHasBetterAdmin", false, EvilHackerRate);
+            EvilHackerRate = new(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
+            EvilHackerCanMoveEvenIfUsesAdmin = Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);
+            EvilHackerCanHasBetterAdmin = Create(192, Impostor, ImpostorRed, "EvilHackerCanHasBetterAdmin", false, EvilHackerRate);
 
-            AdversityRate = new CustomRoleOption(195, Impostor, White, "Adversity", ImpostorRed, 1);
-            AdversityAdversityStateKillCooldown = CustomOption.Create(196, Impostor, ImpostorRed, "AdversityStateKillCooldown", 20f, 2.5f, 60f, 2.5f, AdversityRate, format: "FormatSeconds");
-            AdversityAdversityStateCanFindMadmate = CustomOption.Create(197, Impostor, ImpostorRed, "AdversityStateCanFindMadmate", false, AdversityRate);
-            AdversityAdversityStateCanSeeVotes = CustomOption.Create(198, Impostor, ImpostorRed, "AdversityStateCanSeeVotes", false, AdversityRate);
+            AdversityRate = new(195, Impostor, White, "Adversity", ImpostorRed, 1);
+            AdversityAdversityStateKillCooldown = Create(196, Impostor, ImpostorRed, "AdversityStateKillCooldown", 20f, 2.5f, 60f, 2.5f, AdversityRate, format: "FormatSeconds");
+            AdversityAdversityStateCanFindMadmate = Create(197, Impostor, ImpostorRed, "AdversityStateCanFindMadmate", false, AdversityRate);
+            AdversityAdversityStateCanSeeVotes = Create(198, Impostor, ImpostorRed, "AdversityStateCanSeeVotes", false, AdversityRate);
 
-            SnitchRate = new CustomRoleOption(200, Crewmate, White, "Snitch", SnitchGreen, 15);
-            SnitchLeftTasksForReveal = CustomOption.Create(201, Crewmate, SnitchGreen, "SnitchLeftTasksForReveal", 1f, 0f, 5f, 1f, SnitchRate);
-            SnitchIncludeTeamJackal = CustomOption.Create(202, Crewmate, SnitchGreen, "SnitchIncludeTeamJackal", false, SnitchRate);
+            SnitchRate = new(200, Crewmate, White, "Snitch", SnitchGreen, 15);
+            SnitchLeftTasksForReveal = Create(201, Crewmate, SnitchGreen, "SnitchLeftTasksForReveal", 1f, 0f, 5f, 1f, SnitchRate);
+            SnitchIncludeTeamJackal = Create(202, Crewmate, SnitchGreen, "SnitchIncludeTeamJackal", false, SnitchRate);
 
-            JackalRate = new CustomRoleOption(210, Neutral, White, "Jackal", JackalBlue, 1);
-            JackalKillCooldown = CustomOption.Create(211, Neutral, JackalBlue, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, JackalRate, format: "FormatSeconds");
-            JackalCanUseVents = CustomOption.Create(212, Neutral, JackalBlue, "JackalCanUseVents", true, JackalRate);
-            JackalAndSidekickHaveImpostorVision = CustomOption.Create(213, Neutral, JackalBlue, "JackalAndSidekickHaveImpostorVision", false, JackalRate);
-            JackalCanCreateSidekick = CustomOption.Create(214, Neutral, JackalBlue, "JackalCanCreateSidekick", false, JackalRate);
-            JackalCreateSidekickCooldown = CustomOption.Create(215, Neutral, JackalBlue, "JackalCreateSidekickCooldown", 30f, 2.5f, 60f, 2.5f, JackalCanCreateSidekick, format: "FormatSeconds");
-            SidekickPromotesToJackal = CustomOption.Create(216, Neutral, JackalBlue, "SidekickPromotesToJackal", true, JackalCanCreateSidekick);
-            SidekickCanKill = CustomOption.Create(217, Neutral, JackalBlue, "SidekickCanKill", false, JackalCanCreateSidekick);
-            SidekickCanUseVents = CustomOption.Create(218, Neutral, JackalBlue, "SidekickCanUseVents", true, JackalCanCreateSidekick);
-            JackalPromotedFromSidekickCanCreateSidekick = CustomOption.Create(219, Neutral, JackalBlue, "JackalPromotedFromSidekickCanCreateSidekick", true, JackalCanCreateSidekick);
+            JackalRate = new(210, Neutral, White, "Jackal", JackalBlue, 1);
+            JackalKillCooldown = Create(211, Neutral, JackalBlue, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, JackalRate, format: "FormatSeconds");
+            JackalCanUseVents = Create(212, Neutral, JackalBlue, "JackalCanUseVents", true, JackalRate);
+            JackalAndSidekickHaveImpostorVision = Create(213, Neutral, JackalBlue, "JackalAndSidekickHaveImpostorVision", false, JackalRate);
+            JackalCanCreateSidekick = Create(214, Neutral, JackalBlue, "JackalCanCreateSidekick", false, JackalRate);
+            JackalCreateSidekickCooldown = Create(215, Neutral, JackalBlue, "JackalCreateSidekickCooldown", 30f, 2.5f, 60f, 2.5f, JackalCanCreateSidekick, format: "FormatSeconds");
+            SidekickPromotesToJackal = Create(216, Neutral, JackalBlue, "SidekickPromotesToJackal", true, JackalCanCreateSidekick);
+            SidekickCanKill = Create(217, Neutral, JackalBlue, "SidekickCanKill", false, JackalCanCreateSidekick);
+            SidekickCanUseVents = Create(218, Neutral, JackalBlue, "SidekickCanUseVents", true, JackalCanCreateSidekick);
+            JackalPromotedFromSidekickCanCreateSidekick = Create(219, Neutral, JackalBlue, "JackalPromotedFromSidekickCanCreateSidekick", true, JackalCanCreateSidekick);
 
-            SeerRate = new CustomRoleOption(230, Crewmate, White, "Seer", SeerGreen, 15);
-            SeerMode = CustomOption.Create(231, Crewmate, SeerGreen, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerRate);
-            SeerLimitSoulDuration = CustomOption.Create(232, Crewmate, SeerGreen, "SeerLimitSoulDuration", false, SeerRate);
-            SeerSoulDuration = CustomOption.Create(233, Crewmate, SeerGreen, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "FormatSeconds");
+            SeerRate = new(230, Crewmate, White, "Seer", SeerGreen, 15);
+            SeerMode = Create(231, Crewmate, SeerGreen, "SeerMode", new string[] { "SeerModeBoth", "SeerModeFlash", "SeerModeSouls" }, SeerRate);
+            SeerLimitSoulDuration = Create(232, Crewmate, SeerGreen, "SeerLimitSoulDuration", false, SeerRate);
+            SeerSoulDuration = Create(233, Crewmate, SeerGreen, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "FormatSeconds");
 
             ArsonistRate = new CustomRoleOption(240, Neutral, White, "Arsonist", ArsonistOrange, 1);
             ArsonistCooldown = CustomOption.Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
             ArsonistDuration = CustomOption.Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
 
-            LighterRate = new CustomRoleOption(250, Crewmate, White, "Lighter", LighterYellow, 15);
-            LighterModeLightsOnVision = CustomOption.Create(251, Crewmate, LighterYellow, "LighterModeLightsOnVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
-            LighterModeLightsOffVision = CustomOption.Create(252, Crewmate, LighterYellow, "LighterModeLightsOffVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
-            LighterCooldown = CustomOption.Create(253, Crewmate, LighterYellow, "LighterCooldowns", 30f, 5f, 120f, 5f, LighterRate, format: "FormatSeconds");
-            LighterDuration = CustomOption.Create(254, Crewmate, LighterYellow, "LighterDurations", 5f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
-
-            YakuzaRate = new CustomRoleOption(260, Crewmate, White, "Yakuza", YakuzaBlue, 1);
-            YakuzaNumShots = CustomOption.Create(261, Crewmate, YakuzaBlue, "MaxShots", 2f, 1f, 15f, 1f, YakuzaRate, format: "FormatSeconds");
-            YakuzaShareShots = CustomOption.Create(262, Crewmate, YakuzaBlue, "YakuzaShareShots", true, YakuzaRate);
-            YakuzaKillCooldown = CustomOption.Create(263, Crewmate, YakuzaBlue, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, YakuzaRate, format: "FormatSeconds");
-            YakuzaCanKillNeutrals = CustomOption.Create(264, Crewmate, YakuzaBlue, "CanKillNeutral", true, YakuzaRate);
-            YakuzaMisfireKillsTarget = CustomOption.Create(265, Crewmate, YakuzaBlue, "MisfireKillsTarget", false, YakuzaRate);
-
             /* Modifiers */
-            OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
+            OpportunistRate = new(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
         }
     }
 }

@@ -93,7 +93,7 @@ namespace UltimateMods.EndGame
 
             if (UltimateModsPlugin.DebugMode.Value || UltimateModsPlugin.isBeta)
             {
-                DebugBots.BotCount = 0;
+                DebugBots.botCount = 0;
             }
         }
 

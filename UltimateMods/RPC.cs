@@ -317,7 +317,7 @@ namespace UltimateMods
                     }
 
                     // Give players back their vote if target is shot dead
-                    if (COHelpers.RefundVotes && dead)
+                    if (Helpers.RefundVotes && dead)
                     {
                         if (pva.VotedFor != targetId) continue;
                         pva.UnsetVote();

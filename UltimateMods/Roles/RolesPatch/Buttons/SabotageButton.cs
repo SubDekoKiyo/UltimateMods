@@ -10,12 +10,12 @@ namespace UltimateMods.Roles.Patches
         {
             static void Postfix(PlayerControl __instance)
             {
-                if (__instance.AmOwner && COHelpers.ShowButtons)
+                if (__instance.AmOwner && Helpers.ShowButtons)
                 {
                     FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.Hide();
                     FastDestroyableSingleton<HudManager>.Instance.SabotageButton.Hide();
 
-                    if (COHelpers.ShowButtons)
+                    if (Helpers.ShowButtons)
                     {
                         if (__instance.RoleCanUseVents())
                             FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.Show();
