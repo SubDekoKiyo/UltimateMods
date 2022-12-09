@@ -45,6 +45,7 @@ namespace UltimateMods
         ArsonistWin,
         AltruistKill,
         AltruistRevive,
+        YakuzaKill,
     }
 
     public static class RPCProcedure
@@ -184,6 +185,10 @@ namespace UltimateMods
                         {
                             RPCProcedure.AltruistRevive(body, reader.ReadByte());
                         }
+                        break;
+                    // 85
+                    case (byte)CustomRPC.YakuzaKill:
+                        RPCProcedure.YakuzaKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
                         break;
                 }
             }
@@ -522,6 +527,31 @@ namespace UltimateMods
             player.NetTransform.SnapTo(new(position.x, position.y + 0.3636f));
 
             CleanBody(target.ParentId);
+        }
+
+        public static void YakuzaKill(byte yakuzaId, byte targetId, bool misfire)
+        {
+            PlayerControl yakuza = Helpers.PlayerById(yakuzaId);
+            PlayerControl target = Helpers.PlayerById(targetId);
+            if (yakuza == null || target == null) return;
+
+            if (yakuza != null)
+                if (!CustomRolesH.YakuzaShareShots.getBool())
+                    Yakuza.NumShots--;
+                else
+                    Yakuza.PublicShots--;
+
+
+            if (misfire)
+            {
+                yakuza.MurderPlayer(yakuza);
+                finalStatuses[yakuzaId] = FinalStatus.Misfire;
+
+                if (!Yakuza.MisfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+            }
+
+            yakuza.MurderPlayer(target);
         }
     }
 }

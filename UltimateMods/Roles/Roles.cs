@@ -18,6 +18,9 @@ namespace UltimateMods.Roles
         Seer,
         Lighter,
         Altruist,
+        Boss,
+        Executives,
+        Gun,
 
         // Impostor Roles
         Impostor = 100,
@@ -262,6 +265,8 @@ namespace UltimateMods.Roles
             Modifiers.allModifiers.DoIf(x => x.player == player, x => x.OnDeath(killer));
 
             RPCProcedure.UpdateMeeting(player.PlayerId, true);
+
+            Yakuza.Boss.OnDeath();
         }
     }
 }

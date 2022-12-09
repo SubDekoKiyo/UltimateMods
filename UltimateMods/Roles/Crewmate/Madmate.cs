@@ -6,7 +6,7 @@ namespace UltimateMods.Roles
     [HarmonyPatch]
     public class Madmate : RoleBase<Madmate>
     {
-        public static bool CanDieToSheriff { get { return CustomRolesH.MadmateCanDieToSheriff.getBool(); } }
+        public static bool CanDieToSheriffOrYakuza { get { return CustomRolesH.MadmateCanDieToSheriffOrYakuza.getBool(); } }
         public static bool CanUseVents { get { return CustomRolesH.MadmateCanEnterVents.getBool(); } }
         public static bool CanMoveInVents { get { return CustomRolesH.MadmateCanMoveInVents.getBool(); } }
         public static bool CanSabotage { get { return CustomRolesH.MadmateCanSabotage.getBool(); } }

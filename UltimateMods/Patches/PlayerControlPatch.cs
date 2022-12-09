@@ -124,6 +124,7 @@ namespace UltimateMods.Patches
             }
 
             UltimateMods.FixedUpdate(__instance);
+            Yakuza.FixedUpdate();
         }
     }
 

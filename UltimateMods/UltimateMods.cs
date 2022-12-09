@@ -33,6 +33,7 @@ namespace UltimateMods
             Seer.Clear();
             Arsonist.Clear();
             Lighter.Clear();
+            Yakuza.Clear();
 
             // Modifiers
             Opportunist.Clear();

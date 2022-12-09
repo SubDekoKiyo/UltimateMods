@@ -51,7 +51,7 @@ namespace UltimateMods
         public static CustomOption BountyHunterArrowUpdateCooldown;
 
         public static CustomRoleOption MadmateRate;
-        public static CustomOption MadmateCanDieToSheriff;
+        public static CustomOption MadmateCanDieToSheriffOrYakuza;
         public static CustomOption MadmateCanEnterVents;
         public static CustomOption MadmateCanMoveInVents;
         public static CustomOption MadmateCanSabotage;
@@ -115,6 +115,13 @@ namespace UltimateMods
         public static CustomOption LighterCooldown;
         public static CustomOption LighterDuration;
 
+        public static CustomRoleOption YakuzaRate;
+        public static CustomOption YakuzaKillCooldown;
+        public static CustomOption YakuzaNumShots;
+        public static CustomOption YakuzaShareShots;
+        public static CustomOption YakuzaCanKillNeutrals;
+        public static CustomOption YakuzaMisfireKillsTarget;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
 
@@ -165,7 +172,7 @@ namespace UltimateMods
             BountyHunterArrowUpdateCooldown = CustomOption.Create(155, Impostor, ImpostorRed, "BountyHunterArrowUpdateCooldown", 15f, 2.5f, 60f, 2.5f, BountyHunterShowArrow, format: "FormatSeconds");
 
             MadmateRate = new CustomRoleOption(160, Crewmate, White, "Madmate", ImpostorRed, 15);
-            MadmateCanDieToSheriff = CustomOption.Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
+            MadmateCanDieToSheriffOrYakuza = CustomOption.Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
             MadmateCanEnterVents = CustomOption.Create(162, Crewmate, ImpostorRed, "CanUseVents", true, MadmateRate);
             MadmateCanMoveInVents = CustomOption.Create(163, Crewmate, ImpostorRed, "CanMoveInVents", false, MadmateCanEnterVents);
             MadmateCanSabotage = CustomOption.Create(164, Crewmate, ImpostorRed, "CanSabotage", false, MadmateRate);
@@ -227,6 +234,13 @@ namespace UltimateMods
             LighterModeLightsOffVision = CustomOption.Create(252, Crewmate, LighterYellow, "LighterModeLightsOffVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
             LighterCooldown = CustomOption.Create(253, Crewmate, LighterYellow, "LighterCooldowns", 30f, 5f, 120f, 5f, LighterRate, format: "FormatSeconds");
             LighterDuration = CustomOption.Create(254, Crewmate, LighterYellow, "LighterDurations", 5f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
+
+            YakuzaRate = new CustomRoleOption(260, Crewmate, White, "Yakuza", YakuzaBlue, 1);
+            YakuzaNumShots = CustomOption.Create(261, Crewmate, YakuzaBlue, "MaxShots", 2f, 1f, 15f, 1f, YakuzaRate, format: "FormatSeconds");
+            YakuzaShareShots = CustomOption.Create(262, Crewmate, YakuzaBlue, "YakuzaShareShots", true, YakuzaRate);
+            YakuzaKillCooldown = CustomOption.Create(263, Crewmate, YakuzaBlue, "KillCooldowns", 30f, 2.5f, 60f, 2.5f, YakuzaRate, format: "FormatSeconds");
+            YakuzaCanKillNeutrals = CustomOption.Create(264, Crewmate, YakuzaBlue, "CanKillNeutral", true, YakuzaRate);
+            YakuzaMisfireKillsTarget = CustomOption.Create(265, Crewmate, YakuzaBlue, "MisfireKillsTarget", false, YakuzaRate);
 
             /* Modifiers */
             OpportunistRate = new CustomRoleOption(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
