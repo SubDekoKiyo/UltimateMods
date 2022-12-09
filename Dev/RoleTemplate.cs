@@ -36,27 +36,25 @@ namespace UltimateMods.Roles
 
         public static void MakeButtons(HudManager hm)
         {
-            // Template
             TemplateButton = new CustomButton(
                 () =>
-                { }, // 押したとき
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.NoRole) && !PlayerControl.LocalPlayer.Data.IsDead; }, //使用可能条件
-                () => { return PlayerControl.LocalPlayer.CanMove; }, // 使用時の動作(Text変更等)
-                () => { }, // 会議終了時
-                GetButtonSprite(), //絵
-                new Vector3(-1.8f, -0.06f, 0), //位置
-                hm, // HudManager
-                hm.KillButton, // 基にするボタン
-                KeyCode.F, //キー
-                true, // 効果あり(ない場合ここから下記述不要)
-                Duration, // 継続時間
-                () => { } // // 効果終了時
+                { },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.NoRole) && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return PlayerControl.LocalPlayer.CanMove; },
+                () => { },
+                GetButtonSprite(),
+                new Vector3(-1.8f, -0.06f, 0),
+                hm,
+                hm.KillButton,
+                KeyCode.F,
+                true,
+                Duration,
+                () => { }
             );
 
-            TemplateButton.ButtonText = ModTranslation.getString("ButtonText"); // 文字
-            TemplateButton.EffectCancellable = true; // 効果を途中で止められるか
-            // ボタンの上に表示する小さい文字
-            TemplateButtonText = GameObject.Instantiate(TemplateButton.actionButton.cooldownTimerText, TemplateButton.actionButton.cooldownTimerText.transform.parent); // TMP初期化
+            TemplateButton.ButtonText = ModTranslation.getString("ButtonText");
+            TemplateButton.EffectCancellable = true;
+            TemplateButtonText = GameObject.Instantiate(TemplateButton.actionButton.cooldownTimerText, TemplateButton.actionButton.cooldownTimerText.transform.parent);
             TemplateButtonText.text = "";
             TemplateButtonText.enableWordWrapping = false;
             TemplateButtonText.transform.localScale = Vector3.one * 0.5f;
