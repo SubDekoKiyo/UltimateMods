@@ -63,6 +63,11 @@ namespace UltimateMods.Patches
                 foreach (var sk in Sidekick.allPlayers)
                     setPlayerNameColor(sk, JackalBlue);
             }
+
+            if (p.IsYakuza())
+            {
+                setPlayerNameColor(p, YakuzaBlue);
+            }
         }
 
         static void Postfix(HudManager __instance)

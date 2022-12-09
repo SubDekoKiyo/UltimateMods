@@ -139,6 +139,14 @@ namespace UltimateMods
                         player.isRole(RoleType.Sidekick)));
         }
 
+        public static bool IsYakuza(this PlayerControl player)
+        {
+            return (player != null &&
+                    (player.isRole(RoleType.Boss) ||
+                    player.isRole(RoleType.Executives) ||
+                    player.isRole(RoleType.Gun)));
+        }
+
         public static void ShareGameVersion()
         {
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.VersionHandshake, Hazel.SendOption.Reliable, -1);

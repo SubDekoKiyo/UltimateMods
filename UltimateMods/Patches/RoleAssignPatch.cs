@@ -180,6 +180,15 @@ namespace UltimateMods.Patches
                     }
                 }
             }*/
+
+            // Assign Yakuza
+            if (data.Crewmates.Count >= 3 && data.CrewmateRoles >= 3 && (rnd.Next(1, 101) <= CustomRolesH.YakuzaRate.getSelection() * 10))
+            {
+                setRoleToRandomPlayer((byte)RoleType.Boss, data.Crewmates);
+                setRoleToRandomPlayer((byte)RoleType.Executives, data.Crewmates);
+                setRoleToRandomPlayer((byte)RoleType.Gun, data.Crewmates);
+                data.CrewmateRoles -= 3;
+            }
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)

@@ -49,6 +49,9 @@ namespace UltimateMods.Roles
         public static RoleInfo seer = new("Seer", SeerGreen, CustomRolesH.SeerRate, RoleType.Seer);
         public static RoleInfo arsonist = new("Arsonist", ArsonistOrange, CustomRolesH.ArsonistRate, RoleType.Arsonist);
         public static RoleInfo lighter = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleType.Lighter);
+        public static RoleInfo boss = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleType.Boss);
+        public static RoleInfo executives = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleType.Executives);
+        public static RoleInfo gun = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleType.Gun);
         public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -74,6 +77,9 @@ namespace UltimateMods.Roles
             seer,
             arsonist,
             lighter,
+            boss,
+            executives,
+            gun,
         };
 
         public static string tl(string key)
@@ -105,6 +111,9 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Seer)) infos.Add(seer);
             if (p.isRole(RoleType.Arsonist)) infos.Add(arsonist);
             if (p.isRole(RoleType.Lighter)) infos.Add(lighter);
+            if (p.isRole(RoleType.Boss)) infos.Add(boss);
+            if (p.isRole(RoleType.Executives)) infos.Add(executives);
+            if (p.isRole(RoleType.Gun)) infos.Add(gun);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor

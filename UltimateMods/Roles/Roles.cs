@@ -189,6 +189,12 @@ namespace UltimateMods.Roles
 
             switch (role)
             {
+                case RoleType.Boss:
+                    return Yakuza.Boss.boss == player;
+                case RoleType.Executives:
+                    return Yakuza.Executives.executives == player;
+                case RoleType.Gun:
+                    return Yakuza.Gun.gun == player;
                 default:
                     UltimateModsPlugin.Logger.LogError($"IsRole: no method found for role type {role}");
                     break;
@@ -210,8 +216,15 @@ namespace UltimateMods.Roles
 
             switch (role)
             {
-                case RoleType.Jester:
-
+                case RoleType.Boss:
+                    Yakuza.Boss.boss = player;
+                    break;
+                case RoleType.Executives:
+                    Yakuza.Executives.executives = player;
+                    break;
+                case RoleType.Gun:
+                    Yakuza.Gun.gun = player;
+                    break;
                 default:
                     UltimateModsPlugin.Logger.LogError($"SetRole: no method found for role type {role}");
                     return;
@@ -240,6 +253,8 @@ namespace UltimateMods.Roles
             {
                 t.Value.GetMethod("eraseRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player });
             }
+
+            if (player.isRole(RoleType.Boss) || player.isRole(RoleType.Executives) || player.isRole(RoleType.Gun)) Yakuza.Clear();
         }
 
         public static void swapRoles(this PlayerControl player, PlayerControl target)
@@ -251,6 +266,10 @@ namespace UltimateMods.Roles
                     t.Value.GetMethod("swapRole", BindingFlags.Public | BindingFlags.Static)?.Invoke(null, new object[] { player, target });
                 }
             }
+
+            if (player.isRole(RoleType.Boss)) Yakuza.Boss.boss = target;
+            if (player.isRole(RoleType.Executives)) Yakuza.Executives.executives = target;
+            if (player.isRole(RoleType.Gun)) Yakuza.Gun.gun = target;
         }
 
         public static void OnKill(this PlayerControl player, PlayerControl target)
