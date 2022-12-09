@@ -40,7 +40,7 @@ namespace UltimateMods.Roles
         public static RoleInfo madmate = new("Madmate", ImpostorRed, CustomRolesH.MadmateRate, RoleType.Madmate);
         public static RoleInfo bakery = new("Bakery", BakeryYellow, CustomRolesH.BakeryRate, RoleType.Bakery);
         public static RoleInfo teleporter = new("Teleporter", ImpostorRed, CustomRolesH.TeleporterRate, RoleType.Teleporter);
-        // public static RoleInfo altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleType.Altruist);
+        public static RoleInfo altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleType.Altruist);
         public static RoleInfo evilHacker = new("EvilHacker", ImpostorRed, CustomRolesH.EvilHackerRate, RoleType.EvilHacker);
         public static RoleInfo adversity = new("Adversity", ImpostorRed, CustomRolesH.AdversityRate, RoleType.Adversity);
         public static RoleInfo snitch = new("Snitch", SnitchGreen, CustomRolesH.SnitchRate, RoleType.Snitch);
@@ -65,7 +65,7 @@ namespace UltimateMods.Roles
             madmate,
             bakery,
             teleporter,
-            // altruist,
+            altruist,
             evilHacker,
             adversity,
             snitch,
@@ -96,7 +96,7 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Madmate)) infos.Add(madmate);
             if (p.isRole(RoleType.Bakery)) infos.Add(bakery);
             if (p.isRole(RoleType.Teleporter)) infos.Add(teleporter);
-            // if (p.isRole(RoleType.Altruist)) infos.Add(altruist);
+            if (p.isRole(RoleType.Altruist)) infos.Add(altruist);
             if (p.isRole(RoleType.EvilHacker)) infos.Add(evilHacker);
             if (p.isRole(RoleType.Adversity)) infos.Add(adversity);
             if (p.isRole(RoleType.Snitch)) infos.Add(snitch);

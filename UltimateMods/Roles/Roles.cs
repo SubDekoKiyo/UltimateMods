@@ -17,7 +17,7 @@ namespace UltimateMods.Roles
         Snitch,
         Seer,
         Lighter,
-        // Altruist,
+        Altruist,
 
         // Impostor Roles
         Impostor = 100,
@@ -51,7 +51,7 @@ namespace UltimateMods.Roles
             { RoleType.Snitch, typeof(RoleBase<Snitch>) },
             { RoleType.Seer, typeof(RoleBase<Seer>) },
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
-            // { RoleType.Altruist, typeof(RoleBase<Altruist>) },
+            { RoleType.Altruist, typeof(RoleBase<Altruist>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },

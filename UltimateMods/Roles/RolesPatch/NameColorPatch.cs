@@ -43,6 +43,8 @@ namespace UltimateMods.Patches
                 setPlayerNameColor(p, BakeryYellow);
             if (role(RoleType.Lighter))
                 setPlayerNameColor(p, LighterYellow);
+            if (role(RoleType.Altruist))
+                setPlayerNameColor(p, AltruistRed);
 
             if (role(RoleType.Madmate))
             {

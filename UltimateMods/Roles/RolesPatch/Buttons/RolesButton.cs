@@ -16,7 +16,7 @@ namespace UltimateMods
             Sidekick.SetButtonCooldowns();
             Arsonist.SetButtonCooldowns();
             Lighter.SetButtonCooldowns();
-            // Altruist.SetButtonCooldowns();
+            Altruist.SetButtonCooldowns();
         }
 
         public static void MakeButtons(HudManager hm)
@@ -27,7 +27,7 @@ namespace UltimateMods
             Teleporter.MakeButtons(hm);
             Jackal.MakeButtons(hm);
             Sidekick.MakeButtons(hm);
-            // Altruist.MakeButtons(hm);
+            Altruist.MakeButtons(hm);
             EvilHacker.MakeButtons(hm);
             Arsonist.MakeButtons(hm);
             Lighter.MakeButtons(hm);

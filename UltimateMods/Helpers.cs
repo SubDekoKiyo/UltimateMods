@@ -36,6 +36,14 @@ namespace UltimateMods
             return null;
         }
 
+        public static DeadBody DeadBodyById(DeadBody id)
+        {
+            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+                if (deadBody.ParentId == id.ParentId)
+                    return deadBody;
+            return null;
+        }
+
         public static bool IsDead(this PlayerControl player)
         {
             return player == null || player?.Data?.IsDead == true || player?.Data?.Disconnected == true ||

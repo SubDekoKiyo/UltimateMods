@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UltimateMods.Patches;
 
 [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.Awake))]
-public static class PlayerPhysiscs_Awake_Patch
+public static class PlayerPhysics_Awake_Patch
 {
     [HarmonyPostfix]
     public static void Postfix(PlayerPhysics __instance)

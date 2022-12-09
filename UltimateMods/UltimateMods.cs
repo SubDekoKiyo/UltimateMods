@@ -25,7 +25,7 @@ namespace UltimateMods
             Madmate.Clear();
             Bakery.Clear();
             Teleporter.Clear();
-            // Altruist.Clear();
+            Altruist.Clear();
             Adversity.Clear();
             Snitch.Clear();
             Jackal.Clear();
