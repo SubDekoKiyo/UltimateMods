@@ -98,6 +98,13 @@ namespace UltimateMods.Patches
                 __instance.TeamTitle.color = roleInfo.color;
                 __instance.ImpostorText.text = "";
             }
+            if (PlayerControl.LocalPlayer.IsYakuza())
+            {
+                __instance.BackgroundBar.material.color = YakuzaBlue;
+                __instance.TeamTitle.text = ModTranslation.getString("Yakuza");
+                __instance.TeamTitle.color = YakuzaBlue;
+                __instance.ImpostorText.text = "";
+            }
         }
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
