@@ -243,6 +243,7 @@ namespace UltimateMods.Modules
 
             if (moreOptions)
                 moreOptions.Text.text = ModTranslation.getString("VanillaOptionsText");
+
             try
             {
                 modButtons[0].Text.text = FastDestroyableSingleton<TranslationController>.Instance.GetString(StringNames.SettingsCensorChat);

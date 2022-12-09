@@ -13,6 +13,7 @@ namespace UltimateMods.Patches
             typeof(StringNames),
             typeof(Il2CppReferenceArray<Il2CppSystem.Object>)
         })]
+
         public class ColorStringPatch
         {
             public static bool Prefix(ref string __result, [HarmonyArgument(0)] StringNames name)
@@ -80,20 +81,20 @@ namespace UltimateMods.Patches
         [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.CheckColor))]
         public static class PlayerCntrolCheckColorPatch
         {
-            private static bool isTaken(PlayerControl player, uint color) 
+            private static bool isTaken(PlayerControl player, uint color)
             {
                 foreach (GameData.PlayerInfo p in GameData.Instance.AllPlayers.GetFastEnumerator())
                     if (!p.Disconnected && p.PlayerId != player.PlayerId && p.DefaultOutfit.ColorId == color)
                         return true;
                 return false;
             }
-            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte bodyColor) 
-            { 
+            public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] byte bodyColor)
+            {
                 uint color = (uint)bodyColor;
-                if (isTaken(__instance, color) || color >= Palette.PlayerColors.Length) 
+                if (isTaken(__instance, color) || color >= Palette.PlayerColors.Length)
                 {
                     int num = 0;
-                    while (num++ < 50 && (color >= CustomColors.pickableColors || isTaken(__instance, color))) 
+                    while (num++ < 50 && (color >= CustomColors.pickableColors || isTaken(__instance, color)))
                     {
                         color = (color + 1) % CustomColors.pickableColors;
                     }

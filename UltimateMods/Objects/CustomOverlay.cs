@@ -15,11 +15,11 @@ namespace UltimateMods.Objects
     public class CustomOverlays
     {
         public static Dictionary<int, PlayerVersion> playerVersions = new Dictionary<int, PlayerVersion>();
-        private static SpriteRenderer MeetingUnderlay;
-        private static SpriteRenderer InfoUnderlay;
-        private static TMPro.TextMeshPro InfoOverlayRules;
-        private static TMPro.TextMeshPro InfoOverlayPlayer;
-        private static TMPro.TextMeshPro InfoOverlayRoles;
+        private static SpriteRenderer meetingUnderlay;
+        private static SpriteRenderer infoUnderlay;
+        private static TMPro.TextMeshPro infoOverlayRules;
+        private static TMPro.TextMeshPro infoOverlayPlayer;
+        private static TMPro.TextMeshPro infoOverlayRoles;
 
         public static bool OverlayShown = false;
 
@@ -49,13 +49,13 @@ namespace UltimateMods.Objects
         public static void ResetOverlays()
         {
             HideInfoOverlay();
-            UnityEngine.Object.Destroy(MeetingUnderlay);
-            UnityEngine.Object.Destroy(InfoUnderlay);
-            UnityEngine.Object.Destroy(InfoOverlayRules);
-            UnityEngine.Object.Destroy(InfoOverlayPlayer);
-            UnityEngine.Object.Destroy(InfoOverlayRoles);
-            InfoOverlayRules = InfoOverlayPlayer = InfoOverlayRoles = null;
-            MeetingUnderlay = InfoUnderlay = null;
+            UnityEngine.Object.Destroy(meetingUnderlay);
+            UnityEngine.Object.Destroy(infoUnderlay);
+            UnityEngine.Object.Destroy(infoOverlayRules);
+            UnityEngine.Object.Destroy(infoOverlayPlayer);
+            UnityEngine.Object.Destroy(infoOverlayRoles);
+            infoOverlayRules = infoOverlayPlayer = infoOverlayRoles = null;
+            meetingUnderlay = infoUnderlay = null;
             OverlayShown = false;
         }
 
@@ -64,72 +64,72 @@ namespace UltimateMods.Objects
             HudManager hudManager = FastDestroyableSingleton<HudManager>.Instance;
             if (hudManager == null) return false;
 
-            if (MeetingUnderlay == null)
+            if (meetingUnderlay == null)
             {
-                MeetingUnderlay = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
-                MeetingUnderlay.transform.localPosition = new Vector3(0f, 0f, 20f);
-                MeetingUnderlay.gameObject.SetActive(true);
-                MeetingUnderlay.enabled = false;
+                meetingUnderlay = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
+                meetingUnderlay.transform.localPosition = new Vector3(0f, 0f, 20f);
+                meetingUnderlay.gameObject.SetActive(true);
+                meetingUnderlay.enabled = false;
             }
 
-            if (InfoUnderlay == null)
+            if (infoUnderlay == null)
             {
-                InfoUnderlay = UnityEngine.Object.Instantiate(MeetingUnderlay, hudManager.transform);
-                InfoUnderlay.transform.localPosition = new Vector3(0f, 0f, -900f);
-                InfoUnderlay.gameObject.SetActive(true);
-                InfoUnderlay.enabled = false;
+                infoUnderlay = UnityEngine.Object.Instantiate(meetingUnderlay, hudManager.transform);
+                infoUnderlay.transform.localPosition = new Vector3(0f, 0f, -900f);
+                infoUnderlay.gameObject.SetActive(true);
+                infoUnderlay.enabled = false;
             }
 
-            if (InfoOverlayRules == null)
+            if (infoOverlayRules == null)
             {
-                InfoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskText, hudManager.transform);
-                InfoOverlayRules.fontSize = InfoOverlayRules.fontSizeMin = InfoOverlayRules.fontSizeMax = 1.15f;
-                InfoOverlayRules.autoSizeTextContainer = false;
-                InfoOverlayRules.enableWordWrapping = false;
-                InfoOverlayRules.alignment = TMPro.TextAlignmentOptions.TopLeft;
-                InfoOverlayRules.transform.position = Vector3.zero;
-                InfoOverlayRules.transform.localPosition = new Vector3(-3f, 1f, -910f);
-                InfoOverlayRules.transform.localScale = Vector3.one * 1.25f;
-                InfoOverlayRules.color = Palette.White;
-                InfoOverlayRules.enabled = false;
+                infoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskText, hudManager.transform);
+                infoOverlayRules.fontSize = infoOverlayRules.fontSizeMin = infoOverlayRules.fontSizeMax = 1.15f;
+                infoOverlayRules.autoSizeTextContainer = false;
+                infoOverlayRules.enableWordWrapping = false;
+                infoOverlayRules.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                infoOverlayRules.transform.position = Vector3.zero;
+                infoOverlayRules.transform.localPosition = new Vector3(-3f, 1f, -910f);
+                infoOverlayRules.transform.localScale = Vector3.one * 1.25f;
+                infoOverlayRules.color = Palette.White;
+                infoOverlayRules.enabled = false;
             }
 
-            if (InfoOverlayPlayer == null)
+            if (infoOverlayPlayer == null)
             {
-                InfoOverlayPlayer = UnityEngine.Object.Instantiate(InfoOverlayRules, hudManager.transform);
-                InfoOverlayPlayer.maxVisibleLines = 28;
-                InfoOverlayPlayer.fontSize = InfoOverlayPlayer.fontSizeMin = InfoOverlayPlayer.fontSizeMax = 1.10f;
-                InfoOverlayPlayer.outlineWidth += 0.02f;
-                InfoOverlayPlayer.autoSizeTextContainer = false;
-                InfoOverlayPlayer.enableWordWrapping = false;
-                InfoOverlayPlayer.alignment = TMPro.TextAlignmentOptions.TopLeft;
-                InfoOverlayPlayer.transform.position = Vector3.zero;
-                InfoOverlayPlayer.transform.localPosition = new Vector3(0f, 1f, -910f);
-                InfoOverlayPlayer.transform.localScale = Vector3.one * 1.25f;
-                InfoOverlayPlayer.color = Palette.White;
-                InfoOverlayPlayer.enabled = false;
+                infoOverlayPlayer = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
+                infoOverlayPlayer.maxVisibleLines = 28;
+                infoOverlayPlayer.fontSize = infoOverlayPlayer.fontSizeMin = infoOverlayPlayer.fontSizeMax = 1.10f;
+                infoOverlayPlayer.outlineWidth += 0.02f;
+                infoOverlayPlayer.autoSizeTextContainer = false;
+                infoOverlayPlayer.enableWordWrapping = false;
+                infoOverlayPlayer.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                infoOverlayPlayer.transform.position = Vector3.zero;
+                infoOverlayPlayer.transform.localPosition = new Vector3(0f, 1f, -910f);
+                infoOverlayPlayer.transform.localScale = Vector3.one * 1.25f;
+                infoOverlayPlayer.color = Palette.White;
+                infoOverlayPlayer.enabled = false;
             }
 
-            if (InfoOverlayRoles == null)
+            if (infoOverlayRoles == null)
             {
-                InfoOverlayRoles = UnityEngine.Object.Instantiate(InfoOverlayRules, hudManager.transform);
-                InfoOverlayRoles.maxVisibleLines = 28;
-                InfoOverlayRoles.fontSize = InfoOverlayRoles.fontSizeMin = InfoOverlayRoles.fontSizeMax = 1f;
-                InfoOverlayRoles.outlineWidth += 0.02f;
-                InfoOverlayRoles.autoSizeTextContainer = false;
-                InfoOverlayRoles.enableWordWrapping = false;
-                InfoOverlayRoles.alignment = TMPro.TextAlignmentOptions.TopLeft;
-                InfoOverlayRoles.transform.position = Vector3.zero;
-                InfoOverlayRoles.transform.localPosition = new Vector3(2.7f, 1f, -910f);
-                InfoOverlayRoles.transform.localScale = Vector3.one * 1.25f;
-                InfoOverlayRoles.color = Palette.White;
-                InfoOverlayRoles.enabled = false;
+                infoOverlayRoles = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
+                infoOverlayRoles.maxVisibleLines = 28;
+                infoOverlayRoles.fontSize = infoOverlayRoles.fontSizeMin = infoOverlayRoles.fontSizeMax = 1f;
+                infoOverlayRoles.outlineWidth += 0.02f;
+                infoOverlayRoles.autoSizeTextContainer = false;
+                infoOverlayRoles.enableWordWrapping = false;
+                infoOverlayRoles.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                infoOverlayRoles.transform.position = Vector3.zero;
+                infoOverlayRoles.transform.localPosition = new Vector3(2.7f, 1f, -910f);
+                infoOverlayRoles.transform.localScale = Vector3.one * 1.25f;
+                infoOverlayRoles.color = Palette.White;
+                infoOverlayRoles.enabled = false;
             }
 
             return true;
         }
 
-        public static void ShowInfoOverlay()
+        public static void ShowinfoOverlay()
         {
             if (OverlayShown) return;
 
@@ -149,16 +149,16 @@ namespace UltimateMods.Objects
             Transform parent;
             parent = hudManager.transform;
 
-            InfoUnderlay.transform.parent = parent;
-            InfoOverlayRules.transform.parent = parent;
-            InfoOverlayPlayer.transform.parent = parent;
-            InfoOverlayRoles.transform.parent = parent;
+            infoUnderlay.transform.parent = parent;
+            infoOverlayRules.transform.parent = parent;
+            infoOverlayPlayer.transform.parent = parent;
+            infoOverlayRoles.transform.parent = parent;
 
-            InfoUnderlay.color = new Color(0.1f, 0.1f, 0.1f, 0.88f);
-            InfoUnderlay.transform.localScale = new Vector3(9f, 5.3f, 1f);
-            InfoUnderlay.enabled = true;
-            InfoOverlayRules.enabled = true;
-            InfoOverlayPlayer.enabled = true;
+            infoUnderlay.color = new Color(0.1f, 0.1f, 0.1f, 0.88f);
+            infoUnderlay.transform.localScale = new Vector3(9f, 5.3f, 1f);
+            infoUnderlay.enabled = true;
+            infoOverlayRules.enabled = true;
+            infoOverlayPlayer.enabled = true;
 
             string rolesText = "";
             foreach (RoleInfo r in RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer))
@@ -170,24 +170,24 @@ namespace UltimateMods.Objects
                     (roleOptions != "" ? $"{roleOptions}\n\n" : "");
             }
 
-            InfoOverlayRoles.text = rolesText;
+            infoOverlayRoles.text = rolesText;
             if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
-                InfoOverlayRoles.enabled = true;
+                infoOverlayRoles.enabled = true;
             }
             else
             {
-                InfoOverlayRoles.enabled = false;
+                infoOverlayRoles.enabled = false;
             }
 
             var underlayTransparent = new Color(0.1f, 0.1f, 0.1f, 0.0f);
             var underlayOpaque = new Color(0.1f, 0.1f, 0.1f, 0.88f);
             FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
             {
-                InfoUnderlay.color = Color.Lerp(underlayTransparent, underlayOpaque, t);
-                InfoOverlayRules.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
-                InfoOverlayPlayer.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
-                InfoOverlayRoles.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
+                infoUnderlay.color = Color.Lerp(underlayTransparent, underlayOpaque, t);
+                infoOverlayRules.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
+                infoOverlayPlayer.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
+                infoOverlayRoles.color = Color.Lerp(Palette.ClearWhite, Palette.White, t);
             })));
         }
 
@@ -203,38 +203,38 @@ namespace UltimateMods.Objects
 
             FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(0.2f, new Action<float>(t =>
             {
-                if (InfoUnderlay != null)
+                if (infoUnderlay != null)
                 {
-                    InfoUnderlay.color = Color.Lerp(underlayOpaque, underlayTransparent, t);
-                    if (t >= 1.0f) InfoUnderlay.enabled = false;
+                    infoUnderlay.color = Color.Lerp(underlayOpaque, underlayTransparent, t);
+                    if (t >= 1.0f) infoUnderlay.enabled = false;
                 }
 
-                if (InfoOverlayRules != null)
+                if (infoOverlayRules != null)
                 {
-                    InfoOverlayRules.color = Color.Lerp(Palette.White, Palette.ClearWhite, t);
-                    if (t >= 1.0f) InfoOverlayRules.enabled = false;
+                    infoOverlayRules.color = Color.Lerp(Palette.White, Palette.ClearWhite, t);
+                    if (t >= 1.0f) infoOverlayRules.enabled = false;
                 }
 
-                if (InfoOverlayPlayer != null)
+                if (infoOverlayPlayer != null)
                 {
-                    InfoOverlayPlayer.color = Color.Lerp(Palette.White, Palette.ClearWhite, t);
-                    if (t >= 1.0f) InfoOverlayPlayer.enabled = false;
+                    infoOverlayPlayer.color = Color.Lerp(Palette.White, Palette.ClearWhite, t);
+                    if (t >= 1.0f) infoOverlayPlayer.enabled = false;
                 }
 
-                if (InfoOverlayRoles != null)
+                if (infoOverlayRoles != null)
                 {
-                    InfoOverlayRoles.color = Color.Lerp(Palette.White, Palette.ClearWhite, t);
-                    if (t >= 1.0f) InfoOverlayRoles.enabled = false;
+                    infoOverlayRoles.color = Color.Lerp(Palette.White, Palette.ClearWhite, t);
+                    if (t >= 1.0f) infoOverlayRoles.enabled = false;
                 }
             })));
         }
 
-        public static void ToggleInfoOverlay()
+        public static void ToggleinfoOverlay()
         {
             if (OverlayShown)
                 HideInfoOverlay();
             else
-                ShowInfoOverlay();
+                ShowinfoOverlay();
         }
 
         [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
@@ -244,7 +244,7 @@ namespace UltimateMods.Objects
             {
                 if (Input.GetKeyDown(KeyCode.F3))
                 {
-                    ToggleInfoOverlay();
+                    ToggleinfoOverlay();
                 }
             }
         }
@@ -261,7 +261,7 @@ namespace UltimateMods.Objects
 
                 GameOptionsData o = PlayerControl.GameOptions;
                 List<string> gameOptions = o.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
-                InfoOverlayRules.text = string.Join("\n", gameOptions);
+                infoOverlayRules.text = string.Join("\n", gameOptions);
                 string PlayerText = ModTranslation.getString("PlatformTitle");
                 foreach (InnerNet.ClientData Client in AmongUsClient.Instance.allClients.ToArray())
                 {
@@ -275,7 +275,7 @@ namespace UltimateMods.Objects
                     if (HEXcolor == "") HEXcolor = "FF000000";
                     PlayerText += $"\n<color=#{HEXcolor}>■</color>{PlayerName} : {Platform.Replace("Standalone", "")}";
                 }
-                InfoOverlayPlayer.text = PlayerText;
+                infoOverlayPlayer.text = PlayerText;
             }
         }
         public class PlayerVersion

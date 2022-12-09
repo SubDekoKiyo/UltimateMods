@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UltimateMods.Modules;
 using static UltimateMods.ColorDictionary;
+using static UltimateMods.Modules.CustomOption;
 using static UltimateMods.Modules.CustomOption.CustomOptionType;
 
 namespace UltimateMods
@@ -14,7 +15,6 @@ namespace UltimateMods
 
         public static CustomOption PresetSelection;
         public static CustomOption ActivateModRoles;
-        // public static CustomOption activateModSettings;
         public static CustomOption CrewmateRolesCount;
         public static CustomOption ImpostorRolesCount;
         public static CustomOption NeutralRolesCount;
@@ -26,8 +26,6 @@ namespace UltimateMods
         public static CustomOption BlockSkippingInEmergencyMeetings;
         public static CustomOption NoVoteIsSelfVote;
         public static CustomOption AllowParallelMedBayScans;
-        // public static CustomOption onePlayerStart;
-        // public static CustomOption betterStartButtons;
         public static CustomOption HideOutOfSightNameTags;
         public static CustomOption HidePlayerNames;
         public static CustomOption RefundVotesOnDeath;
@@ -70,49 +68,46 @@ namespace UltimateMods
         public static void Load()
         {
             // Role Options
-            ActivateModRoles = CustomOption.Create(1, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ActivateRoles"), true, null, true);
-            // activateModSettings = CustomOption.Create(2, General, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "activateSettings"), true, null, true);
+            ActivateModRoles = Create(1, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ActivateRoles"), true, null, true);
 
-            PresetSelection = CustomOption.Create(3, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "PresetSelection"), Presets, null, true);
+            PresetSelection = Create(3, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "PresetSelection"), Presets, null, true);
 
-            // RememberClassic = CustomOption.Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
-            EnableMirrorMap = CustomOption.Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
-            CanZoomInOutWhenPlayerIsDead = CustomOption.Create(6, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
-            // EnableGodMiraHQ = CustomOption.Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
+            // RememberClassic = Create(4, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "RememberClassic"), false, null, true);
+            EnableMirrorMap = Create(5, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "MirrorMap"), false, null, true);
+            CanZoomInOutWhenPlayerIsDead = Create(6, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CanZoomInOutDead"), true, null, true);
+            // EnableGodMiraHQ = Create(7, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "EnableGodMiraHQ"), false, null, true);
 
             // Using new id's for the options to not break compatibility with older versions
-            CrewmateRolesCount = CustomOption.Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCount"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
-            ImpostorRolesCount = CustomOption.Create(11, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            NeutralRolesCount = CustomOption.Create(12, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
-            ModifierCount = CustomOption.Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            CrewmateRolesCount = Create(10, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "CrewmateRolesCount"), 0f, 0f, 15f, 1f, null, true, format: "FormatPlayer");
+            ImpostorRolesCount = Create(11, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ImpostorRolesCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            NeutralRolesCount = Create(12, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "NeutralRolesCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
+            ModifierCount = Create(13, General, Yellow, cs(new Color(204f / 255f, 204f / 255f, 0, 1f), "ModifierCount"), 0f, 0f, 15f, 1f, format: "FormatPlayer");
 
             SpecialOptions = new CustomOptionBlank(null);
-            MaxNumberOfMeetings = CustomOption.Create(20, General, White, "MaxNumberOfMeetings", 10f, 0f, 15f, 1f, SpecialOptions, format: "FormatTimes");
-            BlockSkippingInEmergencyMeetings = CustomOption.Create(21, General, White, "BlockSkip", false, SpecialOptions);
-            NoVoteIsSelfVote = CustomOption.Create(22, General, White, "NoVoteIsSelfVote", false, SpecialOptions);
-            AllowParallelMedBayScans = CustomOption.Create(23, General, White, "NoMedBayLimit", true, SpecialOptions);
-            // onePlayerStart = CustomOption.Create(27, General, "oneStart", false, specialOptions);
-            // betterStartButtons = CustomOption.Create(30, General, "betterStart", true, specialOptions);
-            HideOutOfSightNameTags = CustomOption.Create(24, General, White, "HideOutName", true, SpecialOptions);
-            HidePlayerNames = CustomOption.Create(25, General, White, "HidePlayerName", false, SpecialOptions);
-            RefundVotesOnDeath = CustomOption.Create(26, General, White, "RefundVoteDeath", true, SpecialOptions);
-            // EnableGodMiraHQ = CustomOption.Create(27, General, "EnableGodMira", false, SpecialOptions);
-            RandomMap = CustomOption.Create(34, General, White, "PlayRandomMaps", false, SpecialOptions);
-            RandomMapEnableSkeld = CustomOption.Create(50, General, White, "RandomMapsEnableSkeld", true, RandomMap, false);
-            RandomMapEnableMira = CustomOption.Create(51, General, White, "RandomMapsEnableMira", true, RandomMap, false);
-            RandomMapEnablePolus = CustomOption.Create(52, General, White, "RandomMapsEnablePolus", true, RandomMap, false);
-            RandomMapEnableAirShip = CustomOption.Create(53, General, White, "RandomMapsEnableAirShip", true, RandomMap, false);
-            RandomMapEnableSubmerged = CustomOption.Create(54, General, White, "RandomMapsEnableSubmerged", true, RandomMap, false);
-            RestrictDevices = CustomOption.Create(60, General, White, "RestrictDevices", new string[] { "OptionOff", "RestrictPerTurn", "RestrictPerGame" }, SpecialOptions);
-            RestrictAdmin = CustomOption.Create(61, General, White, "DisableAdmin", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
-            RestrictCameras = CustomOption.Create(62, General, White, "DisableCameras", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
-            RestrictVitals = CustomOption.Create(63, General, White, "DisableVitals", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
+            MaxNumberOfMeetings = Create(20, General, White, "MaxNumberOfMeetings", 10f, 0f, 15f, 1f, SpecialOptions, format: "FormatTimes");
+            BlockSkippingInEmergencyMeetings = Create(21, General, White, "BlockSkip", false, SpecialOptions);
+            NoVoteIsSelfVote = Create(22, General, White, "NoVoteIsSelfVote", false, SpecialOptions);
+            AllowParallelMedBayScans = Create(23, General, White, "NoMedBayLimit", true, SpecialOptions);
+            HideOutOfSightNameTags = Create(24, General, White, "HideOutName", true, SpecialOptions);
+            HidePlayerNames = Create(25, General, White, "HidePlayerName", false, SpecialOptions);
+            RefundVotesOnDeath = Create(26, General, White, "RefundVoteDeath", true, SpecialOptions);
+            // EnableGodMiraHQ = Create(27, General, "EnableGodMira", false, SpecialOptions);
+            RandomMap = Create(34, General, White, "PlayRandomMaps", false, SpecialOptions);
+            RandomMapEnableSkeld = Create(50, General, White, "RandomMapsEnableSkeld", true, RandomMap, false);
+            RandomMapEnableMira = Create(51, General, White, "RandomMapsEnableMira", true, RandomMap, false);
+            RandomMapEnablePolus = Create(52, General, White, "RandomMapsEnablePolus", true, RandomMap, false);
+            RandomMapEnableAirShip = Create(53, General, White, "RandomMapsEnableAirShip", true, RandomMap, false);
+            RandomMapEnableSubmerged = Create(54, General, White, "RandomMapsEnableSubmerged", true, RandomMap, false);
+            RestrictDevices = Create(60, General, White, "RestrictDevices", new string[] { "OptionOff", "RestrictPerTurn", "RestrictPerGame" }, SpecialOptions);
+            RestrictAdmin = Create(61, General, White, "DisableAdmin", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
+            RestrictCameras = Create(62, General, White, "DisableCameras", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
+            RestrictVitals = Create(63, General, White, "DisableVitals", 30f, 0f, 600f, 5f, RestrictDevices, format: "FormatSeconds");
 
-            AirShipSettings = CustomOption.Create(80, General, White, "AirShipSettings", false, SpecialOptions);
-            OldAirShipAdmin = CustomOption.Create(81, General, White, "OldAirShipAdmin", true, AirShipSettings);
-            EnableRecordsAdmin = CustomOption.Create(82, General, White, "EnableRecordsAdmin", false, AirShipSettings);
-            EnableCockpitAdmin = CustomOption.Create(83, General, White, "EnableCockpitAdmin", false, AirShipSettings);
-            AirshipReactorDuration = CustomOption.Create(84, General, White, "AirShipReactorDuration", 90f, 10f, 600f, 5f, AirShipSettings, format: "FormatSeconds");
+            AirShipSettings = Create(80, General, White, "AirShipSettings", false, SpecialOptions);
+            OldAirShipAdmin = Create(81, General, White, "OldAirShipAdmin", true, AirShipSettings);
+            EnableRecordsAdmin = Create(82, General, White, "EnableRecordsAdmin", false, AirShipSettings);
+            EnableCockpitAdmin = Create(83, General, White, "EnableCockpitAdmin", false, AirShipSettings);
+            AirshipReactorDuration = Create(84, General, White, "AirShipReactorDuration", 90f, 10f, 600f, 5f, AirShipSettings, format: "FormatSeconds");
         }
     }
 }

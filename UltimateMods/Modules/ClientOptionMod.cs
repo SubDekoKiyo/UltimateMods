@@ -204,11 +204,15 @@ namespace UltimateMods.Modules
             if (moreOptions)
                 moreOptions.Text.text = ModTranslation.getString("ModOptionsText");
 
-            for (int i = 0; i < AllOptions.Length; i++)
+            try
             {
-                if (i >= modButtons.Count) break;
-                modButtons[i].Text.text = ModTranslation.getString(AllOptions[i].Title);
+                for (int i = 0; i < AllOptions.Length; i++)
+                {
+                    if (i >= modButtons.Count) break;
+                    modButtons[i].Text.text = ModTranslation.getString(AllOptions[i].Title);
+                }
             }
+            catch { }
         }
 
         public class SelectionBehaviour

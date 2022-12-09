@@ -79,7 +79,7 @@ namespace UltimateMods
             }
 
             var data = TransData[keyClean];
-            int lang = ModLanguageSelector.LanguageNum;
+            int lang = ModLanguageSelector.languageNum;
 
             if (data.ContainsKey(lang))
             {
