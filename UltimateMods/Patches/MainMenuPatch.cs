@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using System;
 using static UltimateMods.ColorDictionary;
 using static UnityEngine.UI.Button;
+using UnityEngine.Events;
 using Object = UnityEngine.Object;
 using UltimateMods.Utilities;
 using static UltimateMods.Modules.Assets;
@@ -15,11 +16,11 @@ namespace UltimateMods.Patches
         [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]
         public static class MainMenuObjects
         {
-            private static GameObject ButtonTemplate;
-            private static AnnouncementPopUp PopUp;
-            private static GameObject ButtonDiscord;
-            private static GameObject ButtonTwitter;
-            private static GameObject TmpButton;
+            private static GameObject buttonTemplate;
+            private static AnnouncementPopUp popUp;
+            private static GameObject buttonDiscord;
+            private static GameObject buttonTwitter;
+            private static GameObject tmpButton;
 
             public static SpriteRenderer renderer;
             public static Sprite bannerSprite;
@@ -29,62 +30,62 @@ namespace UltimateMods.Patches
             private static void Prefix(MainMenuManager __instance)
             {
                 // CustomHatLoader.LaunchHatFetcher();
-                TmpButton = GameObject.Find("ExitGameButton");
-                // TmpButton.gameObject.SetActive(false);
-                if (TmpButton == null) return;
+                tmpButton = GameObject.Find("ExitGameButton");
+                // tmpButton.gameObject.SetActive(false);
+                if (tmpButton == null) return;
 
-                ButtonDiscord = UnityEngine.Object.Instantiate(TmpButton, null);
+                buttonDiscord = UnityEngine.Object.Instantiate(tmpButton, null);
 
-                var TextDiscord = ButtonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                var TextDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
                 {
                     TextDiscord.SetText("Discord");
                 })));
 
-                PassiveButton PassiveButtonDiscord = ButtonDiscord.GetComponent<PassiveButton>();
-                SpriteRenderer ButtonSpriteDiscord = ButtonDiscord.GetComponent<SpriteRenderer>();
+                PassiveButton PassiveButtonDiscord = buttonDiscord.GetComponent<PassiveButton>();
+                SpriteRenderer buttonSpriteDiscord = buttonDiscord.GetComponent<SpriteRenderer>();
 
-                PassiveButtonDiscord.OnClick = new Button.ButtonClickedEvent();
-                PassiveButtonDiscord.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
+                PassiveButtonDiscord.OnClick = new ButtonClickedEvent();
+                PassiveButtonDiscord.OnClick.AddListener((UnityAction)delegate
                 {
                     Application.OpenURL("https://discord.gg/kZwzNn9qRg");
                 });
 
-                ButtonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
-                PassiveButtonDiscord.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
+                buttonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
+                PassiveButtonDiscord.OnMouseOut.AddListener((UnityAction)delegate
                 {
-                    ButtonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
+                    buttonSpriteDiscord.color = TextDiscord.color = DiscordPurple;
                 });
 
-                ButtonTwitter = UnityEngine.Object.Instantiate(TmpButton, null);
+                buttonTwitter = UnityEngine.Object.Instantiate(tmpButton, null);
 
-                var TextTwitter = ButtonTwitter.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                var TextTwitter = buttonTwitter.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
                 {
                     TextTwitter.SetText("Twitter");
                 })));
 
-                PassiveButton PassiveButtonTwitter = ButtonTwitter.GetComponent<PassiveButton>();
-                SpriteRenderer ButtonSpriteTwitter = ButtonTwitter.GetComponent<SpriteRenderer>();
+                PassiveButton PassiveButtonTwitter = buttonTwitter.GetComponent<PassiveButton>();
+                SpriteRenderer buttonSpriteTwitter = buttonTwitter.GetComponent<SpriteRenderer>();
 
-                PassiveButtonTwitter.OnClick = new Button.ButtonClickedEvent();
-                PassiveButtonTwitter.OnClick.AddListener((UnityEngine.Events.UnityAction)delegate
+                PassiveButtonTwitter.OnClick = new ButtonClickedEvent();
+                PassiveButtonTwitter.OnClick.AddListener((UnityAction)delegate
                 {
                     Application.OpenURL("https://twitter.com/DekoKiyomori");
                 });
 
-                ButtonSpriteTwitter.color = TextTwitter.color = TwitterLightBlue;
-                PassiveButtonTwitter.OnMouseOut.AddListener((UnityEngine.Events.UnityAction)delegate
+                buttonSpriteTwitter.color = TextTwitter.color = TwitterLightBlue;
+                PassiveButtonTwitter.OnMouseOut.AddListener((UnityAction)delegate
                 {
-                    ButtonSpriteTwitter.color = TextTwitter.color = TwitterLightBlue;
+                    buttonSpriteTwitter.color = TextTwitter.color = TwitterLightBlue;
                 });
 
                 SetButtonPosition();
 
-                // UM credits button
-                ButtonTemplate = GameObject.Find("InventoryButton");
-                if (ButtonTemplate == null) return;
-                var creditsButton = Object.Instantiate(ButtonTemplate, ButtonTemplate.transform.parent);
+                // UM credits Button
+                buttonTemplate = GameObject.Find("InventoryButton");
+                if (buttonTemplate == null) return;
+                var creditsButton = Object.Instantiate(buttonTemplate, buttonTemplate.transform.parent);
                 var passiveCreditsButton = creditsButton.GetComponent<PassiveButton>();
                 var spriteCreditsButton = creditsButton.GetComponent<SpriteRenderer>();
 
@@ -95,14 +96,14 @@ namespace UltimateMods.Patches
                 passiveCreditsButton.OnClick.AddListener((System.Action)delegate
                 {
                     // do stuff
-                    if (PopUp != null) Object.Destroy(PopUp);
-                    PopUp = Object.Instantiate(Object.FindObjectOfType<AnnouncementPopUp>(true));
-                    PopUp.gameObject.SetActive(true);
-                    PopUp.Init();
-                    // SelectableHyperLinkHelper.DestroyGOs(PopUp.selectableHyperLinks, "test");
+                    if (popUp != null) Object.Destroy(popUp);
+                    popUp = Object.Instantiate(Object.FindObjectOfType<AnnouncementPopUp>(true));
+                    popUp.gameObject.SetActive(true);
+                    popUp.Init();
+                    // SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, "test");
                     string creditsString = ModTranslation.getString("DevName");
                     creditsString += ModTranslation.getString("CreditsText");
-                    PopUp.AnnounceTextMeshPro.text = creditsString;
+                    popUp.AnnounceTextMeshPro.text = creditsString;
                     __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) =>
                     {
                         if (p == 1)
@@ -120,8 +121,8 @@ namespace UltimateMods.Patches
                 {
                     if (p == 1)
                     {
-                        ButtonTemplate = GameObject.Find("InventoryButton");
-                        foreach (Transform tf in ButtonTemplate.transform.parent.GetComponentsInChildren<Transform>())
+                        buttonTemplate = GameObject.Find("InventoryButton");
+                        foreach (Transform tf in buttonTemplate.transform.parent.GetComponentsInChildren<Transform>())
                         {
                             tf.localPosition = new Vector2(tf.localPosition.x * 0.8f, tf.localPosition.y);
                         }
@@ -131,10 +132,10 @@ namespace UltimateMods.Patches
 
             public static void SetButtonPosition()
             {
-                if (ButtonDiscord != null)
-                    ButtonDiscord.transform.localPosition = new Vector3(TmpButton.transform.localPosition.x, TmpButton.transform.localPosition.y + 0.6f, TmpButton.transform.localPosition.z);
-                if (ButtonTwitter != null)
-                    ButtonTwitter.transform.localPosition = new Vector3(TmpButton.transform.localPosition.x, TmpButton.transform.localPosition.y + 1.2f, TmpButton.transform.localPosition.z);
+                if (buttonDiscord != null)
+                    buttonDiscord.transform.localPosition = new Vector3(tmpButton.transform.localPosition.x, tmpButton.transform.localPosition.y + 0.6f, tmpButton.transform.localPosition.z);
+                if (buttonTwitter != null)
+                    buttonTwitter.transform.localPosition = new Vector3(tmpButton.transform.localPosition.x, tmpButton.transform.localPosition.y + 1.2f, tmpButton.transform.localPosition.z);
             }
 
             public static void Postfix(PingTracker __instance)

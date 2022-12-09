@@ -6,35 +6,35 @@ namespace UltimateMods
     [HarmonyPatch(typeof(ShipStatus), nameof(GameStartManager.Start))]
     public class MirrorMap
     {
-        public static GameObject Skeld;
-        public static GameObject MiraHQ;
-        public static GameObject Polus;
-        public static GameObject AirShip;
+        public static GameObject skeld;
+        public static GameObject miraHQ;
+        public static GameObject polus;
+        public static GameObject airShip;
 
         public static void Prefix(SpawnInMinigame.SpawnLocation __instance)
         {
-            if (PlayerControl.GameOptions.MapId == 0 && CustomOptionsH.EnableMirrorMap.getBool())
+            if (PlayerControl.GameOptions.MapId == 0 && Helpers.IsMirrorMap)
             {
-                Skeld = GameObject.Find("SkeldShip(Clone)");
-                Skeld.transform.localScale = new Vector3(-1.2f, 1.2f, 1.2f);
-                SkeldShipStatus.Instance.InitialSpawnCenter = new Vector2(0.8f, 0.6f);
-                SkeldShipStatus.Instance.MeetingSpawnCenter = new Vector2(0.8f, 0.6f);
+                skeld = GameObject.Find("SkeldShip(Clone)");
+                skeld.transform.localScale = new Vector3(-1.2f, 1.2f, 1.2f);
+                SkeldShipStatus.Instance.InitialSpawnCenter = new(0.8f, 0.6f);
+                SkeldShipStatus.Instance.MeetingSpawnCenter = new(0.8f, 0.6f);
             }
-            else if (PlayerControl.GameOptions.MapId == 1 && CustomOptionsH.EnableMirrorMap.getBool())
+            else if (PlayerControl.GameOptions.MapId == 1 && Helpers.IsMirrorMap)
             {
-                MiraHQ = GameObject.Find("MiraShip(Clone)");
-                MiraHQ.transform.localScale = new Vector3(-1f, 1f, 1f);
-                MiraShipStatus.Instance.InitialSpawnCenter = new Vector2(4.4f, 2.2f);
-                MiraShipStatus.Instance.MeetingSpawnCenter = new Vector2(-25.3921f, 2.5626f);
-                MiraShipStatus.Instance.MeetingSpawnCenter2 = new Vector2(-25.3921f, 2.5626f);
+                miraHQ = GameObject.Find("MiraShip(Clone)");
+                miraHQ.transform.localScale = new Vector3(-1f, 1f, 1f);
+                MiraShipStatus.Instance.InitialSpawnCenter = new(4.4f, 2.2f);
+                MiraShipStatus.Instance.MeetingSpawnCenter = new(-25.3921f, 2.5626f);
+                MiraShipStatus.Instance.MeetingSpawnCenter2 = new(-25.3921f, 2.5626f);
             }
-            else if (PlayerControl.GameOptions.MapId == 2 && CustomOptionsH.EnableMirrorMap.getBool())
+            else if (PlayerControl.GameOptions.MapId == 2 && Helpers.IsMirrorMap)
             {
-                Polus = GameObject.Find("PolusShip(Clone)");
-                Polus.transform.localScale = new Vector3(-1f, 1f, 1f);
-                PolusShipStatus.Instance.InitialSpawnCenter = new Vector2(-16.7f, -2.1f);
-                PolusShipStatus.Instance.MeetingSpawnCenter = new Vector2(-19.5f, -17f);
-                PolusShipStatus.Instance.MeetingSpawnCenter2 = new Vector2(-19.5f, -17f);
+                polus = GameObject.Find("PolusShip(Clone)");
+                polus.transform.localScale = new Vector3(-1f, 1f, 1f);
+                PolusShipStatus.Instance.InitialSpawnCenter = new(-16.7f, -2.1f);
+                PolusShipStatus.Instance.MeetingSpawnCenter = new(-19.5f, -17f);
+                PolusShipStatus.Instance.MeetingSpawnCenter2 = new(-19.5f, -17f);
             }
         }
     }
