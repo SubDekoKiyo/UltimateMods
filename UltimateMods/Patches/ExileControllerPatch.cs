@@ -1,12 +1,3 @@
-using System;
-using System.Linq;
-using HarmonyLib;
-using UnityEngine;
-using UltimateMods.Roles;
-using UltimateMods.Modules;
-using AmongUs.Data;
-// using UltimateMods.Classic;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]

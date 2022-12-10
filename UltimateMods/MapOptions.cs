@@ -1,7 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Patches;
-
 namespace UltimateMods
 {
     static class Options

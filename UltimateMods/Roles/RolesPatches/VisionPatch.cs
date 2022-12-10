@@ -1,8 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using UltimateMods.Utilities;
-using AmongUs.GameOptions;
-
 namespace UltimateMods.Roles.Patches
 {
     [HarmonyPatch(typeof(ShipStatus))]

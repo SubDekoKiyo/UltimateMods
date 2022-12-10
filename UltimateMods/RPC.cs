@@ -1,23 +1,3 @@
-using HarmonyLib;
-using Hazel;
-using UltimateMods.Patches;
-using UltimateMods.Modules;
-using System.Linq;
-using System;
-using UnityEngine;
-using static UltimateMods.GameHistory;
-using UltimateMods.Utilities;
-using UltimateMods.Roles;
-using UltimateMods.Roles.Patches;
-using UltimateMods.Objects;
-using UltimateMods.EndGame;
-using System.Collections;
-using System.Collections.Generic;
-using static UltimateMods.Modules.Assets;
-using Object = UnityEngine.Object;
-using Il2CppSystem.Collections.Generic;
-using AmongUs.GameOptions;
-
 namespace UltimateMods
 {
     enum CustomRPC

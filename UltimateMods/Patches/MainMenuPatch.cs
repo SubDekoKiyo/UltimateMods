@@ -1,14 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using UnityEngine.UI;
-using System;
-using static UltimateMods.ColorDictionary;
-using static UnityEngine.UI.Button;
-using UnityEngine.Events;
-using Object = UnityEngine.Object;
-using UltimateMods.Utilities;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Patches
 {
     public class MainMenuPatch

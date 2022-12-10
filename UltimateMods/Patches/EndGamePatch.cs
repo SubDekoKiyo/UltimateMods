@@ -1,16 +1,3 @@
-using HarmonyLib;
-using UltimateMods.Roles;
-using static UltimateMods.GameHistory;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using System;
-using System.Text;
-using UltimateMods.Modules;
-using UltimateMods.Debug;
-using static UltimateMods.Modules.Assets;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.EndGame
 {
     public enum CustomGameOverReason

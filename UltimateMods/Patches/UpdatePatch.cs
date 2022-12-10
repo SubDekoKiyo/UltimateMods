@@ -1,9 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using Hazel;
-using UltimateMods.Modules;
-using UltimateMods.Roles;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]

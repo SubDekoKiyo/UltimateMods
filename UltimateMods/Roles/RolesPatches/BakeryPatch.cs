@@ -1,11 +1,3 @@
-using UnityEngine;
-using HarmonyLib;
-using UltimateMods.Modules;
-using UltimateMods.Utilities;
-using Hazel;
-using AmongUs.GameOptions;
-using static UltimateMods.UltimateMods;
-
 namespace UltimateMods.Roles.Patches
 {
     [HarmonyPatch]

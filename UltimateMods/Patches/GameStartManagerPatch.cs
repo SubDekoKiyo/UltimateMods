@@ -1,14 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using System.Reflection;
-using System.Collections.Generic;
-using Hazel;
-using System;
-using UltimateMods.Utilities;
-using AmongUs.Data;
-using InnerNet;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Patches
 {
     public class GameStartManagerPatch
@@ -202,7 +191,7 @@ namespace UltimateMods.Patches
 
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    foreach (InnerNet.ClientData client in AmongUsClient.Instance.allClients.GetFastEnumerator())
+                    foreach (ClientData client in AmongUsClient.Instance.allClients.GetEnumerator())
                     {
                         if (client.Character == null) continue;
                         var dummyComponent = client.Character.GetComponent<DummyBehaviour>();

@@ -1,17 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
-using UnityEngine;
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using UltimateMods.Utilities;
-using UltimateMods.Roles;
-using UltimateMods.EndGame;
-using static UltimateMods.UltimateMods;
-using static UltimateMods.GameHistory;
-
 namespace UltimateMods
 {
     public enum MurderAttemptResult

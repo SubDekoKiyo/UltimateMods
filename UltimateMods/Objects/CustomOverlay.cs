@@ -1,14 +1,4 @@
 // Source Code from Town of Plus & Town of Super
-
-using HarmonyLib;
-using System;
-using System.Linq;
-using System.Collections.Generic;
-using System.Reflection;
-using UnityEngine;
-using UltimateMods.Roles;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Objects
 {
     [Harmony]

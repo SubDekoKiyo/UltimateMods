@@ -1,5 +1,3 @@
-using HarmonyLib;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(HeliSabotageSystem), nameof(HeliSabotageSystem.RepairDamage))]

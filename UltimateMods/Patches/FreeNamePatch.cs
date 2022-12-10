@@ -1,15 +1,5 @@
 // Taken from https://github.com/NuclearPowered/Reactor/ , licensed under the LGPLv3
 // Source Code from TheOtherRoles(https://github.com/Eisbison/TheOtherRoles)
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using UltimateMods.Utilities;
-using TMPro;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
-
 namespace UltimateMods.Patches
 {
     internal class FreeNamePatch

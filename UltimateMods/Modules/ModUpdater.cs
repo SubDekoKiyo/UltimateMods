@@ -1,15 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using UnityEngine.UI;
-using System.IO;
-using System.Reflection;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading.Tasks;
-using Newtonsoft.Json.Linq;
-using Twitch;
-
 namespace UltimateMods.Modules
 {
     [HarmonyPatch(typeof(MainMenuManager), nameof(MainMenuManager.Start))]

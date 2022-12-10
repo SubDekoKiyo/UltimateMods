@@ -1,11 +1,3 @@
-using System.Linq;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using static UltimateMods.CustomOptionsH;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Roles
 {
     class RoleInfo

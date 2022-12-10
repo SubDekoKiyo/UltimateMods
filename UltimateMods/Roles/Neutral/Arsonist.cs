@@ -1,15 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using System.Linq;
-using System;
-using UltimateMods.Utilities;
-using static UltimateMods.Modules.Assets;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Roles.Patches.OutlinePatch;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]

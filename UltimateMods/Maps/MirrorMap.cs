@@ -1,7 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using AmongUs.GameOptions;
-
 namespace UltimateMods
 {
     [HarmonyPatch(typeof(ShipStatus), nameof(GameStartManager.Start))]

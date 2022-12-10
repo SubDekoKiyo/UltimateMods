@@ -1,10 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Modules.CustomOption;
-using static UltimateMods.Modules.CustomOption.CustomOptionType;
-
 namespace UltimateMods
 {
     public class CustomOptionsH

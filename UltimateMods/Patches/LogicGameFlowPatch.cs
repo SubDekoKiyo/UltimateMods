@@ -1,5 +1,3 @@
-using HarmonyLib;
-
 namespace UltimateMods.Patches
 {
     public class LogicGameFlowPatch

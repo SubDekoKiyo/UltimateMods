@@ -1,10 +1,3 @@
-using HarmonyLib;
-using UltimateMods.Utilities;
-using UnityEngine;
-using System.Collections.Generic;
-using UltimateMods.Roles;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]

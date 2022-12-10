@@ -1,11 +1,3 @@
-using HarmonyLib;
-using static UltimateMods.Options;
-using System;
-using UnityEngine;
-using UltimateMods.Utilities;
-using UltimateMods.Roles;
-using AmongUs.GameOptions;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch]

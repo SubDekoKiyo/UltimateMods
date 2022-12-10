@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using TMPro;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]

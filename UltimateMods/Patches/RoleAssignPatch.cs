@@ -1,14 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using UnityEngine;
-using UltimateMods.Roles;
-using UltimateMods.Modules;
-using AmongUs.GameOptions;
-using static UltimateMods.UltimateMods;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(RoleOptionsData), nameof(RoleOptionsData.GetNumPerGame))]

@@ -1,13 +1,10 @@
-using System;
-using System.Collections;
-using System.Linq.Expressions;
-using Il2CppSystem.Collections.Generic;
+using Generic = Il2CppSystem.Collections.Generic;
 
 namespace UltimateMods.Utilities;
 
 public static class EnumerationHelpers
 {
-    public static System.Collections.Generic.IEnumerable<T> GetFastEnumerator<T>(this List<T> list) where T : Il2CppSystem.Object => new Il2CppListEnumerable<T>(list);
+    public static System.Collections.Generic.IEnumerable<T> GetFastEnumerator<T>(this Generic.List<T> list) where T : Il2CppSystem.Object => new Il2CppListEnumerable<T>(list);
 }
 
 public unsafe class Il2CppListEnumerable<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IEnumerator<T> where T : Il2CppSystem.Object
@@ -45,7 +42,7 @@ public unsafe class Il2CppListEnumerable<T> : System.Collections.Generic.IEnumer
     private readonly int _count;
     private int _index = -1;
 
-    public Il2CppListEnumerable(List<T> list)
+    public Il2CppListEnumerable(Generic.List<T> list)
     {
         var listStruct = (Il2CppListStruct*)list.Pointer;
         _count = listStruct->_size;

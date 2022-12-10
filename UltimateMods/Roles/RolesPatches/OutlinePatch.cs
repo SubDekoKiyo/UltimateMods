@@ -1,10 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
-using UltimateMods.Utilities;
-using AmongUs.GameOptions;
-
 namespace UltimateMods.Roles.Patches
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]

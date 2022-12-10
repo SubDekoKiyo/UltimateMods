@@ -1,8 +1,3 @@
-using UnityEngine;
-using System.Collections.Generic;
-using System;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Objects
 {
     public class CustomMessage

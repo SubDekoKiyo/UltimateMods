@@ -1,5 +1,3 @@
-using HarmonyLib;
-
 namespace UltimateMods.Roles.Patches
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]

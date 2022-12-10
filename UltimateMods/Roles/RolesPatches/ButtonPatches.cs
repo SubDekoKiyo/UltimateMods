@@ -1,10 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using UltimateMods.Utilities;
-using System;
-using AmongUs.GameOptions;
-using static UltimateMods.Options;
-
 namespace UltimateMods.Roles.Patches;
 
 public static class ButtonPatches

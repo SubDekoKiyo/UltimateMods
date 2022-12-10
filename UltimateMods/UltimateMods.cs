@@ -1,16 +1,9 @@
-using HarmonyLib;
-using System;
-using UltimateMods.Roles;
-using UltimateMods.EndGame;
-using UltimateMods.Objects;
-using static UltimateMods.GameHistory;
-
 namespace UltimateMods
 {
     [HarmonyPatch]
     public static class UltimateMods
     {
-        public static Random rnd = new((int)DateTime.Now.Ticks);
+        public static System.Random rnd = new((int)DateTime.Now.Ticks);
 
         public static void ClearAndReloadRoles()
         {

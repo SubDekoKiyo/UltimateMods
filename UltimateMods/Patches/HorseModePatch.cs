@@ -1,12 +1,4 @@
 // Source Code from TheOtherRoles
-
-using HarmonyLib;
-using UnityEngine;
-using static UnityEngine.UI.Button;
-using Object = UnityEngine.Object;
-using UltimateMods.Modules;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch]

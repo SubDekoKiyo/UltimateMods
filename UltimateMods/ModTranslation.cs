@@ -1,13 +1,4 @@
 // Source Code from TownOfHost
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using HarmonyLib;
-using System.Text.RegularExpressions;
-using UltimateMods.Modules;
-using AmongUs.Data;
-
 namespace UltimateMods
 {
     public static class ModTranslation

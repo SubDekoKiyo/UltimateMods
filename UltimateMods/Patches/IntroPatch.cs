@@ -1,13 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using BepInEx.Unity.IL2CPP.Utils.Collections;
-using HarmonyLib;
-using UnityEngine;
-using UltimateMods.Utilities;
-using UltimateMods.Roles;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]

@@ -1,14 +1,3 @@
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UltimateMods.Utilities;
-using UltimateMods.Modules;
-using UltimateMods.Roles;
-using Hazel;
-using AmongUs.GameOptions;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
