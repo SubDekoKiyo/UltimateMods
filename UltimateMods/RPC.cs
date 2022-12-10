@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using static UltimateMods.Modules.Assets;
 using Object = UnityEngine.Object;
 using Il2CppSystem.Collections.Generic;
+using AmongUs.GameOptions;
 
 namespace UltimateMods
 {
@@ -195,7 +196,7 @@ namespace UltimateMods
 
         public static void ResetVariables()
         {
-            MapOptions.ClearAndReloadMapOptions();
+            ModMapOptions.ClearAndReloadModMapOptions();
             UltimateMods.ClearAndReloadRoles();
             GameHistory.clearGameHistory();
             AdminPatch.ResetData();
@@ -227,7 +228,7 @@ namespace UltimateMods
 
         public static void DynamicMapOption(byte mapId)
         {
-            PlayerControl.GameOptions.MapId = mapId;
+            GameOptionsManager.Instance.currentNormalGameOptions.MapId = mapId;
         }
 
         public static void VersionHandshake(int major, int minor, int build, int revision, Guid guid, int clientId)
@@ -258,17 +259,17 @@ namespace UltimateMods
 
         public static void UseAdminTime(float time)
         {
-            MapOptions.RestrictAdminTime -= time;
+            ModMapOptions.RestrictAdminTime -= time;
         }
 
         public static void UseCameraTime(float time)
         {
-            MapOptions.RestrictCamerasTime -= time;
+            ModMapOptions.RestrictCamerasTime -= time;
         }
 
         public static void UseVitalsTime(float time)
         {
-            MapOptions.RestrictVitalsTime -= time;
+            ModMapOptions.RestrictVitalsTime -= time;
         }
 
         public static void UncheckedMurderPlayer(byte sourceId, byte targetId, byte showAnimation)
@@ -370,11 +371,6 @@ namespace UltimateMods
                     {
                         UnderTaker.DraggingBody = true;
                         UnderTaker.BodyId = playerId;
-                        if (PlayerControl.GameOptions.MapId == 5)
-                        {
-                            GameObject vent = GameObject.Find("LowerCentralVent");
-                            vent.GetComponent<BoxCollider2D>().enabled = false;
-                        }
                     }
                     else
                     {
@@ -392,17 +388,8 @@ namespace UltimateMods
                                 false
                             ))
                             {
-                                if (PlayerControl.GameOptions.MapId == 5)
-                                {
-                                    Array[i].transform.position = newPos;
-                                    Array[i].transform.position += new Vector3(0, 0, -0.5f);
-                                    GameObject vent = GameObject.Find("LowerCentralVent");
-                                    vent.GetComponent<BoxCollider2D>().enabled = true;
-                                }
-                                else
-                                {
-                                    Array[i].transform.position = newPos;
-                                }
+                                Array[i].transform.position = newPos;
+
                             }
                         }
                     }

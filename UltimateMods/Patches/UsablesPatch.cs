@@ -64,7 +64,7 @@ namespace UltimateMods.Patches
         {
             static void Prefix(MedScanMinigame __instance)
             {
-                if (MapOptions.AllowParallelMedBayScans)
+                if (ModMapOptions.AllowParallelMedBayScans)
                 {
                     __instance.medscan.CurrentUser = PlayerControl.LocalPlayer.PlayerId;
                     __instance.medscan.UsersList.Clear();

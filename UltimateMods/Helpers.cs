@@ -206,7 +206,7 @@ namespace UltimateMods
             // if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
             // if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
             */
-            if (MapOptions.HideOutOfSightNametags && COHelpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
+            if (ModMapOptions.HideOutOfSightNametags && COHelpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
             {
                 float distMod = 1.025f;
                 float distance = Vector3.Distance(source.transform.position, target.transform.position);
@@ -214,9 +214,9 @@ namespace UltimateMods
 
                 if (distance > ShipStatus.Instance.CalculateLightRadius(source.Data) * distMod || anythingBetween) return true;
             }
-            if (!MapOptions.HidePlayerNames) return false; // All names are visible
-                                                           // if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
-                                                           // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
+            if (!ModMapOptions.HidePlayerNames) return false; // All names are visible
+                                                              // if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
+                                                              // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
             if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick))) return false; // Members of team Jackal see the names of each other
             return true;
         }

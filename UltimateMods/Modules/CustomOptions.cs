@@ -7,6 +7,7 @@ using HarmonyLib;
 using Hazel;
 using System.Reflection;
 using System.Text;
+using AmongUs.GameOptions;
 using UltimateMods.Utilities;
 using UltimateMods.Roles;
 using static UltimateMods.Modules.Assets;
@@ -670,10 +671,9 @@ namespace UltimateMods.Modules
     {
         public static void Postfix(KeyValueOption __instance)
         {
-            GameOptionsData gameOptions = PlayerControl.GameOptions;
             if (__instance.Title == StringNames.GameMapName)
             {
-                __instance.Selected = gameOptions.MapId;
+                __instance.Selected = GameOptionsManager.Instance.currentNormalGameOptions.MapId;
             }
             try
             {
@@ -818,9 +818,9 @@ namespace UltimateMods.Modules
     }
 
     [HarmonyPatch]
-    class GameOptionsDataPatch
+    public static class GameOptionsDataPatch
     {
-        public static int MaxPage;
+        public static int NumPages;
         public static string tl(string key)
         {
             return ModTranslation.getString(key);
@@ -858,12 +858,12 @@ namespace UltimateMods.Modules
             return string.Join("\n", options);
         }
 
-        private static void Postfix(ref string __result)
+        private static void Postfix()
         {
             List<string> pages = new();
-            pages.Add(__result);
+            pages.Add(GameOptionsManager.Instance.CurrentGameOptions.ToHudString(PlayerControl.AllPlayerControls.Count));
 
-            StringBuilder entry = new StringBuilder();
+            StringBuilder entry = new();
             List<string> entries = new();
 
             // First add the Presets and the role counts
@@ -879,9 +879,7 @@ namespace UltimateMods.Modules
             entries.Add(optionToString(CustomOptionsH.NeutralRolesCount));
             entries.Add(optionToString(CustomOptionsH.ModifierCount));
 
-            entries.Add(entry.ToString().Trim('\r', '\n'));
-
-            void addChildren(CustomOption option, ref StringBuilder entry, bool indent = true)
+            void addChildren(CustomOption option, StringBuilder entry, bool indent = true)
             {
                 if (!option.enabled) return;
 
@@ -889,7 +887,7 @@ namespace UltimateMods.Modules
                 {
                     if (!child.isHidden)
                         entry.AppendLine((indent ? "    " : "") + optionToString(child));
-                    addChildren(child, ref entry, indent);
+                    addChildren(child, entry, indent);
                 }
             }
 
@@ -916,11 +914,10 @@ namespace UltimateMods.Modules
                         continue;
                     }
 
-                    entry = new StringBuilder();
                     if (!option.isHidden)
                         entry.AppendLine(optionToString(option));
 
-                    addChildren(option, ref entry, !option.isHidden);
+                    addChildren(option, entry, !option.isHidden);
                     entries.Add(entry.ToString().Trim('\r', '\n'));
                 }
             }
@@ -949,21 +946,10 @@ namespace UltimateMods.Modules
                 pages.Add(page);
             }
 
-            int NumPages = pages.Count;
-            MaxPage = NumPages;
+            NumPages = pages.Count;
             int counter = UltimateModsPlugin.OptionsPage = UltimateModsPlugin.OptionsPage % NumPages;
 
-            __result = pages[counter].Trim('\r', '\n') + "\n\n" + tl("ChangePage") + $" ({counter + 1}/{NumPages})";
-        }
-    }
-
-    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.GetAdjustedNumImpostors))]
-    public static class GameOptionsGetAdjustedNumImpostorsPatch
-    {
-        public static bool Prefix(GameOptionsData __instance, ref int __result)
-        {
-            __result = PlayerControl.GameOptions.NumImpostors;
-            return false;
+            FastDestroyableSingleton<HudManager>.Instance.GameSettings.text = pages[counter].Trim('\r', '\n') + "\n\n" + tl("ChangePage") + $" ({counter + 1}/{NumPages})";
         }
     }
 
@@ -982,7 +968,7 @@ namespace UltimateMods.Modules
                 if (UltimateModsPlugin.OptionsPage > 0)
                     UltimateModsPlugin.OptionsPage -= 1;
                 else if (UltimateModsPlugin.OptionsPage == 0)
-                    UltimateModsPlugin.OptionsPage = GameOptionsDataPatch.MaxPage - 1;
+                    UltimateModsPlugin.OptionsPage = GameOptionsDataPatch.NumPages - 1;
             }
             if (page != UltimateModsPlugin.OptionsPage)
             {

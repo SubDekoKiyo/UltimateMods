@@ -58,7 +58,7 @@ namespace UltimateMods.Roles
                                 false
                             ))
                             {
-                                if (PlayerControl.GameOptions.MapId == 5)
+                                if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5)
                                 {
                                     array[i].transform.position = newPos;
                                     array[i].transform.position += new Vector3(0, 0, -0.5f);
@@ -196,7 +196,7 @@ namespace UltimateMods.Roles
         {
             DraggingBody = false;
             BodyId = 0;
-            if (PlayerControl.GameOptions.MapId == 5)
+            if (GameOptionsManager.Instance.currentNormalGameOptions.MapId == 5)
             {
                 GameObject vent = GameObject.Find("LowerCentralVent");
                 vent.GetComponent<BoxCollider2D>().enabled = true;

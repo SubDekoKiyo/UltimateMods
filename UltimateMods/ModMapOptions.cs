@@ -4,7 +4,7 @@ using UltimateMods.Patches;
 
 namespace UltimateMods
 {
-    static class MapOptions
+    static class ModMapOptions
     {
         // Set values
         public static int MaxNumberOfMeetings = 10;
@@ -37,7 +37,7 @@ namespace UltimateMods
         public static List<Vent> VentsToSeal = new();
         public static Dictionary<byte, PoolablePlayer> PlayerIcons = new();
 
-        public static void ClearAndReloadMapOptions()
+        public static void ClearAndReloadModMapOptions()
         {
             MeetingsCount = 0;
             CamerasToAdd = new();

@@ -51,7 +51,7 @@ namespace UltimateMods
         {
             get
             {
-                return CustomOptionsH.EnableGodMiraHQ.getBool() && PlayerControl.GameOptions.MapId == 1;
+                return CustomOptionsH.EnableGodMiraHQ.getBool() && GameOptionsManager.Instance.currentNormalGameOptions.MapId == 1;
             }
         }*/
     }

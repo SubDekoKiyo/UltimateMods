@@ -29,7 +29,7 @@ namespace UltimateMods.Roles
 
         public static Sprite GetButtonSprite()
         {
-            byte mapId = PlayerControl.GameOptions.MapId;
+            byte mapId = GameOptionsManager.Instance.currentNormalGameOptions.MapId;
             UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
             if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld
             else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
@@ -44,8 +44,15 @@ namespace UltimateMods.Roles
                 () =>
                 {
                     PlayerControl.LocalPlayer.NetTransform.Halt();
-                    Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
-                    DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                    // Before 10.25
+                    // Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
+                    // DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                    // After 12.8
+                    HudManager.Instance.ToggleMapVisible(new MapOptions
+                    {
+                        Mode = MapOptions.Modes.CountOverlay,
+                        ShowLivePlayerPosition = true
+                    });
                 },
                 () =>
                 {
@@ -62,7 +69,7 @@ namespace UltimateMods.Roles
                 false,
                 0f,
                 () => { },
-                PlayerControl.GameOptions.MapId == 3,
+                GameOptionsManager.Instance.currentNormalGameOptions.MapId == 3,
                 DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
             );
         }

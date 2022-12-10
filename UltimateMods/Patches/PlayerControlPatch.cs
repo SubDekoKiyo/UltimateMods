@@ -7,13 +7,14 @@ using UltimateMods.Utilities;
 using UltimateMods.Modules;
 using UltimateMods.Roles;
 using Hazel;
+using AmongUs.GameOptions;
 
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
     public static class PlayerControlFixedUpdatePatch
     {
-        public static void UpdatePlayerInfo()
+        public static void UpdatePlayerInfo(TaskPanelBehaviour __instance)
         {
             bool commsActive = false;
             foreach (PlayerTask t in PlayerControl.LocalPlayer.myTasks)
@@ -76,24 +77,24 @@ namespace UltimateMods.Patches
                     if (p == PlayerControl.LocalPlayer)
                     {
                         playerInfoText = $"{roleNames}";
-                        if (TaskPanelBehaviour.InstanceExists)
+                        if (__instance)
                         {
-                            TMPro.TextMeshPro tabText = TaskPanelBehaviour.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                            TMPro.TextMeshPro tabText = __instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
                             tabText.SetText($"{TranslationController.Instance.GetString(StringNames.Tasks)} {taskInfo}");
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks /*&& !Altruist.exists*/)
+                    else if (ModMapOptions.GhostsSeeRoles && ModMapOptions.GhostsSeeTasks /*&& !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeTasks/* && !Altruist.exists*/)
+                    else if (ModMapOptions.GhostsSeeTasks/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeRoles/* && !Altruist.exists*/)
+                    else if (ModMapOptions.GhostsSeeRoles/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;
@@ -106,6 +107,7 @@ namespace UltimateMods.Patches
             }
         }
 
+        public static TaskPanelBehaviour __tpb;
         public static void Postfix(PlayerControl __instance)
         {
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
@@ -120,7 +122,7 @@ namespace UltimateMods.Patches
                 Helpers.RefreshRoleDescription(__instance);
 
                 // Update Player Info
-                UpdatePlayerInfo();
+                UpdatePlayerInfo(__tpb);
             }
 
             UltimateMods.FixedUpdate(__instance);
@@ -216,12 +218,12 @@ namespace UltimateMods.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] float time)
         {
-            if (PlayerControl.GameOptions.KillCooldown <= 0f) return false;
+            if (GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
 
-            float Max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
+            float Max = Mathf.Max(GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
             __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, Max), Max);
             return false;
         }

@@ -4,6 +4,7 @@ using UnityEngine;
 using UltimateMods.Modules;
 using TMPro;
 using UltimateMods.Utilities;
+using AmongUs.GameOptions;
 using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Roles
@@ -135,10 +136,10 @@ namespace UltimateMods.Roles
                 if (EnableZoomInOut && PlayerControl.LocalPlayer.IsDead())
                 {
                     if ((AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started
-                        || AmongUsClient.Instance.GameMode == GameModes.FreePlay)
+                        // || AmongUsClient.Instance.GameMode == GameModes.FreePlay)
                         && (PlayerControl.LocalPlayer.CanMove)
                         && !(MapBehaviour.Instance && MapBehaviour.Instance.IsOpen)
-                        && !(MeetingHud.Instance))
+                        && !(MeetingHud.Instance)))
                     {
                         if (Input.GetAxis("Mouse ScrollWheel") < 0)
                         {
