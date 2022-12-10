@@ -28,7 +28,7 @@ namespace UltimateMods.Patches
         // private static List<byte> BlockLovers = new();
         public static int BlockedAssignments = 0;
         public static int MaxBlocks = 10;
-        public static System.Random rnd = new ((int)DateTime.Now.Ticks);
+        public static System.Random rnd = new((int)DateTime.Now.Ticks);
 
         public static void Postfix()
         {
@@ -36,7 +36,7 @@ namespace UltimateMods.Patches
             AmongUsClient.Instance.FinishRpcImmediately(writer);
             RPCProcedure.ResetVariables();
 
-            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionsH.ActivateModRoles.getBool()) // Don't assign Roles in Tutorial or if deactivated
+            if (!DestroyableSingleton<TutorialManager>.InstanceExists && CustomOptionsH.ActivateModRoles.getBool() && GameOptionsManager.Instance.currentGameMode == GameModes.Normal) // Don't assign Roles in Tutorial or if deactivated
                 assignRoles();
         }
 
