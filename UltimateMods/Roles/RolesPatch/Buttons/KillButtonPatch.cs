@@ -1,5 +1,4 @@
 using HarmonyLib;
-using AmongUs.GameOptions;
 
 namespace UltimateMods.Roles.Patches
 {
@@ -19,7 +18,7 @@ namespace UltimateMods.Roles.Patches
                     // Handle blank kill
                     if (res == MurderAttemptResult.BlankKill)
                     {
-                        PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().KillCooldown;
+                        PlayerControl.LocalPlayer.killTimer = PlayerControl.GameOptions.KillCooldown;
                     }
 
                     __instance.SetTarget(null);

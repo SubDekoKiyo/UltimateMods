@@ -9,7 +9,6 @@ using System.Reflection;
 using System.Text;
 using UltimateMods.Utilities;
 using UltimateMods.Roles;
-using AmongUs.GameOptions;
 using static UltimateMods.Modules.Assets;
 
 namespace UltimateMods.Modules
@@ -671,9 +670,10 @@ namespace UltimateMods.Modules
     {
         public static void Postfix(KeyValueOption __instance)
         {
+            GameOptionsData gameOptions = PlayerControl.GameOptions;
             if (__instance.Title == StringNames.GameMapName)
             {
-                __instance.Selected = GameOptionsManager.Instance.CurrentGameOptions.MapId;
+                __instance.Selected = gameOptions.MapId;
             }
             try
             {
@@ -817,7 +817,7 @@ namespace UltimateMods.Modules
         }
     }
 
-    [HarmonyPatch(typeof(LobbyBehaviour), nameof(LobbyBehaviour.FixedUpdate))]
+    [HarmonyPatch]
     class GameOptionsDataPatch
     {
         public static int MaxPage;
@@ -828,7 +828,7 @@ namespace UltimateMods.Modules
 
         private static IEnumerable<MethodBase> TargetMethods()
         {
-            return typeof(GameOptionsManager).GetMethods().Where(x => x.ReturnType == typeof(string) && x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(int));
+            return typeof(GameOptionsData).GetMethods().Where(x => x.ReturnType == typeof(string) && x.GetParameters().Length == 1 && x.GetParameters()[0].ParameterType == typeof(int));
         }
 
         public static string optionToString(CustomOption option)
@@ -858,10 +858,10 @@ namespace UltimateMods.Modules
             return string.Join("\n", options);
         }
 
-        private static void Postfix()
+        private static void Postfix(ref string __result)
         {
             List<string> pages = new();
-            pages.Add(GameOptionsManager.Instance.CurrentGameOptions.ToHudString(PlayerControl.AllPlayerControls.Count));
+            pages.Add(__result);
 
             StringBuilder entry = new StringBuilder();
             List<string> entries = new();
@@ -953,7 +953,17 @@ namespace UltimateMods.Modules
             MaxPage = NumPages;
             int counter = UltimateModsPlugin.OptionsPage = UltimateModsPlugin.OptionsPage % NumPages;
 
-            FastDestroyableSingleton<HudManager>.Instance.GameSettings.text = pages[counter].Trim('\r', '\n') + "\n\n" + tl("ChangePage") + $" ({counter + 1}/{NumPages})";
+            __result = pages[counter].Trim('\r', '\n') + "\n\n" + tl("ChangePage") + $" ({counter + 1}/{NumPages})";
+        }
+    }
+
+    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.GetAdjustedNumImpostors))]
+    public static class GameOptionsGetAdjustedNumImpostorsPatch
+    {
+        public static bool Prefix(GameOptionsData __instance, ref int __result)
+        {
+            __result = PlayerControl.GameOptions.NumImpostors;
+            return false;
         }
     }
 

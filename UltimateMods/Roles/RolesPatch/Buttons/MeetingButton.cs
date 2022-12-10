@@ -1,7 +1,7 @@
 using HarmonyLib;
 using System;
 using UnityEngine;
-using static UltimateMods.Options;
+using static UltimateMods.MapOptions;
 
 namespace UltimateMods.Roles.Patches
 {

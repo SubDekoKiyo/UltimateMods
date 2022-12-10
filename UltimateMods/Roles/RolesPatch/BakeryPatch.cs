@@ -3,7 +3,6 @@ using HarmonyLib;
 using UltimateMods.Modules;
 using UltimateMods.Utilities;
 using Hazel;
-using AmongUs.GameOptions;
 using static UltimateMods.UltimateMods;
 
 namespace UltimateMods.Roles.Patches
@@ -31,7 +30,7 @@ namespace UltimateMods.Roles.Patches
                 BakeryText.text = Bomb ? ModTranslation.getString("BombBakeryText") : ModTranslation.getString("MakeBreadText");
                 BakeryText.gameObject.SetActive(true);
 
-                if (GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().ConfirmImpostor)
+                if (PlayerControl.GameOptions.ConfirmImpostor)
                 {
                     BakeryText.transform.localPosition -= new Vector3(0f, 0.4f, 0f);
                 }

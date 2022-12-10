@@ -1,7 +1,6 @@
 using HarmonyLib;
 using UnityEngine;
 using UltimateMods.Utilities;
-using AmongUs.GameOptions;
 
 namespace UltimateMods.Roles.Patches
 {
@@ -32,12 +31,19 @@ namespace UltimateMods.Roles.Patches
 
         public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
         {
-            if (isImpostor) return shipStatus.MaxLightRadius * GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().ImpostorLightMod;
+            if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
 
             SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
             float lerpValue = switchSystem.Value / 255f;
 
-            return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().CrewLightMod;
+            return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * PlayerControl.GameOptions.CrewLightMod;
+        }
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.IsGameOverDueToDeath))]
+        public static void Postfix2(ShipStatus __instance, ref bool __result)
+        {
+            __result = false;
         }
     }
 }

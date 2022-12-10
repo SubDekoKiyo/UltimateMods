@@ -18,11 +18,11 @@ namespace UltimateMods.Patches
             public static bool isHorseMode;
             public static bool Prefix(ref bool __result)
             {
-                if (isHorseMode != Options.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
+                if (isHorseMode != MapOptions.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
                 else
                 {
-                    __result = Options.enableHorseMode;
-                    isHorseMode = Options.enableHorseMode;
+                    __result = MapOptions.enableHorseMode;
+                    isHorseMode = MapOptions.enableHorseMode;
                 }
                 return false;
             }
@@ -33,7 +33,7 @@ namespace UltimateMods.Patches
     class ChangeHorseModePatch
     {
         public static bool AssetsLoaded = false;
-        private static bool horseButtonState = Options.enableHorseMode;
+        private static bool horseButtonState = MapOptions.enableHorseMode;
         private static Sprite horseModeOffSprite = null;
         private static Sprite horseModeOnSprite = null;
         private static GameObject bottomTemplate;
@@ -46,7 +46,7 @@ namespace UltimateMods.Patches
             }
 
             // Horse Mode
-            var horseModeSelectionBehavior = new ClientOptionsPatch.SelectionBehaviour("Enable Horse Mode", () => Options.enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value = !UltimateModsPlugin.EnableHorseMode.Value, UltimateModsPlugin.EnableHorseMode.Value);
+            var horseModeSelectionBehavior = new ClientOptionsPatch.SelectionBehaviour("Enable Horse Mode", () => MapOptions.enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value = !UltimateModsPlugin.EnableHorseMode.Value, UltimateModsPlugin.EnableHorseMode.Value);
 
             bottomTemplate = GameObject.Find("InventoryButton");
             if (bottomTemplate == null) return;

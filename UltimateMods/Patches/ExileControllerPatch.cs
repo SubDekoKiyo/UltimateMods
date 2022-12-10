@@ -19,8 +19,8 @@ namespace UltimateMods.Patches
             lastExiled = exiled;
 
             // 1 = Reset per turn
-            if (Options.RestrictDevices == 1)
-                Options.ResetDeviceTimes();
+            if (MapOptions.RestrictDevices == 1)
+                MapOptions.ResetDeviceTimes();
         }
     }
 
