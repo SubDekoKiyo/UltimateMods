@@ -191,7 +191,7 @@ namespace UltimateMods.Patches
 
                 if (AmongUsClient.Instance.AmHost)
                 {
-                    foreach (ClientData client in AmongUsClient.Instance.allClients.GetEnumerator())
+                    foreach (ClientData client in AmongUsClient.Instance.allClients.GetFastEnumerator())
                     {
                         if (client.Character == null) continue;
                         var dummyComponent = client.Character.GetComponent<DummyBehaviour>();
