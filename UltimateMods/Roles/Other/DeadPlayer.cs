@@ -135,7 +135,7 @@ namespace UltimateMods.Roles
                 if (EnableZoomInOut && PlayerControl.LocalPlayer.IsDead())
                 {
                     if ((AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started
-                        || AmongUsClient.Instance.GameMode == GameModes.FreePlay)
+                        || GameOptionsManager.Instance.CurrentGameOptions.GameMode == AmongUs.GameOptions.GameModes.None)
                         && (PlayerControl.LocalPlayer.CanMove)
                         && !(MapBehaviour.Instance && MapBehaviour.Instance.IsOpen)
                         && !(MeetingHud.Instance))

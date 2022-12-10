@@ -17,7 +17,7 @@ namespace UltimateMods
     public class UltimateModsPlugin : BasePlugin
     {
         public const string Id = "jp.DekoKiyo.UltimateMods";
-        public const string VersionString = "1.1.0";
+        public const string VersionString = "1.2.0.1";
 
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
@@ -62,7 +62,7 @@ namespace UltimateMods
 
             CustomRolesH.Load();
             CustomOptionsH.Load();
-            CustomColors.Load();
+            // CustomColors.Load();
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             ModLanguageSelector.Initialize();

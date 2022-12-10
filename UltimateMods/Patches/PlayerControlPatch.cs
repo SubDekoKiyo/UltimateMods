@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UltimateMods.Utilities;
 using UltimateMods.Modules;
+using AmongUs.GameOptions;
 using UltimateMods.Roles;
 using Hazel;
 
@@ -76,24 +77,24 @@ namespace UltimateMods.Patches
                     if (p == PlayerControl.LocalPlayer)
                     {
                         playerInfoText = $"{roleNames}";
-                        if (TaskPanelBehaviour.InstanceExists)
+                        if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists)
                         {
-                            TMPro.TextMeshPro tabText = TaskPanelBehaviour.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                            TMPro.TextMeshPro tabText = FastDestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
                             tabText.SetText($"{TranslationController.Instance.GetString(StringNames.Tasks)} {taskInfo}");
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks /*&& !Altruist.exists*/)
+                    else if (Options.GhostsSeeRoles && Options.GhostsSeeTasks /*&& !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeTasks/* && !Altruist.exists*/)
+                    else if (Options.GhostsSeeTasks/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeRoles/* && !Altruist.exists*/)
+                    else if (Options.GhostsSeeRoles/* && !Altruist.exists*/)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;
@@ -216,12 +217,12 @@ namespace UltimateMods.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] float time)
         {
-            if (PlayerControl.GameOptions.KillCooldown <= 0f) return false;
+            if (GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().KillCooldown <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
 
-            float Max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
+            float Max = Mathf.Max(GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().KillCooldown * multiplier + addition, __instance.killTimer);
             __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, Max), Max);
             return false;
         }

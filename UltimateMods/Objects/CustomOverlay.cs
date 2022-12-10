@@ -8,6 +8,7 @@ using System.Reflection;
 using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Utilities;
+using AmongUs.GameOptions;
 
 namespace UltimateMods.Objects
 {
@@ -82,7 +83,7 @@ namespace UltimateMods.Objects
 
             if (infoOverlayRules == null)
             {
-                infoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskText, hudManager.transform);
+                infoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskPanel.taskText, hudManager.transform);
                 infoOverlayRules.fontSize = infoOverlayRules.fontSizeMin = infoOverlayRules.fontSizeMax = 1.15f;
                 infoOverlayRules.autoSizeTextContainer = false;
                 infoOverlayRules.enableWordWrapping = false;
@@ -259,8 +260,7 @@ namespace UltimateMods.Objects
                 if (PlayerControl.LocalPlayer == null || hudManager == null)
                     return;
 
-                GameOptionsData o = PlayerControl.GameOptions;
-                List<string> gameOptions = o.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> gameOptions = GameOptionsManager.Instance.CurrentGameOptions.Cast<NormalGameOptionsV07>().ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
                 infoOverlayRules.text = string.Join("\n", gameOptions);
                 string PlayerText = ModTranslation.getString("PlatformTitle");
                 foreach (InnerNet.ClientData Client in AmongUsClient.Instance.allClients.ToArray())

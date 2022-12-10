@@ -31,7 +31,7 @@ namespace UltimateMods.Patches
                     // PlayerControl.SetPetImage(data.DefaultOutfit.PetId, data.DefaultOutfit.ColorId, player.PetSlot);
                     player.cosmetics.nameText.text = data.PlayerName;
                     player.SetFlipX(true);
-                    MapOptions.PlayerIcons[p.PlayerId] = player;
+                    Options.PlayerIcons[p.PlayerId] = player;
 
                     if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                     {
@@ -191,11 +191,11 @@ namespace UltimateMods.Patches
             public static bool isHorseMode;
             public static bool Prefix(ref bool __result)
             {
-                if (isHorseMode != MapOptions.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
+                if (isHorseMode != Options.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
                 else
                 {
-                    __result = MapOptions.enableHorseMode;
-                    isHorseMode = MapOptions.enableHorseMode;
+                    __result = Options.enableHorseMode;
+                    isHorseMode = Options.enableHorseMode;
                 }
                 return false;
             }

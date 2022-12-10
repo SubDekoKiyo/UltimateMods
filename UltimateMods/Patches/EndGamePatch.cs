@@ -367,7 +367,7 @@ namespace UltimateMods.EndGame
                         bonusText = ModTranslation.getString("JesterWin");
                         textRenderer.color = JesterPink;
                         __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
-                        if (MapOptions.EnableCustomSounds)
+                        if (Options.EnableCustomSounds)
                         {
                             SoundManager.Instance.StopSound(__instance.ImpostorStinger);
                             SoundManager.Instance.PlaySound(JesterWinSound, false, 0.8f);
@@ -400,7 +400,7 @@ namespace UltimateMods.EndGame
                         bonusText = ModTranslation.getString("EveryoneLose");
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
-                        if (MapOptions.EnableCustomSounds)
+                        if (Options.EnableCustomSounds)
                         {
                             SoundManager.Instance.StopSound(__instance.ImpostorStinger);
                             SoundManager.Instance.PlaySound(EveryoneLoseSound, false, 0.8f);
@@ -454,7 +454,7 @@ namespace UltimateMods.EndGame
                         textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
                     }
 
-                    if (MapOptions.ShowRoleSummary)
+                    if (Options.ShowRoleSummary)
                     {
                         var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
                         GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
@@ -506,7 +506,7 @@ namespace UltimateMods.EndGame
                 }
             }
 
-            [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
+            [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.FixedUpdate))]
             public class CheckEndCriteriaPatch
             {
                 public static bool Prefix(ShipStatus __instance)
@@ -657,7 +657,7 @@ namespace UltimateMods.EndGame
 
                 private static void UncheckedEndGame(GameOverReason reason)
                 {
-                    ShipStatus.RpcEndGame(reason, false);
+                    GameManager.Instance.RpcEndGame(reason, false);
                 }
 
                 public static void UncheckedEndGame(CustomGameOverReason reason)

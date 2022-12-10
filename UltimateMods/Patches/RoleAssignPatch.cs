@@ -6,6 +6,7 @@ using Hazel;
 using UnityEngine;
 using UltimateMods.Roles;
 using UltimateMods.Modules;
+using AmongUs.GameOptions;
 using static UltimateMods.UltimateMods;
 
 namespace UltimateMods.Patches
