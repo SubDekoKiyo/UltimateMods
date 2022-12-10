@@ -11,7 +11,7 @@ namespace UltimateMods.Patches
     {
         static void Postfix()
         {
-            if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started)
+            if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started && AlivePlayer.IsForceEnd)
             {
                 AlivePlayer.IsForceEnd = false;
             }

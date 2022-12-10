@@ -59,14 +59,13 @@ namespace UltimateMods.Objects
             OverlayShown = false;
         }
 
-        public static bool InitializeOverlays()
+        public static bool InitializeOverlays(HudManager __instance)
         {
-            HudManager hudManager = FastDestroyableSingleton<HudManager>.Instance;
-            if (hudManager == null) return false;
+            if (__instance == null) return false;
 
             if (meetingUnderlay == null)
             {
-                meetingUnderlay = UnityEngine.Object.Instantiate(hudManager.FullScreen, hudManager.transform);
+                meetingUnderlay = UnityEngine.Object.Instantiate(__instance.FullScreen, __instance.transform);
                 meetingUnderlay.transform.localPosition = new Vector3(0f, 0f, 20f);
                 meetingUnderlay.gameObject.SetActive(true);
                 meetingUnderlay.enabled = false;
@@ -74,7 +73,7 @@ namespace UltimateMods.Objects
 
             if (infoUnderlay == null)
             {
-                infoUnderlay = UnityEngine.Object.Instantiate(meetingUnderlay, hudManager.transform);
+                infoUnderlay = UnityEngine.Object.Instantiate(meetingUnderlay, __instance.transform);
                 infoUnderlay.transform.localPosition = new Vector3(0f, 0f, -900f);
                 infoUnderlay.gameObject.SetActive(true);
                 infoUnderlay.enabled = false;
@@ -82,7 +81,7 @@ namespace UltimateMods.Objects
 
             if (infoOverlayRules == null)
             {
-                infoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskText, hudManager.transform);
+                infoOverlayRules = UnityEngine.Object.Instantiate(__instance.TaskPanel.taskText, __instance.transform);
                 infoOverlayRules.fontSize = infoOverlayRules.fontSizeMin = infoOverlayRules.fontSizeMax = 1.15f;
                 infoOverlayRules.autoSizeTextContainer = false;
                 infoOverlayRules.enableWordWrapping = false;
@@ -96,7 +95,7 @@ namespace UltimateMods.Objects
 
             if (infoOverlayPlayer == null)
             {
-                infoOverlayPlayer = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
+                infoOverlayPlayer = UnityEngine.Object.Instantiate(infoOverlayRules, __instance.transform);
                 infoOverlayPlayer.maxVisibleLines = 28;
                 infoOverlayPlayer.fontSize = infoOverlayPlayer.fontSizeMin = infoOverlayPlayer.fontSizeMax = 1.10f;
                 infoOverlayPlayer.outlineWidth += 0.02f;
@@ -112,7 +111,7 @@ namespace UltimateMods.Objects
 
             if (infoOverlayRoles == null)
             {
-                infoOverlayRoles = UnityEngine.Object.Instantiate(infoOverlayRules, hudManager.transform);
+                infoOverlayRoles = UnityEngine.Object.Instantiate(infoOverlayRules, __instance.transform);
                 infoOverlayRoles.maxVisibleLines = 28;
                 infoOverlayRoles.fontSize = infoOverlayRoles.fontSizeMin = infoOverlayRoles.fontSizeMax = 1f;
                 infoOverlayRoles.outlineWidth += 0.02f;
@@ -129,25 +128,24 @@ namespace UltimateMods.Objects
             return true;
         }
 
-        public static void ShowinfoOverlay()
+        public static void ShowInfoOverlay(HudManager __instance)
         {
             if (OverlayShown) return;
 
-            HudManager hudManager = FastDestroyableSingleton<HudManager>.Instance;
-            if (PlayerControl.LocalPlayer == null || hudManager == null)
+            if (PlayerControl.LocalPlayer == null || __instance == null)
                 return;
 
-            if (!InitializeOverlays()) return;
+            if (!InitializeOverlays(__instance)) return;
 
             if (MapBehaviour.Instance != null)
                 MapBehaviour.Instance.Close();
 
-            if (MeetingHud.Instance != null) hudManager.SetHudActive(false);
+            if (MeetingHud.Instance != null) __instance.SetHudActive(false);
 
             OverlayShown = true;
 
             Transform parent;
-            parent = hudManager.transform;
+            parent = __instance.transform;
 
             infoUnderlay.transform.parent = parent;
             infoOverlayRules.transform.parent = parent;
@@ -229,22 +227,22 @@ namespace UltimateMods.Objects
             })));
         }
 
-        public static void ToggleinfoOverlay()
+        public static void ToggleInfoOverlay(HudManager __instance)
         {
             if (OverlayShown)
                 HideInfoOverlay();
             else
-                ShowinfoOverlay();
+                ShowInfoOverlay(__instance);
         }
 
         [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
-        public static class CustomOverlayKeybinds
+        public static class CustomOverlayKeyInput
         {
             public static void Postfix(KeyboardJoystick __instance)
             {
                 if (Input.GetKeyDown(KeyCode.F3))
                 {
-                    ToggleinfoOverlay();
+                    ToggleInfoOverlay(FastDestroyableSingleton<HudManager>.Instance);
                 }
             }
         }
@@ -253,14 +251,11 @@ namespace UltimateMods.Objects
         {
             public static void Postfix(HudManager __instance)
             {
-                if (!InitializeOverlays()) return;
+                if (!InitializeOverlays(__instance)) return;
                 if (!OverlayShown) return;
-                HudManager hudManager = FastDestroyableSingleton<HudManager>.Instance;
-                if (PlayerControl.LocalPlayer == null || hudManager == null)
-                    return;
+                if (PlayerControl.LocalPlayer == null || __instance == null) return;
 
-                GameOptionsData o = PlayerControl.GameOptions;
-                List<string> gameOptions = o.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> gameOptions = GameOptionsManager.Instance.CurrentGameOptions.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
                 infoOverlayRules.text = string.Join("\n", gameOptions);
                 string PlayerText = ModTranslation.getString("PlatformTitle");
                 foreach (InnerNet.ClientData Client in AmongUsClient.Instance.allClients.ToArray())

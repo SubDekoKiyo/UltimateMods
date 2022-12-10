@@ -1,7 +1,6 @@
 using HarmonyLib;
-using UltimateMods.Roles;
 
-namespace UltimateMods
+namespace UltimateMods.Roles.Patches
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Start))]
     public static class Buttons

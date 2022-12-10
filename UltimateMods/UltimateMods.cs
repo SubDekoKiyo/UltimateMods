@@ -10,8 +10,7 @@ namespace UltimateMods
     [HarmonyPatch]
     public static class UltimateMods
     {
-        // public static Random rnd = new ((int)DateTime.Now.Ticks);
-        public static Random rnd = new MersenneTwister((int)DateTime.Now.Ticks);
+        public static Random rnd = new((int)DateTime.Now.Ticks);
 
         public static void ClearAndReloadRoles()
         {
@@ -57,7 +56,7 @@ namespace UltimateMods
             Role.allRoles.Do(x => x.OnMeetingEnd());
             Modifiers.allModifiers.Do(x => x.OnMeetingEnd());
 
-            CustomOverlays.HideInfoOverlay();
+            // CustomOverlays.HideInfoOverlay();
         }
 
         [HarmonyPatch(typeof(GameData), nameof(GameData.HandleDisconnect), new Type[] { typeof(PlayerControl), typeof(DisconnectReasons) })]

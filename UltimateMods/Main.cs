@@ -1,10 +1,12 @@
-﻿global using UnhollowerBaseLib;
-global using UnhollowerBaseLib.Attributes;
-global using UnhollowerRuntimeLib;
+﻿global using Il2CppInterop.Runtime;
+global using Il2CppInterop.Runtime.Attributes;
+global using Il2CppInterop.Runtime.InteropTypes;
+global using Il2CppInterop.Runtime.InteropTypes.Arrays;
+global using Il2CppInterop.Runtime.Injection;
 
 using BepInEx;
 using BepInEx.Configuration;
-using BepInEx.IL2CPP;
+using BepInEx.Unity.IL2CPP;
 using HarmonyLib;
 using System;
 using UnityEngine;
@@ -17,7 +19,7 @@ namespace UltimateMods
     public class UltimateModsPlugin : BasePlugin
     {
         public const string Id = "jp.DekoKiyo.UltimateMods";
-        public const string VersionString = "1.2.0.1";
+        public const string VersionString = "1.2.1";
 
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
@@ -62,7 +64,7 @@ namespace UltimateMods
 
             CustomRolesH.Load();
             CustomOptionsH.Load();
-            CustomColors.Load();
+            // CustomColors.Load();
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             ModLanguageSelector.Initialize();

@@ -38,7 +38,7 @@ namespace UltimateMods.Patches
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive() && !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)))
+            if (Options.RestrictDevices > 0 && Options.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive() && !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -63,7 +63,7 @@ namespace UltimateMods.Patches
         {
             public static bool Prefix(MapConsole __instance)
             {
-                return MapOptions.canUseAdmin;
+                return Options.canUseAdmin;
             }
         }
 
@@ -105,7 +105,7 @@ namespace UltimateMods.Patches
 
                 playerColors = new Dictionary<SystemTypes, List<Color>>();
 
-                if (MapOptions.RestrictDevices > 0)
+                if (Options.RestrictDevices > 0)
                 {
                     if (OutOfTime == null)
                     {
@@ -115,7 +115,7 @@ namespace UltimateMods.Patches
 
                     if (TimeRemaining == null)
                     {
-                        TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
+                        TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
                         TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                         TimeRemaining.transform.position = Vector3.zero;
                         TimeRemaining.transform.localPosition = new Vector3(3.25f, 5.25f);
@@ -128,7 +128,7 @@ namespace UltimateMods.Patches
                     }
                     else
                     {
-                        if (MapOptions.RestrictAdminTime <= 0f)
+                        if (Options.RestrictAdminTime <= 0f)
                         {
                             __instance.BackgroundColor.SetColor(Palette.DisabledGrey);
                             OutOfTime.gameObject.SetActive(true);
@@ -144,9 +144,9 @@ namespace UltimateMods.Patches
 
                         clearedIcons = false;
                         OutOfTime.gameObject.SetActive(false);
-                        string timeString = TimeSpan.FromSeconds(MapOptions.RestrictAdminTime).ToString(@"mm\:ss\.ff");
+                        string timeString = TimeSpan.FromSeconds(Options.RestrictAdminTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
-                        //TimeRemaining.color = MapOptions.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
+                        //TimeRemaining.color = Options.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
                         isUseAdmin = true;
                         TimeRemaining.gameObject.SetActive(true);
                     }
@@ -350,12 +350,12 @@ namespace UltimateMods.Patches
     {
         public static void Postfix()
         {
-            if (!CustomOptionsH.EnableRecordsAdmin.getBool() && PlayerControl.GameOptions.MapId == 4)
+            if (!CustomOptionsH.EnableRecordsAdmin.getBool() && GameOptionsManager.Instance.CurrentGameOptions.MapId == 4)
             {
                 Transform recordsAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Records").FindChild("records_admin_map");
                 GameObject.Destroy(recordsAdmin.gameObject);
             }
-            if (!CustomOptionsH.EnableCockpitAdmin.getBool() && PlayerControl.GameOptions.MapId == 4)
+            if (!CustomOptionsH.EnableCockpitAdmin.getBool() && GameOptionsManager.Instance.CurrentGameOptions.MapId == 4)
             {
                 Transform cockpitAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Cockpit").FindChild("panel_cockpit_map");
                 GameObject.Destroy(cockpitAdmin.gameObject);

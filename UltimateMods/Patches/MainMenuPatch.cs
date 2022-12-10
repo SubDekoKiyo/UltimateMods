@@ -157,7 +157,7 @@ namespace UltimateMods.Patches
 
                 instance = __instance;
                 LoadSprites();
-                renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                renderer.sprite = Options.enableHorseMode ? horseBannerSprite : bannerSprite;
             }
 
             public static void LoadSprites()
@@ -177,7 +177,7 @@ namespace UltimateMods.Patches
                         renderer.color = new Color(1, 1, 1, 1 - p);
                         if (p == 1)
                         {
-                            renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                            renderer.sprite = Options.enableHorseMode ? horseBannerSprite : bannerSprite;
                             instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) =>
                             {
                                 renderer.color = new Color(1, 1, 1, p);

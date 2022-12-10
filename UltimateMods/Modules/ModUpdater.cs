@@ -87,7 +87,7 @@ namespace UltimateMods.Modules
                 DestroyableSingleton<MainMenuManager>.Instance.Announcement.gameObject.SetActive(true);
                 UltimateModsPlugin.ShowPopUpVersion.Value = UltimateModsPlugin.VersionString;
             }
-            MapOptions.reloadPluginOptions();
+            Options.reloadPluginOptions();
         }
 
         public static void ExecuteUpdate()

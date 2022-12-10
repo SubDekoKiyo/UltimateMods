@@ -6,6 +6,7 @@ using static UltimateMods.ColorDictionary;
 using UltimateMods.Patches;
 using UltimateMods.Objects;
 using UltimateMods.Utilities;
+using AmongUs.GameOptions;
 
 namespace UltimateMods.Roles
 {
@@ -51,7 +52,7 @@ namespace UltimateMods.Roles
                 if (BountyHunter.CooldownTimer != null && BountyHunter.CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(BountyHunter.CooldownTimer.gameObject);
                 BountyHunter.CooldownTimer = null;
                 BountyHunter.Bounty = null;
-                foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
+                foreach (PoolablePlayer p in Options.PlayerIcons.Values)
                 {
                     if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
                 }
@@ -78,9 +79,9 @@ namespace UltimateMods.Roles
                 // Show poolable player
                 if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null)
                 {
-                    foreach (PoolablePlayer pp in MapOptions.PlayerIcons.Values) pp.gameObject.SetActive(false);
-                    if (MapOptions.PlayerIcons.ContainsKey(BountyHunter.Bounty.PlayerId) && MapOptions.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject != null)
-                        MapOptions.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject.SetActive(true);
+                    foreach (PoolablePlayer pp in Options.PlayerIcons.Values) pp.gameObject.SetActive(false);
+                    if (Options.PlayerIcons.ContainsKey(BountyHunter.Bounty.PlayerId) && Options.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject != null)
+                        Options.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject.SetActive(true);
                 }
             }
 
@@ -112,7 +113,7 @@ namespace UltimateMods.Roles
                     BountyHunter.BountyUpdateTimer = 0f; // Force bounty update
                 }
                 else
-                    bountyHunter.SetKillTimer(PlayerControl.GameOptions.KillCooldown + AdditionalCooldown);
+                    bountyHunter.SetKillTimer(GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) + AdditionalCooldown);
             }
         }
         public override void OnDeath(PlayerControl killer = null) { }
@@ -130,7 +131,7 @@ namespace UltimateMods.Roles
             Arrow = null;
             if (CooldownTimer != null && CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(CooldownTimer.gameObject);
             CooldownTimer = null;
-            foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
+            foreach (PoolablePlayer p in Options.PlayerIcons.Values)
                 if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
             foreach (var bountyHunter in BountyHunter.allPlayers)
                 KillCooldowns = bountyHunter.killTimer / 2;
