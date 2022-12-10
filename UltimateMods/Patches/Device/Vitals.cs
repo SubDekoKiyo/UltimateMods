@@ -27,7 +27,7 @@ namespace UltimateMods.Patches
         static void UseVitalsTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (ModMapOptions.RestrictDevices > 0 && ModMapOptions.RestrictVitalsTime > 0f && PlayerControl.LocalPlayer.IsAlive())
+            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictVitalsTime > 0f && PlayerControl.LocalPlayer.IsAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseVitalsTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(vitalsTimer);
@@ -69,11 +69,11 @@ namespace UltimateMods.Patches
                 if (vitalsTimer > 0.1f)
                     UseVitalsTime();
 
-                if (ModMapOptions.RestrictDevices > 0)
+                if (MapOptions.RestrictDevices > 0)
                 {
                     if (TimeRemaining == null)
                     {
-                        TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
+                        TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
                         TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                         TimeRemaining.transform.position = Vector3.zero;
                         TimeRemaining.transform.localPosition = new Vector3(1.7f, 4.45f);
@@ -81,13 +81,13 @@ namespace UltimateMods.Patches
                         TimeRemaining.color = Palette.White;
                     }
 
-                    if (ModMapOptions.RestrictVitalsTime <= 0f)
+                    if (MapOptions.RestrictVitalsTime <= 0f)
                     {
                         __instance.Close();
                         return false;
                     }
 
-                    string timeString = TimeSpan.FromSeconds(ModMapOptions.RestrictVitalsTime).ToString(@"mm\:ss\.ff");
+                    string timeString = TimeSpan.FromSeconds(MapOptions.RestrictVitalsTime).ToString(@"mm\:ss\.ff");
                     TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
                     TimeRemaining.gameObject.SetActive(true);
                 }

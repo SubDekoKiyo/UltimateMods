@@ -18,7 +18,7 @@ namespace UltimateMods.Roles.Patches
                     // Handle blank kill
                     if (res == MurderAttemptResult.BlankKill)
                     {
-                        PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.currentNormalGameOptions.KillCooldown;
+                        PlayerControl.LocalPlayer.killTimer = PlayerControl.GameOptions.KillCooldown;
                     }
 
                     __instance.SetTarget(null);

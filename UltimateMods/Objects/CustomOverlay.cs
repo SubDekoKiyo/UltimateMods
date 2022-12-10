@@ -82,7 +82,7 @@ namespace UltimateMods.Objects
 
             if (InfoOverlayRules == null)
             {
-                InfoOverlayRules = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, hudManager.transform);
+                InfoOverlayRules = UnityEngine.Object.Instantiate(hudManager.TaskText, hudManager.transform);
                 InfoOverlayRules.fontSize = InfoOverlayRules.fontSizeMin = InfoOverlayRules.fontSizeMax = 1.15f;
                 InfoOverlayRules.autoSizeTextContainer = false;
                 InfoOverlayRules.enableWordWrapping = false;
@@ -259,7 +259,8 @@ namespace UltimateMods.Objects
                 if (PlayerControl.LocalPlayer == null || hudManager == null)
                     return;
 
-                List<string> gameOptions = GameOptionsManager.Instance.currentNormalGameOptions.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
+                GameOptionsData o = PlayerControl.GameOptions;
+                List<string> gameOptions = o.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
                 InfoOverlayRules.text = string.Join("\n", gameOptions);
                 string PlayerText = ModTranslation.getString("PlatformTitle");
                 foreach (InnerNet.ClientData Client in AmongUsClient.Instance.allClients.ToArray())

@@ -30,7 +30,7 @@ namespace UltimateMods.Roles.Patches
                 BakeryText.text = Bomb ? ModTranslation.getString("BombBakeryText") : ModTranslation.getString("MakeBreadText");
                 BakeryText.gameObject.SetActive(true);
 
-                if (GameOptionsManager.Instance.currentNormalGameOptions.ConfirmImpostor)
+                if (PlayerControl.GameOptions.ConfirmImpostor)
                 {
                     BakeryText.transform.localPosition -= new Vector3(0f, 0.4f, 0f);
                 }

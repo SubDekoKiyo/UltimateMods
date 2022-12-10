@@ -69,7 +69,7 @@ namespace UltimateMods.Roles
 
         public static void UpdateIcons()
         {
-            foreach (PoolablePlayer pp in ModMapOptions.PlayerIcons.Values)
+            foreach (PoolablePlayer pp in MapOptions.PlayerIcons.Values)
             {
                 pp.gameObject.SetActive(false);
             }
@@ -84,21 +84,21 @@ namespace UltimateMods.Roles
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     if (p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
-                    if (!ModMapOptions.PlayerIcons.ContainsKey(p.PlayerId)) continue;
+                    if (!MapOptions.PlayerIcons.ContainsKey(p.PlayerId)) continue;
 
                     if (p.Data.IsDead || p.Data.Disconnected)
                     {
-                        ModMapOptions.PlayerIcons[p.PlayerId].gameObject.SetActive(false);
+                        MapOptions.PlayerIcons[p.PlayerId].gameObject.SetActive(false);
                     }
                     else
                     {
-                        ModMapOptions.PlayerIcons[p.PlayerId].gameObject.SetActive(true);
-                        ModMapOptions.PlayerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.25f;
-                        ModMapOptions.PlayerIcons[p.PlayerId].transform.localPosition = bottomLeft + Vector3.right * visibleCounter * 0.45f;
+                        MapOptions.PlayerIcons[p.PlayerId].gameObject.SetActive(true);
+                        MapOptions.PlayerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.25f;
+                        MapOptions.PlayerIcons[p.PlayerId].transform.localPosition = bottomLeft + Vector3.right * visibleCounter * 0.45f;
                         visibleCounter++;
                     }
                     bool isDoused = DousedPlayers.Any(x => x.PlayerId == p.PlayerId);
-                    ModMapOptions.PlayerIcons[p.PlayerId].SetSemiTransparent(!isDoused);
+                    MapOptions.PlayerIcons[p.PlayerId].SetSemiTransparent(!isDoused);
                 }
             }
         }
@@ -189,9 +189,9 @@ namespace UltimateMods.Roles
 
                     foreach (PlayerControl p in DousedPlayers)
                     {
-                        if (ModMapOptions.PlayerIcons.ContainsKey(p.PlayerId))
+                        if (MapOptions.PlayerIcons.ContainsKey(p.PlayerId))
                         {
-                            ModMapOptions.PlayerIcons[p.PlayerId].SetSemiTransparent(false);
+                            MapOptions.PlayerIcons[p.PlayerId].SetSemiTransparent(false);
                         }
                     }
                 }
@@ -233,7 +233,7 @@ namespace UltimateMods.Roles
             TriggerArsonistWin = false;
             DousedEveryone = false;
             DousedPlayers = new();
-            foreach (PoolablePlayer p in ModMapOptions.PlayerIcons.Values)
+            foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
             {
                 if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
             }

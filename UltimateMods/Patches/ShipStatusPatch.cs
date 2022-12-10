@@ -2,33 +2,11 @@ using HarmonyLib;
 using UnityEngine;
 using UltimateMods.Utilities;
 
-namespace UltimateMods.Roles.Patches
+namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(ShipStatus))]
-    public class RolesVisionPatch
+    public class ShipStatusPatch
     {
-        [HarmonyPostfix]
-        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CalculateLightRadius))]
-        public static bool Prefix(ref float __result, ShipStatus __instance, [HarmonyArgument(0)] GameData.PlayerInfo player)
-        {
-            if (!__instance.Systems.ContainsKey(SystemTypes.Electrical)) return true;
-
-            // Has Impostor Vision
-            if (Helpers.HasImpostorVision(player))
-            {
-                __result = GetNeutralLightRadius(__instance, true);
-                return false;
-            }
-
-            // Default light radius
-            else
-            {
-                __result = GetNeutralLightRadius(__instance, false);
-            }
-
-            return false;
-        }
-
         public static float GetNeutralLightRadius(ShipStatus shipStatus, bool isImpostor)
         {
             if (isImpostor) return shipStatus.MaxLightRadius * PlayerControl.GameOptions.ImpostorLightMod;
@@ -44,6 +22,20 @@ namespace UltimateMods.Roles.Patches
         public static void Postfix2(ShipStatus __instance, ref bool __result)
         {
             __result = false;
+        }
+
+        private static int originalNumCommonTasksOption = 0;
+        private static int originalNumShortTasksOption = 0;
+        private static int originalNumLongTasksOption = 0;
+
+        [HarmonyPostfix]
+        [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Begin))]
+        public static void Postfix3(ShipStatus __instance)
+        {
+            // Restore original settings after the tasks have been selected
+            PlayerControl.GameOptions.NumCommonTasks = originalNumCommonTasksOption;
+            PlayerControl.GameOptions.NumShortTasks = originalNumShortTasksOption;
+            PlayerControl.GameOptions.NumLongTasks = originalNumLongTasksOption;
         }
     }
 }

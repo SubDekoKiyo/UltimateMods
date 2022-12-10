@@ -1,5 +1,5 @@
 using HarmonyLib;
-using static UltimateMods.ModMapOptions;
+using static UltimateMods.MapOptions;
 using System;
 using UnityEngine;
 using UltimateMods.Utilities;
@@ -38,13 +38,11 @@ namespace UltimateMods.Patches
         }
 
         [HarmonyPatch(typeof(MeetingHud), nameof(MeetingHud.BloopAVoteIcon))]
-        class MeetingHudBloopAVoteIconPatch
-        {
-            public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)] GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)] int index, [HarmonyArgument(2)] Transform parent)
-            {
+        class MeetingHudBloopAVoteIconPatch {
+            public static bool Prefix(MeetingHud __instance, [HarmonyArgument(0)] GameData.PlayerInfo voterPlayer, [HarmonyArgument(1)] int index, [HarmonyArgument(2)] Transform parent) {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
                 int cId = voterPlayer.DefaultOutfit.ColorId;
-                if (!(!GameOptionsManager.Instance.currentNormalGameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && ModMapOptions.GhostsSeeVotes) || PlayerControl.LocalPlayer.isRole(RoleType.Adversity) && CustomRolesH.AdversityAdversityStateCanSeeVotes.getBool()))
+                if (!(!PlayerControl.GameOptions.AnonymousVotes || (PlayerControl.LocalPlayer.Data.IsDead && MapOptions.GhostsSeeVotes) || PlayerControl.LocalPlayer.isRole(RoleType.Adversity) && CustomRolesH.AdversityAdversityStateCanSeeVotes.getBool()))
                     voterPlayer.Object.SetColor(6);
                 voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 spriteRenderer.transform.SetParent(parent);

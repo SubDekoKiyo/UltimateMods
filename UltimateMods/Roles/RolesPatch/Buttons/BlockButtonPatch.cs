@@ -42,7 +42,7 @@ namespace UltimateMods.Roles.Patches
             bool isVitals = name == "panel_vitals";
             bool isButton = name == "EmergencyButton" || name == "EmergencyConsole" || name == "task_emergency";
 
-            if ((isSecurity && !ModMapOptions.canUseCameras) || (isVitals && !ModMapOptions.canUseVitals)) return true;
+            if ((isSecurity && !MapOptions.canUseCameras) || (isVitals && !MapOptions.canUseVitals)) return true;
             return false;
         }
 
@@ -55,7 +55,7 @@ namespace UltimateMods.Roles.Patches
             MapConsole targetMapConsole = target.TryCast<MapConsole>();
             if ((targetConsole != null && IsBlocked(targetConsole, pc)) ||
                 (targetSysConsole != null && IsBlocked(targetSysConsole, pc)) ||
-                (targetMapConsole != null && !ModMapOptions.canUseAdmin))
+                (targetMapConsole != null && !MapOptions.canUseAdmin))
             {
                 return true;
             }

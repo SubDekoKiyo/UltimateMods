@@ -38,15 +38,7 @@ namespace UltimateMods.Roles.Patches
                 if (!PlayerControl.LocalPlayer.IsNeutral())
                     return true;
 
-                // Before 10.25
-                // FastDestroyableSingleton<HudManager>.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((SaboMap) => { SaboMap.ShowSabotageMap(); }));
-
-                // After 12.8
-                HudManager.Instance.ToggleMapVisible(new MapOptions
-                {
-                    Mode = MapOptions.Modes.Sabotage,
-                    ShowLivePlayerPosition = true
-                });
+                FastDestroyableSingleton<HudManager>.Instance.ShowMap((Il2CppSystem.Action<MapBehaviour>)((SaboMap) => { SaboMap.ShowSabotageMap(); }));
                 return false;
             }
         }
