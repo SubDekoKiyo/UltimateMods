@@ -817,7 +817,7 @@ namespace UltimateMods.Modules
         }
     }
 
-    [HarmonyPatch(typeof(LobbyBehaviour), nameof(LobbyBehaviour.FixedUpdate))]
+    [HarmonyPatch]
     public static class GameOptionsDataPatch
     {
         public static int NumPages;
@@ -860,8 +860,6 @@ namespace UltimateMods.Modules
 
         private static void Postfix()
         {
-            if (GameOptionsManager.Instance.currentGameMode == GameModes.HideNSeek) return;
-
             List<string> pages = new();
             pages.Add(GameOptionsManager.Instance.CurrentGameOptions.ToHudString(PlayerControl.AllPlayerControls.Count));
 
