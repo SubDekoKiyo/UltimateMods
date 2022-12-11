@@ -9,7 +9,7 @@ namespace UltimateMods.Patches
             {
                 AlivePlayer.IsForceEnd = false;
             }
-            else
+            else if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
                 CustomButton.HudUpdate();
             }

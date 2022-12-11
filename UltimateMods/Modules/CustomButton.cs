@@ -153,7 +153,7 @@ namespace UltimateMods.Modules
                 setActive(false);
                 return;
             }
-            setActive(hudManager.UseButton.isActiveAndEnabled);
+            setActive(hudManager.UseButton.isActiveAndEnabled || hudManager.PetButton.isActiveAndEnabled);
 
             actionButton.graphic.sprite = Sprite;
             if (ShowButtonText && ButtonText != null)
@@ -162,10 +162,10 @@ namespace UltimateMods.Modules
             }
             actionButton.buttonLabelText.enabled = ShowButtonText; // Only show the text if it's a kill button
 
-            if (hudManager.ReportButton != null)
+            if (hudManager.UseButton != null)
             {
                 Vector3 PositionOffset = new(0f, 0f, 0f);
-                Vector3 pos = hudManager.ReportButton.transform.localPosition;
+                Vector3 pos = hudManager.UseButton.transform.localPosition;
                 if (mirror) pos = new(-pos.x, pos.y, pos.z);
 
                 switch (ButtonPosition)
@@ -176,23 +176,23 @@ namespace UltimateMods.Modules
                     case ButtonPositions.ZoomOut:
                         PositionOffset = Vector3.zero + Vector3.up * 3.75f + Vector3.right * 0.55f;
                         break;
-                    case ButtonPositions.LeftTop:
+                    case ButtonPositions.LeftTop: // Kill Button
+                        PositionOffset = new(-1.8f, 1f, 0f);
+                        break;
+                    case ButtonPositions.CenterTop: // Sabotage Button
                         PositionOffset = new(-0.9f, 1f, 0f);
                         break;
-                    case ButtonPositions.CenterTop:
+                    case ButtonPositions.RightTop: // ShapeShift Button
                         PositionOffset = new(0f, 1f, 0f);
                         break;
-                    case ButtonPositions.RightTop:
-                        PositionOffset = new(0.9f, 1f, 0f);
+                    case ButtonPositions.LeftBottom: // Vent Button
+                        PositionOffset = new(-1.8f, -0.06f, 0f);
                         break;
-                    case ButtonPositions.LeftBottom:
+                    case ButtonPositions.CenterBottom: // Report Button
                         PositionOffset = new(-0.9f, -0.06f, 0f);
                         break;
-                    case ButtonPositions.CenterBottom:
-                        PositionOffset = new(0f, 0f, 0f);
-                        break;
-                    case ButtonPositions.RightBottom:
-                        PositionOffset = new(0.9f, 0f, 0f);
+                    case ButtonPositions.RightBottom: // Use/Pet Button
+                        PositionOffset = new(0f, -0.06f, 0f);
                         break;
                 }
 
