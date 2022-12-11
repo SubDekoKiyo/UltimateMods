@@ -63,7 +63,7 @@ namespace UltimateMods
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
         public static int OptionsPage = 1;
-        public static bool isBeta = true;
+        public static bool isBeta = false;
 
         public static ConfigEntry<bool> DebugMode { get; private set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }

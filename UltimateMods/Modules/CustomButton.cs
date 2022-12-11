@@ -177,19 +177,19 @@ namespace UltimateMods.Modules
                         PositionOffset = Vector3.zero + Vector3.up * 3.75f + Vector3.right * 0.55f;
                         break;
                     case ButtonPositions.LeftTop: // Kill Button
-                        PositionOffset = new(-1.8f, 1f, 0f);
+                        PositionOffset = new(-2f, 1f, 0f);
                         break;
                     case ButtonPositions.CenterTop: // Sabotage Button
-                        PositionOffset = new(-0.9f, 1f, 0f);
+                        PositionOffset = new(-1f, 1f, 0f);
                         break;
-                    case ButtonPositions.RightTop: // ShapeShift Button
+                    case ButtonPositions.RightTop: // Ability Button
                         PositionOffset = new(0f, 1f, 0f);
                         break;
                     case ButtonPositions.LeftBottom: // Vent Button
-                        PositionOffset = new(-1.8f, -0.06f, 0f);
+                        PositionOffset = new(-2f, -0.06f, 0f);
                         break;
                     case ButtonPositions.CenterBottom: // Report Button
-                        PositionOffset = new(-0.9f, -0.06f, 0f);
+                        PositionOffset = new(-1f, -0.06f, 0f);
                         break;
                     case ButtonPositions.RightBottom: // Use/Pet Button
                         PositionOffset = new(0f, -0.06f, 0f);
