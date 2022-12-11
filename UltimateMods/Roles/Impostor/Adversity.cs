@@ -1,10 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using UltimateMods.Objects;
-using TMPro;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -23,19 +16,19 @@ namespace UltimateMods.Roles
         }
 
         public override void OnMeetingStart() { }
-        public override void OnMeetingEnd() 
-        { 
+        public override void OnMeetingEnd()
+        {
             if (isLast)
             {
                 PlayerControl.LocalPlayer.SetKillTimer(cooldown);
             }
         }
-        public override void FixedUpdate() 
-        { 
+        public override void FixedUpdate()
+        {
             if (PlayerControl.LocalPlayer.isRole(RoleType.Adversity) && isLast && canFindMad && Madmate.exists) arrowUpdate();
         }
-        public override void OnKill(PlayerControl target) 
-        { 
+        public override void OnKill(PlayerControl target)
+        {
             if (isLast)
             {
                 PlayerControl.LocalPlayer.SetKillTimer(cooldown);

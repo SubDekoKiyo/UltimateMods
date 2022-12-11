@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using TMPro;
-using UltimateMods.Patches;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -50,6 +41,7 @@ namespace UltimateMods.Roles
                         {
                             var currentPosition = underTaker.GetTruePosition();
                             var velocity = underTaker.gameObject.GetComponent<Rigidbody2D>().velocity.normalized;
+                            velocity *= UnderTaker.SpeedDown / 100f;
                             var newPos = ((Vector2)underTaker.GetTruePosition()) - (velocity / 3) + new Vector2(0.15f, 0.25f) + array[i].myCollider.offset;
                             if (!PhysicsHelpers.AnythingBetween(
                                 currentPosition,
@@ -58,7 +50,7 @@ namespace UltimateMods.Roles
                                 false
                             ))
                             {
-                                if (PlayerControl.GameOptions.MapId == 5)
+                                if (GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
                                 {
                                     array[i].transform.position = newPos;
                                     array[i].transform.position += new Vector3(0, 0, -0.5f);
@@ -142,7 +134,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () =>
                 {
-                    if (UnderTaker.DraggingBody)
+                    if (DraggingBody)
                         UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDropText");
                     else
                         UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDragText");
@@ -155,10 +147,10 @@ namespace UltimateMods.Roles
                 () =>
                 {
                     UnderTakerButton.Timer = UnderTakerButton.MaxTimer = MoveCooldown;
-                    UnderTaker.UnderTakerResetValuesAtDead();
+                    UnderTakerResetValuesAtDead();
                 },
-                UnderTaker.GetButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0f),
+                GetButtonSprite(),
+                ButtonPositions.LeftTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,
@@ -169,9 +161,9 @@ namespace UltimateMods.Roles
                     if (DraggingBody)
                     {
                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.DragPlaceBody, Hazel.SendOption.Reliable, -1);
-                        writer.Write(UnderTaker.BodyId);
+                        writer.Write(BodyId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.DragPlaceBody(UnderTaker.BodyId);
+                        RPCProcedure.DragPlaceBody(BodyId);
                     }
                     else
                     {
@@ -196,7 +188,7 @@ namespace UltimateMods.Roles
         {
             DraggingBody = false;
             BodyId = 0;
-            if (PlayerControl.GameOptions.MapId == 5)
+            if (GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
             {
                 GameObject vent = GameObject.Find("LowerCentralVent");
                 vent.GetComponent<BoxCollider2D>().enabled = true;

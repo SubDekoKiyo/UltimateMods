@@ -1,15 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using System;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine.Events;
-using UltimateMods.Patches;
-using UltimateMods.Utilities;
-using UnityEngine.UI;
-using static UnityEngine.UI.Button;
-using Object = UnityEngine.Object;
-
 namespace UltimateMods.Modules
 {
     public enum SupportedLang
@@ -23,15 +11,15 @@ namespace UltimateMods.Modules
     [HarmonyPatch]
     public static class ModLanguageSelector
     {
-        private static ToggleButtonBehaviour LangOption;
-        public static ToggleButtonBehaviour ButtonPrefab;
-        public static int LanguageNum;
-        public static string Language;
+        private static ToggleButtonBehaviour langOption;
+        public static ToggleButtonBehaviour buttonPrefab;
+        public static int languageNum = 0;
+        public static string language;
 
         public static void Initialize()
         {
-            LanguageNum = UltimateModsPlugin.LanguageNum.Value;
-            Language = ModTranslation.getString("AllLanguage");
+            languageNum = UltimateModsPlugin.LanguageNum.Value;
+            language = ModTranslation.getString("AllLanguage");
         }
 
         [HarmonyPostfix]
@@ -40,12 +28,12 @@ namespace UltimateMods.Modules
         {
             if (!__instance.CensorChatButton) return;
 
-            if (!ButtonPrefab)
+            if (!buttonPrefab)
             {
-                ButtonPrefab = Object.Instantiate(__instance.CensorChatButton);
-                Object.DontDestroyOnLoad(ButtonPrefab);
-                ButtonPrefab.name = "CensorChatPrefab";
-                ButtonPrefab.gameObject.SetActive(false);
+                buttonPrefab = Object.Instantiate(__instance.CensorChatButton);
+                Object.DontDestroyOnLoad(buttonPrefab);
+                buttonPrefab.name = "CensorChatPrefab";
+                buttonPrefab.gameObject.SetActive(false);
             }
 
             InitializeLangButton(__instance);
@@ -53,14 +41,14 @@ namespace UltimateMods.Modules
 
         private static void InitializeLangButton(OptionsMenuBehaviour __instance)
         {
-            LangOption = Object.Instantiate(ButtonPrefab, __instance.CensorChatButton.transform.parent);
-            LangOption.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f + Vector3.right * 1.35f;
+            langOption = Object.Instantiate(buttonPrefab, __instance.CensorChatButton.transform.parent);
+            langOption.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f + Vector3.right * 1.35f;
 
-            LangOption.gameObject.SetActive(true);
-            LangOption.Text.text = String.Format(ModTranslation.getString("Language"), Language);
-            var LangOptionButton = LangOption.GetComponent<PassiveButton>();
-            LangOptionButton.OnClick = new ButtonClickedEvent();
-            LangOptionButton.OnClick.AddListener((Action)(() =>
+            langOption.gameObject.SetActive(true);
+            langOption.Text.text = String.Format(ModTranslation.getString("Language"), language);
+            var langOptionButton = langOption.GetComponent<PassiveButton>();
+            langOptionButton.OnClick = new ButtonClickedEvent();
+            langOptionButton.OnClick.AddListener((Action)(() =>
             {
                 ChangeNextLang();
             }));
@@ -70,12 +58,12 @@ namespace UltimateMods.Modules
         {
             try
             {
-                if (LanguageNum == (int)SupportedLang.Indonesia) LanguageNum = UltimateModsPlugin.LanguageNum.Value = (int)SupportedLang.Japanese;
-                else LanguageNum++;
+                if (languageNum == (int)SupportedLang.Indonesia) languageNum = UltimateModsPlugin.LanguageNum.Value = (int)SupportedLang.Japanese;
+                else languageNum++;
                 ClientOptionsPatch.updateTranslations();
                 VanillaOptionsPatch.updateTranslations();
-                Language = ModTranslation.getString("AllLanguage");
-                LangOption.Text.text = String.Format(ModTranslation.getString("Language"), Language);
+                language = ModTranslation.getString("AllLanguage");
+                langOption.Text.text = String.Format(ModTranslation.getString("Language"), language);
                 UltimateModsPlugin.Logger.LogInfo("Changed Language");
                 UltimateModsPlugin.LanguageNum.Value++;
             }

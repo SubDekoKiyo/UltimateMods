@@ -1,6 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-
 namespace UltimateMods.Patches;
 
 [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.Awake))]

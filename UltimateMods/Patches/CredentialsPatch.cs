@@ -1,9 +1,3 @@
-using HarmonyLib;
-using System;
-using UnityEngine;
-using UltimateMods.Utilities;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch]

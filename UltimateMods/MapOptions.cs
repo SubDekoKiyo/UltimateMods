@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Patches;
-
 namespace UltimateMods
 {
-    static class MapOptions
+    static class Options
     {
         // Set values
         public static int MaxNumberOfMeetings = 10;
@@ -37,7 +33,7 @@ namespace UltimateMods
         public static List<Vent> VentsToSeal = new();
         public static Dictionary<byte, PoolablePlayer> PlayerIcons = new();
 
-        public static void ClearAndReloadMapOptions()
+        public static void ClearAndReloadOptions()
         {
             MeetingsCount = 0;
             CamerasToAdd = new();

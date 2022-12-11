@@ -1,13 +1,4 @@
 // Source Code from TownOfHost
-
-using System;
-using System.Collections.Generic;
-using System.IO;
-using HarmonyLib;
-using System.Text.RegularExpressions;
-using UltimateMods.Modules;
-using AmongUs.Data;
-
 namespace UltimateMods
 {
     public static class ModTranslation
@@ -79,7 +70,7 @@ namespace UltimateMods
             }
 
             var data = TransData[keyClean];
-            int lang = ModLanguageSelector.LanguageNum;
+            int lang = ModLanguageSelector.languageNum;
 
             if (data.ContainsKey(lang))
             {

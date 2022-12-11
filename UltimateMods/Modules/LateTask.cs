@@ -1,8 +1,5 @@
 // Source Code from TownOfHost
-
-using System;
-using System.Collections.Generic;
-namespace UltimateMods
+namespace UltimateMods.Modules
 {
     class LateTask
     {

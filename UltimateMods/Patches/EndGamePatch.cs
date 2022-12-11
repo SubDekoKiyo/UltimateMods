@@ -1,16 +1,3 @@
-using HarmonyLib;
-using UltimateMods.Roles;
-using static UltimateMods.GameHistory;
-using System.Collections.Generic;
-using UnityEngine;
-using System.Linq;
-using System;
-using System.Text;
-using UltimateMods.Modules;
-using UltimateMods.Debug;
-using static UltimateMods.Modules.Assets;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.EndGame
 {
     public enum CustomGameOverReason
@@ -93,7 +80,7 @@ namespace UltimateMods.EndGame
 
             if (UltimateModsPlugin.DebugMode.Value || UltimateModsPlugin.isBeta)
             {
-                DebugBots.BotCount = 0;
+                DebugBots.botCount = 0;
             }
         }
 
@@ -367,7 +354,7 @@ namespace UltimateMods.EndGame
                         bonusText = ModTranslation.getString("JesterWin");
                         textRenderer.color = JesterPink;
                         __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
-                        if (MapOptions.EnableCustomSounds)
+                        if (Options.EnableCustomSounds)
                         {
                             SoundManager.Instance.StopSound(__instance.ImpostorStinger);
                             SoundManager.Instance.PlaySound(JesterWinSound, false, 0.8f);
@@ -400,7 +387,7 @@ namespace UltimateMods.EndGame
                         bonusText = ModTranslation.getString("EveryoneLose");
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
-                        if (MapOptions.EnableCustomSounds)
+                        if (Options.EnableCustomSounds)
                         {
                             SoundManager.Instance.StopSound(__instance.ImpostorStinger);
                             SoundManager.Instance.PlaySound(EveryoneLoseSound, false, 0.8f);
@@ -454,7 +441,7 @@ namespace UltimateMods.EndGame
                         textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
                     }
 
-                    if (MapOptions.ShowRoleSummary)
+                    if (Options.ShowRoleSummary)
                     {
                         var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
                         GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
@@ -506,14 +493,15 @@ namespace UltimateMods.EndGame
                 }
             }
 
-            [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.CheckEndCriteria))]
+            [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
             public class CheckEndCriteriaPatch
             {
                 public static bool Prefix(ShipStatus __instance)
                 {
                     if (!GameData.Instance) return false;
-                    if (DestroyableSingleton<TutorialManager>.InstanceExists) // InstanceExists | Don't check Custom Criteria when in Tutorial
-                        return true;
+                    if (DestroyableSingleton<TutorialManager>.InstanceExists) return true; // InstanceExists | Don't check Custom Criteria when in Tutorial
+                    if (FastDestroyableSingleton<HudManager>.Instance.IsIntroDisplayed) return false;
+
                     var statistics = new PlayerStatistics(__instance);
                     if (CheckAndEndGameForJesterWin(__instance)) return false;
                     if (CheckAndEndGameForJackalWin(__instance, statistics)) return false;
@@ -657,7 +645,7 @@ namespace UltimateMods.EndGame
 
                 private static void UncheckedEndGame(GameOverReason reason)
                 {
-                    ShipStatus.RpcEndGame(reason, false);
+                    GameManager.Instance.RpcEndGame(reason, false);
                 }
 
                 public static void UncheckedEndGame(CustomGameOverReason reason)

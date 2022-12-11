@@ -1,5 +1,3 @@
-using UnityEngine;
-
 namespace UltimateMods
 {
     public static class ColorDictionary

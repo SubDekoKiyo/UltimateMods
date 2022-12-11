@@ -2,13 +2,54 @@
 global using UnhollowerBaseLib.Attributes;
 global using UnhollowerRuntimeLib;
 
-using BepInEx;
-using BepInEx.Configuration;
-using BepInEx.IL2CPP;
-using HarmonyLib;
-using System;
-using UnityEngine;
-using UltimateMods.Modules;
+global using BepInEx;
+global using BepInEx.Configuration;
+global using BepInEx.IL2CPP;
+global using BepInEx.IL2CPP.Utils.Collections;
+global using UnityEngine;
+global using UnityEngine.Events;
+global using UnityEngine.UI;
+global using UnityEngine.SceneManagement;
+global using Object = UnityEngine.Object;
+global using static UnityEngine.UI.Button;
+global using HarmonyLib;
+global using AmongUs.Data;
+global using InnerNet;
+global using Hazel;
+global using TMPro;
+global using System;
+global using System.Reflection;
+global using System.Text;
+global using System.IO;
+global using System.Linq;
+global using System.Collections;
+global using System.Collections.Generic;
+global using System.Linq.Expressions;
+global using System.Text.RegularExpressions;
+global using System.Net;
+global using System.Net.Http;
+global using System.Threading.Tasks;
+global using Newtonsoft.Json.Linq;
+global using Twitch;
+global using AmongUs.Data.Legacy;
+global using AmongUs.GameOptions;
+global using UltimateMods.Patches;
+global using UltimateMods.Roles;
+global using UltimateMods.Debug;
+global using UltimateMods.Utilities;
+global using UltimateMods.Modules;
+global using UltimateMods.Objects;
+global using UltimateMods.EndGame;
+global using UltimateMods.Roles.Patches;
+global using static UltimateMods.Options;
+global using static UltimateMods.ColorDictionary;
+global using static UltimateMods.UltimateMods;
+global using static UltimateMods.Modules.Assets;
+global using static UltimateMods.GameHistory;
+global using static UltimateMods.Modules.CustomOption;
+global using static UltimateMods.Modules.CustomOption.CustomOptionType;
+global using static UltimateMods.Roles.Patches.ButtonPatches;
+global using static UltimateMods.Roles.Patches.OutlinePatch;
 
 namespace UltimateMods
 {
@@ -17,12 +58,12 @@ namespace UltimateMods
     public class UltimateModsPlugin : BasePlugin
     {
         public const string Id = "jp.DekoKiyo.UltimateMods";
-        public const string VersionString = "1.1.0";
+        public const string VersionString = "1.2.0.1";
 
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;
         public static int OptionsPage = 1;
-        public static bool isBeta = true;
+        public static bool isBeta = false;
 
         public static ConfigEntry<bool> DebugMode { get; private set; }
         public static ConfigEntry<bool> GhostsSeeTasks { get; set; }
@@ -62,6 +103,7 @@ namespace UltimateMods
 
             CustomRolesH.Load();
             CustomOptionsH.Load();
+            // CustomColors.Load();
             // DiscordPatch.StartDiscord();
             Patches.FreeNamePatch.Initialize();
             ModLanguageSelector.Initialize();

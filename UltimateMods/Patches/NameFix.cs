@@ -1,6 +1,3 @@
-using HarmonyLib;
-using AmongUs.Data.Legacy;
-
 namespace UltimateMods.Patches
 {
     [Harmony]

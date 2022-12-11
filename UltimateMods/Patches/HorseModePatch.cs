@@ -1,12 +1,4 @@
 // Source Code from TheOtherRoles
-
-using HarmonyLib;
-using UnityEngine;
-using static UnityEngine.UI.Button;
-using Object = UnityEngine.Object;
-using UltimateMods.Modules;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch]
@@ -18,11 +10,11 @@ namespace UltimateMods.Patches
             public static bool isHorseMode;
             public static bool Prefix(ref bool __result)
             {
-                if (isHorseMode != MapOptions.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
+                if (isHorseMode != Options.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
                 else
                 {
-                    __result = MapOptions.enableHorseMode;
-                    isHorseMode = MapOptions.enableHorseMode;
+                    __result = Options.enableHorseMode;
+                    isHorseMode = Options.enableHorseMode;
                 }
                 return false;
             }
@@ -33,7 +25,7 @@ namespace UltimateMods.Patches
     class ChangeHorseModePatch
     {
         public static bool AssetsLoaded = false;
-        private static bool horseButtonState = MapOptions.enableHorseMode;
+        private static bool horseButtonState = Options.enableHorseMode;
         private static Sprite horseModeOffSprite = null;
         private static Sprite horseModeOnSprite = null;
         private static GameObject bottomTemplate;
@@ -46,7 +38,7 @@ namespace UltimateMods.Patches
             }
 
             // Horse Mode
-            var horseModeSelectionBehavior = new ClientOptionsPatch.SelectionBehaviour("Enable Horse Mode", () => MapOptions.enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value = !UltimateModsPlugin.EnableHorseMode.Value, UltimateModsPlugin.EnableHorseMode.Value);
+            var horseModeSelectionBehavior = new ClientOptionsPatch.SelectionBehaviour("Enable Horse Mode", () => Options.enableHorseMode = UltimateModsPlugin.EnableHorseMode.Value = !UltimateModsPlugin.EnableHorseMode.Value, UltimateModsPlugin.EnableHorseMode.Value);
 
             bottomTemplate = GameObject.Find("InventoryButton");
             if (bottomTemplate == null) return;

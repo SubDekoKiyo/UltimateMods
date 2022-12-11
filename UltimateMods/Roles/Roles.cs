@@ -1,9 +1,3 @@
-using System.Linq;
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-
 namespace UltimateMods.Roles
 {
     public enum RoleType
@@ -136,7 +130,7 @@ namespace UltimateMods.Roles
 
         public static bool exists
         {
-            get { return COHelpers.RolesEnabled && players.Count > 0; }
+            get { return Helpers.RolesEnabled && players.Count > 0; }
         }
 
         public static T getRole(PlayerControl player = null)

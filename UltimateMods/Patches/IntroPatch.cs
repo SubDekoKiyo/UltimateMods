@@ -1,13 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using BepInEx.IL2CPP.Utils.Collections;
-using HarmonyLib;
-using UnityEngine;
-using UltimateMods.Utilities;
-using UltimateMods.Roles;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.OnDestroy))]
@@ -31,7 +21,7 @@ namespace UltimateMods.Patches
                     // PlayerControl.SetPetImage(data.DefaultOutfit.PetId, data.DefaultOutfit.ColorId, player.PetSlot);
                     player.cosmetics.nameText.text = data.PlayerName;
                     player.SetFlipX(true);
-                    MapOptions.PlayerIcons[p.PlayerId] = player;
+                    Options.PlayerIcons[p.PlayerId] = player;
 
                     if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
                     {
@@ -182,22 +172,6 @@ namespace UltimateMods.Patches
             public static void Postfix(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
             {
                 setupIntroTeam(__instance, ref yourTeam);
-            }
-        }
-
-        [HarmonyPatch(typeof(Constants), nameof(Constants.ShouldHorseAround))]
-        public static class ShouldAlwaysHorseAround
-        {
-            public static bool isHorseMode;
-            public static bool Prefix(ref bool __result)
-            {
-                if (isHorseMode != MapOptions.enableHorseMode && LobbyBehaviour.Instance != null) __result = isHorseMode;
-                else
-                {
-                    __result = MapOptions.enableHorseMode;
-                    isHorseMode = MapOptions.enableHorseMode;
-                }
-                return false;
             }
         }
     }

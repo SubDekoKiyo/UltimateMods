@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Roles.Patches.OutlinePatch;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -84,7 +75,7 @@ namespace UltimateMods.Roles
                 },
                 () => { SheriffKillButton.Timer = SheriffKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0f, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q

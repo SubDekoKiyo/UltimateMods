@@ -1,21 +1,16 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using static UltimateMods.UltimateMods;
-
 namespace UltimateMods.Debug
 {
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
     public static class DebugBots
     {
         private static List<PlayerControl> bots = new();
-        public static int BotCount = 0;
+        public static int botCount = 0;
+
         public static void Postfix(KeyboardJoystick __instance)
         {
             if (AmongUsClient.Instance.AmHost && UltimateModsPlugin.isBeta && Input.GetKeyDown(KeyCode.F))
             {
-                BotCount++;
+                botCount++;
                 var playerControl = UnityEngine.Object.Instantiate(AmongUsClient.Instance.PlayerPrefab);
                 var i = playerControl.PlayerId = (byte)GameData.Instance.GetAvailableId();
 
@@ -33,7 +28,7 @@ namespace UltimateMods.Debug
                 playerControl.transform.position = PlayerControl.LocalPlayer.transform.position;
                 playerControl.GetComponent<DummyBehaviour>().enabled = true;
                 playerControl.NetTransform.enabled = false;
-                playerControl.SetName("Bot" + BotCount);
+                playerControl.SetName("Bot" + botCount);
                 playerControl.SetColor(color);
                 playerControl.SetHat(HatManager.Instance.allHats[hat].ProductId, color);
                 playerControl.SetPet(HatManager.Instance.allPets[pet].ProductId, color);
