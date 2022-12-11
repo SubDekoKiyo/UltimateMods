@@ -1,13 +1,11 @@
-﻿global using Il2CppInterop.Runtime;
-global using Il2CppInterop.Runtime.Attributes;
-global using Il2CppInterop.Runtime.InteropTypes;
-global using Il2CppInterop.Runtime.InteropTypes.Arrays;
-global using Il2CppInterop.Runtime.Injection;
+﻿global using UnhollowerBaseLib;
+global using UnhollowerBaseLib.Attributes;
+global using UnhollowerRuntimeLib;
 
 global using BepInEx;
 global using BepInEx.Configuration;
-global using BepInEx.Unity.IL2CPP;
-global using BepInEx.Unity.IL2CPP.Utils.Collections;
+global using BepInEx.IL2CPP;
+global using BepInEx.IL2CPP.Utils.Collections;
 global using UnityEngine;
 global using UnityEngine.Events;
 global using UnityEngine.UI;
@@ -60,7 +58,7 @@ namespace UltimateMods
     public class UltimateModsPlugin : BasePlugin
     {
         public const string Id = "jp.DekoKiyo.UltimateMods";
-        public const string VersionString = "1.2.1";
+        public const string VersionString = "1.2.0.1";
 
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;

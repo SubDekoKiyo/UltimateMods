@@ -103,7 +103,7 @@ namespace UltimateMods.Modules
 #nullable enable
         public static T? LoadAsset<T>(this AssetBundle assetBundle, string name) where T : UnityEngine.Object
         {
-            return assetBundle.LoadAsset(name, Il2CppType.Of<T>())?.Cast<T>();
+            return assetBundle.LoadAsset(name, UnhollowerRuntimeLib.Il2CppType.Of<T>())?.Cast<T>();
         }
 
 #nullable disable

@@ -4,10 +4,10 @@ namespace UltimateMods.Utilities;
 
 public static class EnumerationHelpers
 {
-    public static System.Collections.Generic.IEnumerable<T> GetFastEnumerator<T>(this Generic.List<T> list) where T : Il2CppSystem.Object => new Il2CppListEnumerable<T>(list);
+    public static IEnumerable<T> GetFastEnumerator<T>(this Generic.List<T> list) where T : Il2CppSystem.Object => new Il2CppListEnumerable<T>(list);
 }
 
-public unsafe class Il2CppListEnumerable<T> : System.Collections.Generic.IEnumerable<T>, System.Collections.Generic.IEnumerator<T> where T : Il2CppSystem.Object
+public unsafe class Il2CppListEnumerable<T> : IEnumerable<T>, IEnumerator<T> where T : Il2CppSystem.Object
 {
     private struct Il2CppListStruct
     {
@@ -65,7 +65,7 @@ public unsafe class Il2CppListEnumerable<T> : System.Collections.Generic.IEnumer
         _index = -1;
     }
 
-    public System.Collections.Generic.IEnumerator<T> GetEnumerator()
+    public IEnumerator<T> GetEnumerator()
     {
         return this;
     }
