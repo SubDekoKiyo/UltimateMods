@@ -1,15 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using System;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine.Events;
-using UltimateMods.Patches;
-using UltimateMods.Utilities;
-using UnityEngine.UI;
-using static UnityEngine.UI.Button;
-using Object = UnityEngine.Object;
-
 namespace UltimateMods.Modules
 {
     public enum SupportedLang

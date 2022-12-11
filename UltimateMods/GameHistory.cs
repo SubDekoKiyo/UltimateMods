@@ -1,8 +1,3 @@
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using UltimateMods.EndGame;
-
 namespace UltimateMods
 {
     public class DeadPlayer

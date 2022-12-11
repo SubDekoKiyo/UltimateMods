@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Objects;
-using UltimateMods.Utilities;
-using UltimateMods.Modules;
-using System;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -34,46 +25,50 @@ namespace UltimateMods.Roles
                 var (PlayerCompleted, PlayerTotal) = TasksHandler.taskInfo(snitch.Data);
                 int NumberOfTasks = PlayerTotal - PlayerCompleted;
 
-                if (NumberOfTasks <= TaskCountForReveal && (PlayerControl.LocalPlayer.Data.Role.IsImpostor || (IncludeTeamJackal && (PlayerControl.LocalPlayer.isRole(RoleType.Jackal) || PlayerControl.LocalPlayer.isRole(RoleType.Sidekick)))))
+                if (NumberOfTasks <= TaskCountForReveal)
                 {
-                    if (LocalArrows.Count == 0) LocalArrows.Add(new(Color.blue));
-                    if (LocalArrows.Count != 0 && LocalArrows[0] != null)
+                    if (PlayerControl.LocalPlayer.Data.Role.IsImpostor || (IncludeTeamJackal && (PlayerControl.LocalPlayer.isRole(RoleType.Jackal) || PlayerControl.LocalPlayer.isRole(RoleType.Sidekick))))
                     {
-                        LocalArrows[0].arrow.SetActive(true);
-                        LocalArrows[0].image.color = Color.blue;
-                        LocalArrows[0].Update(snitch.transform.position);
+                        if (LocalArrows.Count == 0) LocalArrows.Add(new(SnitchGreen));
+                        if (LocalArrows.Count != 0 && LocalArrows[0] != null)
+                        {
+                            LocalArrows[0].arrow.SetActive(true);
+                            LocalArrows[0].image.color = SnitchGreen;
+                            LocalArrows[0].Update(snitch.transform.position);
+                        }
                     }
-                }
-                else if (PlayerControl.LocalPlayer.isRole(RoleType.Snitch) && NumberOfTasks == 0)
-                {
-                    int arrowIndex = 0;
-                    foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+                    else if (PlayerControl.LocalPlayer.isRole(RoleType.Snitch))
                     {
-                        bool ArrowForImpostor = p.Data.Role.IsImpostor;
-                        bool ArrowForTeamJackal = IncludeTeamJackal && (p.isRole(RoleType.Jackal) || p.isRole(RoleType.Sidekick));
+                        int arrowIndex = 0;
+                        foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
+                        {
+                            bool ArrowForImpostor = p.Data.Role.IsImpostor;
+                            bool ArrowForTeamJackal = IncludeTeamJackal && (p.isRole(RoleType.Jackal) || p.isRole(RoleType.Sidekick));
 
-                        // Update the arrows' color every time bc things go weird when you add a sidekick or someone dies
-                        Color c = Palette.ImpostorRed;
-                        if (ArrowForTeamJackal)
-                        {
-                            c = JackalBlue;
-                        }
-                        if (!p.Data.IsDead && (ArrowForImpostor || ArrowForTeamJackal))
-                        {
-                            if (arrowIndex >= LocalArrows.Count)
+                            // Update the arrows' color every time bc things go weird when you add a sidekick or someone dies
+                            Color c = ImpostorRed;
+                            if (ArrowForTeamJackal)
                             {
-                                LocalArrows.Add(new(c));
+                                c = JackalBlue;
                             }
-                            if (arrowIndex < LocalArrows.Count && LocalArrows[arrowIndex] != null)
+                            if (!p.Data.IsDead && (ArrowForImpostor || ArrowForTeamJackal))
                             {
-                                LocalArrows[arrowIndex].image.color = c;
-                                LocalArrows[arrowIndex].arrow.SetActive(true);
-                                LocalArrows[arrowIndex].Update(p.transform.position, c);
+                                if (arrowIndex >= LocalArrows.Count)
+                                {
+                                    LocalArrows.Add(new(c));
+                                }
+                                if (arrowIndex < LocalArrows.Count && LocalArrows[arrowIndex] != null)
+                                {
+                                    LocalArrows[arrowIndex].image.color = c;
+                                    LocalArrows[arrowIndex].arrow.SetActive(true);
+                                    LocalArrows[arrowIndex].Update(p.transform.position, c);
+                                }
+                                arrowIndex++;
                             }
-                            arrowIndex++;
                         }
                     }
                 }
+
             }
         }
         public override void OnKill(PlayerControl target) { }

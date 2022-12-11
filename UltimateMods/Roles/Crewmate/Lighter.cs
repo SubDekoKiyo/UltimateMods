@@ -1,11 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using TMPro;
-using System.Linq;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -66,7 +58,7 @@ namespace UltimateMods.Roles
                     LighterButton.actionButton.graphic.color = Palette.EnabledColor;
                 },
                 GetButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,

@@ -1,9 +1,3 @@
-using System.Linq;
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
-
 namespace UltimateMods.Roles
 {
     public enum ModifierType

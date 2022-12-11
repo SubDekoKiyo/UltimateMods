@@ -1,10 +1,3 @@
-using System;
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -29,7 +22,7 @@ namespace UltimateMods.Roles
 
         public static Sprite GetButtonSprite()
         {
-            byte mapId = PlayerControl.GameOptions.MapId;
+            byte mapId = GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId);
             UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
             if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld
             else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
@@ -44,8 +37,12 @@ namespace UltimateMods.Roles
                 () =>
                 {
                     PlayerControl.LocalPlayer.NetTransform.Halt();
-                    Action<MapBehaviour> tmpAction = (MapBehaviour m) => { m.ShowCountOverlay(); };
-                    DestroyableSingleton<HudManager>.Instance.ShowMap(tmpAction);
+                    HudManager.Instance.ToggleMapVisible(new MapOptions()
+                    {
+                        Mode = MapOptions.Modes.CountOverlay,
+                        AllowMovementWhileMapOpen = true,
+                        IncludeDeadBodies = true
+                    });
                 },
                 () =>
                 {
@@ -54,15 +51,15 @@ namespace UltimateMods.Roles
                 },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () => { },
-                EvilHacker.GetButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                GetButtonSprite(),
+                ButtonPositions.LeftTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,
                 false,
                 0f,
                 () => { },
-                PlayerControl.GameOptions.MapId == 3,
+                GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 3,
                 DestroyableSingleton<TranslationController>.Instance.GetString(StringNames.Admin)
             );
         }

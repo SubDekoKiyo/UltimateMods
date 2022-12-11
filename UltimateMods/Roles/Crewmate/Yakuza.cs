@@ -1,17 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Objects;
-using UltimateMods.Utilities;
-using UltimateMods.Modules;
-using System;
-using Hazel;
-using UltimateMods.EndGame;
-using static UltimateMods.GameHistory;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Modules.Assets;
-using static UltimateMods.Roles.Patches.OutlinePatch;
-
 namespace UltimateMods.Roles;
 
 [HarmonyPatch]
@@ -142,7 +128,7 @@ public static class Yakuza
                 },
                 () => { bossKillButton.Timer = bossKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0f, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q
@@ -249,7 +235,7 @@ public static class Yakuza
                 },
                 () => { executivesKillButton.Timer = executivesKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0f, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q
@@ -354,7 +340,7 @@ public static class Yakuza
                 },
                 () => { Gun.gunKillButton.Timer = Gun.gunKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0f, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q

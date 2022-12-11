@@ -1,22 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using HarmonyLib;
-using Hazel;
-using UnityEngine;
-using UltimateMods.Roles;
-using UltimateMods.Modules;
-using static UltimateMods.UltimateMods;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(RoleOptionsData), nameof(RoleOptionsData.GetNumPerGame))]
     class RoleOptionsDataGetNumPerGamePatch
     {
-        public static void Postfix(ref int __result, ref RoleTypes role)
+        public static void Postfix(ref int __result)
         {
-            if (role is RoleTypes.Crewmate or RoleTypes.Impostor) return;
-
             if (CustomOptionsH.ActivateModRoles.getBool()) __result = 0; // Deactivate Vanilla Roles if the mod roles are active
         }
     }
@@ -27,7 +15,6 @@ namespace UltimateMods.Patches
         // private static List<byte> BlockLovers = new();
         public static int BlockedAssignments = 0;
         public static int MaxBlocks = 10;
-        public static System.Random rnd = new((int)DateTime.Now.Ticks);
 
         public static void Postfix()
         {
@@ -84,9 +71,9 @@ namespace UltimateMods.Patches
             int ImpostorRoles = Mathf.Min(Impostors.Count, ImpostorCount);
 
             // Fill in the lists with the roles that should be assigned to players. Note that the special roles (like Mafia or Lovers) are NOT included in these lists
-            Dictionary<byte, (bool enable, int count)> ImpSettings = new();
-            Dictionary<byte, (bool enable, int count)> NeutralSettings = new();
-            Dictionary<byte, (bool enable, int count)> CrewSettings = new();
+            Dictionary<byte, (int rate, int count)> ImpSettings = new();
+            Dictionary<byte, (int rate, int count)> NeutralSettings = new();
+            Dictionary<byte, (int rate, int count)> CrewSettings = new();
 
             ImpSettings.Add((byte)RoleType.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
             ImpSettings.Add((byte)RoleType.UnderTaker, CustomRolesH.UnderTakerRate.data);
@@ -247,10 +234,10 @@ namespace UltimateMods.Patches
                 }
 
                 if (niceCount > 0)
-                    data.CrewSettings.Add((byte)option.roleType, (option.enable, niceCount));
+                    data.CrewSettings.Add((byte)option.roleType, (option.rate, niceCount));
 
                 if (evilCount > 0)
-                    data.ImpSettings.Add((byte)option.roleType, (option.enable, evilCount));
+                    data.ImpSettings.Add((byte)option.roleType, (option.rate, evilCount));
             }
         }
 
@@ -259,9 +246,9 @@ namespace UltimateMods.Patches
             BlockedAssignments = 0;
 
             // Get all roles where the chance to occur is set to 100%
-            List<byte> EnsuredCrewmateRoles = data.CrewSettings.Where(x => x.Value.enable).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
-            List<byte> EnsuredNeutralRoles = data.NeutralSettings.Where(x => x.Value.enable).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
-            List<byte> EnsuredImpostorRoles = data.ImpSettings.Where(x => x.Value.enable).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> EnsuredCrewmateRoles = data.CrewSettings.Where(x => x.Value.rate == 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> EnsuredNeutralRoles = data.NeutralSettings.Where(x => x.Value.rate == 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> EnsuredImpostorRoles = data.ImpSettings.Where(x => x.Value.rate == 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
 
             // Assign roles until we run out of either players we can assign roles to or run out of roles we can assign to players
             while ((data.Impostors.Count > 0 && data.ImpostorRoles > 0 && EnsuredImpostorRoles.Count > 0) || (data.Crewmates.Count > 0 && ((data.CrewmateRoles > 0 && EnsuredCrewmateRoles.Count > 0) || (data.NeutralRoles > 0 && EnsuredNeutralRoles.Count > 0))))
@@ -293,9 +280,9 @@ namespace UltimateMods.Patches
                     foreach (var BlockedRoleId in CustomOptionsH.BlockedRolePairings[roleId])
                     {
                         // Set chance for the Blocked roles to 0 for chances less than 100%
-                        if (data.ImpSettings.ContainsKey(BlockedRoleId)) data.ImpSettings[BlockedRoleId] = (false, 0);
-                        if (data.NeutralSettings.ContainsKey(BlockedRoleId)) data.NeutralSettings[BlockedRoleId] = (false, 0);
-                        if (data.CrewSettings.ContainsKey(BlockedRoleId)) data.CrewSettings[BlockedRoleId] = (false, 0);
+                        if (data.ImpSettings.ContainsKey(BlockedRoleId)) data.ImpSettings[BlockedRoleId] = (0, 0);
+                        if (data.NeutralSettings.ContainsKey(BlockedRoleId)) data.NeutralSettings[BlockedRoleId] = (0, 0);
+                        if (data.CrewSettings.ContainsKey(BlockedRoleId)) data.CrewSettings[BlockedRoleId] = (0, 0);
                         // Remove Blocked roles even if the chance was 100%
                         foreach (var EnsuredRolesList in rolesToAssign.Values)
                         {
@@ -320,9 +307,9 @@ namespace UltimateMods.Patches
             BlockedAssignments = 0;
 
             // Get all roles where the chance to occur is set grater than 0% but not 100% and build a ticket pool based on their weight
-            List<byte> CrewmateTickets = data.CrewSettings.Where(x => x.Value.enable is true).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
-            List<byte> NeutralTickets = data.NeutralSettings.Where(x => x.Value.enable is true).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
-            List<byte> ImpostorTickets = data.ImpSettings.Where(x => x.Value.enable is true).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> CrewmateTickets = data.CrewSettings.Where(x => x.Value.rate is > 0 and < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> NeutralTickets = data.NeutralSettings.Where(x => x.Value.rate is > 0 and < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
+            List<byte> ImpostorTickets = data.ImpSettings.Where(x => x.Value.rate is > 0 and < 10).Select(x => Enumerable.Repeat(x.Key, x.Value.count)).SelectMany(x => x).ToList();
 
             // Assign roles until we run out of either players we can assign roles to or run out of roles we can assign to players
             while (
@@ -408,7 +395,7 @@ namespace UltimateMods.Patches
             // Opportunist
             for (int i = 0; i < CustomRolesH.OpportunistRate.count; i++)
             {
-                if (CustomRolesH.OpportunistRate.enable)
+                if (rnd.Next(1, 100) <= CustomRolesH.OpportunistRate.rate * 10)
                 {
                     var candidates = Opportunist.Candidates;
                     if (candidates.Count <= 0)
@@ -464,9 +451,9 @@ namespace UltimateMods.Patches
         {
             public List<PlayerControl> Crewmates { get; set; }
             public List<PlayerControl> Impostors { get; set; }
-            public Dictionary<byte, (bool enable, int count)> ImpSettings = new();
-            public Dictionary<byte, (bool enable, int count)> NeutralSettings = new();
-            public Dictionary<byte, (bool enable, int count)> CrewSettings = new();
+            public Dictionary<byte, (int rate, int count)> ImpSettings = new();
+            public Dictionary<byte, (int rate, int count)> NeutralSettings = new();
+            public Dictionary<byte, (int rate, int count)> CrewSettings = new();
             public int CrewmateRoles { get; set; }
             public int NeutralRoles { get; set; }
             public int ImpostorRoles { get; set; }

@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Modules.Assets;
-using static UltimateMods.Roles.Patches.OutlinePatch;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -30,8 +21,8 @@ namespace UltimateMods.Roles
         public override void FixedUpdate()
         {
             var TruePosition = PlayerControl.LocalPlayer.GetTruePosition();
-            var MaxDistance = GameOptionsData.KillDistances[PlayerControl.GameOptions.KillDistance];
-            var flag = (PlayerControl.GameOptions.GhostsDoTasks || !PlayerControl.LocalPlayer.Data.IsDead) &&
+            var MaxDistance = GameOptionsData.KillDistances[GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.KillDistance)];
+            var flag = (GameOptionsManager.Instance.CurrentGameOptions.GetBool(BoolOptionNames.GhostsDoTasks) || !PlayerControl.LocalPlayer.Data.IsDead) &&
                         (!AmongUsClient.Instance || !AmongUsClient.Instance.IsGameOver) &&
                         PlayerControl.LocalPlayer.CanMove;
             var OverlapCircle = Physics2D.OverlapCircleAll(TruePosition, MaxDistance, LayerMask.GetMask(new[] { "Players", "Ghost" }));
@@ -82,7 +73,7 @@ namespace UltimateMods.Roles
                 },
                 () => { },
                 GetButtonSprite(),
-                new Vector3(0f, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,

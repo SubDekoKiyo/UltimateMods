@@ -1,14 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using UnityEngine.UI;
-using System;
-using static UltimateMods.ColorDictionary;
-using static UnityEngine.UI.Button;
-using UnityEngine.Events;
-using Object = UnityEngine.Object;
-using UltimateMods.Utilities;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Patches
 {
     public class MainMenuPatch
@@ -157,7 +146,7 @@ namespace UltimateMods.Patches
 
                 instance = __instance;
                 LoadSprites();
-                renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                renderer.sprite = Options.enableHorseMode ? horseBannerSprite : bannerSprite;
             }
 
             public static void LoadSprites()
@@ -177,7 +166,7 @@ namespace UltimateMods.Patches
                         renderer.color = new Color(1, 1, 1, 1 - p);
                         if (p == 1)
                         {
-                            renderer.sprite = MapOptions.enableHorseMode ? horseBannerSprite : bannerSprite;
+                            renderer.sprite = Options.enableHorseMode ? horseBannerSprite : bannerSprite;
                             instance.StartCoroutine(Effects.Lerp(fadeDuration, new Action<float>((p) =>
                             {
                                 renderer.color = new Color(1, 1, 1, p);

@@ -1,10 +1,3 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Modules.CustomOption;
-using static UltimateMods.Modules.CustomOption.CustomOptionType;
-
 namespace UltimateMods
 {
     public class CustomRolesH
@@ -88,7 +81,6 @@ namespace UltimateMods
         public static CustomRoleOption SnitchRate;
         public static CustomOption SnitchLeftTasksForReveal;
         public static CustomOption SnitchIncludeTeamJackal;
-        public static CustomOption SnitchTeamJackalUseDifferentArrowColor;
 
         public static CustomRoleOption JackalRate;
         public static CustomOption JackalKillCooldown;

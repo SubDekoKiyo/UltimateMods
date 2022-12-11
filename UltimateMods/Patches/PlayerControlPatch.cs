@@ -1,13 +1,3 @@
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UltimateMods.Utilities;
-using UltimateMods.Modules;
-using UltimateMods.Roles;
-using Hazel;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.FixedUpdate))]
@@ -35,7 +25,7 @@ namespace UltimateMods.Patches
                 if (canSeeInfo)
                 {
                     Transform playerInfoTransform = p.cosmetics.nameText.transform.parent.FindChild("Info");
-                    TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
+                    TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TextMeshPro>() : null;
                     if (playerInfo == null)
                     {
                         playerInfo = UnityEngine.Object.Instantiate(p.cosmetics.nameText, p.cosmetics.nameText.transform.parent);
@@ -44,15 +34,15 @@ namespace UltimateMods.Patches
                     }
 
                     // Set the position every time bc it sometimes ends up in the wrong place due to camoflauge
-                    playerInfo.transform.localPosition = p.cosmetics.nameText.transform.localPosition + Vector3.up * 0.5f;
+                    playerInfo.transform.localPosition = p.cosmetics.nameText.transform.localPosition + Vector3.up * 0.25f;
 
                     PlayerVoteArea playerVoteArea = MeetingHud.Instance?.playerStates?.FirstOrDefault(x => x.TargetPlayerId == p.PlayerId);
                     Transform meetingInfoTransform = playerVoteArea != null ? playerVoteArea.NameText.transform.parent.FindChild("Info") : null;
-                    TMPro.TextMeshPro meetingInfo = meetingInfoTransform != null ? meetingInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
+                    TextMeshPro meetingInfo = meetingInfoTransform != null ? meetingInfoTransform.GetComponent<TextMeshPro>() : null;
                     if (meetingInfo == null && playerVoteArea != null)
                     {
                         meetingInfo = UnityEngine.Object.Instantiate(playerVoteArea.NameText, playerVoteArea.NameText.transform.parent);
-                        meetingInfo.transform.localPosition += Vector3.down * 0.10f;
+                        meetingInfo.transform.localPosition += Vector3.down * 0.05f;
                         meetingInfo.fontSize *= 0.60f;
                         meetingInfo.gameObject.name = "Info";
                     }
@@ -61,7 +51,7 @@ namespace UltimateMods.Patches
                     if (meetingInfo != null && playerVoteArea != null)
                     {
                         var playerName = playerVoteArea.NameText;
-                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);
+                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f + 0.05f), -0.1f);
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
@@ -76,24 +66,24 @@ namespace UltimateMods.Patches
                     if (p == PlayerControl.LocalPlayer)
                     {
                         playerInfoText = $"{roleNames}";
-                        if (TaskPanelBehaviour.InstanceExists)
+                        if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists)
                         {
-                            TMPro.TextMeshPro tabText = TaskPanelBehaviour.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                            TextMeshPro tabText = FastDestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TextMeshPro>();
                             tabText.SetText($"{TranslationController.Instance.GetString(StringNames.Tasks)} {taskInfo}");
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (MapOptions.GhostsSeeRoles && MapOptions.GhostsSeeTasks && !Altruist.exists)
+                    else if (Options.GhostsSeeRoles && Options.GhostsSeeTasks && !Altruist.exists)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeTasks && !Altruist.exists)
+                    else if (Options.GhostsSeeTasks && !Altruist.exists)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (MapOptions.GhostsSeeRoles && !Altruist.exists)
+                    else if (Options.GhostsSeeRoles && !Altruist.exists)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;
@@ -217,12 +207,12 @@ namespace UltimateMods.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] float time)
         {
-            if (PlayerControl.GameOptions.KillCooldown <= 0f) return false;
+            if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
             if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
 
-            float Max = Mathf.Max(PlayerControl.GameOptions.KillCooldown * multiplier + addition, __instance.killTimer);
+            float Max = Mathf.Max(GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition, __instance.killTimer);
             __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, Max), Max);
             return false;
         }

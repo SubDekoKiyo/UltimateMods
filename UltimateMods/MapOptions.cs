@@ -1,10 +1,6 @@
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Patches;
-
 namespace UltimateMods
 {
-    static class MapOptions
+    static class Options
     {
         // Set values
         public static int MaxNumberOfMeetings = 10;
@@ -12,7 +8,6 @@ namespace UltimateMods
         public static bool NoVoteIsSelfVote = false;
         public static bool HideOutOfSightNametags = false;
         public static bool HidePlayerNames = false;
-
         public static int RestrictDevices = 0;
         public static float RestrictAdminTime = 600f;
         public static float RestrictAdminTimeMax = 600f;
@@ -37,7 +32,7 @@ namespace UltimateMods
         public static List<Vent> VentsToSeal = new();
         public static Dictionary<byte, PoolablePlayer> PlayerIcons = new();
 
-        public static void ClearAndReloadMapOptions()
+        public static void ClearAndReloadOptions()
         {
             MeetingsCount = 0;
             CamerasToAdd = new();

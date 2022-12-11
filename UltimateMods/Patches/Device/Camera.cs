@@ -1,10 +1,3 @@
-using HarmonyLib;
-using Hazel;
-using System;
-using System.Linq;
-using UnityEngine;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Patches
 {
     [Harmony]
@@ -22,7 +15,7 @@ namespace UltimateMods.Patches
         static void UseCameraTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (MapOptions.RestrictDevices > 0 && MapOptions.RestrictCamerasTime > 0f && PlayerControl.LocalPlayer.IsAlive())
+            if (Options.RestrictDevices > 0 && Options.RestrictCamerasTime > 0f && PlayerControl.LocalPlayer.IsAlive())
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseCameraTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(cameraTimer);
@@ -87,23 +80,23 @@ namespace UltimateMods.Patches
                     cameraTimer += Time.deltaTime;
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
-                    if (MapOptions.RestrictDevices > 0)
+                    if (Options.RestrictDevices > 0)
                     {
                         if (TimeRemaining == null)
                         {
-                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
+                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
                             TimeRemaining.alignment = TMPro.TextAlignmentOptions.Center;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(0.0f, -1.7f);
                             TimeRemaining.transform.localScale *= 1.8f;
                             TimeRemaining.color = Palette.White;
                         }
-                        if (MapOptions.RestrictCamerasTime <= 0f)
+                        if (Options.RestrictCamerasTime <= 0f)
                         {
                             __instance.Close();
                             return false;
                         }
-                        string timeString = TimeSpan.FromSeconds(MapOptions.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
+                        string timeString = TimeSpan.FromSeconds(Options.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
@@ -193,23 +186,23 @@ namespace UltimateMods.Patches
                     cameraTimer += Time.deltaTime;
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
-                    if (MapOptions.RestrictDevices > 0)
+                    if (Options.RestrictDevices > 0)
                     {
                         if (TimeRemaining == null)
                         {
-                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
+                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
                             TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(0.95f, 4.45f);
                             TimeRemaining.transform.localScale *= 1.8f;
                             TimeRemaining.color = Palette.White;
                         }
-                        if (MapOptions.RestrictCamerasTime <= 0f)
+                        if (Options.RestrictCamerasTime <= 0f)
                         {
                             __instance.Close();
                             return false;
                         }
-                        string timeString = TimeSpan.FromSeconds(MapOptions.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
+                        string timeString = TimeSpan.FromSeconds(Options.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
@@ -259,23 +252,23 @@ namespace UltimateMods.Patches
                     cameraTimer += Time.deltaTime;
                     if (cameraTimer > 0.1f)
                         UseCameraTime();
-                    if (MapOptions.RestrictDevices > 0)
+                    if (Options.RestrictDevices > 0)
                     {
                         if (TimeRemaining == null)
                         {
-                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskText, __instance.transform);
+                            TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
                             TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(1.0f, 4.25f);
                             TimeRemaining.transform.localScale *= 1.6f;
                             TimeRemaining.color = Palette.White;
                         }
-                        if (MapOptions.RestrictCamerasTime <= 0f)
+                        if (Options.RestrictCamerasTime <= 0f)
                         {
                             __instance.Close();
                             return false;
                         }
-                        string timeString = TimeSpan.FromSeconds(MapOptions.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
+                        string timeString = TimeSpan.FromSeconds(Options.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
                         TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }

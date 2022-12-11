@@ -1,16 +1,8 @@
-using HarmonyLib;
-using UltimateMods.Utilities;
-using UnityEngine;
-using System.Collections.Generic;
-using UltimateMods.Roles;
-using static UltimateMods.ColorDictionary;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
     class PlayerNameColorPatch
     {
-        private static Dictionary<byte, (string name, Color color)> TagColorDict = new();
         static void ResetNameTagsAndColors() { }
 
         static void setPlayerNameColor(PlayerControl p, Color color)
@@ -70,7 +62,8 @@ namespace UltimateMods.Patches
             }
         }
 
-        static void Postfix(HudManager __instance)
+        // 生存
+        static void Postfix()
         {
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
 

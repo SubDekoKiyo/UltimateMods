@@ -1,7 +1,3 @@
-using HarmonyLib;
-using UltimateMods.Roles;
-using UltimateMods.Roles.Patches;
-
 namespace UltimateMods.Patches
 {
     public static class UsablesPatch
@@ -64,7 +60,7 @@ namespace UltimateMods.Patches
         {
             static void Prefix(MedScanMinigame __instance)
             {
-                if (MapOptions.AllowParallelMedBayScans)
+                if (Options.AllowParallelMedBayScans)
                 {
                     __instance.medscan.CurrentUser = PlayerControl.LocalPlayer.PlayerId;
                     __instance.medscan.UsersList.Clear();
