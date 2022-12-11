@@ -1,6 +1,5 @@
 namespace UltimateMods.Roles.Patches
 {
-    [HarmonyPatch(typeof(ShipStatus))]
     public class RolesVisionPatch
     {
         [HarmonyPostfix]
@@ -29,7 +28,7 @@ namespace UltimateMods.Roles.Patches
         {
             if (isImpostor) return shipStatus.MaxLightRadius * GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.ImpostorLightMod);
 
-            SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].CastFast<SwitchSystem>();
+            SwitchSystem switchSystem = MapUtilities.Systems[SystemTypes.Electrical].Cast<SwitchSystem>();
             float lerpValue = switchSystem.Value / 255f;
 
             return Mathf.Lerp(shipStatus.MinLightRadius, shipStatus.MaxLightRadius, lerpValue) * GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.ImpostorLightMod);

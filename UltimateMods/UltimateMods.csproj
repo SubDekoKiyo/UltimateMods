@@ -39,8 +39,8 @@
 		<Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\.net6.0\$(AssemblyName).dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
 	</Target>
 
-	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <!--<Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
-    <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" /> -->
-	</Target>
+	<!-- <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+    <Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
+    <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" />
+	</Target> -->
 </Project>
