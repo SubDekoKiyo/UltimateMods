@@ -81,7 +81,6 @@ namespace UltimateMods
         public static CustomRoleOption SnitchRate;
         public static CustomOption SnitchLeftTasksForReveal;
         public static CustomOption SnitchIncludeTeamJackal;
-        public static CustomOption SnitchTeamJackalUseDifferentArrowColor;
 
         public static CustomRoleOption JackalRate;
         public static CustomOption JackalKillCooldown;
