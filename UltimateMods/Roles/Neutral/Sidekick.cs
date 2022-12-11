@@ -64,7 +64,7 @@ namespace UltimateMods.Roles
                 () => { return CurrentTarget && PlayerControl.LocalPlayer.CanMove; },
                 () => { SidekickKillButton.Timer = SidekickKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q,

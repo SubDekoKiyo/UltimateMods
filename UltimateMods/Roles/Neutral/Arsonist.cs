@@ -155,7 +155,7 @@ namespace UltimateMods.Roles
                     UpdateStatus();
                 },
                 GetDouseSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,
@@ -200,7 +200,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.CanMove && DousedEveryone; },
                 () => { },
                 GetIgniteSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F

@@ -72,7 +72,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () => { TeleportButton.Timer = TeleportButton.MaxTimer = Cooldown; },
                 GetButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.LeftTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,

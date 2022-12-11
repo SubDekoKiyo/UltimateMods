@@ -134,7 +134,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () =>
                 {
-                    if (UnderTaker.DraggingBody)
+                    if (DraggingBody)
                         UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDropText");
                     else
                         UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDragText");
@@ -147,10 +147,10 @@ namespace UltimateMods.Roles
                 () =>
                 {
                     UnderTakerButton.Timer = UnderTakerButton.MaxTimer = MoveCooldown;
-                    UnderTaker.UnderTakerResetValuesAtDead();
+                    UnderTakerResetValuesAtDead();
                 },
-                UnderTaker.GetButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0f),
+                GetButtonSprite(),
+                ButtonPositions.LeftTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,
@@ -161,9 +161,9 @@ namespace UltimateMods.Roles
                     if (DraggingBody)
                     {
                         MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.DragPlaceBody, Hazel.SendOption.Reliable, -1);
-                        writer.Write(UnderTaker.BodyId);
+                        writer.Write(BodyId);
                         AmongUsClient.Instance.FinishRpcImmediately(writer);
-                        RPCProcedure.DragPlaceBody(UnderTaker.BodyId);
+                        RPCProcedure.DragPlaceBody(BodyId);
                     }
                     else
                     {

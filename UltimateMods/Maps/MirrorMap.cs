@@ -1,6 +1,6 @@
 namespace UltimateMods
 {
-    [HarmonyPatch(typeof(ShipStatus), nameof(GameStartManager.Start))]
+    [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.Start))]
     public class MirrorMap
     {
         public static GameObject skeld;

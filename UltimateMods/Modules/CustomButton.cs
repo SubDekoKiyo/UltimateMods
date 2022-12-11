@@ -1,10 +1,17 @@
 namespace UltimateMods.Modules
 {
+    public enum ButtonPositions
+    {
+        ZoomIn, ZoomOut,
+        LeftTop, CenterTop, RightTop,
+        LeftBottom, CenterBottom, RightBottom
+    }
+
     public class CustomButton
     {
         public static List<CustomButton> buttons = new();
         public ActionButton actionButton;
-        public Vector3 PositionOffset;
+        public ButtonPositions ButtonPosition;
         public Vector3 LocalScale = Vector3.one;
         public float MaxTimer = float.MaxValue;
         public float Timer = 0f;
@@ -24,13 +31,13 @@ namespace UltimateMods.Modules
         private bool mirror;
         private KeyCode? hotkey;
 
-        public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, Vector3 PositionOffset, HudManager hudManager, ActionButton textTemplate, KeyCode? hotkey, bool HasEffect, float EffectDuration, Action OnEffectEnds, bool mirror = false, string ButtonText = null)
+        public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, ButtonPositions ButtonPosition, HudManager hudManager, ActionButton textTemplate, KeyCode? hotkey, bool HasEffect, float EffectDuration, Action OnEffectEnds, bool mirror = false, string ButtonText = null)
         {
             this.hudManager = hudManager;
             this.OnClick = OnClick;
             this.HasButton = HasButton;
             this.CouldUse = CouldUse;
-            this.PositionOffset = PositionOffset;
+            this.ButtonPosition = ButtonPosition;
             this.OnMeetingEnds = OnMeetingEnds;
             this.HasEffect = HasEffect;
             this.EffectDuration = EffectDuration;
@@ -56,8 +63,8 @@ namespace UltimateMods.Modules
             setActive(false);
         }
 
-        public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, Vector3 PositionOffset, HudManager hudManager, ActionButton textTemplate, KeyCode? hotkey, bool mirror = false, string ButtonText = null)
-        : this(OnClick, HasButton, CouldUse, OnMeetingEnds, Sprite, PositionOffset, hudManager, textTemplate, hotkey, false, 0f, () => { }, mirror, ButtonText) { }
+        public CustomButton(Action OnClick, Func<bool> HasButton, Func<bool> CouldUse, Action OnMeetingEnds, Sprite Sprite, ButtonPositions ButtonPosition, HudManager hudManager, ActionButton textTemplate, KeyCode? hotkey, bool mirror = false, string ButtonText = null)
+        : this(OnClick, HasButton, CouldUse, OnMeetingEnds, Sprite, ButtonPosition, hudManager, textTemplate, hotkey, false, 0f, () => { }, mirror, ButtonText) { }
 
         void onClickEvent()
         {
@@ -155,10 +162,40 @@ namespace UltimateMods.Modules
             }
             actionButton.buttonLabelText.enabled = ShowButtonText; // Only show the text if it's a kill button
 
-            if (hudManager.UseButton != null)
+            if (hudManager.ReportButton != null)
             {
-                Vector3 pos = hudManager.UseButton.transform.localPosition;
-                if (mirror) pos = new Vector3(-pos.x, pos.y, pos.z);
+                Vector3 PositionOffset = new(0f, 0f, 0f);
+                Vector3 pos = hudManager.ReportButton.transform.localPosition;
+                if (mirror) pos = new(-pos.x, pos.y, pos.z);
+
+                switch (ButtonPosition)
+                {
+                    case ButtonPositions.ZoomIn:
+                        PositionOffset = Vector3.zero + Vector3.up * 3.75f + Vector3.right * 0.2f;
+                        break;
+                    case ButtonPositions.ZoomOut:
+                        PositionOffset = Vector3.zero + Vector3.up * 3.75f + Vector3.right * 0.55f;
+                        break;
+                    case ButtonPositions.LeftTop:
+                        PositionOffset = new(-0.9f, 1f, 0f);
+                        break;
+                    case ButtonPositions.CenterTop:
+                        PositionOffset = new(0f, 1f, 0f);
+                        break;
+                    case ButtonPositions.RightTop:
+                        PositionOffset = new(0.9f, 1f, 0f);
+                        break;
+                    case ButtonPositions.LeftBottom:
+                        PositionOffset = new(-0.9f, -0.06f, 0f);
+                        break;
+                    case ButtonPositions.CenterBottom:
+                        PositionOffset = new(0f, 0f, 0f);
+                        break;
+                    case ButtonPositions.RightBottom:
+                        PositionOffset = new(0.9f, 0f, 0f);
+                        break;
+                }
+
                 actionButton.transform.localPosition = pos + PositionOffset;
                 actionButton.transform.localScale = LocalScale;
             }

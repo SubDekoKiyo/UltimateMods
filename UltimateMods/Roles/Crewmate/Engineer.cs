@@ -90,7 +90,7 @@ namespace UltimateMods.Roles
                 },
                 () => { },
                 Engineer.GetFixButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.UseButton,
                 KeyCode.F

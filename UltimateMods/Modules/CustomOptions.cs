@@ -803,7 +803,7 @@ namespace UltimateMods.Modules
         }
     }
 
-    [HarmonyPatch(nameof(LobbyBehaviour), nameof(LobbyBehaviour.FixedUpdate))]
+    [HarmonyPatch(nameof(HudManager), nameof(HudManager.Update))]
     public static class GameOptionsDataPatch
     {
         public static int NumPages;

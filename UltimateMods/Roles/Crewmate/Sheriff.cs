@@ -75,7 +75,7 @@ namespace UltimateMods.Roles
                 },
                 () => { SheriffKillButton.Timer = SheriffKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0f, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q

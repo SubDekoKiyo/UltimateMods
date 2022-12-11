@@ -52,6 +52,5 @@ public static class ShipStatus_OnDestroy_Patch
     {
         MapUtilities.CachedShipStatus = null;
         MapUtilities.MapDestroyed();
-        // SubmergedCompatibility.SetupMap(null);
     }
 }

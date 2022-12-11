@@ -493,24 +493,25 @@ namespace UltimateMods.EndGame
                 }
             }
 
-            [HarmonyPatch(typeof(ShipStatus), nameof(ShipStatus.FixedUpdate))]
+            [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]
             public class CheckEndCriteriaPatch
             {
-                public static void Postfix(ShipStatus __instance)
+                public static bool Prefix(ShipStatus __instance)
                 {
-                    if (!GameData.Instance) return;
-                    // InstanceExists | Don't check Custom Criteria when in Tutorial
-                    if (DestroyableSingleton<TutorialManager>.InstanceExists) return;
+                    if (!GameData.Instance) return false;
+                    if (DestroyableSingleton<TutorialManager>.InstanceExists) return true; // InstanceExists | Don't check Custom Criteria when in Tutorial
+                    if (FastDestroyableSingleton<HudManager>.Instance.IsIntroDisplayed) return false;
+
                     var statistics = new PlayerStatistics(__instance);
-                    if (CheckAndEndGameForJesterWin(__instance)) return;
-                    if (CheckAndEndGameForJackalWin(__instance, statistics)) return;
-                    if (CheckAndEndGameForArsonistWin(__instance)) return;
-                    if (CheckAndEndGameForSabotageWin(__instance)) return;
-                    if (CheckAndEndGameForTaskWin(__instance)) return;
-                    if (CheckAndEndGameForForceEnd(__instance)) return;
-                    if (CheckAndEndGameForImpostorWin(__instance, statistics)) return;
-                    if (CheckAndEndGameForCrewmateWin(__instance, statistics)) return;
-                    return;
+                    if (CheckAndEndGameForJesterWin(__instance)) return false;
+                    if (CheckAndEndGameForJackalWin(__instance, statistics)) return false;
+                    if (CheckAndEndGameForArsonistWin(__instance)) return false;
+                    if (CheckAndEndGameForSabotageWin(__instance)) return false;
+                    if (CheckAndEndGameForTaskWin(__instance)) return false;
+                    if (CheckAndEndGameForForceEnd(__instance)) return false;
+                    if (CheckAndEndGameForImpostorWin(__instance, statistics)) return false;
+                    if (CheckAndEndGameForCrewmateWin(__instance, statistics)) return false;
+                    return false;
                 }
 
                 private static bool CheckAndEndGameForJesterWin(ShipStatus __instance)
