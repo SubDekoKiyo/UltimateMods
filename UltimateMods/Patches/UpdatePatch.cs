@@ -13,6 +13,11 @@ namespace UltimateMods.Patches
             {
                 CustomButton.HudUpdate();
             }
+
+            var FullScreen = GameObject.Find("FullScreen500(Clone)");
+            if (FullScreen) FullScreen.SetActive(false);
+            var FullScreenC = GameObject.Find("FullScreen500(Clone)(Clone)");
+            if (FullScreenC) FullScreenC.SetActive(false);
         }
     }
 

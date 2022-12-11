@@ -960,4 +960,24 @@ namespace UltimateMods.Modules
             if (__instance.GameSettings != null) __instance.GameSettings.fontSize = 1.2f;
         }
     }
+
+    [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Deserialize))]
+    public static class GameOptionsDeserializePatch
+    {
+        static private int NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+        public static bool Prefix(GameOptionsData __instance)
+        {
+            NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+            return true;
+        }
+
+        public static void Postfix(GameOptionsData __instance)
+        {
+            try
+            {
+                GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
+            }
+            catch { }
+        }
+    }
 }

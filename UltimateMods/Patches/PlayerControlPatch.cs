@@ -25,7 +25,7 @@ namespace UltimateMods.Patches
                 if (canSeeInfo)
                 {
                     Transform playerInfoTransform = p.cosmetics.nameText.transform.parent.FindChild("Info");
-                    TMPro.TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
+                    TextMeshPro playerInfo = playerInfoTransform != null ? playerInfoTransform.GetComponent<TextMeshPro>() : null;
                     if (playerInfo == null)
                     {
                         playerInfo = UnityEngine.Object.Instantiate(p.cosmetics.nameText, p.cosmetics.nameText.transform.parent);
@@ -34,15 +34,15 @@ namespace UltimateMods.Patches
                     }
 
                     // Set the position every time bc it sometimes ends up in the wrong place due to camoflauge
-                    playerInfo.transform.localPosition = p.cosmetics.nameText.transform.localPosition + Vector3.up * 0.5f;
+                    playerInfo.transform.localPosition = p.cosmetics.nameText.transform.localPosition + Vector3.up * 0.25f;
 
                     PlayerVoteArea playerVoteArea = MeetingHud.Instance?.playerStates?.FirstOrDefault(x => x.TargetPlayerId == p.PlayerId);
                     Transform meetingInfoTransform = playerVoteArea != null ? playerVoteArea.NameText.transform.parent.FindChild("Info") : null;
-                    TMPro.TextMeshPro meetingInfo = meetingInfoTransform != null ? meetingInfoTransform.GetComponent<TMPro.TextMeshPro>() : null;
+                    TextMeshPro meetingInfo = meetingInfoTransform != null ? meetingInfoTransform.GetComponent<TextMeshPro>() : null;
                     if (meetingInfo == null && playerVoteArea != null)
                     {
                         meetingInfo = UnityEngine.Object.Instantiate(playerVoteArea.NameText, playerVoteArea.NameText.transform.parent);
-                        meetingInfo.transform.localPosition += Vector3.down * 0.10f;
+                        meetingInfo.transform.localPosition += Vector3.down * 0.05f;
                         meetingInfo.fontSize *= 0.60f;
                         meetingInfo.gameObject.name = "Info";
                     }
@@ -51,7 +51,7 @@ namespace UltimateMods.Patches
                     if (meetingInfo != null && playerVoteArea != null)
                     {
                         var playerName = playerVoteArea.NameText;
-                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f), -0.1f);
+                        playerName.transform.localPosition = new Vector3(0.3384f, (0.0311f + 0.0683f + 0.05f), -0.1f);
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
@@ -68,7 +68,7 @@ namespace UltimateMods.Patches
                         playerInfoText = $"{roleNames}";
                         if (DestroyableSingleton<TaskPanelBehaviour>.InstanceExists)
                         {
-                            TMPro.TextMeshPro tabText = FastDestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TMPro.TextMeshPro>();
+                            TextMeshPro tabText = FastDestroyableSingleton<TaskPanelBehaviour>.Instance.tab.transform.FindChild("TabText_TMP").GetComponent<TextMeshPro>();
                             tabText.SetText($"{TranslationController.Instance.GetString(StringNames.Tasks)} {taskInfo}");
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
