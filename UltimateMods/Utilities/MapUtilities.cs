@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using HarmonyLib;
-using Il2CppSystem;
+using Il2Object = Il2CppSystem.Object;
 
 namespace UltimateMods.Utilities;
 
@@ -14,8 +12,8 @@ public static class MapUtilities
         _systems.Clear();
     }
 
-    private static readonly Dictionary<SystemTypes, Object> _systems = new();
-    public static Dictionary<SystemTypes, Object> Systems
+    private static readonly Dictionary<SystemTypes, Il2Object> _systems = new();
+    public static Dictionary<SystemTypes, Il2Object> Systems
     {
         get
         {
@@ -34,7 +32,7 @@ public static class MapUtilities
         foreach (var systemTypes in SystemTypeHelpers.AllTypes)
         {
             if (!systems.ContainsKey(systemTypes)) continue;
-            _systems[systemTypes] = systems[systemTypes].TryCast<Object>();
+            _systems[systemTypes] = systems[systemTypes].TryCast<Il2Object>();
         }
     }
 }
@@ -56,6 +54,5 @@ public static class ShipStatus_OnDestroy_Patch
     {
         MapUtilities.CachedShipStatus = null;
         MapUtilities.MapDestroyed();
-        // SubmergedCompatibility.SetupMap(null);
     }
 }

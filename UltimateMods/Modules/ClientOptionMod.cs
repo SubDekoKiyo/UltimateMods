@@ -1,30 +1,19 @@
-using HarmonyLib;
-using UnityEngine;
-using System;
-using System.Collections.Generic;
-using TMPro;
-using UnityEngine.Events;
-using UltimateMods.Patches;
-using UltimateMods.Utilities;
-using static UnityEngine.UI.Button;
-using Object = UnityEngine.Object;
-
 namespace UltimateMods.Modules
 {
     [HarmonyPatch]
     public static class ClientOptionsPatch
     {
         private static SelectionBehaviour[] AllOptions = {
-            new SelectionBehaviour("GhostsSeeTasksButton", () => MapOptions.GhostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value = !UltimateModsPlugin.GhostsSeeTasks.Value, UltimateModsPlugin.GhostsSeeTasks.Value),
-            new SelectionBehaviour("GhostsSeeVotesButton", () => MapOptions.GhostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value = !UltimateModsPlugin.GhostsSeeVotes.Value, UltimateModsPlugin.GhostsSeeVotes.Value),
-            new SelectionBehaviour("GhostsSeeRolesButton", () => MapOptions.GhostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value = !UltimateModsPlugin.GhostsSeeRoles.Value, UltimateModsPlugin.GhostsSeeRoles.Value),
-            new SelectionBehaviour("ShowRoleSummaryButton", () => MapOptions.ShowRoleSummary = UltimateModsPlugin.ShowRoleSummary.Value = !UltimateModsPlugin.ShowRoleSummary.Value, UltimateModsPlugin.ShowRoleSummary.Value),
+            new SelectionBehaviour("GhostsSeeTasksButton", () => Options.GhostsSeeTasks = UltimateModsPlugin.GhostsSeeTasks.Value = !UltimateModsPlugin.GhostsSeeTasks.Value, UltimateModsPlugin.GhostsSeeTasks.Value),
+            new SelectionBehaviour("GhostsSeeVotesButton", () => Options.GhostsSeeVotes = UltimateModsPlugin.GhostsSeeVotes.Value = !UltimateModsPlugin.GhostsSeeVotes.Value, UltimateModsPlugin.GhostsSeeVotes.Value),
+            new SelectionBehaviour("GhostsSeeRolesButton", () => Options.GhostsSeeRoles = UltimateModsPlugin.GhostsSeeRoles.Value = !UltimateModsPlugin.GhostsSeeRoles.Value, UltimateModsPlugin.GhostsSeeRoles.Value),
+            new SelectionBehaviour("ShowRoleSummaryButton", () => Options.ShowRoleSummary = UltimateModsPlugin.ShowRoleSummary.Value = !UltimateModsPlugin.ShowRoleSummary.Value, UltimateModsPlugin.ShowRoleSummary.Value),
             new SelectionBehaviour("HideNameplates", () => {
-                MapOptions.HideNameplates = UltimateModsPlugin.HideNameplates.Value = !UltimateModsPlugin.HideNameplates.Value;
+                Options.HideNameplates = UltimateModsPlugin.HideNameplates.Value = !UltimateModsPlugin.HideNameplates.Value;
                 MeetingHudPatch.nameplatesChanged = true;
-                return MapOptions.HideNameplates;
+                return Options.HideNameplates;
             }, UltimateModsPlugin.HideNameplates.Value),
-            new SelectionBehaviour("EnableCustomSounds", () => MapOptions.EnableCustomSounds = UltimateModsPlugin.EnableCustomSounds.Value = !UltimateModsPlugin.EnableCustomSounds.Value, UltimateModsPlugin.EnableCustomSounds.Value),
+            new SelectionBehaviour("EnableCustomSounds", () => Options.EnableCustomSounds = UltimateModsPlugin.EnableCustomSounds.Value = !UltimateModsPlugin.EnableCustomSounds.Value, UltimateModsPlugin.EnableCustomSounds.Value),
             };
 
         private static GameObject popUp;

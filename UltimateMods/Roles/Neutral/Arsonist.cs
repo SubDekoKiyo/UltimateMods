@@ -1,15 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using System.Linq;
-using System;
-using UltimateMods.Utilities;
-using static UltimateMods.Modules.Assets;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Roles.Patches.OutlinePatch;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -69,7 +57,7 @@ namespace UltimateMods.Roles
 
         public static void UpdateIcons()
         {
-            foreach (PoolablePlayer pp in MapOptions.PlayerIcons.Values)
+            foreach (PoolablePlayer pp in Options.PlayerIcons.Values)
             {
                 pp.gameObject.SetActive(false);
             }
@@ -84,21 +72,21 @@ namespace UltimateMods.Roles
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {
                     if (p.PlayerId == PlayerControl.LocalPlayer.PlayerId) continue;
-                    if (!MapOptions.PlayerIcons.ContainsKey(p.PlayerId)) continue;
+                    if (!Options.PlayerIcons.ContainsKey(p.PlayerId)) continue;
 
                     if (p.Data.IsDead || p.Data.Disconnected)
                     {
-                        MapOptions.PlayerIcons[p.PlayerId].gameObject.SetActive(false);
+                        Options.PlayerIcons[p.PlayerId].gameObject.SetActive(false);
                     }
                     else
                     {
-                        MapOptions.PlayerIcons[p.PlayerId].gameObject.SetActive(true);
-                        MapOptions.PlayerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.25f;
-                        MapOptions.PlayerIcons[p.PlayerId].transform.localPosition = bottomLeft + Vector3.right * visibleCounter * 0.45f;
+                        Options.PlayerIcons[p.PlayerId].gameObject.SetActive(true);
+                        Options.PlayerIcons[p.PlayerId].transform.localScale = Vector3.one * 0.25f;
+                        Options.PlayerIcons[p.PlayerId].transform.localPosition = bottomLeft + Vector3.right * visibleCounter * 0.45f;
                         visibleCounter++;
                     }
                     bool isDoused = DousedPlayers.Any(x => x.PlayerId == p.PlayerId);
-                    MapOptions.PlayerIcons[p.PlayerId].SetSemiTransparent(!isDoused);
+                    Options.PlayerIcons[p.PlayerId].SetSemiTransparent(!isDoused);
                 }
             }
         }
@@ -167,7 +155,7 @@ namespace UltimateMods.Roles
                     UpdateStatus();
                 },
                 GetDouseSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F,
@@ -189,9 +177,9 @@ namespace UltimateMods.Roles
 
                     foreach (PlayerControl p in DousedPlayers)
                     {
-                        if (MapOptions.PlayerIcons.ContainsKey(p.PlayerId))
+                        if (Options.PlayerIcons.ContainsKey(p.PlayerId))
                         {
-                            MapOptions.PlayerIcons[p.PlayerId].SetSemiTransparent(false);
+                            Options.PlayerIcons[p.PlayerId].SetSemiTransparent(false);
                         }
                     }
                 }
@@ -212,7 +200,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.CanMove && DousedEveryone; },
                 () => { },
                 GetIgniteSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.F
@@ -233,7 +221,7 @@ namespace UltimateMods.Roles
             TriggerArsonistWin = false;
             DousedEveryone = false;
             DousedPlayers = new();
-            foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
+            foreach (PoolablePlayer p in Options.PlayerIcons.Values)
             {
                 if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
             }

@@ -5,6 +5,7 @@ using UltimateMods.Modules;
 using TMPro;
 using UltimateMods.Utilities;
 using static UltimateMods.Modules.Assets;
+using AmongUs.GameOptions;
 
 namespace UltimateMods.Roles
 {
@@ -66,7 +67,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.IsDead(); },
                 () => { },
                 GetZoomInSprite(),
-                Vector3.zero + Vector3.up * 3.75f + Vector3.right * 0.2f,
+                ButtonPositions.ZoomIn,
                 hm,
                 hm.UseButton,
                 KeyCode.PageUp,
@@ -95,7 +96,7 @@ namespace UltimateMods.Roles
                 () => { return PlayerControl.LocalPlayer.IsDead(); },
                 () => { },
                 GetZoomOutSprite(),
-                Vector3.zero + Vector3.up * 3.75f + Vector3.right * 0.55f,
+                ButtonPositions.ZoomOut,
                 hm,
                 hm.UseButton,
                 KeyCode.PageDown,
@@ -135,7 +136,7 @@ namespace UltimateMods.Roles
                 if (EnableZoomInOut && PlayerControl.LocalPlayer.IsDead())
                 {
                     if ((AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started
-                        || AmongUsClient.Instance.GameMode == GameModes.FreePlay)
+                        || FastDestroyableSingleton<InnerNetClient>.Instance.NetworkMode == NetworkModes.FreePlay)
                         && (PlayerControl.LocalPlayer.CanMove)
                         && !(MapBehaviour.Instance && MapBehaviour.Instance.IsOpen)
                         && !(MeetingHud.Instance))

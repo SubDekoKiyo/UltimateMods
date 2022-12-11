@@ -1,7 +1,3 @@
-using System;
-using System.Linq.Expressions;
-using UnityEngine;
-
 namespace UltimateMods.Utilities;
 
 public static unsafe class FastDestroyableSingleton<T> where T : MonoBehaviour

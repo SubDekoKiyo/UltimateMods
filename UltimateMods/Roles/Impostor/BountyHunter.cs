@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using static UltimateMods.ColorDictionary;
-using UltimateMods.Patches;
-using UltimateMods.Objects;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -15,6 +6,7 @@ namespace UltimateMods.Roles
         public static CustomArrow Arrow;
         public static PlayerControl Bounty;
         public static TMP_Text CooldownTimer;
+        public static Vector3 BountyPos;
 
         public static float SuccessCooldown { get { return CustomRolesH.BountyHunterSuccessKillCooldown.getFloat(); } }
         public static float AdditionalCooldown { get { return CustomRolesH.BountyHunterAdditionalKillCooldown.getFloat(); } }
@@ -46,73 +38,74 @@ namespace UltimateMods.Roles
 
             if (player.Data.IsDead)
             {
-                if (BountyHunter.Arrow != null || BountyHunter.Arrow.arrow != null) UnityEngine.Object.Destroy(BountyHunter.Arrow.arrow);
-                BountyHunter.Arrow = null;
-                if (BountyHunter.CooldownTimer != null && BountyHunter.CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(BountyHunter.CooldownTimer.gameObject);
-                BountyHunter.CooldownTimer = null;
-                BountyHunter.Bounty = null;
-                foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
+                if (Arrow != null || Arrow.arrow != null) UnityEngine.Object.Destroy(Arrow.arrow);
+                Arrow = null;
+                if (CooldownTimer != null && CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(CooldownTimer.gameObject);
+                CooldownTimer = null;
+                Bounty = null;
+                foreach (PoolablePlayer p in Options.PlayerIcons.Values)
                 {
                     if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
                 }
                 return;
             }
 
-            BountyHunter.ArrowUpdateTimer -= Time.fixedDeltaTime;
-            BountyHunter.BountyUpdateTimer -= Time.fixedDeltaTime;
+            ArrowUpdateTimer -= Time.fixedDeltaTime;
+            BountyUpdateTimer -= Time.fixedDeltaTime;
 
-            if (BountyHunter.Bounty == null || BountyHunter.BountyUpdateTimer <= 0f)
+            if (Bounty == null || BountyUpdateTimer <= 0f)
             {
                 // Set new bounty
-                BountyHunter.Bounty = null;
-                BountyHunter.ArrowUpdateTimer = 0f; // Force arrow to update
-                BountyHunter.BountyUpdateTimer = BountyHunter.Duration;
+                ArrowUpdateTimer = 0f; // Force arrow to update
+                BountyUpdateTimer = Duration;
                 var BountyList = new List<PlayerControl>();
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
                     if (!p.Data.IsDead && !p.Data.Disconnected && p != p.Data.Role.IsImpostor) BountyList.Add(p);
                 }
-                BountyHunter.Bounty = BountyList[UltimateMods.rnd.Next(0, BountyList.Count)];
-                if (BountyHunter.Bounty == null) return;
+                Bounty = BountyList[UltimateMods.rnd.Next(0, BountyList.Count)];
+                if (Bounty == null) return;
 
                 // Show poolable player
                 if (FastDestroyableSingleton<HudManager>.Instance != null && FastDestroyableSingleton<HudManager>.Instance.UseButton != null)
                 {
-                    foreach (PoolablePlayer pp in MapOptions.PlayerIcons.Values) pp.gameObject.SetActive(false);
-                    if (MapOptions.PlayerIcons.ContainsKey(BountyHunter.Bounty.PlayerId) && MapOptions.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject != null)
-                        MapOptions.PlayerIcons[BountyHunter.Bounty.PlayerId].gameObject.SetActive(true);
+                    foreach (PoolablePlayer pp in Options.PlayerIcons.Values) pp.gameObject.SetActive(false);
+                    if (Options.PlayerIcons.ContainsKey(Bounty.PlayerId) && Options.PlayerIcons[Bounty.PlayerId].gameObject != null)
+                        Options.PlayerIcons[Bounty.PlayerId].gameObject.SetActive(true);
                 }
             }
 
             // Update Cooldown Text
-            if (BountyHunter.CooldownTimer != null)
+            if (CooldownTimer != null)
             {
-                BountyHunter.CooldownTimer.text = Mathf.CeilToInt(Mathf.Clamp(BountyHunter.BountyUpdateTimer, 0, BountyHunter.Duration)).ToString();
+                CooldownTimer.text = Mathf.CeilToInt(Mathf.Clamp(BountyUpdateTimer, 0, Duration)).ToString();
             }
 
             // Update Arrow
-            if (BountyHunter.ShowArrow && BountyHunter.Bounty != null)
+            if (ShowArrow && Bounty != null)
             {
-                if (BountyHunter.Arrow == null) BountyHunter.Arrow = new CustomArrow(Color.red);
-                if (BountyHunter.ArrowUpdateTimer <= 0f)
+                if (Arrow == null) Arrow = new CustomArrow(ImpostorRed);
+                if (ArrowUpdateTimer <= 0f)
                 {
-                    BountyHunter.Arrow.Update(BountyHunter.Bounty.transform.position);
-                    BountyHunter.ArrowUpdateTimer = BountyHunter.ArrowUpdate;
+                    BountyPos = Bounty.transform.position;
+                    Arrow.Update(BountyPos);
+                    ArrowUpdateTimer = ArrowUpdate;
                 }
-                BountyHunter.Arrow.Update();
+                Arrow.Update(BountyPos);
             }
         }
         public override void OnKill(PlayerControl target)
         {
-            foreach (var bountyHunter in BountyHunter.allPlayers)
+            foreach (var bountyHunter in allPlayers)
             {
                 if (target == Bounty)
                 {
+                    Bounty = null;
                     bountyHunter.SetKillTimer(SuccessCooldown);
-                    BountyHunter.BountyUpdateTimer = 0f; // Force bounty update
+                    BountyUpdateTimer = 0f; // Force bounty update
                 }
                 else
-                    bountyHunter.SetKillTimer(PlayerControl.GameOptions.KillCooldown + AdditionalCooldown);
+                    bountyHunter.SetKillTimer(GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) + AdditionalCooldown);
             }
         }
         public override void OnDeath(PlayerControl killer = null) { }
@@ -122,18 +115,17 @@ namespace UltimateMods.Roles
         {
             players = new List<BountyHunter>();
 
-            Arrow = new CustomArrow(ImpostorRed);
-            Bounty = null;
+            BountyPos = new();
             ArrowUpdateTimer = 0f;
             BountyUpdateTimer = 0f;
+            Arrow = new CustomArrow(ImpostorRed);
+            Bounty = null;
             if (Arrow != null && Arrow.arrow != null) UnityEngine.Object.Destroy(Arrow.arrow);
             Arrow = null;
             if (CooldownTimer != null && CooldownTimer.gameObject != null) UnityEngine.Object.Destroy(CooldownTimer.gameObject);
             CooldownTimer = null;
-            foreach (PoolablePlayer p in MapOptions.PlayerIcons.Values)
-                if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
-            foreach (var bountyHunter in BountyHunter.allPlayers)
-                KillCooldowns = bountyHunter.killTimer / 2;
+            foreach (PoolablePlayer p in Options.PlayerIcons.Values) if (p != null && p.gameObject != null) p.gameObject.SetActive(false);
+            foreach (var bountyHunter in allPlayers) KillCooldowns = bountyHunter.killTimer / 2;
         }
     }
 }

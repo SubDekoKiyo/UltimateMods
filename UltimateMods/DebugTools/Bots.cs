@@ -1,9 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using System;
-using UnityEngine;
-using static UltimateMods.UltimateMods;
-
 namespace UltimateMods.Debug
 {
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]

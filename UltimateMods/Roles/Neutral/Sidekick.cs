@@ -1,11 +1,3 @@
-using HarmonyLib;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using static UltimateMods.ColorDictionary;
-using static UltimateMods.Roles.Patches.OutlinePatch;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -72,7 +64,7 @@ namespace UltimateMods.Roles
                 () => { return CurrentTarget && PlayerControl.LocalPlayer.CanMove; },
                 () => { SidekickKillButton.Timer = SidekickKillButton.MaxTimer; },
                 hm.KillButton.graphic.sprite,
-                new Vector3(0, 1f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.KillButton,
                 KeyCode.Q,

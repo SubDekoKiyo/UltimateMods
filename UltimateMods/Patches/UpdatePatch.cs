@@ -1,9 +1,3 @@
-using HarmonyLib;
-using UnityEngine;
-using Hazel;
-using UltimateMods.Modules;
-using UltimateMods.Roles;
-
 namespace UltimateMods.Patches
 {
     [HarmonyPatch(typeof(HudManager), nameof(HudManager.Update))]
@@ -11,14 +5,19 @@ namespace UltimateMods.Patches
     {
         static void Postfix()
         {
-            if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started)
+            if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started && AlivePlayer.IsForceEnd)
             {
                 AlivePlayer.IsForceEnd = false;
             }
-            else
+            else if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
             {
                 CustomButton.HudUpdate();
             }
+
+            var FullScreen = GameObject.Find("FullScreen500(Clone)");
+            if (FullScreen) FullScreen.SetActive(false);
+            var FullScreenC = GameObject.Find("FullScreen500(Clone)(Clone)");
+            if (FullScreenC) FullScreenC.SetActive(false);
         }
     }
 

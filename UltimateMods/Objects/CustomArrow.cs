@@ -1,6 +1,3 @@
-using UnityEngine;
-using static UltimateMods.Modules.Assets;
-
 namespace UltimateMods.Objects
 {
     public class CustomArrow

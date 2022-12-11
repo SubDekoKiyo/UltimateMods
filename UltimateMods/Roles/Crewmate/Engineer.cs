@@ -1,12 +1,3 @@
-using HarmonyLib;
-using System;
-using System.Collections.Generic;
-using UnityEngine;
-using UltimateMods.Modules;
-using Hazel;
-using TMPro;
-using UltimateMods.Utilities;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
@@ -99,7 +90,7 @@ namespace UltimateMods.Roles
                 },
                 () => { },
                 Engineer.GetFixButtonSprite(),
-                new Vector3(-1.8f, -0.06f, 0),
+                ButtonPositions.RightTop,
                 hm,
                 hm.UseButton,
                 KeyCode.F
