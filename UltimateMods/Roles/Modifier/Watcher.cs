@@ -1,9 +1,9 @@
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
-    public class ModifierT : ModifierBase<ModifierT>
+    public class Watcher : ModifierBase<Watcher>
     {
-        public static string Postfix { get { return ModTranslation.getString("ModifierPostfix"); } }
+        public static string Postfix { get { return "WT"; } }
 
         public static List<PlayerControl> Candidates
         {
@@ -13,7 +13,7 @@ namespace UltimateMods.Roles
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (!player.hasModifier(ModifierType.NoModifier))
+                    if (!player.hasModifier(ModifierType.Watcher))
                         validPlayers.Add(player);
                 }
 
@@ -21,9 +21,9 @@ namespace UltimateMods.Roles
             }
         }
 
-        public ModifierT()
+        public Watcher()
         {
-            ModType = modId = ModifierType.NoModifier;
+            ModType = modId = ModifierType.Watcher;
         }
 
         public override void OnMeetingStart() { }
@@ -35,7 +35,7 @@ namespace UltimateMods.Roles
 
         public static void Clear()
         {
-            players = new List<ModifierT>();
+            players = new List<Watcher>();
         }
     }
 }

@@ -130,6 +130,21 @@ namespace UltimateMods.Patches
                     __instance.RoleBlurbText.color = ImpostorRed;
                 }
 
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Opportunist))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(OpportunistGreen, String.Format(ModTranslation.getString("OPIntro")));
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(WatcherPurple, String.Format(ModTranslation.getString("WTIntro")));
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(SunglassesGray, String.Format(ModTranslation.getString("SGIntro")));
+                }
+
                 // 従来処理
                 SoundManager.Instance.PlaySound(PlayerControl.LocalPlayer.Data.Role.IntroSound, false, 1f);
                 __instance.YouAreText.gameObject.SetActive(true);

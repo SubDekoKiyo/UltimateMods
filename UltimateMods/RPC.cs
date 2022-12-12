@@ -28,6 +28,7 @@ namespace UltimateMods
         AltruistKill,
         AltruistRevive,
         YakuzaKill,
+        UncheckedCmdReportDeadBody,
     }
 
     public static class RPCProcedure
@@ -164,13 +165,17 @@ namespace UltimateMods
                     case (byte)CustomRPC.AltruistRevive:
                         var DeadBodies = Object.FindObjectsOfType<DeadBody>();
                         foreach (var body in DeadBodies)
-                        {
                             RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                        }
                         break;
                     // 85
                     case (byte)CustomRPC.YakuzaKill:
                         RPCProcedure.YakuzaKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
+                        break;
+                    // 86
+                    case (byte)CustomRPC.UncheckedCmdReportDeadBody:
+                        byte reportSource = reader.ReadByte();
+                        byte reportTarget = reader.ReadByte();
+                        RPCProcedure.UncheckedCmdReportDeadBody(reportSource, reportTarget);
                         break;
                 }
             }
@@ -534,6 +539,13 @@ namespace UltimateMods
             }
 
             yakuza.MurderPlayer(target);
+        }
+
+        public static void UncheckedCmdReportDeadBody(byte sourceId, byte targetId)
+        {
+            PlayerControl source = Helpers.PlayerById(sourceId);
+            var t = targetId == Byte.MaxValue ? null : Helpers.PlayerById(targetId).Data;
+            if (source != null) source.ReportDeadBody(t);
         }
     }
 }

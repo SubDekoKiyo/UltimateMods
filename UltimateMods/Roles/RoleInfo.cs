@@ -118,16 +118,26 @@ namespace UltimateMods.Roles
             return infos;
         }
 
-        public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null, bool includeHidden = false)
+        public static String GetRolesString(PlayerControl p, RoleType[] excludeRoles = null, bool includeHidden = false)
         {
             if (p?.Data?.Disconnected != false) return "";
 
             var roleInfo = getRoleInfoForPlayer(p, excludeRoles, includeHidden);
-            string roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.Name) : x.Name).ToArray());
+            string roleName = String.Join(" ", roleInfo.Select(x => Helpers.cs(x.color, x.Name)).ToArray());
 
             if (p.hasModifier(ModifierType.Opportunist))
             {
-                string postfix = useColors ? Helpers.cs(OpportunistGreen, Opportunist.Postfix) : Opportunist.Postfix;
+                string postfix = Helpers.cs(OpportunistGreen, Opportunist.Postfix);
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Watcher))
+            {
+                string postfix = Helpers.cs(WatcherPurple, Watcher.Postfix);
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Sunglasses))
+            {
+                string postfix = Helpers.cs(SunglassesGray, Sunglasses.Postfix);
                 roleName = roleName + postfix;
             }
 

@@ -111,7 +111,7 @@ namespace UltimateMods.EndGame
                     ColorId = p.DefaultOutfit.ColorId,
                     // NameSuffix = Lovers.getIcon(p.Object),
                     Roles = roles,
-                    RoleString = RoleInfo.GetRolesString(p.Object, true, excludeRoles, true),
+                    RoleString = RoleInfo.GetRolesString(p.Object, excludeRoles, true),
                     TasksTotal = tasksTotal,
                     TasksCompleted = tasksCompleted,
                     Status = finalStatus,

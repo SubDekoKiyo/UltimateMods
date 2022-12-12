@@ -3,7 +3,7 @@ namespace UltimateMods.Roles
     [HarmonyPatch]
     public class Opportunist : ModifierBase<Opportunist>
     {
-        public static string Postfix { get { return ModTranslation.getString("OpportunistPostfix"); } }
+        public static string Postfix { get { return "OP"; } }
 
         public static List<PlayerControl> Candidates
         {

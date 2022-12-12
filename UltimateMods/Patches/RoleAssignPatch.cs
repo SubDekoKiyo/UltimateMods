@@ -377,21 +377,7 @@ namespace UltimateMods.Patches
         }
 
         private static void assignRoleModifiers(RoleAssignmentData data)
-        {/*
-            // AntiTeleport
-            for (int i = 0; i < CustomOptionsH.antiTeleportSpawnRate.count; i++)
-            {
-                if (rnd.Next(1, 100) <= CustomOptionsH.antiTeleportSpawnRate.rate * 10)
-                {
-                    var candidates = AntiTeleport.candidates;
-                    if (candidates.Count <= 0)
-                    {
-                        break;
-                    }
-                    setModifierToRandomPlayer((byte)ModifierType.AntiTeleport, AntiTeleport.candidates);
-                }
-            }*/
-
+        {
             // Opportunist
             for (int i = 0; i < CustomRolesH.OpportunistRate.count; i++)
             {
@@ -403,6 +389,34 @@ namespace UltimateMods.Patches
                         break;
                     }
                     setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.Candidates);
+                }
+            }
+
+            // Sunglasses
+            for (int i = 0; i < CustomRolesH.SunglassesRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomRolesH.SunglassesRate.rate * 10)
+                {
+                    var candidates = Sunglasses.Candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Sunglasses, Sunglasses.Candidates);
+                }
+            }
+
+            // Watcher
+            for (int i = 0; i < CustomRolesH.WatcherRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomRolesH.WatcherRate.rate * 10)
+                {
+                    var candidates = Watcher.Candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Watcher, Watcher.Candidates);
                 }
             }
         }

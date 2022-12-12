@@ -55,7 +55,7 @@ namespace UltimateMods.Patches
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
-                    string roleNames = RoleInfo.GetRolesString(p, true);
+                    string roleNames = RoleInfo.GetRolesString(p);
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();
                     var color = commsActive ? "808080" : "FAD934FF";

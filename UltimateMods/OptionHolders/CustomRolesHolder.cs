@@ -115,8 +115,18 @@ namespace UltimateMods
         public static CustomOption YakuzaCanKillNeutrals;
         public static CustomOption YakuzaMisfireKillsTarget;
 
+        public static CustomRoleOption MayorRate;
+        public static CustomOption MayorNumVotes;
+        public static CustomOption MayorMeetingButton;
+        public static CustomOption MayorNumMeetingButton;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
+
+        public static CustomRoleOption SunglassesRate;
+        public static CustomOption Sunglass;
+
+        public static CustomRoleOption WatcherRate;
 
         internal static Dictionary<byte, byte[]> BlockedRolePairings = new();
 
@@ -130,7 +140,7 @@ namespace UltimateMods
             JesterCanSabotage = Create(104, Neutral, JesterPink, "CanSabotage", false, JesterRate);
             JesterHasImpostorVision = Create(105, Neutral, JesterPink, "HasImpostorVision", false, JesterRate);
             JesterMustFinishTasks = Create(106, Neutral, JesterPink, "JesterMustFinishTasks", false, JesterRate);
-            JesterTasks = new CustomTasksOption(107, Neutral, JesterPink, 1, 1, 3, JesterMustFinishTasks);
+            JesterTasks = new(107, Neutral, JesterPink, 1, 1, 3, JesterMustFinishTasks);
 
             SheriffRate = new(110, Crewmate, White, "Sheriff", SheriffYellow, 15);
             SheriffMaxShots = Create(111, Crewmate, SheriffYellow, "MaxShots", 2f, 1f, 15f, 1f, SheriffRate, format: "FormatShots");
@@ -175,7 +185,7 @@ namespace UltimateMods
             MadmateCanFixReactor = Create(168, Crewmate, ImpostorRed, "CanFixReactor", true, MadmateRate);
             MadmateCanFixBlackout = Create(169, Crewmate, ImpostorRed, "CanFixBlackout", true, MadmateRate);
             MadmateHasTasks = Create(170, Crewmate, ImpostorRed, "HasTasks", true, MadmateRate);
-            MadmateTasksCount = new CustomTasksOption(171, Crewmate, ImpostorRed, 1, 2, 3, MadmateHasTasks);
+            MadmateTasksCount = new(171, Crewmate, ImpostorRed, 1, 2, 3, MadmateHasTasks);
             MadmateCanKnowImpostorWhenTasksEnded = Create(172, Crewmate, ImpostorRed, "MadmateKnowImpostorTaskEnd", true, MadmateHasTasks);
             MadmateCanWinWhenTaskEnded = Create(173, Crewmate, ImpostorRed, "MadmateCanWinWhenTaskEnd", true, MadmateHasTasks);
 
@@ -218,12 +228,22 @@ namespace UltimateMods
             SeerLimitSoulDuration = Create(232, Crewmate, SeerGreen, "SeerLimitSoulDuration", false, SeerRate);
             SeerSoulDuration = Create(233, Crewmate, SeerGreen, "SeerSoulDuration", 15f, 0f, 120f, 5f, SeerLimitSoulDuration, format: "FormatSeconds");
 
-            ArsonistRate = new CustomRoleOption(240, Neutral, White, "Arsonist", ArsonistOrange, 1);
-            ArsonistCooldown = CustomOption.Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
-            ArsonistDuration = CustomOption.Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
+            ArsonistRate = new(240, Neutral, White, "Arsonist", ArsonistOrange, 1);
+            ArsonistCooldown = Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
+            ArsonistDuration = Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
+
+            MayorRate = new(250, Crewmate, White, "Mayor", MayorGreen, 1);
+            MayorNumVotes = Create(251, Crewmate, MayorGreen, "MayorNumVotes", 2f, 2f, 10f, 1f, MayorRate, format: "FormatVotes");
+            MayorMeetingButton = Create(252, Crewmate, MayorGreen, "MayorMeetingButton", true, MayorRate);
+            MayorNumMeetingButton = Create(253, Crewmate, MayorGreen, "MayorNumMeetingButton", 1f, 1f, 10f, 1f, MayorMeetingButton, format: "FormatTimes");
 
             /* Modifiers */
             OpportunistRate = new(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
+
+            SunglassesRate = new(2001, Modifier, White, "Sunglasses", SunglassesGray, 15);
+            Sunglass = Create(2002, Modifier, SunglassesGray, "SunglassesEye", 50f, 10f, 90f, 10f, SunglassesRate, format: "FormatPercent");
+
+            WatcherRate = new(203, Modifier, White, "Watcher", WatcherPurple, 15);
         }
     }
 }

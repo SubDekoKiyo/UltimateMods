@@ -15,6 +15,7 @@ namespace UltimateMods.Roles
         Boss,
         Executives,
         Gun,
+        Mayor,
 
         // Impostor Roles
         Impostor = 100,
@@ -49,6 +50,7 @@ namespace UltimateMods.Roles
             { RoleType.Seer, typeof(RoleBase<Seer>) },
             { RoleType.Lighter, typeof(RoleBase<Lighter>) },
             { RoleType.Altruist, typeof(RoleBase<Altruist>) },
+            { RoleType.Mayor, typeof(RoleBase<Mayor>) },
 
             // Neutral
             { RoleType.Jester, typeof(RoleBase<Jester>) },

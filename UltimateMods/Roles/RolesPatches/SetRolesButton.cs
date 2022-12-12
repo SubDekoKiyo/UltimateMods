@@ -15,6 +15,7 @@ namespace UltimateMods.Roles.Patches
             Lighter.SetButtonCooldowns();
             Altruist.SetButtonCooldowns();
             Yakuza.SetButtonCooldowns();
+            Mayor.SetButtonCooldowns();
         }
 
         public static void MakeButtons(HudManager hm)
@@ -30,6 +31,7 @@ namespace UltimateMods.Roles.Patches
             Arsonist.MakeButtons(hm);
             Lighter.MakeButtons(hm);
             Yakuza.MakeButtons(hm);
+            Mayor.MakeButtons(hm);
         }
 
         public static void Postfix(HudManager __instance)

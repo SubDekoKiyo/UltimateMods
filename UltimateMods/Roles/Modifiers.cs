@@ -4,6 +4,8 @@ namespace UltimateMods.Roles
     {
         // don't put anything below this
         Opportunist = 0,
+        Sunglasses,
+        Watcher,
         NoModifier = int.MaxValue
     }
 
@@ -13,6 +15,8 @@ namespace UltimateMods.Roles
         public static Dictionary<ModifierType, Type> allModTypes = new()
         {
             { ModifierType.Opportunist, typeof(ModifierBase<Opportunist>) },
+            { ModifierType.Sunglasses, typeof(ModifierBase<Sunglasses>) },
+            { ModifierType.Watcher, typeof(ModifierBase<Watcher>) },
         };
     }
 

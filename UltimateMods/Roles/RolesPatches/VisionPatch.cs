@@ -30,6 +30,8 @@ namespace UltimateMods.Roles.Patches
                 __result = GetNeutralLightRadius(__instance, false);
             }
 
+            if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses)) __result *= 1f - Sunglasses.Vision * 0.01f;
+
             return false;
         }
 
