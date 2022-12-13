@@ -1,9 +1,10 @@
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
-    public class ModifierT : ModifierBase<ModifierT>
+    public class Sunglasses : ModifierBase<Sunglasses>
     {
-        public static string Postfix { get { return ModTranslation.getString("ModifierPostfix"); } }
+        public static string Postfix { get { return "SG"; } }
+        public static int Vision { get { return Mathf.RoundToInt(CustomRolesH.Sunglass.getFloat()); } }
 
         public static List<PlayerControl> Candidates
         {
@@ -13,7 +14,7 @@ namespace UltimateMods.Roles
 
                 foreach (var player in PlayerControl.AllPlayerControls)
                 {
-                    if (!player.hasModifier(ModifierType.NoModifier))
+                    if (!player.hasModifier(ModifierType.Sunglasses))
                         validPlayers.Add(player);
                 }
 
@@ -21,9 +22,9 @@ namespace UltimateMods.Roles
             }
         }
 
-        public ModifierT()
+        public Sunglasses()
         {
-            ModType = modId = ModifierType.NoModifier;
+            ModType = modId = ModifierType.Sunglasses;
         }
 
         public override void OnMeetingStart() { }
@@ -35,7 +36,7 @@ namespace UltimateMods.Roles
 
         public static void Clear()
         {
-            players = new List<ModifierT>();
+            players = new List<Sunglasses>();
         }
     }
 }

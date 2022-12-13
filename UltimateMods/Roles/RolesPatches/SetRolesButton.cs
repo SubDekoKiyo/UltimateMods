@@ -12,7 +12,10 @@ namespace UltimateMods.Roles.Patches
             Jackal.SetButtonCooldowns();
             Sidekick.SetButtonCooldowns();
             Arsonist.SetButtonCooldowns();
-            // Altruist.SetButtonCooldowns();
+            Lighter.SetButtonCooldowns();
+            Altruist.SetButtonCooldowns();
+            Yakuza.SetButtonCooldowns();
+            Mayor.SetButtonCooldowns();
         }
 
         public static void MakeButtons(HudManager hm)
@@ -23,9 +26,12 @@ namespace UltimateMods.Roles.Patches
             Teleporter.MakeButtons(hm);
             Jackal.MakeButtons(hm);
             Sidekick.MakeButtons(hm);
-            // Altruist.MakeButtons(hm);
+            Altruist.MakeButtons(hm);
             EvilHacker.MakeButtons(hm);
             Arsonist.MakeButtons(hm);
+            Lighter.MakeButtons(hm);
+            Yakuza.MakeButtons(hm);
+            Mayor.MakeButtons(hm);
         }
 
         public static void Postfix(HudManager __instance)

@@ -17,13 +17,15 @@ namespace UltimateMods
             Madmate.Clear();
             Bakery.Clear();
             Teleporter.Clear();
-            // Altruist.Clear();
+            Altruist.Clear();
             Adversity.Clear();
             Snitch.Clear();
             Jackal.Clear();
             Sidekick.Clear();
             Seer.Clear();
             Arsonist.Clear();
+            Lighter.Clear();
+            Yakuza.Clear();
 
             // Modifiers
             Opportunist.Clear();

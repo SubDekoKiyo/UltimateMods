@@ -92,7 +92,9 @@ namespace UltimateMods.Patches
             CrewSettings.Add((byte)RoleType.Bakery, CustomRolesH.BakeryRate.data);
             CrewSettings.Add((byte)RoleType.Snitch, CustomRolesH.SnitchRate.data);
             CrewSettings.Add((byte)RoleType.Seer, CustomRolesH.SeerRate.data);
-            // CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
+            CrewSettings.Add((byte)RoleType.Lighter, CustomRolesH.LighterRate.data);
+            CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
+            CrewSettings.Add((byte)RoleType.Mayor, CustomRolesH.MayorRate.data);
 
             return new RoleAssignmentData
             {
@@ -166,6 +168,15 @@ namespace UltimateMods.Patches
                     }
                 }
             }*/
+
+            // Assign Yakuza
+            if (data.Crewmates.Count >= 3 && data.CrewmateRoles >= 3 && (rnd.Next(1, 101) <= CustomRolesH.YakuzaRate.getSelection() * 10))
+            {
+                setRoleToRandomPlayer((byte)RoleType.Boss, data.Crewmates);
+                setRoleToRandomPlayer((byte)RoleType.Executives, data.Crewmates);
+                setRoleToRandomPlayer((byte)RoleType.Gun, data.Crewmates);
+                data.CrewmateRoles -= 3;
+            }
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)
@@ -367,21 +378,7 @@ namespace UltimateMods.Patches
         }
 
         private static void assignRoleModifiers(RoleAssignmentData data)
-        {/*
-            // AntiTeleport
-            for (int i = 0; i < CustomOptionsH.antiTeleportSpawnRate.count; i++)
-            {
-                if (rnd.Next(1, 100) <= CustomOptionsH.antiTeleportSpawnRate.rate * 10)
-                {
-                    var candidates = AntiTeleport.candidates;
-                    if (candidates.Count <= 0)
-                    {
-                        break;
-                    }
-                    setModifierToRandomPlayer((byte)ModifierType.AntiTeleport, AntiTeleport.candidates);
-                }
-            }*/
-
+        {
             // Opportunist
             for (int i = 0; i < CustomRolesH.OpportunistRate.count; i++)
             {
@@ -393,6 +390,34 @@ namespace UltimateMods.Patches
                         break;
                     }
                     setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.Candidates);
+                }
+            }
+
+            // Sunglasses
+            for (int i = 0; i < CustomRolesH.SunglassesRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomRolesH.SunglassesRate.rate * 10)
+                {
+                    var candidates = Sunglasses.Candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Sunglasses, Sunglasses.Candidates);
+                }
+            }
+
+            // Watcher
+            for (int i = 0; i < CustomRolesH.WatcherRate.count; i++)
+            {
+                if (rnd.Next(1, 100) <= CustomRolesH.WatcherRate.rate * 10)
+                {
+                    var candidates = Watcher.Candidates;
+                    if (candidates.Count <= 0)
+                    {
+                        break;
+                    }
+                    setModifierToRandomPlayer((byte)ModifierType.Watcher, Watcher.Candidates);
                 }
             }
         }

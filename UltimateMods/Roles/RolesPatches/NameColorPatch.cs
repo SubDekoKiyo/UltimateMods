@@ -33,6 +33,10 @@ namespace UltimateMods.Patches
                 setPlayerNameColor(p, SnitchGreen);
             if (role(RoleType.Bakery))
                 setPlayerNameColor(p, BakeryYellow);
+            if (role(RoleType.Lighter))
+                setPlayerNameColor(p, LighterYellow);
+            if (role(RoleType.Altruist))
+                setPlayerNameColor(p, AltruistRed);
 
             if (role(RoleType.Madmate))
             {
@@ -50,6 +54,11 @@ namespace UltimateMods.Patches
                     setPlayerNameColor(jk, JackalBlue);
                 foreach (var sk in Sidekick.allPlayers)
                     setPlayerNameColor(sk, JackalBlue);
+            }
+
+            if (p.IsYakuza())
+            {
+                setPlayerNameColor(p, YakuzaBlue);
             }
         }
 

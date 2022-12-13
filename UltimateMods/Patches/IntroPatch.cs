@@ -88,6 +88,13 @@ namespace UltimateMods.Patches
                 __instance.TeamTitle.color = roleInfo.color;
                 __instance.ImpostorText.text = "";
             }
+            if (PlayerControl.LocalPlayer.IsYakuza())
+            {
+                __instance.BackgroundBar.material.color = YakuzaBlue;
+                __instance.TeamTitle.text = ModTranslation.getString("Yakuza");
+                __instance.TeamTitle.color = YakuzaBlue;
+                __instance.ImpostorText.text = "";
+            }
         }
 
         [HarmonyPatch(typeof(IntroCutscene), nameof(IntroCutscene.ShowRole))]
@@ -121,6 +128,21 @@ namespace UltimateMods.Patches
                     __instance.RoleText.color = ImpostorRed;
                     __instance.RoleBlurbText.text = ModTranslation.getString("MadmateIntro");
                     __instance.RoleBlurbText.color = ImpostorRed;
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Opportunist))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(OpportunistGreen, String.Format(ModTranslation.getString("OPIntro")));
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(WatcherPurple, String.Format(ModTranslation.getString("WTIntro")));
+                }
+
+                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(SunglassesGray, String.Format(ModTranslation.getString("SGIntro")));
                 }
 
                 // 従来処理

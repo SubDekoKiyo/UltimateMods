@@ -82,6 +82,14 @@ namespace UltimateMods
             return null;
         }
 
+        public static DeadBody DeadBodyById(DeadBody id)
+        {
+            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+                if (deadBody.ParentId == id.ParentId)
+                    return deadBody;
+            return null;
+        }
+
         public static bool IsDead(this PlayerControl player)
         {
             return player == null || player?.Data?.IsDead == true || player?.Data?.Disconnected == true ||
@@ -175,6 +183,14 @@ namespace UltimateMods
             return (player != null &&
                         (player.isRole(RoleType.Jackal) ||
                         player.isRole(RoleType.Sidekick)));
+        }
+
+        public static bool IsYakuza(this PlayerControl player)
+        {
+            return (player != null &&
+                    (player.isRole(RoleType.Boss) ||
+                    player.isRole(RoleType.Executives) ||
+                    player.isRole(RoleType.Gun)));
         }
 
         public static void ShareGameVersion()
@@ -443,6 +459,25 @@ namespace UltimateMods
             foreach (SpriteRenderer r in player.gameObject.GetComponentsInChildren<SpriteRenderer>())
                 r.color = new Color(r.color.r, r.color.g, r.color.b, alpha);
             player.cosmetics.nameText.color = new Color(player.cosmetics.nameText.color.r, player.cosmetics.nameText.color.g, player.cosmetics.nameText.color.b, alpha);
+        }
+
+        public static KeyValuePair<byte, int> MaxPair(this Dictionary<byte, int> self, out bool tie)
+        {
+            tie = true;
+            KeyValuePair<byte, int> result = new KeyValuePair<byte, int>(byte.MaxValue, int.MinValue);
+            foreach (KeyValuePair<byte, int> keyValuePair in self)
+            {
+                if (keyValuePair.Value > result.Value)
+                {
+                    result = keyValuePair;
+                    tie = false;
+                }
+                else if (keyValuePair.Value == result.Value)
+                {
+                    tie = true;
+                }
+            }
+            return result;
         }
     }
 }

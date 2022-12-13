@@ -25,8 +25,10 @@ namespace UltimateMods
         SidekickPromotes = 80,
         ArsonistDouse,
         ArsonistWin,
-        // AltruistKill,
-        // AltruistRevive,
+        AltruistKill,
+        AltruistRevive,
+        YakuzaKill,
+        UncheckedCmdReportDeadBody,
     }
 
     public static class RPCProcedure
@@ -155,22 +157,26 @@ namespace UltimateMods
                     case (byte)CustomRPC.ArsonistWin:
                         RPCProcedure.ArsonistWin();
                         break;
-                        // // 79
-                        // case (byte)CustomRPC.AltruistKill:
-                        //     RPCProcedure.AltruistKill(reader.ReadByte());
-                        //     break;
-                        // // 80
-                        // case (byte)CustomRPC.AltruistRevive:
-                        //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                        //     foreach (var body in DeadBodies)
-                        //     {
-                        //         if (body.ParentId == reader.ReadByte())
-                        //         {
-                        //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
-                        //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                        //         }
-                        //     }
-                        //     break;
+                    // 83
+                    case (byte)CustomRPC.AltruistKill:
+                        RPCProcedure.AltruistKill(reader.ReadByte());
+                        break;
+                    // 84
+                    case (byte)CustomRPC.AltruistRevive:
+                        var DeadBodies = Object.FindObjectsOfType<DeadBody>();
+                        foreach (var body in DeadBodies)
+                            RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                        break;
+                    // 85
+                    case (byte)CustomRPC.YakuzaKill:
+                        RPCProcedure.YakuzaKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
+                        break;
+                    // 86
+                    case (byte)CustomRPC.UncheckedCmdReportDeadBody:
+                        byte reportSource = reader.ReadByte();
+                        byte reportTarget = reader.ReadByte();
+                        RPCProcedure.UncheckedCmdReportDeadBody(reportSource, reportTarget);
+                        break;
                 }
             }
         }
@@ -186,7 +192,6 @@ namespace UltimateMods
             Buttons.SetCustomButtonCooldowns();
             CustomOverlays.ResetOverlays();
             MapBehaviorPatch.ResetIcons();
-            // CustomLobbyPatch.ReSetLobbyText();
         }
 
         public static void ShareOptions(int NumberOfOptions, MessageReader reader)
@@ -481,44 +486,66 @@ namespace UltimateMods
             }
         }
 
-        // public static void AltruistKill(byte AltruistId)
-        // {
-        //     PlayerControl altruist = Helpers.PlayerById(AltruistId);
-        //     if (altruist == null) return;
+        public static void AltruistKill(byte AltruistId)
+        {
+            PlayerControl altruist = Helpers.PlayerById(AltruistId);
+            if (altruist == null) return;
 
-        //     altruist.MurderPlayer(altruist);
-        //     finalStatuses[AltruistId] = FinalStatus.Suicide;
-        // }
+            altruist.MurderPlayer(altruist);
+            finalStatuses[AltruistId] = FinalStatus.Suicide;
+        }
 
-        // public static void AltruistRevive(byte deadBodyTarget, byte altruistId)
-        // {
-        //     PlayerControl AltruistId = Helpers.PlayerById(altruistId);
-        //     var DeadBodyId = deadBodyTarget.ParentId;
-        //     var DeadBodyPos = deadBodyTarget.TruePosition;
-        //     var RevivePlayer = Helpers.PlayerById(DeadBodyId);
+        public static void AltruistRevive(DeadBody target, byte altruistId)
+        {
+            var parentId = target.ParentId;
+            var position = target.TruePosition;
 
-        //     Altruist role = Altruist.getRole(AltruistId);
+            PlayerControl altruist = Helpers.PlayerById(altruistId);
+            DeadBody targetDeadBody = Helpers.DeadBodyById(target);
+            CleanBody(targetDeadBody.ParentId);
 
-        //     if (deadBodyTarget != null || role != null)
-        //     {
-        //         foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
-        //         {
-        //             if (deadBody.ParentId == deadBodyTarget.ParentId) deadBody.gameObject.Destroy();
-        //             if (deadBody.ParentId == role.player.PlayerId) deadBody.gameObject.Destroy();
-        //         }
-        //     }
+            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
+            {
+                if (deadBody.ParentId == altruist.PlayerId) CleanBody(altruist.PlayerId);
+            }
 
-        //     RevivePlayer.Revive();
-        //     RevivePlayer.NetTransform.SnapTo(new Vector2(DeadBodyPos.x, DeadBodyPos.y + 0.3636f));
+            var player = Helpers.PlayerById(parentId);
+            player.Revive();
+            player.NetTransform.SnapTo(new(position.x, position.y + 0.3636f));
 
-        //     if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == RevivePlayer.PlayerId)
-        //     {
-        //         SubmergedCompatibility.ChangeFloor(RevivePlayer.transform.position.y > -7);
-        //     }
+            CleanBody(target.ParentId);
+        }
 
-        //     if (deadBodyTarget != null) Object.Destroy(deadBodyTarget.gameObject);
+        public static void YakuzaKill(byte yakuzaId, byte targetId, bool misfire)
+        {
+            PlayerControl yakuza = Helpers.PlayerById(yakuzaId);
+            PlayerControl target = Helpers.PlayerById(targetId);
+            if (yakuza == null || target == null) return;
 
-        //     finalStatuses[DeadBodyId] = FinalStatus.Revival;
-        // }
+            if (yakuza != null)
+                if (!CustomRolesH.YakuzaShareShots.getBool())
+                    Yakuza.NumShots--;
+                else
+                    Yakuza.PublicShots--;
+
+
+            if (misfire)
+            {
+                yakuza.MurderPlayer(yakuza);
+                finalStatuses[yakuzaId] = FinalStatus.Misfire;
+
+                if (!Yakuza.MisfireKillsTarget) return;
+                finalStatuses[targetId] = FinalStatus.Misfire;
+            }
+
+            yakuza.MurderPlayer(target);
+        }
+
+        public static void UncheckedCmdReportDeadBody(byte sourceId, byte targetId)
+        {
+            PlayerControl source = Helpers.PlayerById(sourceId);
+            var t = targetId == Byte.MaxValue ? null : Helpers.PlayerById(targetId).Data;
+            if (source != null) source.ReportDeadBody(t);
+        }
     }
 }

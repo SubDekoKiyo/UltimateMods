@@ -45,7 +45,7 @@ namespace UltimateMods
         public static CustomOption BountyHunterArrowUpdateCooldown;
 
         public static CustomRoleOption MadmateRate;
-        public static CustomOption MadmateCanDieToSheriff;
+        public static CustomOption MadmateCanDieToSheriffOrYakuza;
         public static CustomOption MadmateCanEnterVents;
         public static CustomOption MadmateCanMoveInVents;
         public static CustomOption MadmateCanSabotage;
@@ -102,8 +102,31 @@ namespace UltimateMods
         public static CustomOption ArsonistCooldown;
         public static CustomOption ArsonistDuration;
 
+        public static CustomRoleOption LighterRate;
+        public static CustomOption LighterModeLightsOnVision;
+        public static CustomOption LighterModeLightsOffVision;
+        public static CustomOption LighterCooldown;
+        public static CustomOption LighterDuration;
+
+        public static CustomRoleOption YakuzaRate;
+        public static CustomOption YakuzaKillCooldown;
+        public static CustomOption YakuzaNumShots;
+        public static CustomOption YakuzaShareShots;
+        public static CustomOption YakuzaCanKillNeutrals;
+        public static CustomOption YakuzaMisfireKillsTarget;
+
+        public static CustomRoleOption MayorRate;
+        public static CustomOption MayorNumVotes;
+        public static CustomOption MayorMeetingButton;
+        public static CustomOption MayorNumMeetingButton;
+
         /* Modifiers */
         public static CustomRoleOption OpportunistRate;
+
+        public static CustomRoleOption SunglassesRate;
+        public static CustomOption Sunglass;
+
+        public static CustomRoleOption WatcherRate;
 
         internal static Dictionary<byte, byte[]> BlockedRolePairings = new();
 
@@ -117,7 +140,7 @@ namespace UltimateMods
             JesterCanSabotage = Create(104, Neutral, JesterPink, "CanSabotage", false, JesterRate);
             JesterHasImpostorVision = Create(105, Neutral, JesterPink, "HasImpostorVision", false, JesterRate);
             JesterMustFinishTasks = Create(106, Neutral, JesterPink, "JesterMustFinishTasks", false, JesterRate);
-            JesterTasks = new CustomTasksOption(107, Neutral, JesterPink, 1, 1, 3, JesterMustFinishTasks);
+            JesterTasks = new(107, Neutral, JesterPink, 1, 1, 3, JesterMustFinishTasks);
 
             SheriffRate = new(110, Crewmate, White, "Sheriff", SheriffYellow, 15);
             SheriffMaxShots = Create(111, Crewmate, SheriffYellow, "MaxShots", 2f, 1f, 15f, 1f, SheriffRate, format: "FormatShots");
@@ -152,7 +175,7 @@ namespace UltimateMods
             BountyHunterArrowUpdateCooldown = Create(155, Impostor, ImpostorRed, "BountyHunterArrowUpdateCooldown", 15f, 2.5f, 60f, 2.5f, BountyHunterShowArrow, format: "FormatSeconds");
 
             MadmateRate = new(160, Crewmate, White, "Madmate", ImpostorRed, 15);
-            MadmateCanDieToSheriff = Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
+            MadmateCanDieToSheriffOrYakuza = Create(161, Crewmate, ImpostorRed, "CanDieToSheriff", true, MadmateRate);
             MadmateCanEnterVents = Create(162, Crewmate, ImpostorRed, "CanUseVents", true, MadmateRate);
             MadmateCanMoveInVents = Create(163, Crewmate, ImpostorRed, "CanMoveInVents", false, MadmateCanEnterVents);
             MadmateCanSabotage = Create(164, Crewmate, ImpostorRed, "CanSabotage", false, MadmateRate);
@@ -162,7 +185,7 @@ namespace UltimateMods
             MadmateCanFixReactor = Create(168, Crewmate, ImpostorRed, "CanFixReactor", true, MadmateRate);
             MadmateCanFixBlackout = Create(169, Crewmate, ImpostorRed, "CanFixBlackout", true, MadmateRate);
             MadmateHasTasks = Create(170, Crewmate, ImpostorRed, "HasTasks", true, MadmateRate);
-            MadmateTasksCount = new CustomTasksOption(171, Crewmate, ImpostorRed, 1, 2, 3, MadmateHasTasks);
+            MadmateTasksCount = new(171, Crewmate, ImpostorRed, 1, 2, 3, MadmateHasTasks);
             MadmateCanKnowImpostorWhenTasksEnded = Create(172, Crewmate, ImpostorRed, "MadmateKnowImpostorTaskEnd", true, MadmateHasTasks);
             MadmateCanWinWhenTaskEnded = Create(173, Crewmate, ImpostorRed, "MadmateCanWinWhenTaskEnd", true, MadmateHasTasks);
 
@@ -209,8 +232,31 @@ namespace UltimateMods
             ArsonistCooldown = Create(241, Neutral, ArsonistOrange, "ArsonistCooldown", 12.5f, 2.5f, 60f, 2.5f, ArsonistRate, format: "FormatSeconds");
             ArsonistDuration = Create(242, Neutral, ArsonistOrange, "ArsonistDuration", 3f, 0f, 10f, 1f, ArsonistRate, format: "FormatSeconds");
 
+            MayorRate = new(250, Crewmate, White, "Mayor", MayorGreen, 1);
+            MayorNumVotes = Create(251, Crewmate, MayorGreen, "MayorNumVotes", 2f, 2f, 10f, 1f, MayorRate, format: "FormatVotes");
+            MayorMeetingButton = Create(252, Crewmate, MayorGreen, "MayorMeetingButton", true, MayorRate);
+            MayorNumMeetingButton = Create(253, Crewmate, MayorGreen, "MayorNumMeetingButton", 1f, 1f, 10f, 1f, MayorMeetingButton, format: "FormatTimes");
+
+            LighterRate = new(260, Crewmate, White, "Lighter", LighterYellow, 1);
+            LighterCooldown = Create(261, Crewmate, LighterYellow, "Cooldowns", 30f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
+            LighterDuration = Create(262, Crewmate, LighterYellow, "LighterDurations", 10f, 2.5f, 30f, 2.5f, LighterRate, format: "FormatSeconds");
+            LighterModeLightsOffVision = Create(263, Crewmate, LighterYellow, "LighterModeLightsOffVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+            LighterModeLightsOnVision = Create(264, Crewmate, LighterYellow, "LighterModeLightsOnVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+
+            YakuzaRate = new(270, Crewmate, White, "Yakuza", YakuzaBlue, 1);
+            YakuzaKillCooldown = Create(271, Crewmate, YakuzaBlue, "KillCooldown", 30f, 2.5f, 60f, 2.5f, YakuzaRate, format: "FormatSeconds");
+            YakuzaNumShots = Create(272, Crewmate, YakuzaBlue, "MaxShots", 2f, 1f, 15f, 1f, YakuzaRate, format: "FormatShots");
+            YakuzaShareShots = Create(273, Crewmate, YakuzaBlue, "YakuzaShareShots", true, YakuzaRate);
+            YakuzaCanKillNeutrals = Create(274, Crewmate, YakuzaBlue, "CanKillNeutrals", true, YakuzaRate);
+            YakuzaMisfireKillsTarget = Create(275, Crewmate, YakuzaBlue, "MisfireKillsTarget", false, YakuzaRate);
+
             /* Modifiers */
             OpportunistRate = new(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
+
+            SunglassesRate = new(2001, Modifier, White, "Sunglasses", SunglassesGray, 15);
+            Sunglass = Create(2002, Modifier, SunglassesGray, "SunglassesEye", 50f, 10f, 90f, 10f, SunglassesRate, format: "FormatPercent");
+
+            WatcherRate = new(203, Modifier, White, "Watcher", WatcherPurple, 15);
         }
     }
 }

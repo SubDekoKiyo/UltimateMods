@@ -36,10 +36,10 @@ namespace UltimateMods.Roles
                     if (murderAttemptResult == MurderAttemptResult.PerformKill)
                     {
                         bool misfire = false;
-                        byte targetId = local.currentTarget.PlayerId; ;
+                        byte targetId = local.currentTarget.PlayerId;
                         if ((local.currentTarget.Data.Role.IsImpostor) ||
                             (CanKillNeutrals && local.currentTarget.IsNeutral()) ||
-                            (Madmate.CanDieToSheriff && local.currentTarget.isRole(RoleType.Madmate)))
+                            (Madmate.CanDieToSheriffOrYakuza && local.currentTarget.isRole(RoleType.Madmate)))
                         {
                             targetId = local.currentTarget.PlayerId;
                             misfire = false;

@@ -55,7 +55,7 @@ namespace UltimateMods.Patches
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
-                    string roleNames = RoleInfo.GetRolesString(p, true);
+                    string roleNames = RoleInfo.GetRolesString(p);
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();
                     var color = commsActive ? "808080" : "FAD934FF";
@@ -73,17 +73,17 @@ namespace UltimateMods.Patches
                         }
                         meetingInfoText = $"{roleNames} {taskInfo}".Trim();
                     }
-                    else if (Options.GhostsSeeRoles && Options.GhostsSeeTasks /*&& !Altruist.exists*/)
+                    else if (Options.GhostsSeeRoles && Options.GhostsSeeTasks && !Altruist.exists)
                     {
                         playerInfoText = $"{roleNames} {taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (Options.GhostsSeeTasks/* && !Altruist.exists*/)
+                    else if (Options.GhostsSeeTasks && !Altruist.exists)
                     {
                         playerInfoText = $"{taskInfo}".Trim();
                         meetingInfoText = playerInfoText;
                     }
-                    else if (Options.GhostsSeeRoles/* && !Altruist.exists*/)
+                    else if (Options.GhostsSeeRoles && !Altruist.exists)
                     {
                         playerInfoText = $"{roleNames}";
                         meetingInfoText = playerInfoText;
@@ -114,6 +114,7 @@ namespace UltimateMods.Patches
             }
 
             UltimateMods.FixedUpdate(__instance);
+            Yakuza.FixedUpdate();
         }
     }
 

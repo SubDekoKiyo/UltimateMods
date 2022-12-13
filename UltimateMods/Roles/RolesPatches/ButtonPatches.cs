@@ -123,7 +123,7 @@ public static class ButtonPatches
                 {
                     int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;
                     int teamRemaining = Mathf.Max(0, MaxNumberOfMeetings - MeetingsCount);
-                    int remaining = Mathf.Min(localRemaining, teamRemaining);
+                    int remaining = Mathf.Min(localRemaining, (PlayerControl.LocalPlayer.isRole(RoleType.Mayor)) ? 1 : teamRemaining);
 
                     __instance.StatusText.text = String.Format(ModTranslation.getString("MeetingStatus"), PlayerControl.LocalPlayer.name, localRemaining.ToString(), teamRemaining.ToString());
                     __instance.NumberText.text = "";

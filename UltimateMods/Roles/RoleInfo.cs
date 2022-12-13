@@ -33,7 +33,7 @@ namespace UltimateMods.Roles
         public static RoleInfo madmate = new("Madmate", ImpostorRed, CustomRolesH.MadmateRate, RoleType.Madmate);
         public static RoleInfo bakery = new("Bakery", BakeryYellow, CustomRolesH.BakeryRate, RoleType.Bakery);
         public static RoleInfo teleporter = new("Teleporter", ImpostorRed, CustomRolesH.TeleporterRate, RoleType.Teleporter);
-        // public static RoleInfo altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleType.Altruist);
+        public static RoleInfo altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleType.Altruist);
         public static RoleInfo evilHacker = new("EvilHacker", ImpostorRed, CustomRolesH.EvilHackerRate, RoleType.EvilHacker);
         public static RoleInfo adversity = new("Adversity", ImpostorRed, CustomRolesH.AdversityRate, RoleType.Adversity);
         public static RoleInfo snitch = new("Snitch", SnitchGreen, CustomRolesH.SnitchRate, RoleType.Snitch);
@@ -41,6 +41,11 @@ namespace UltimateMods.Roles
         public static RoleInfo sidekick = new("Sidekick", JackalBlue, CustomRolesH.JackalRate, RoleType.Sidekick);
         public static RoleInfo seer = new("Seer", SeerGreen, CustomRolesH.SeerRate, RoleType.Seer);
         public static RoleInfo arsonist = new("Arsonist", ArsonistOrange, CustomRolesH.ArsonistRate, RoleType.Arsonist);
+        public static RoleInfo lighter = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleType.Lighter);
+        public static RoleInfo boss = new("Boss", YakuzaBlue, CustomRolesH.YakuzaRate, RoleType.Boss);
+        public static RoleInfo executives = new("Executives", YakuzaBlue, CustomRolesH.YakuzaRate, RoleType.Executives);
+        public static RoleInfo gun = new("Gun", YakuzaBlue, CustomRolesH.YakuzaRate, RoleType.Gun);
+        public static RoleInfo mayor = new("Mayor", MayorGreen, CustomRolesH.MayorRate, RoleType.Mayor);
         public static RoleInfo impostor = new("Impostor", ImpostorRed, null, RoleType.Impostor);
         public static RoleInfo crewmate = new("Crewmate", CrewmateBlue, null, RoleType.Crewmate);
 
@@ -57,7 +62,7 @@ namespace UltimateMods.Roles
             madmate,
             bakery,
             teleporter,
-            // altruist,
+            altruist,
             evilHacker,
             adversity,
             snitch,
@@ -65,6 +70,11 @@ namespace UltimateMods.Roles
             sidekick,
             seer,
             arsonist,
+            lighter,
+            boss,
+            executives,
+            gun,
+            mayor,
         };
 
         public static string tl(string key)
@@ -87,7 +97,7 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Madmate)) infos.Add(madmate);
             if (p.isRole(RoleType.Bakery)) infos.Add(bakery);
             if (p.isRole(RoleType.Teleporter)) infos.Add(teleporter);
-            // if (p.isRole(RoleType.Altruist)) infos.Add(altruist);
+            if (p.isRole(RoleType.Altruist)) infos.Add(altruist);
             if (p.isRole(RoleType.EvilHacker)) infos.Add(evilHacker);
             if (p.isRole(RoleType.Adversity)) infos.Add(adversity);
             if (p.isRole(RoleType.Snitch)) infos.Add(snitch);
@@ -95,6 +105,11 @@ namespace UltimateMods.Roles
             if (p.isRole(RoleType.Sidekick)) infos.Add(sidekick);
             if (p.isRole(RoleType.Seer)) infos.Add(seer);
             if (p.isRole(RoleType.Arsonist)) infos.Add(arsonist);
+            if (p.isRole(RoleType.Lighter)) infos.Add(lighter);
+            if (p.isRole(RoleType.Boss)) infos.Add(boss);
+            if (p.isRole(RoleType.Executives)) infos.Add(executives);
+            if (p.isRole(RoleType.Gun)) infos.Add(gun);
+            if (p.isRole(RoleType.Mayor)) infos.Add(mayor);
 
             // Default roles
             if (infos.Count == 0 && p.Data.Role.IsImpostor) infos.Add(impostor); // Just Impostor
@@ -106,16 +121,26 @@ namespace UltimateMods.Roles
             return infos;
         }
 
-        public static String GetRolesString(PlayerControl p, bool useColors, RoleType[] excludeRoles = null, bool includeHidden = false)
+        public static String GetRolesString(PlayerControl p, RoleType[] excludeRoles = null, bool includeHidden = false)
         {
             if (p?.Data?.Disconnected != false) return "";
 
             var roleInfo = getRoleInfoForPlayer(p, excludeRoles, includeHidden);
-            string roleName = String.Join(" ", roleInfo.Select(x => useColors ? Helpers.cs(x.color, x.Name) : x.Name).ToArray());
+            string roleName = String.Join(" ", roleInfo.Select(x => Helpers.cs(x.color, x.Name)).ToArray());
 
             if (p.hasModifier(ModifierType.Opportunist))
             {
-                string postfix = useColors ? Helpers.cs(OpportunistGreen, Opportunist.Postfix) : Opportunist.Postfix;
+                string postfix = Helpers.cs(OpportunistGreen, Opportunist.Postfix);
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Watcher))
+            {
+                string postfix = Helpers.cs(WatcherPurple, Watcher.Postfix);
+                roleName = roleName + postfix;
+            }
+            if (p.hasModifier(ModifierType.Sunglasses))
+            {
+                string postfix = Helpers.cs(SunglassesGray, Sunglasses.Postfix);
                 roleName = roleName + postfix;
             }
 

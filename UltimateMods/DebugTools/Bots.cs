@@ -3,6 +3,7 @@ namespace UltimateMods.Debug
     [HarmonyPatch(typeof(KeyboardJoystick), nameof(KeyboardJoystick.Update))]
     public static class DebugBots
     {
+        public static System.Random rnd = new((int)DateTime.Now.Ticks);
         private static List<PlayerControl> bots = new();
         public static int botCount = 0;
 
