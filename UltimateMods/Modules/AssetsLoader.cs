@@ -37,6 +37,7 @@ namespace UltimateMods.Modules
         public static Texture2D ArsonistDouseButton;
         public static Texture2D ArsonistIgniteButton;
         public static Texture2D LighterLight;
+        public static Texture2D MeetingButton;
 
         public static GameObject GodMiraHQ;
         public static GameObject NewDropShip;
@@ -82,6 +83,7 @@ namespace UltimateMods.Modules
             ArsonistDouseButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ArsonistDouse.png").DontUnload();
             ArsonistIgniteButton = ButtonAssetsBundle.LoadAsset<Texture2D>("ArsonistIgnite.png").DontUnload();
             LighterLight = ButtonAssetsBundle.LoadAsset<Texture2D>("LighterButton.png").DontUnload();
+            MeetingButton = ButtonAssetsBundle.LoadAsset<Texture2D>("MeetingButton.png").DontUnload();
 
             var GodMiraHQAssetsResource = GodMiraHQAssets.GetManifestResourceStream("UltimateMods.GodMiraHQ.Resources.godmirahq");
             var GodMiraHQAssetsBundle = AssetBundle.LoadFromMemory(GodMiraHQAssetsResource.ReadFully());

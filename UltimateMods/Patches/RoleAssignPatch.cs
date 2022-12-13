@@ -94,6 +94,7 @@ namespace UltimateMods.Patches
             CrewSettings.Add((byte)RoleType.Seer, CustomRolesH.SeerRate.data);
             CrewSettings.Add((byte)RoleType.Lighter, CustomRolesH.LighterRate.data);
             CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
+            CrewSettings.Add((byte)RoleType.Mayor, CustomRolesH.MayorRate.data);
 
             return new RoleAssignmentData
             {

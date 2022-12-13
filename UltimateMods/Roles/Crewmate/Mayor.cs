@@ -7,7 +7,7 @@ namespace UltimateMods.Roles
         public static TMP_Text MayorMeetingButtonText;
         public static Sprite MayorMeetingButtonSprite;
         public static int NumVotes { get { return Mathf.RoundToInt(CustomRolesH.MayorNumVotes.getFloat()); } }
-        public static bool MeetingButton { get { return CustomRolesH.MayorMeetingButton.getBool(); } }
+        public static bool HasMeetingButton { get { return CustomRolesH.MayorMeetingButton.getBool(); } }
         public static int MaxButton { get { return Mathf.RoundToInt(CustomRolesH.MayorNumMeetingButton.getFloat()); } }
         public int NumButton = 2;
 
@@ -28,7 +28,7 @@ namespace UltimateMods.Roles
         public static Sprite GetButtonSprite()
         {
             if (MayorMeetingButtonSprite) return MayorMeetingButtonSprite;
-            MayorMeetingButtonSprite = Helpers.LoadSpriteFromTexture2D(MayorMeetingButtonSprite, 115f);
+            MayorMeetingButtonSprite = Helpers.LoadSpriteFromTexture2D(MeetingButton, 550f);
             return MayorMeetingButtonSprite;
         }
 
@@ -53,7 +53,7 @@ namespace UltimateMods.Roles
 
                     MayorMeetingButton.Timer = MayorMeetingButton.MaxTimer;
                 },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Mayor) && !PlayerControl.LocalPlayer.Data.IsDead && MeetingButton && local.NumButton > 0; },
+                () => { return PlayerControl.LocalPlayer.isRole(RoleType.Mayor) && !PlayerControl.LocalPlayer.Data.IsDead && HasMeetingButton && local.NumButton > 0; },
                 () =>
                 {
                     bool sabotageActive = false;
@@ -65,6 +65,13 @@ namespace UltimateMods.Roles
                                             TaskTypes.FixComms or
                                             TaskTypes.StopCharles)
                             sabotageActive = true;
+
+                    if (MayorMeetingButtonText != null)
+                    {
+                        if (local.NumButton > 0) MayorMeetingButtonText.text = String.Format(ModTranslation.getString("ReamingCount"), local.NumButton);
+                        else MayorMeetingButtonText.text = "";
+                    }
+
                     return !sabotageActive && PlayerControl.LocalPlayer.CanMove;
                 },
                 () => { MayorMeetingButton.Timer = MayorMeetingButton.MaxTimer; },
@@ -75,6 +82,11 @@ namespace UltimateMods.Roles
                 KeyCode.F
             );
             MayorMeetingButton.ButtonText = ModTranslation.getString("MayorMeetingButtonText");
+            MayorMeetingButtonText = GameObject.Instantiate(MayorMeetingButton.actionButton.cooldownTimerText, MayorMeetingButton.actionButton.cooldownTimerText.transform.parent);
+            MayorMeetingButtonText.text = "";
+            MayorMeetingButtonText.enableWordWrapping = false;
+            MayorMeetingButtonText.transform.localScale = Vector3.one * 0.5f;
+            MayorMeetingButtonText.transform.localPosition += new Vector3(-0.05f, 0.7f, 0);
         }
 
         public static void SetButtonCooldowns()

@@ -237,6 +237,19 @@ namespace UltimateMods
             MayorMeetingButton = Create(252, Crewmate, MayorGreen, "MayorMeetingButton", true, MayorRate);
             MayorNumMeetingButton = Create(253, Crewmate, MayorGreen, "MayorNumMeetingButton", 1f, 1f, 10f, 1f, MayorMeetingButton, format: "FormatTimes");
 
+            LighterRate = new(260, Crewmate, White, "Lighter", LighterYellow, 1);
+            LighterCooldown = Create(261, Crewmate, LighterYellow, "Cooldowns", 30f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
+            LighterDuration = Create(262, Crewmate, LighterYellow, "LighterDurations", 10f, 2.5f, 30f, 2.5f, LighterRate, format: "FormatSeconds");
+            LighterModeLightsOffVision = Create(263, Crewmate, LighterYellow, "LighterModeLightsOffVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+            LighterModeLightsOnVision = Create(264, Crewmate, LighterYellow, "LighterModeLightsOnVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+
+            YakuzaRate = new(270, Crewmate, White, "Yakuza", YakuzaBlue, 1);
+            YakuzaKillCooldown = Create(271, Crewmate, YakuzaBlue, "KillCooldown", 30f, 2.5f, 60f, 2.5f, YakuzaRate, format: "FormatSeconds");
+            YakuzaNumShots = Create(272, Crewmate, YakuzaBlue, "MaxShots", 2f, 1f, 15f, 1f, YakuzaRate, format: "FormatShots");
+            YakuzaShareShots = Create(273, Crewmate, YakuzaBlue, "YakuzaShareShots", true, YakuzaRate);
+            YakuzaCanKillNeutrals = Create(274, Crewmate, YakuzaBlue, "CanKillNeutrals", true, YakuzaRate);
+            YakuzaMisfireKillsTarget = Create(275, Crewmate, YakuzaBlue, "MisfireKillsTarget", false, YakuzaRate);
+
             /* Modifiers */
             OpportunistRate = new(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
 
