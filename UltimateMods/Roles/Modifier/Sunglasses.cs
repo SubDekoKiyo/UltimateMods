@@ -34,7 +34,7 @@ namespace UltimateMods.Roles
         public override void OnDeath(PlayerControl killer = null) { }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<Sunglasses>();
         }

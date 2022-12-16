@@ -32,7 +32,7 @@ namespace UltimateMods
         public static void MakeButtons(HudManager hm) { }
         public static void SetButtonCooldowns() { }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<CustomImpostor>();
         }

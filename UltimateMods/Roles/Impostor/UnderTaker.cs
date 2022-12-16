@@ -195,7 +195,7 @@ namespace UltimateMods.Roles
             }
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<UnderTaker>();
         }

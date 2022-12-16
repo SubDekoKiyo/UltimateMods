@@ -116,7 +116,7 @@ namespace UltimateMods.Roles
             EngineerRepairButton.MaxTimer = 0f;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<Engineer>();
         }

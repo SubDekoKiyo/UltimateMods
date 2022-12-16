@@ -81,7 +81,7 @@ namespace UltimateMods.Roles
             LighterButton.EffectDuration = Duration;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             LightActive = false;
             players = new List<Lighter>();

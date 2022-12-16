@@ -86,7 +86,7 @@ namespace UltimateMods.Roles
             TeleportButton.MaxTimer = Cooldown;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<Teleporter>();
         }

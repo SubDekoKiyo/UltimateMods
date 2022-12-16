@@ -7,30 +7,9 @@ namespace UltimateMods
 
         public static void ClearAndReloadRoles()
         {
-            // Roles
-            Sheriff.Clear();
-            Jester.Clear();
-            Engineer.Clear();
-            CustomImpostor.Clear();
-            UnderTaker.Clear();
-            BountyHunter.Clear();
-            Madmate.Clear();
-            Bakery.Clear();
-            Teleporter.Clear();
-            Altruist.Clear();
-            Adversity.Clear();
-            Snitch.Clear();
-            Jackal.Clear();
-            Sidekick.Clear();
-            Seer.Clear();
-            Arsonist.Clear();
-            Lighter.Clear();
             Yakuza.Clear();
 
-            // Modifiers
-            Opportunist.Clear();
-
-            AlivePlayer.Clear();
+            Clear();
             Role.ClearAll();
         }
 
@@ -51,7 +30,13 @@ namespace UltimateMods
             Role.allRoles.Do(x => x.OnMeetingEnd());
             Modifiers.allModifiers.Do(x => x.OnMeetingEnd());
 
-            // CustomOverlays.HideInfoOverlay();
+            CustomOverlays.HideInfoOverlay();
+        }
+
+        public static void Clear()
+        {
+            Role.allRoles.Do(x => x.Clear());
+            Modifiers.allModifiers.Do(x => x.Clear());
         }
 
         [HarmonyPatch(typeof(GameData), nameof(GameData.HandleDisconnect), new Type[] { typeof(PlayerControl), typeof(DisconnectReasons) })]

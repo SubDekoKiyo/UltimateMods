@@ -98,7 +98,7 @@ namespace UltimateMods.Roles
             JackalMakeSidekickButton.MaxTimer = CreateSideKickCooldown;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             CanSidekick = CanCreateSidekick;
             CurrentTarget = null;

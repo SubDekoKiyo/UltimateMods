@@ -33,6 +33,7 @@ namespace UltimateMods.Roles
         public abstract void OnDeath(PlayerControl killer = null);
         public abstract void HandleDisconnect(PlayerControl player, DisconnectReasons reason);
         public virtual void ResetModifier() { }
+        public abstract void Clear();
 
         public static void ClearAll()
         {

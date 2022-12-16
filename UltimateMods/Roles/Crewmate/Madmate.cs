@@ -70,7 +70,7 @@ namespace UltimateMods.Roles
             return counter >= totalTasks;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<Madmate>();
         }

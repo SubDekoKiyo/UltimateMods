@@ -80,6 +80,7 @@ namespace UltimateMods.Roles
         public abstract void OnKill(PlayerControl target);
         public abstract void OnDeath(PlayerControl killer = null);
         public abstract void HandleDisconnect(PlayerControl player, DisconnectReasons reason);
+        public abstract void Clear();
         public virtual void ResetRole() { }
         public virtual void PostInit() { }
 

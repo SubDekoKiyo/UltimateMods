@@ -122,7 +122,7 @@ namespace UltimateMods.Roles
             return ZoomOutIcon;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<DeadPlayer>();
         }

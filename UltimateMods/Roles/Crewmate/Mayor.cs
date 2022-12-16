@@ -94,7 +94,7 @@ namespace UltimateMods.Roles
             MayorMeetingButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.EmergencyCooldown);
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<Mayor>();
         }

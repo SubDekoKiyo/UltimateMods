@@ -98,7 +98,7 @@ namespace UltimateMods.Roles
             AltruistButton.Timer = AltruistButton.MaxTimer = 0f;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             Started = false;
             Ended = false;

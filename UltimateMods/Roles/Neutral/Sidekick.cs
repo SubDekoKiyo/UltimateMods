@@ -77,7 +77,7 @@ namespace UltimateMods.Roles
             SidekickKillButton.MaxTimer = Cooldown;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             CurrentTarget = null;
             players = new List<Sidekick>();

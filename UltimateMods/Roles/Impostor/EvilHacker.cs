@@ -66,7 +66,7 @@ namespace UltimateMods.Roles
 
         public static void SetButtonCooldowns() { }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<EvilHacker>();
         }

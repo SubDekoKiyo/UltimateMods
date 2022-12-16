@@ -26,7 +26,7 @@ namespace UltimateMods.Roles
             ModType = modId = ModifierType.Opportunist;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             players = new List<Opportunist>();
         }

@@ -214,7 +214,7 @@ namespace UltimateMods.Roles
             IgniteButton.Timer = IgniteButton.MaxTimer = 0f;
         }
 
-        public static void Clear()
+        public override void Clear()
         {
             CurrentTarget = null;
             DouseTarget = null;
