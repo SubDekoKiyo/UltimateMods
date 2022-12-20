@@ -25,7 +25,7 @@ namespace UltimateMods.Patches
 
                 buttonDiscord = UnityEngine.Object.Instantiate(tmpButton, null);
 
-                var TextDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                var TextDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMP_Text>();
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
                 {
                     TextDiscord.SetText("Discord");
@@ -48,7 +48,7 @@ namespace UltimateMods.Patches
 
                 buttonTwitter = UnityEngine.Object.Instantiate(tmpButton, null);
 
-                var TextTwitter = buttonTwitter.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                var TextTwitter = buttonTwitter.transform.GetChild(0).GetComponent<TMP_Text>();
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
                 {
                     TextTwitter.SetText("Twitter");
@@ -97,7 +97,7 @@ namespace UltimateMods.Patches
                     {
                         if (p == 1)
                         {
-                            var titleText = GameObject.Find("Title_Text").GetComponent<TMPro.TextMeshPro>();
+                            var titleText = GameObject.Find("Title_Text").GetComponent<TextMeshPro>();
                             if (titleText != null) titleText.text = ModTranslation.getString("CreditsTitle");
                         }
                     })));

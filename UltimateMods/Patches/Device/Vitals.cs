@@ -4,8 +4,8 @@ namespace UltimateMods.Patches
     public class VitalsPatch
     {
         static float vitalsTimer = 0f;
-        static TMPro.TextMeshPro TimeRemaining;
-        private static List<TMPro.TextMeshPro> hackerTexts = new();
+        static TextMeshPro TimeRemaining;
+        private static List<TextMeshPro> hackerTexts = new();
 
         public static void ResetData()
         {
@@ -39,10 +39,10 @@ namespace UltimateMods.Patches
 
                 if (Hacker.hacker != null && PlayerControl.LocalPlayer == Hacker.hacker)
                 {
-                    hackerTexts = new List<TMPro.TextMeshPro>();
+                    hackerTexts = new List<TextMeshPro>();
                     foreach (VitalsPanel panel in __instance.vitals)
                     {
-                        TMPro.TextMeshPro text = UnityEngine.Object.Instantiate(__instance.SabText, panel.transform);
+                        TextMeshPro text = UnityEngine.Object.Instantiate(__instance.SabText, panel.transform);
                         hackerTexts.Add(text);
                         UnityEngine.Object.DestroyImmediate(text.GetComponent<AlphaBlink>());
                         text.gameObject.SetActive(false);
@@ -67,7 +67,7 @@ namespace UltimateMods.Patches
                     if (TimeRemaining == null)
                     {
                         TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
-                        TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
+                        TimeRemaining.alignment = TextAlignmentOptions.BottomRight;
                         TimeRemaining.transform.position = Vector3.zero;
                         TimeRemaining.transform.localPosition = new Vector3(1.7f, 4.45f);
                         TimeRemaining.transform.localScale *= 1.8f;
@@ -113,7 +113,7 @@ namespace UltimateMods.Patches
                 }
                 else
                 {*/
-                foreach (TMPro.TextMeshPro text in hackerTexts)
+                foreach (TextMeshPro text in hackerTexts)
                     if (text != null && text.gameObject != null)
                         text.gameObject.SetActive(false);
                 // }

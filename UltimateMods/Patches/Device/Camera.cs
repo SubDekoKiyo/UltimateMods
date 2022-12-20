@@ -30,7 +30,7 @@ namespace UltimateMods.Patches
         {
             private static int page = 0;
             private static float timer = 0f;
-            static TMPro.TextMeshPro TimeRemaining;
+            static TextMeshPro TimeRemaining;
 
             public static void ResetData()
             {
@@ -85,7 +85,7 @@ namespace UltimateMods.Patches
                         if (TimeRemaining == null)
                         {
                             TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
-                            TimeRemaining.alignment = TMPro.TextAlignmentOptions.Center;
+                            TimeRemaining.alignment = TextAlignmentOptions.Center;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(0.0f, -1.7f);
                             TimeRemaining.transform.localScale *= 1.8f;
@@ -158,7 +158,7 @@ namespace UltimateMods.Patches
         [HarmonyPatch]
         class PlanetSurveillanceMinigamePatch
         {
-            static TMPro.TextMeshPro TimeRemaining;
+            static TextMeshPro TimeRemaining;
 
             public static void ResetData()
             {
@@ -191,7 +191,7 @@ namespace UltimateMods.Patches
                         if (TimeRemaining == null)
                         {
                             TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
-                            TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
+                            TimeRemaining.alignment = TextAlignmentOptions.BottomRight;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(0.95f, 4.45f);
                             TimeRemaining.transform.localScale *= 1.8f;
@@ -223,7 +223,7 @@ namespace UltimateMods.Patches
         [HarmonyPatch]
         class DoorLogPatch
         {
-            static TMPro.TextMeshPro TimeRemaining;
+            static TextMeshPro TimeRemaining;
 
             public static void ResetData()
             {
@@ -257,7 +257,7 @@ namespace UltimateMods.Patches
                         if (TimeRemaining == null)
                         {
                             TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
-                            TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
+                            TimeRemaining.alignment = TextAlignmentOptions.BottomRight;
                             TimeRemaining.transform.position = Vector3.zero;
                             TimeRemaining.transform.localPosition = new Vector3(1.0f, 4.25f);
                             TimeRemaining.transform.localScale *= 1.6f;

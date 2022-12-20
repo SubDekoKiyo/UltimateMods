@@ -11,15 +11,15 @@ namespace UltimateMods.Debug
     [HarmonyPatch(typeof(ControllerManager), nameof(ControllerManager.Update))]
     public class Role
     {
-        private static RoleType keyrole1 = RoleType.Crewmate;
-        private static RoleType keyrole2 = RoleType.Impostor;
-        private static RoleType keyrole3 = RoleType.Sheriff;
-        private static RoleType keyrole4 = RoleType.Madmate;
-        private static RoleType keyrole5 = RoleType.Jester;
-        private static RoleType keyrole6 = RoleType.EvilHacker;
-        private static RoleType keyrole7 = RoleType.Engineer;
-        private static RoleType keyrole8 = RoleType.CustomImpostor;
-        private static RoleType keyrole9 = RoleType.Teleporter;
+        private static RoleId keyrole1 = RoleId.Crewmate;
+        private static RoleId keyrole2 = RoleId.Impostor;
+        private static RoleId keyrole3 = RoleId.Sheriff;
+        private static RoleId keyrole4 = RoleId.Madmate;
+        private static RoleId keyrole5 = RoleId.Jester;
+        private static RoleId keyrole6 = RoleId.EvilHacker;
+        private static RoleId keyrole7 = RoleId.Engineer;
+        private static RoleId keyrole8 = RoleId.CustomImpostor;
+        private static RoleId keyrole9 = RoleId.Teleporter;
 
 
         public static void Postfix()
@@ -61,9 +61,9 @@ namespace UltimateMods.Debug
             }
         }
 
-        public static void ChangeRole(RoleType roleType)
+        public static void ChangeRole(RoleId RoleId)
         {
-            byte role = (byte)roleType;
+            byte role = (byte)RoleId;
 
             MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SetRole, Hazel.SendOption.Reliable, -1);
             writer.Write(role);

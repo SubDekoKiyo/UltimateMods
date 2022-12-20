@@ -11,7 +11,7 @@ namespace UltimateMods.Roles
 
         public Template()
         {
-            RoleType = roleId = RoleType.NoRole;
+            RoleId = roleId = RoleId.NoRole;
         }
 
         public override void OnMeetingStart() { }
@@ -33,7 +33,7 @@ namespace UltimateMods.Roles
             TemplateButton = new CustomButton(
                 () =>
                 { },
-                () => { return PlayerControl.LocalPlayer.isRole(RoleType.NoRole) && !PlayerControl.LocalPlayer.Data.IsDead; },
+                () => { return PlayerControl.LocalPlayer.IsRole(RoleId.NoRole) && !PlayerControl.LocalPlayer.Data.IsDead; },
                 () => { return PlayerControl.LocalPlayer.CanMove; },
                 () => { },
                 GetButtonSprite(),

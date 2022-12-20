@@ -37,7 +37,7 @@ namespace UltimateMods.Modules
                     GameData.PlayerInfo playerInfo = __instance.AllPlayers[i];
                     if (playerInfo.Object &&
                     (
-                        (Madmate.HasTasks && playerInfo.Object?.isRole(RoleType.Madmate) == true))
+                        (Madmate.HasTasks && playerInfo.Object?.IsRole(RoleId.Madmate) == true))
                     )
                         continue;
                     var (playerCompleted, playerTotal) = taskInfo(playerInfo);

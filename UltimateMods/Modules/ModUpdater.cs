@@ -19,7 +19,7 @@ namespace UltimateMods.Modules
             passiveButton.OnClick = new Button.ButtonClickedEvent();
             passiveButton.OnClick.AddListener((UnityEngine.Events.UnityAction)onClick);
 
-            var text = button.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+            var text = button.transform.GetChild(0).GetComponent<TMP_Text>();
             __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
             {
                 text.SetText(ModTranslation.getString("UpdateButton"));

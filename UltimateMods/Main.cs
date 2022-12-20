@@ -40,7 +40,6 @@ global using UltimateMods.Utilities;
 global using UltimateMods.Modules;
 global using UltimateMods.Objects;
 global using UltimateMods.EndGame;
-global using UltimateMods.Roles.Patches;
 global using static UltimateMods.Options;
 global using static UltimateMods.ColorDictionary;
 global using static UltimateMods.UltimateMods;
@@ -50,6 +49,11 @@ global using static UltimateMods.Modules.CustomOption;
 global using static UltimateMods.Modules.CustomOption.CustomOptionType;
 global using static UltimateMods.Roles.Patches.ButtonPatches;
 global using static UltimateMods.Roles.Patches.OutlinePatch;
+global using static UltimateMods.Roles.CrewmateRoles;
+global using static UltimateMods.Roles.ImpostorRoles;
+global using static UltimateMods.Roles.NeutralRoles;
+global using static UltimateMods.Roles.ModifierRoles;
+global using static UltimateMods.Roles.RoleManagement;
 
 namespace UltimateMods
 {
@@ -58,7 +62,7 @@ namespace UltimateMods
     public class UltimateModsPlugin : BasePlugin
     {
         public const string Id = "jp.DekoKiyo.UltimateMods";
-        public const string VersionString = "1.2.0.1";
+        public const string VersionString = "1.3.0";
 
         public static Version Version = Version.Parse(VersionString);
         internal static BepInEx.Logging.ManualLogSource Logger;

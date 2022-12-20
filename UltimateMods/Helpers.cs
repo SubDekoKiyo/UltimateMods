@@ -9,14 +9,14 @@ namespace UltimateMods
 
     public static class Helpers
     {
-
         public static bool ShowButtons
         {
             get
             {
                 return !(MapBehaviour.Instance && MapBehaviour.Instance.IsOpen) &&
                         !MeetingHud.Instance &&
-                        !ExileController.Instance;
+                        !ExileController.Instance &&
+                        GameStarted;
             }
         }
 
@@ -65,7 +65,7 @@ namespace UltimateMods
         {
             get
             {
-                return CustomOptionsH.EnableGodMiraHQ.getBool() && GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 1;
+                return CustomOptionsH.EnableGodMiraHQ.getBool() && GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId) == 1;
             }
         }*/
 
@@ -161,36 +161,28 @@ namespace UltimateMods
         public static bool HasFakeTasks(this PlayerControl player)
         {
             return (player.IsNeutral() && !player.NeutralHasTasks()) ||
-            (player.isRole(RoleType.Madmate) && !Madmate.HasTasks);
+            (player.IsRole(RoleId.Madmate) && !Madmate.HasTasks);
         }
 
         public static bool NeutralHasTasks(this PlayerControl player)
         {
             return player.IsNeutral() &&
-                (player.isRole(RoleType.Jester) && Jester.HasTasks);
+                (player.IsRole(RoleId.Jester) && Jester.HasTasks);
         }
 
         public static bool IsNeutral(this PlayerControl player)
         {
             return (player != null &&
-                    (player.isRole(RoleType.Jester) ||
-                    player.isRole(RoleType.Arsonist) ||
+                    (player.IsRole(RoleId.Jester) ||
+                    player.IsRole(RoleId.Arsonist) ||
                     player.IsTeamJackal()));
         }
 
         public static bool IsTeamJackal(this PlayerControl player)
         {
             return (player != null &&
-                        (player.isRole(RoleType.Jackal) ||
-                        player.isRole(RoleType.Sidekick)));
-        }
-
-        public static bool IsYakuza(this PlayerControl player)
-        {
-            return (player != null &&
-                    (player.isRole(RoleType.Boss) ||
-                    player.isRole(RoleType.Executives) ||
-                    player.isRole(RoleType.Gun)));
+                        (player.IsRole(RoleId.Jackal) ||
+                        player.IsRole(RoleId.Sidekick)));
         }
 
         public static void ShareGameVersion()
@@ -210,19 +202,13 @@ namespace UltimateMods
         {
             if (player == null) return;
 
-            List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(player);
-
             var toRemove = new List<PlayerTask>();
-            foreach (PlayerTask t in player.myTasks)
+            foreach (PlayerTask t in player.myTasks.GetFastEnumerator())
             {
                 var textTask = t.gameObject.GetComponent<ImportantTextTask>();
                 if (textTask != null)
                 {
-                    var info = infos.FirstOrDefault(x => textTask.Text.StartsWith(x.Name));
-                    if (info != null)
-                        infos.Remove(info); // TextTask for this RoleInfo does not have to be added, as it already exists
-                    else
-                        toRemove.Add(t); // TextTask does not have a corresponding RoleInfo and will hence be deleted
+                    toRemove.Add(t);
                 }
             }
 
@@ -233,23 +219,16 @@ namespace UltimateMods
                 UnityEngine.Object.Destroy(t.gameObject);
             }
 
-            // Add TextTask for remaining RoleInfos
-            foreach (RoleInfo roleInfo in infos)
+            var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
+            task.transform.SetParent(player.transform, false);
+
+            if (player.IsRole(RoleId.Jackal) && Jackal.CanSidekick)
             {
-                var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
-                task.transform.SetParent(player.transform, false);
-
-                if (roleInfo.roleType == RoleType.Jackal && Jackal.CanSidekick)
-                {
-                    task.Text += cs(roleInfo.color, ModTranslation.getString("JackalWithSidekick"));
-                }
-                else
-                {
-                    task.Text = cs(roleInfo.color, $"{roleInfo.Name}: {roleInfo.ShortDescription}");
-                }
-
-                player.myTasks.Insert(0, task);
+                task.Text += cs(JackalBlue, ModTranslation.getString("JackalWithSidekick"));
             }
+
+            task.Text = ModTranslation.getString(player.GetRoleString(player.GetRoleId())) + ": " + RoleManagement.GetRoleShortDesc(player.GetRoleId());
+            player.myTasks.Insert(0, task);
         }
 
         public static bool HidePlayerName(PlayerControl target)
@@ -266,7 +245,7 @@ namespace UltimateMods
             else if (source.Data.Role.IsImpostor && (target.Data.Role.IsImpostor)) return false;/* // Members of team Impostors see the names of Impostors/Spies
             // if (Camouflager.camouflageTimer > 0f) return true; // No names are visible
             // if (!source.isImpostor() && Ninja.isStealthed(target)) return true; // Hide ninja nametags from non-impostors
-            // if (!source.isRole(RoleType.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
+            // if (!source.IsRole(RoleId.Fox) && !source.Data.IsDead && Fox.isStealthed(target)) return true;
             */
             if (Options.HideOutOfSightNametags && Helpers.GameStarted && ShipStatus.Instance != null && source.transform != null && target.transform != null)
             {
@@ -277,9 +256,9 @@ namespace UltimateMods
                 if (distance > ShipStatus.Instance.CalculateLightRadius(source.Data) * distMod || anythingBetween) return true;
             }
             if (!Options.HidePlayerNames) return false; // All names are visible
-                                                        // if (source.isImpostor() && (target.isImpostor() || target.isRole(RoleType.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
+                                                        // if (source.isImpostor() && (target.isImpostor() || target.IsRole(RoleId.Spy))) return false; // Members of team Impostors see the names of Impostors/Spies
                                                         // if (source.getPartner() == target) return false; // Members of team Lovers see the names of each other
-            if ((source.isRole(RoleType.Jackal) || source.isRole(RoleType.Sidekick)) && (target.isRole(RoleType.Jackal) || target.isRole(RoleType.Sidekick))) return false; // Members of team Jackal see the names of each other
+            if ((source.IsRole(RoleId.Jackal) || source.IsRole(RoleId.Sidekick)) && (target.IsRole(RoleId.Jackal) || target.IsRole(RoleId.Sidekick))) return false; // Members of team Jackal see the names of each other
             return true;
         }
 
@@ -314,22 +293,15 @@ namespace UltimateMods
         public static bool RoleCanUseVents(this PlayerControl player)
         {
             bool roleCouldUse = false;
-            if (Engineer.CanUseVents && player.isRole(RoleType.Engineer))
-                roleCouldUse = true;
-            else if (Jester.CanUseVents && player.isRole(RoleType.Jester))
-                roleCouldUse = true;
-            else if (Madmate.CanUseVents && player.isRole(RoleType.Madmate))
-                roleCouldUse = true;
-            else if (Jackal.CanUseVents && player.isRole(RoleType.Jackal))
-                roleCouldUse = true;
-            else if (Sidekick.CanUseVents && player.isRole(RoleType.Sidekick))
-                roleCouldUse = true;
+            if (ProEngineer.CanUseVents && player.IsRole(RoleId.Engineer)) roleCouldUse = true;
+            else if (Jester.CanUseVents && player.IsRole(RoleId.Jester)) roleCouldUse = true;
+            else if (Madmate.CanUseVents && player.IsRole(RoleId.Madmate)) roleCouldUse = true;
+            else if (Jackal.CanUseVents && player.IsRole(RoleId.Jackal)) roleCouldUse = true;
+            else if (Sidekick.CanUseVents && player.IsRole(RoleId.Sidekick)) roleCouldUse = true;
             else if (player.Data?.Role != null && player.Data.Role.CanVent)
             {
-                if (!CustomImpostor.CanUseVents && player.isRole(RoleType.CustomImpostor))
-                    roleCouldUse = false;
-                else
-                    roleCouldUse = true;
+                if (!CustomImpostor.CanUseVents && player.IsRole(RoleId.CustomImpostor)) roleCouldUse = false;
+                else roleCouldUse = true;
             }
             return roleCouldUse;
         }
@@ -337,14 +309,10 @@ namespace UltimateMods
         public static bool RoleCanSabotage(this PlayerControl player)
         {
             bool roleCouldUse = false;
-            if (Jester.CanSabotage && player.isRole(RoleType.Jester))
-                roleCouldUse = true;
-            else if (Madmate.CanSabotage && player.isRole(RoleType.Madmate))
-                roleCouldUse = true;
-            else if (!CustomImpostor.CanSabotage && player.isRole(RoleType.CustomImpostor))
-                roleCouldUse = false;
-            else if (player.Data?.Role != null && player.Data.Role.IsImpostor)
-                roleCouldUse = true;
+            if (Jester.CanSabotage && player.IsRole(RoleId.Jester)) roleCouldUse = true;
+            else if (Madmate.CanSabotage && player.IsRole(RoleId.Madmate)) roleCouldUse = true;
+            else if (!CustomImpostor.CanSabotage && player.IsRole(RoleId.CustomImpostor)) roleCouldUse = false;
+            else if (player.Data?.Role != null && player.Data.Role.IsImpostor) roleCouldUse = true;
 
             return roleCouldUse;
         }
@@ -418,10 +386,10 @@ namespace UltimateMods
         public static bool HasImpostorVision(GameData.PlayerInfo player)
         {
             return player.Role.IsImpostor
-                || (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && Jester.HasImpostorVision)
-                || (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && Madmate.HasImpostorVision)
-                || (PlayerControl.LocalPlayer.isRole(RoleType.Jackal) && Jackal.HasImpostorVision)
-                || (PlayerControl.LocalPlayer.isRole(RoleType.Sidekick) && Sidekick.HasImpostorVision);
+                || (PlayerControl.LocalPlayer.IsRole(RoleId.Jester) && Jester.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.IsRole(RoleId.Madmate) && Madmate.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.IsRole(RoleId.Jackal) && Jackal.HasImpostorVision)
+                || (PlayerControl.LocalPlayer.IsRole(RoleId.Sidekick) && Sidekick.HasImpostorVision);
         }
 
         public static T GetRandom<T>(this List<T> list)

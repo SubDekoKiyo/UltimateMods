@@ -8,9 +8,8 @@ namespace UltimateMods.Patches
         {
             static bool Prefix(AccountManager __instance)
             {
-                if (LegacySaveManager.lastPlayerName == null)
-                    return true;
-                AmongUs.Data.DataManager.Player.Customization.name = LegacySaveManager.lastPlayerName;
+                if (LegacySaveManager.lastPlayerName == null) return true;
+                DataManager.Player.Customization.Name = LegacySaveManager.lastPlayerName;
                 __instance.accountTab.UpdateNameDisplay();
                 return false; // Don't execute original
             }

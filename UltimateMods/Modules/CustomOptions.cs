@@ -8,7 +8,7 @@ namespace UltimateMods.Modules
             Impostor,
             Neutral,
             Crewmate,
-            Modifier,
+            Modifiers,
             Other
         }
 
@@ -279,18 +279,18 @@ namespace UltimateMods.Modules
         public static List<CustomDualRoleOption> dualRoles = new();
         public CustomOption roleImpChance = null;
         public CustomOption roleAssignEqually = null;
-        public RoleType roleType;
+        public RoleId RoleId;
 
         public int impChance { get { return roleImpChance.getSelection(); } }
 
         public bool assignEqually { get { return roleAssignEqually.getSelection() == 0; } }
 
-        public CustomDualRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, RoleType roleType, int Max = 15, bool roleEnabled = true) : base(id, type, Color, name, color, Max, roleEnabled)
+        public CustomDualRoleOption(int id, CustomOptionType type, Color Color, string name, Color color, RoleId RoleId, int Max = 15, bool roleEnabled = true) : base(id, type, Color, name, color, Max, roleEnabled)
         {
             roleAssignEqually = new CustomOption(id + 15001, type, Color, "roleAssignEqually", new string[] { "OptionOn", "OptionOff" }, "OptionOff", this, false, isHidden, "");
             roleImpChance = Create(id + 15000, type, Color, "roleImpChance", CustomOptionsH.TenRates, roleAssignEqually, false, isHidden);
 
-            this.roleType = roleType;
+            this.RoleId = RoleId;
             dualRoles.Add(this);
         }
     }
@@ -320,24 +320,24 @@ namespace UltimateMods.Modules
 
     public class CustomRoleSelectionOption : CustomOption
     {
-        public List<RoleType> roleTypes;
+        public List<RoleId> RoleIds;
 
-        public RoleType role
+        public RoleId role
         {
             get
             {
-                return roleTypes[selection];
+                return RoleIds[selection];
             }
         }
 
-        public CustomRoleSelectionOption(int id, CustomOptionType type, Color Color, string name, List<RoleType> roleTypes = null, CustomOption parent = null)
+        public CustomRoleSelectionOption(int id, CustomOptionType type, Color Color, string name, List<RoleId> RoleIds = null, CustomOption parent = null)
         {
-            if (roleTypes == null)
+            if (RoleIds == null)
             {
-                roleTypes = Enum.GetValues(typeof(RoleType)).Cast<RoleType>().ToList();
+                RoleIds = Enum.GetValues(typeof(RoleId)).Cast<RoleId>().ToList();
             }
 
-            this.roleTypes = roleTypes;
+            this.RoleIds = RoleIds;
             var strings = new string[] { "OptionOff" };
 
             Init(id, type, Color, name, strings, 0, parent, false, false, "");
@@ -345,12 +345,13 @@ namespace UltimateMods.Modules
 
         public override void updateSelection(int newSelection)
         {
-            if (roleTypes.Count > 0)
+            var roleId = PlayerControl.LocalPlayer.GetRoleId();
+            string NameColored = Helpers.cs(PlayerControl.LocalPlayer.GetRoleColor(roleId), ModTranslation.getString(PlayerControl.LocalPlayer.GetRoleString(roleId)));
+            if (RoleIds.Count > 0)
             {
-                selections = roleTypes.Select(
+                selections = RoleIds.Select(
                     x =>
-                        x == RoleType.NoRole ? "OptionOff" :
-                        RoleInfo.allRoleInfos.First(y => y.roleType == x).NameColored
+                        x == RoleId.NoRole ? "OptionOff" : NameColored
                     ).ToArray();
             }
 
@@ -405,32 +406,32 @@ namespace UltimateMods.Modules
         {
             if (GameObject.Find("UMSettings") != null)
             { // Settings setup has already been performed, fixing the title of the tab and returning
-                GameObject.Find("UMSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("GeneralSettings"));
+                GameObject.Find("UMSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("GeneralSettings"));
                 return;
             }
             if (GameObject.Find("ImpostorSettings") != null)
             {
-                GameObject.Find("ImpostorSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("ImpostorSettings"));
+                GameObject.Find("ImpostorSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("ImpostorSettings"));
                 return;
             }
             if (GameObject.Find("NeutralSettings") != null)
             {
-                GameObject.Find("NeutralSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("NeutralSettings"));
+                GameObject.Find("NeutralSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("NeutralSettings"));
                 return;
             }
             if (GameObject.Find("CrewmateSettings") != null)
             {
-                GameObject.Find("CrewmateSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("CrewmateSettings"));
+                GameObject.Find("CrewmateSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("CrewmateSettings"));
                 return;
             }
             if (GameObject.Find("ModifierSettings") != null)
             {
-                GameObject.Find("ModifierSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("ModifierSettings"));
+                GameObject.Find("ModifierSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("ModifierSettings"));
                 return;
             }
             if (GameObject.Find("OtherSettings") != null)
             {
-                GameObject.Find("OtherSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TMPro.TextMeshPro>().SetText(ModTranslation.getString("OtherSettings"));
+                GameObject.Find("OtherSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("OtherSettings"));
                 return;
             }
 
@@ -659,7 +660,7 @@ namespace UltimateMods.Modules
         {
             if (__instance.Title == StringNames.GameMapName)
             {
-                __instance.Selected = GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId);
+                __instance.Selected = GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId);
             }
             try
             {
@@ -712,8 +713,8 @@ namespace UltimateMods.Modules
         }
     }
 
-    [HarmonyPatch(typeof(PlayerControl), nameof(PlayerControl.RpcSyncSettings))]
-    public class RpcSyncSettingsPatch
+    [HarmonyPatch(typeof(PlayerPhysics), nameof(PlayerPhysics.CoSpawnPlayer))]
+    public class AmongUsClientOnPlayerJoinedPatch
     {
         public static void Postfix()
         {
@@ -762,7 +763,7 @@ namespace UltimateMods.Modules
                     continue;
                 if (GameObject.Find("CrewmateSettings") && option.type != CustomOption.CustomOptionType.Crewmate)
                     continue;
-                if (GameObject.Find("ModifierSettings") && option.type != CustomOption.CustomOptionType.Modifier)
+                if (GameObject.Find("ModifierSettings") && option.type != CustomOption.CustomOptionType.Modifiers)
                     continue;
                 if (GameObject.Find("OtherSettings") && option.type != CustomOption.CustomOptionType.Other)
                     continue;
@@ -964,10 +965,10 @@ namespace UltimateMods.Modules
     [HarmonyPatch(typeof(GameOptionsData), nameof(GameOptionsData.Deserialize))]
     public static class GameOptionsDeserializePatch
     {
-        static private int NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+        static private int NumImpostors = GameManager.Instance.LogicOptions.currentGameOptions.NumImpostors;
         public static bool Prefix(GameOptionsData __instance)
         {
-            NumImpostors = GameOptionsManager.Instance.CurrentGameOptions.NumImpostors;
+            NumImpostors = GameManager.Instance.LogicOptions.currentGameOptions.NumImpostors;
             return true;
         }
 
@@ -975,7 +976,7 @@ namespace UltimateMods.Modules
         {
             try
             {
-                GameOptionsManager.Instance.CurrentGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
+                GameManager.Instance.LogicOptions.currentGameOptions.SetInt(Int32OptionNames.NumImpostors, NumImpostors);
             }
             catch { }
         }

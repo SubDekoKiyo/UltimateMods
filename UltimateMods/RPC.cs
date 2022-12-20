@@ -16,7 +16,7 @@ namespace UltimateMods
         EngineerFixLights,
         EngineerUsedRepair,
         UncheckedSetTasks,
-        ForceEnd,
+        UncheckedEndGame,
         DragPlaceBody,
         CleanBody,
         BakeryBomb,
@@ -27,7 +27,6 @@ namespace UltimateMods
         ArsonistWin,
         AltruistKill,
         AltruistRevive,
-        YakuzaKill,
         UncheckedCmdReportDeadBody,
     }
 
@@ -122,8 +121,8 @@ namespace UltimateMods
                         RPCProcedure.UncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;
                     // 74
-                    case (byte)CustomRPC.ForceEnd:
-                        RPCProcedure.ForceEnd();
+                    case (byte)CustomRPC.UncheckedEndGame:
+                        RPCProcedure.UncheckedEndGame(reader.ReadByte());
                         break;
                     // 75
                     case (byte)CustomRPC.DragPlaceBody:
@@ -168,10 +167,6 @@ namespace UltimateMods
                             RPCProcedure.AltruistRevive(body, reader.ReadByte());
                         break;
                     // 85
-                    case (byte)CustomRPC.YakuzaKill:
-                        RPCProcedure.YakuzaKill(reader.ReadByte(), reader.ReadByte(), reader.ReadBoolean());
-                        break;
-                    // 86
                     case (byte)CustomRPC.UncheckedCmdReportDeadBody:
                         byte reportSource = reader.ReadByte();
                         byte reportTarget = reader.ReadByte();
@@ -189,8 +184,10 @@ namespace UltimateMods
             AdminPatch.ResetData();
             CameraPatch.ResetData();
             VitalsPatch.ResetData();
-            Buttons.SetCustomButtonCooldowns();
-            CustomOverlays.ResetOverlays();
+            CrewmateButtons.SetButtonCooldowns();
+            ImpostorButtons.SetButtonCooldowns();
+            NeutralButtons.SetButtonCooldowns();
+            // CustomOverlays.ResetOverlays();
             MapBehaviorPatch.ResetIcons();
         }
 
@@ -214,7 +211,7 @@ namespace UltimateMods
 
         public static void DynamicMapOption(byte mapId)
         {
-            GameOptionsManager.Instance.CurrentGameOptions.SetByte(ByteOptionNames.MapId, mapId);
+            GameManager.Instance.LogicOptions.currentGameOptions.SetByte(ByteOptionNames.MapId, mapId);
         }
 
         public static void VersionHandshake(int major, int minor, int build, int revision, Guid guid, int clientId)
@@ -231,7 +228,7 @@ namespace UltimateMods
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
-                x => x.setRole((RoleType)roleId)
+                x => x.SetRole((RoleId)roleId)
             );
         }
 
@@ -239,7 +236,7 @@ namespace UltimateMods
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
-                x => x.AddModifier((ModifierType)modId)
+                x => x.AddModifier((ModifierId)modId)
             );
         }
 
@@ -275,9 +272,7 @@ namespace UltimateMods
             PlayerControl target = Helpers.PlayerById(targetId);
             if (sheriff == null || target == null) return;
 
-            Sheriff role = Sheriff.getRole(sheriff);
-            if (role != null)
-                role.NumShots--;
+            if (sheriff != null) Sheriff.ReamingShots--;
 
             if (misfire)
             {
@@ -328,9 +323,7 @@ namespace UltimateMods
         public static void EngineerUsedRepair(byte engineerId)
         {
             PlayerControl engineer = Helpers.PlayerById(engineerId);
-            Engineer role = Engineer.getRole(engineer);
-            if (role != null)
-                role.RemainingFixes--;
+            if (engineer != null) ProEngineer.ReamingCounts--;
         }
 
         public static void UncheckedSetTasks(byte playerId, byte[] taskTypeIds)
@@ -341,9 +334,9 @@ namespace UltimateMods
             GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
 
-        public static void ForceEnd()
+        public static void UncheckedEndGame(byte GameOverReason)
         {
-            AlivePlayer.IsForceEnd = true;
+            OnGameEndPatch.EndGameNavigationPatch.EndGameManagerSetUpPatch.CheckEndCriteriaPatch.UncheckedEndGame((CustomGameOverReason)GameOverReason);
         }
 
         public static void DragPlaceBody(byte playerId)
@@ -357,7 +350,7 @@ namespace UltimateMods
                     {
                         UnderTaker.DraggingBody = true;
                         UnderTaker.BodyId = playerId;
-                        if (GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
+                        if (GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
                         {
                             GameObject vent = GameObject.Find("LowerCentralVent");
                             vent.GetComponent<BoxCollider2D>().enabled = false;
@@ -379,7 +372,7 @@ namespace UltimateMods
                                 false
                             ))
                             {
-                                if (GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
+                                if (GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
                                 {
                                     Array[i].transform.position = newPos;
                                     Array[i].transform.position += new Vector3(0, 0, -0.5f);
@@ -400,7 +393,7 @@ namespace UltimateMods
         public static void UnderTakerReSetValues()
         {
             // Restore UnderTaker values when rewind time
-            if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody)
+            if (PlayerControl.LocalPlayer.IsRole(RoleId.UnderTaker) && UnderTaker.DraggingBody)
             {
                 UnderTaker.DraggingBody = false;
                 UnderTaker.BodyId = 0;
@@ -446,8 +439,8 @@ namespace UltimateMods
             if (player.IsNeutral() && ClearNeutralTasks)
                 player.ClearAllTasks();
 
-            player.eraseAllRoles();
-            player.eraseAllModifiers();
+            player.EraseAllRoles();
+            player.EraseAllModifiers();
         }
 
         public static void JackalCreatesSidekick(byte targetId)
@@ -457,7 +450,7 @@ namespace UltimateMods
 
             FastDestroyableSingleton<RoleManager>.Instance.SetRole(Player, RoleTypes.Crewmate);
             ErasePlayerRoles(Player.PlayerId, true);
-            Player.setRole(RoleType.Sidekick);
+            Player.SetRole(RoleId.Sidekick);
             if (Player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
 
             if (!Jackal.JackalPromotedFromSidekickCanCreateSidekick) Jackal.CanSidekick = false;
@@ -467,7 +460,7 @@ namespace UltimateMods
         {
             PlayerControl sidekick = Helpers.PlayerById(sidekickId);
             ErasePlayerRoles(sidekickId);
-            sidekick.setRole(RoleType.Jackal);
+            sidekick.SetRole(RoleId.Jackal);
         }
 
         public static void ArsonistDouse(byte playerId)
@@ -477,8 +470,8 @@ namespace UltimateMods
 
         public static void ArsonistWin()
         {
-            Arsonist.TriggerArsonistWin = true;
-            var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.isRole(RoleType.Arsonist) && p.IsAlive());
+            UncheckedEndGame((byte)CustomGameOverReason.ArsonistWin);
+            var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.IsRole(RoleId.Arsonist) && p.IsAlive());
             foreach (PlayerControl p in livingPlayers)
             {
                 p.Exiled();
@@ -514,31 +507,6 @@ namespace UltimateMods
             player.NetTransform.SnapTo(new(position.x, position.y + 0.3636f));
 
             CleanBody(target.ParentId);
-        }
-
-        public static void YakuzaKill(byte yakuzaId, byte targetId, bool misfire)
-        {
-            PlayerControl yakuza = Helpers.PlayerById(yakuzaId);
-            PlayerControl target = Helpers.PlayerById(targetId);
-            if (yakuza == null || target == null) return;
-
-            if (yakuza != null)
-                if (!CustomRolesH.YakuzaShareShots.getBool())
-                    Yakuza.NumShots--;
-                else
-                    Yakuza.PublicShots--;
-
-
-            if (misfire)
-            {
-                yakuza.MurderPlayer(yakuza);
-                finalStatuses[yakuzaId] = FinalStatus.Misfire;
-
-                if (!Yakuza.MisfireKillsTarget) return;
-                finalStatuses[targetId] = FinalStatus.Misfire;
-            }
-
-            yakuza.MurderPlayer(target);
         }
 
         public static void UncheckedCmdReportDeadBody(byte sourceId, byte targetId)

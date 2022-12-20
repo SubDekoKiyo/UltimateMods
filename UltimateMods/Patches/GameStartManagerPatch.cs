@@ -84,8 +84,7 @@ namespace UltimateMods.Patches
                     {
                         if (client.Character == null) continue;
                         var dummyComponent = client.Character.GetComponent<DummyBehaviour>();
-                        if (dummyComponent != null && dummyComponent.enabled)
-                            continue;
+                        if (dummyComponent != null && dummyComponent.enabled) continue;
                         else if (!playerVersions.ContainsKey(client.Id))
                         {
                             BlockGameStart = true;

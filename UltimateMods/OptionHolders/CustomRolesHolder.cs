@@ -251,12 +251,12 @@ namespace UltimateMods
             YakuzaMisfireKillsTarget = Create(275, Crewmate, YakuzaBlue, "MisfireKillsTarget", false, YakuzaRate);
 
             /* Modifiers */
-            OpportunistRate = new(2000, Modifier, White, "Opportunist", OpportunistGreen, 15);
+            OpportunistRate = new(2000, Modifiers, White, "Opportunist", OpportunistGreen, 15);
 
-            SunglassesRate = new(2001, Modifier, White, "Sunglasses", SunglassesGray, 15);
-            Sunglass = Create(2002, Modifier, SunglassesGray, "SunglassesEye", 50f, 10f, 90f, 10f, SunglassesRate, format: "FormatPercent");
+            SunglassesRate = new(2001, Modifiers, White, "Sunglasses", SunglassesGray, 15);
+            Sunglass = Create(2002, Modifiers, SunglassesGray, "SunglassesEye", 50f, 10f, 90f, 10f, SunglassesRate, format: "FormatPercent");
 
-            WatcherRate = new(203, Modifier, White, "Watcher", WatcherPurple, 15);
+            WatcherRate = new(203, Modifiers, White, "Watcher", WatcherPurple, 15);
         }
     }
 }

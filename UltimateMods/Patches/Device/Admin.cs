@@ -5,8 +5,8 @@ namespace UltimateMods.Patches
     {
         static Dictionary<SystemTypes, List<Color>> playerColors = new();
         static float adminTimer = 0f;
-        static TMPro.TextMeshPro OutOfTime;
-        static TMPro.TextMeshPro TimeRemaining;
+        static TextMeshPro OutOfTime;
+        static TextMeshPro TimeRemaining;
         static bool clearedIcons = false;
         public static bool isUseAdmin = false;
 
@@ -30,7 +30,7 @@ namespace UltimateMods.Patches
         static void UseAdminTime()
         {
             // Don't waste network traffic if we're out of time.
-            if (Options.RestrictDevices > 0 && Options.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive() && !(PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker)))
+            if (Options.RestrictDevices > 0 && Options.RestrictAdminTime > 0f && PlayerControl.LocalPlayer.IsAlive() && !(PlayerControl.LocalPlayer.IsRole(RoleId.EvilHacker)))
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UseAdminTime, Hazel.SendOption.Reliable, -1);
                 writer.Write(adminTimer);
@@ -108,13 +108,13 @@ namespace UltimateMods.Patches
                     if (TimeRemaining == null)
                     {
                         TimeRemaining = UnityEngine.Object.Instantiate(FastDestroyableSingleton<HudManager>.Instance.TaskPanel.taskText, __instance.transform);
-                        TimeRemaining.alignment = TMPro.TextAlignmentOptions.BottomRight;
+                        TimeRemaining.alignment = TextAlignmentOptions.BottomRight;
                         TimeRemaining.transform.position = Vector3.zero;
                         TimeRemaining.transform.localPosition = new Vector3(3.25f, 5.25f);
                         TimeRemaining.transform.localScale *= 2f;
                         TimeRemaining.color = Palette.White;
                     }
-                    if (PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker))
+                    if (PlayerControl.LocalPlayer.IsRole(RoleId.EvilHacker))
                     {
                         TimeRemaining.gameObject.SetActive(false);
                     }
@@ -287,7 +287,7 @@ namespace UltimateMods.Patches
                                 }
                                 renderer.material.SetColor("_VisorColor", Palette.VisorColor);
                             }*/
-                            if ((PlayerControl.LocalPlayer.isRole(RoleType.EvilHacker) && EvilHacker.canHasBetterAdmin))
+                            if ((PlayerControl.LocalPlayer.IsRole(RoleId.EvilHacker) && EvilHacker.CanHasBetterAdmin))
                             {
                                 renderer.material = newMat;
                                 var color = colors[i];
@@ -342,12 +342,12 @@ namespace UltimateMods.Patches
     {
         public static void Postfix()
         {
-            if (!CustomOptionsH.EnableRecordsAdmin.getBool() && GameOptionsManager.Instance.CurrentGameOptions.MapId == 4)
+            if (!CustomOptionsH.EnableRecordsAdmin.getBool() && GameManager.Instance.LogicOptions.currentGameOptions.MapId == 4)
             {
                 Transform recordsAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Records").FindChild("records_admin_map");
                 GameObject.Destroy(recordsAdmin.gameObject);
             }
-            if (!CustomOptionsH.EnableCockpitAdmin.getBool() && GameOptionsManager.Instance.CurrentGameOptions.MapId == 4)
+            if (!CustomOptionsH.EnableCockpitAdmin.getBool() && GameManager.Instance.LogicOptions.currentGameOptions.MapId == 4)
             {
                 Transform cockpitAdmin = GameObject.Find("Airship(Clone)").transform.FindChild("Cockpit").FindChild("panel_cockpit_map");
                 GameObject.Destroy(cockpitAdmin.gameObject);

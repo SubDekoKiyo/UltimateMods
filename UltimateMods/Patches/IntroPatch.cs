@@ -23,32 +23,28 @@ namespace UltimateMods.Patches
                     player.SetFlipX(true);
                     Options.PlayerIcons[p.PlayerId] = player;
 
-                    if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
+                    if (PlayerControl.LocalPlayer.IsRole(RoleId.BountyHunter))
                     {
                         player.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
                         player.transform.localScale = Vector3.one * 0.4f;
                         player.gameObject.SetActive(false);
                     }
-                    else
-                        player.gameObject.SetActive(false);
+                    else player.gameObject.SetActive(false);
                 }
             }
 
             if (BountyHunter.exists)
             {
-                foreach (var bountyHunter in BountyHunter.allPlayers)
+                if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer.IsRole(RoleId.BountyHunter))
                 {
-                    if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer == bountyHunter)
+                    BountyHunter.BountyUpdateTimer = 0f;
+                    if (FastDestroyableSingleton<HudManager>.Instance != null)
                     {
-                        BountyHunter.BountyUpdateTimer = 0f;
-                        if (FastDestroyableSingleton<HudManager>.Instance != null)
-                        {
-                            Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
-                            BountyHunter.CooldownTimer = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
-                            BountyHunter.CooldownTimer.alignment = TMPro.TextAlignmentOptions.Center;
-                            BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
-                            BountyHunter.CooldownTimer.gameObject.SetActive(true);
-                        }
+                        Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
+                        BountyHunter.CooldownTimer = UnityEngine.Object.Instantiate<TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
+                        BountyHunter.CooldownTimer.alignment = TextAlignmentOptions.Center;
+                        BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
+                        BountyHunter.CooldownTimer.gameObject.SetActive(true);
                     }
                 }
             }
@@ -65,6 +61,7 @@ namespace UltimateMods.Patches
     [HarmonyPatch]
     class IntroPatch
     {
+        public static RoleId roleId = PlayerControl.LocalPlayer.GetRoleId();
         public static void setupIntroTeamIcons(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
             // Intro solo teams
@@ -78,21 +75,11 @@ namespace UltimateMods.Patches
 
         public static void setupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
-            List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer);
-            RoleInfo roleInfo = infos.Where(info => info.roleType != RoleType.NoRole).FirstOrDefault();
-            if (roleInfo == null) return;
             if (PlayerControl.LocalPlayer.IsNeutral())
             {
-                __instance.BackgroundBar.material.color = roleInfo.color;
-                __instance.TeamTitle.text = roleInfo.Name;
-                __instance.TeamTitle.color = roleInfo.color;
-                __instance.ImpostorText.text = "";
-            }
-            if (PlayerControl.LocalPlayer.IsYakuza())
-            {
-                __instance.BackgroundBar.material.color = YakuzaBlue;
-                __instance.TeamTitle.text = ModTranslation.getString("Yakuza");
-                __instance.TeamTitle.color = YakuzaBlue;
+                __instance.BackgroundBar.material.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
+                __instance.TeamTitle.text = PlayerControl.LocalPlayer.GetTranslatedRoleString(roleId);
+                __instance.TeamTitle.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
                 __instance.ImpostorText.text = "";
             }
         }
@@ -109,19 +96,13 @@ namespace UltimateMods.Patches
 
             private static IEnumerator SetupRole(IntroCutscene __instance)
             {
-                List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { });
-                RoleInfo roleInfo = infos.FirstOrDefault();
+                __instance.YouAreText.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
+                __instance.RoleText.text = PlayerControl.LocalPlayer.GetTranslatedRoleString(roleId);
+                __instance.RoleText.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
+                __instance.RoleBlurbText.text = RoleManagement.GetRoleIntroDesc(roleId);
+                __instance.RoleBlurbText.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
 
-                Helpers.Log($"{roleInfo.Name}");
-                Helpers.Log($"{roleInfo.IntroDescription}");
-
-                __instance.YouAreText.color = roleInfo.color;
-                __instance.RoleText.text = roleInfo.Name;
-                __instance.RoleText.color = roleInfo.color;
-                __instance.RoleBlurbText.text = roleInfo.IntroDescription;
-                __instance.RoleBlurbText.color = roleInfo.color;
-
-                if (PlayerControl.LocalPlayer.isRole(RoleType.Madmate))
+                if (PlayerControl.LocalPlayer.IsRole(RoleId.Madmate))
                 {
                     __instance.YouAreText.color = ImpostorRed;
                     __instance.RoleText.text = ModTranslation.getString("Madmate");
@@ -130,17 +111,17 @@ namespace UltimateMods.Patches
                     __instance.RoleBlurbText.color = ImpostorRed;
                 }
 
-                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Opportunist))
+                if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Opportunist))
                 {
                     __instance.RoleBlurbText.text += "\n" + Helpers.cs(OpportunistGreen, String.Format(ModTranslation.getString("OPIntro")));
                 }
 
-                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher))
+                if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Watcher))
                 {
                     __instance.RoleBlurbText.text += "\n" + Helpers.cs(WatcherPurple, String.Format(ModTranslation.getString("WTIntro")));
                 }
 
-                if (PlayerControl.LocalPlayer.hasModifier(ModifierType.Sunglasses))
+                if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Sunglasses))
                 {
                     __instance.RoleBlurbText.text += "\n" + Helpers.cs(SunglassesGray, String.Format(ModTranslation.getString("SGIntro")));
                 }
