@@ -8,6 +8,11 @@ public static class ModifierRoles
         public override string ModifierPostfix() { return "OP"; }
         public override Color ModifierColor() { return OpportunistGreen; }
 
+        public Opportunist()
+        {
+            ModId = modId = ModifierId.Opportunist;
+        }
+
         public static List<PlayerControl> Candidates
         {
             get
@@ -38,6 +43,12 @@ public static class ModifierRoles
         public override string ModifierName() { return "Sunglasses"; }
         public override string ModifierPostfix() { return "SG"; }
         public override Color ModifierColor() { return SunglassesGray; }
+
+        public Sunglasses()
+        {
+            ModId = modId = ModifierId.Sunglasses;
+        }
+
         public static int Vision { get { return Mathf.RoundToInt(CustomRolesH.Sunglass.getFloat()); } }
 
         public static List<PlayerControl> Candidates
@@ -70,6 +81,11 @@ public static class ModifierRoles
         public override string ModifierName() { return "Watcher"; }
         public override string ModifierPostfix() { return "WT"; }
         public override Color ModifierColor() { return WatcherPurple; }
+
+        public Watcher()
+        {
+            ModId = modId = ModifierId.Watcher;
+        }
 
         public static List<PlayerControl> Candidates
         {

@@ -7,6 +7,11 @@ public static class ImpostorRoles
         public override string RoleName() { return "Adversity"; }
         public override Color RoleColor() { return ImpostorRed; }
 
+        public Adversity()
+        {
+            RoleId = roleId = RoleId.Adversity;
+        }
+
         public static bool IsLast = false;
         public static List<CustomArrow> Arrows = new();
         public static float UpdateTimer = 0f;
@@ -76,7 +81,6 @@ public static class ImpostorRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Adversity;
             players = new List<Adversity>();
         }
     }
@@ -85,6 +89,11 @@ public static class ImpostorRoles
     {
         public override string RoleName() { return "BountyHunter"; }
         public override Color RoleColor() { return ImpostorRed; }
+
+        public BountyHunter()
+        {
+            RoleId = roleId = RoleId.BountyHunter;
+        }
 
         public static CustomArrow Arrow;
         public static PlayerControl Bounty;
@@ -180,7 +189,6 @@ public static class ImpostorRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.BountyHunter;
             players = new List<BountyHunter>();
 
             BountyPos = new();
@@ -202,6 +210,11 @@ public static class ImpostorRoles
         public override string RoleName() { return "CustomImpostor"; }
         public override Color RoleColor() { return ImpostorRed; }
 
+        public CustomImpostor()
+        {
+            RoleId = roleId = RoleId.CustomImpostor;
+        }
+
         public static float KillCooldowns { get { return CustomRolesH.CustomImpostorKillCooldown.getFloat(); } }
         public static bool CanUseVents { get { return CustomRolesH.CustomImpostorCanUseVents.getBool(); } }
         public static bool CanSabotage { get { return CustomRolesH.CustomImpostorCanSabotage.getBool(); } }
@@ -221,7 +234,6 @@ public static class ImpostorRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.CustomImpostor;
             players = new List<CustomImpostor>();
         }
     }
@@ -230,6 +242,11 @@ public static class ImpostorRoles
     {
         public override string RoleName() { return "EvilHacker"; }
         public override Color RoleColor() { return ImpostorRed; }
+
+        public EvilHacker()
+        {
+            RoleId = roleId = RoleId.EvilHacker;
+        }
 
         public static bool CanHasBetterAdmin { get { return CustomRolesH.EvilHackerCanHasBetterAdmin.getBool(); } }
 
@@ -252,7 +269,6 @@ public static class ImpostorRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.EvilHacker;
             players = new List<EvilHacker>();
         }
     }
@@ -261,6 +277,11 @@ public static class ImpostorRoles
     {
         public override string RoleName() { return "Teleporter"; }
         public override Color RoleColor() { return ImpostorRed; }
+
+        public Teleporter()
+        {
+            RoleId = roleId = RoleId.Teleporter;
+        }
 
         public enum TeleportTarget
         {
@@ -288,7 +309,6 @@ public static class ImpostorRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Teleporter;
             players = new List<Teleporter>();
         }
     }
@@ -297,6 +317,11 @@ public static class ImpostorRoles
     {
         public override string RoleName() { return "UnderTaker"; }
         public override Color RoleColor() { return ImpostorRed; }
+
+        public UnderTaker()
+        {
+            RoleId = roleId = RoleId.UnderTaker;
+        }
 
         public static Sprite UnderTakerButtonSprite;
 
@@ -391,7 +416,6 @@ public static class ImpostorRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.UnderTaker;
             players = new List<UnderTaker>();
         }
     }

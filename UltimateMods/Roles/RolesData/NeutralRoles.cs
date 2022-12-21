@@ -7,6 +7,11 @@ public static class NeutralRoles
         public override string RoleName() { return "Arsonist"; }
         public override Color RoleColor() { return ArsonistOrange; }
 
+        public Arsonist()
+        {
+            RoleId = roleId = RoleId.Arsonist;
+        }
+
         public static PlayerControl CurrentTarget;
         public static PlayerControl DouseTarget;
         public static List<PlayerControl> DousedPlayers = new();
@@ -104,7 +109,6 @@ public static class NeutralRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Arsonist;
             players = new List<Arsonist>();
 
             CurrentTarget = null;
@@ -119,6 +123,13 @@ public static class NeutralRoles
     {
         public override string RoleName() { return "Jackal"; }
         public override Color RoleColor() { return JackalBlue; }
+
+        public Jackal()
+        {
+            RoleId = roleId = RoleId.Jackal;
+            CanSidekick = CanCreateSidekick;
+        }
+
         public static PlayerControl CurrentTarget;
         public static Sprite JackalSidekickButtonSprite;
         public static List<PlayerControl> BlockTarget = new();
@@ -156,10 +167,8 @@ public static class NeutralRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Jackal;
             players = new List<Jackal>();
 
-            CanSidekick = CanCreateSidekick;
             CurrentTarget = null;
         }
     }
@@ -168,6 +177,11 @@ public static class NeutralRoles
     {
         public override string RoleName() { return "Sidekick"; }
         public override Color RoleColor() { return JackalBlue; }
+
+        public Sidekick()
+        {
+            RoleId = roleId = RoleId.Sidekick;
+        }
 
         public static PlayerControl CurrentTarget;
 
@@ -207,7 +221,6 @@ public static class NeutralRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Sidekick;
             players = new List<Sidekick>();
 
             CurrentTarget = null;
@@ -218,6 +231,11 @@ public static class NeutralRoles
     {
         public override string RoleName() { return "Jester"; }
         public override Color RoleColor() { return JesterPink; }
+
+        public Jester()
+        {
+            RoleId = roleId = RoleId.Jester;
+        }
 
         public static bool CanCallEmergency { get { return CustomRolesH.JesterCanEmergencyMeeting.getBool(); } }
         public static bool CanUseVents { get { return CustomRolesH.JesterCanUseVents.getBool(); } }
@@ -270,7 +288,6 @@ public static class NeutralRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Jester;
             players = new List<Jester>();
         }
     }

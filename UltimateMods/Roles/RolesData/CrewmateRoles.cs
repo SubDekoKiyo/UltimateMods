@@ -12,6 +12,11 @@ public static class CrewmateRoles
         public static DeadBody Target;
         public static float Duration { get { return CustomRolesH.AltruistDuration.getFloat(); } }
 
+        public Altruist()
+        {
+            RoleId = roleId = RoleId.Altruist;
+        }
+
         public static Sprite GetButtonSprite()
         {
             if (AltruistButtonSprite) return AltruistButtonSprite;
@@ -49,7 +54,6 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Altruist;
             players = new List<Altruist>();
 
             Started = false;
@@ -63,6 +67,11 @@ public static class CrewmateRoles
         public override Color RoleColor() { return BakeryYellow; }
         public static float BombRate { get { return CustomRolesH.BakeryBombRate.getFloat(); } }
 
+        public Bakery()
+        {
+            RoleId = roleId = RoleId.Bakery;
+        }
+
         public override void OnMeetingStart() { }
         public override void OnMeetingEnd() { }
         public override void FixedUpdate() { }
@@ -72,7 +81,6 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Bakery;
             players = new List<Bakery>();
         }
     }
@@ -82,6 +90,12 @@ public static class CrewmateRoles
         public override string RoleName() { return "ProEngineer"; }
         public override Color RoleColor() { return EngineerBlue; }
         private static Sprite EngineerRepairButtonSprite;
+
+        public ProEngineer()
+        {
+            RoleId = roleId = RoleId.ProEngineer;
+            ReamingCounts = FixCount;
+        }
 
         public static bool CanFixSabo { get { return CustomRolesH.EngineerCanFixSabo.getBool(); } }
         public static int FixCount { get { return Mathf.RoundToInt(CustomRolesH.EngineerMaxFixCount.getFloat()); } }
@@ -105,10 +119,7 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.ProEngineer;
             players = new List<ProEngineer>();
-
-            ReamingCounts = FixCount;
         }
     }
 
@@ -116,6 +127,11 @@ public static class CrewmateRoles
     {
         public override string RoleName() { return "Lighter"; }
         public override Color RoleColor() { return LighterYellow; }
+
+        public Lighter()
+        {
+            RoleId = roleId = RoleId.Lighter;
+        }
 
         public static Sprite LighterButtonSprite;
         public static float LighterModeLightsOnVision { get { return CustomRolesH.LighterModeLightsOnVision.getFloat(); } }
@@ -149,7 +165,6 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Lighter;
             players = new List<Lighter>();
 
             LightActive = false;
@@ -160,6 +175,11 @@ public static class CrewmateRoles
     {
         public override string RoleName() { return "MadMate"; }
         public override Color RoleColor() { return ImpostorRed; }
+
+        public Madmate()
+        {
+            RoleId = roleId = RoleId.Madmate;
+        }
 
         public static bool CanDieToSheriffOrYakuza { get { return CustomRolesH.MadmateCanDieToSheriffOrYakuza.getBool(); } }
         public static bool CanUseVents { get { return CustomRolesH.MadmateCanEnterVents.getBool(); } }
@@ -225,7 +245,6 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Madmate;
             players = new List<Madmate>();
         }
     }
@@ -234,6 +253,12 @@ public static class CrewmateRoles
     {
         public override string RoleName() { return "Mayor"; }
         public override Color RoleColor() { return MayorGreen; }
+
+        public Mayor()
+        {
+            RoleId = roleId = RoleId.Mayor;
+            ReamingCount = MaxButton;
+        }
 
         public static Sprite MayorMeetingButtonSprite;
         public static int NumVotes { get { return Mathf.RoundToInt(CustomRolesH.MayorNumVotes.getFloat()); } }
@@ -257,10 +282,7 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Mayor;
             players = new List<Mayor>();
-
-            ReamingCount = MaxButton;
         }
     }
 
@@ -268,6 +290,11 @@ public static class CrewmateRoles
     {
         public override string RoleName() { return "Seer"; }
         public override Color RoleColor() { return SeerGreen; }
+
+        public Seer()
+        {
+            RoleId = roleId = RoleId.Seer;
+        }
 
         private static Sprite SoulSprite;
         public static List<Vector3> DeadBodyPositions = new();
@@ -320,7 +347,6 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Seer;
             players = new List<Seer>();
         }
     }
@@ -329,6 +355,12 @@ public static class CrewmateRoles
     {
         public override string RoleName() { return "Sheriff"; }
         public override Color RoleColor() { return SheriffYellow; }
+
+        public Sheriff()
+        {
+            RoleId = roleId = RoleId.Sheriff;
+            ReamingShots = MaxShots;
+        }
 
         public static PlayerControl currentTarget;
         public static float Cooldown { get { return CustomRolesH.SheriffCooldowns.getFloat(); } }
@@ -353,10 +385,7 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Sheriff;
             players = new List<Sheriff>();
-
-            ReamingShots = MaxShots;
         }
     }
 
@@ -364,6 +393,11 @@ public static class CrewmateRoles
     {
         public override string RoleName() { return "Snitch"; }
         public override Color RoleColor() { return SnitchGreen; }
+
+        public Snitch()
+        {
+            RoleId = roleId = RoleId.Snitch;
+        }
 
         public static List<CustomArrow> LocalArrows = new();
         public static int TaskCountForReveal { get { return Mathf.RoundToInt(CustomRolesH.SnitchLeftTasksForReveal.getFloat()); } }
@@ -431,7 +465,6 @@ public static class CrewmateRoles
 
         public override void Clear()
         {
-            RoleId = roleId = RoleId.Snitch;
             players = new List<Snitch>();
 
             if (LocalArrows != null) foreach (CustomArrow Arrow in LocalArrows)

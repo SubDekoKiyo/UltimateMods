@@ -87,7 +87,7 @@ namespace UltimateMods.Patches
             NeutralSettings.Add((byte)RoleId.Arsonist, CustomRolesH.ArsonistRate.data);
 
             CrewSettings.Add((byte)RoleId.Sheriff, CustomRolesH.SheriffRate.data);
-            CrewSettings.Add((byte)RoleId.Engineer, CustomRolesH.EngineerRate.data);
+            CrewSettings.Add((byte)RoleId.ProEngineer, CustomRolesH.EngineerRate.data);
             CrewSettings.Add((byte)RoleId.Madmate, CustomRolesH.MadmateRate.data);
             CrewSettings.Add((byte)RoleId.Bakery, CustomRolesH.BakeryRate.data);
             CrewSettings.Add((byte)RoleId.Snitch, CustomRolesH.SnitchRate.data);

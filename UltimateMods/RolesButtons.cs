@@ -122,7 +122,7 @@ public static class RolesButtons
             },
             () =>
             {
-                return PlayerControl.LocalPlayer.IsRole(RoleId.Engineer) && !PlayerControl.LocalPlayer.Data.IsDead && ProEngineer.ReamingCounts > 0 && ProEngineer.CanFixSabo;
+                return PlayerControl.LocalPlayer.IsRole(RoleId.ProEngineer) && !PlayerControl.LocalPlayer.Data.IsDead && ProEngineer.ReamingCounts > 0 && ProEngineer.CanFixSabo;
             },
             () =>
             {
@@ -133,10 +133,8 @@ public static class RolesButtons
 
                 if (EngineerRepairButtonText != null)
                 {
-                    if (ProEngineer.ReamingCounts > 0)
-                        EngineerRepairButtonText.text = String.Format(ModTranslation.getString("ReamingCount"), ProEngineer.ReamingCounts);
-                    else
-                        EngineerRepairButtonText.text = "";
+                    if (ProEngineer.ReamingCounts > 0) EngineerRepairButtonText.text = String.Format(ModTranslation.getString("ReamingCount"), ProEngineer.ReamingCounts);
+                    else EngineerRepairButtonText.text = "";
                 }
 
                 return sabotageActive && ProEngineer.ReamingCounts > 0 && PlayerControl.LocalPlayer.CanMove;
