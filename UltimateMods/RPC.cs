@@ -502,6 +502,7 @@ namespace UltimateMods
 
             var player = Helpers.PlayerById(parentId);
             player.Revive();
+            player.SetRole(RoleTypes.Crewmate);
             player.NetTransform.SnapTo(new(position.x, position.y + 0.3636f));
 
             CleanBody(target.ParentId);
