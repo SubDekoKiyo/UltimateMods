@@ -307,6 +307,8 @@ public static class RolesButtons
         EvilHackerAdminButton = new(
             () =>
             {
+                if (!CustomRolesH.EvilHackerCanMoveEvenIfUsesAdmin.getBool()) PlayerControl.LocalPlayer.NetTransform.Halt();
+
                 FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions()
                 {
                     Mode = MapOptions.Modes.CountOverlay,
