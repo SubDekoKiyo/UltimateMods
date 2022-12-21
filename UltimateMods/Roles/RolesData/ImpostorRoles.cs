@@ -231,19 +231,16 @@ public static class ImpostorRoles
         public override string RoleName() { return "EvilHacker"; }
         public override Color RoleColor() { return ImpostorRed; }
 
-        public static Sprite AdminButtonSprite;
         public static bool CanHasBetterAdmin { get { return CustomRolesH.EvilHackerCanHasBetterAdmin.getBool(); } }
 
         public static Sprite GetButtonSprite()
         {
-            if (AdminButtonSprite) return AdminButtonSprite;
-            byte mapId = GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId);
+            byte mapId = GameOptionsManager.Instance.CurrentGameOptions.MapId;
             UseButtonSettings button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.PolusAdminButton]; // Polus
-            if (mapId == 0 || mapId == 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
+            if (mapId is 0 or 3) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AdminMapButton]; // Skeld || Dleks
             else if (mapId == 1) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.MIRAAdminButton]; // Mira HQ
             else if (mapId == 4) button = FastDestroyableSingleton<HudManager>.Instance.UseButton.fastUseSettings[ImageNames.AirshipAdminButton]; // Airship
-            AdminButtonSprite = button.Image;
-            return AdminButtonSprite;
+            return button.Image;
         }
 
         public override void OnMeetingStart() { }
@@ -384,9 +381,9 @@ public static class ImpostorRoles
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
                 RPCProcedure.CleanBody(BodyId);
                 DraggingBody = false;
-                if (HasDuration && ImpostorButtons.UnderTakerButton.IsEffectActive)
+                if (HasDuration && RolesButtons.UnderTakerButton.IsEffectActive)
                 {
-                    ImpostorButtons.UnderTakerButton.Timer = 0f;
+                    RolesButtons.UnderTakerButton.Timer = 0f;
                     return;
                 }
             }

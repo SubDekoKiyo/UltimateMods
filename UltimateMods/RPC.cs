@@ -184,9 +184,7 @@ namespace UltimateMods
             AdminPatch.ResetData();
             CameraPatch.ResetData();
             VitalsPatch.ResetData();
-            CrewmateButtons.SetButtonCooldowns();
-            ImpostorButtons.SetButtonCooldowns();
-            NeutralButtons.SetButtonCooldowns();
+            RolesButtons.SetButtonCooldowns();
             // CustomOverlays.ResetOverlays();
             MapBehaviorPatch.ResetIcons();
         }
