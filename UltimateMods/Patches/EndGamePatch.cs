@@ -247,13 +247,13 @@ namespace UltimateMods.EndGame
                 if (oppWin) AdditionalTempData.additionalWinConditions.Add(WinCondition.OpportunistWin);
             }
 
-            if (Madmate.allPlayers.Count > 0 && TempData.winners.ToArray().Any(x => x.IsImpostor))
+            if (Madmate.exists && ImpostorWin)
             {
-                if (!Madmate.CanWinTaskEnd || (Madmate.HasTasks && Madmate.CanWinTaskEnd && Madmate.TasksComplete(PlayerControl.LocalPlayer)))
+                if (!Madmate.HasTasks || (Madmate.HasTasks && Madmate.CanWinTaskEnd && Madmate.TasksComplete(PlayerControl.LocalPlayer)))
                 {
                     foreach (var p in Madmate.allPlayers)
                     {
-                        WinningPlayerData wpd = new WinningPlayerData(p.Data);
+                        WinningPlayerData wpd = new(p.Data);
                         TempData.winners.Add(wpd);
                         AdditionalTempData.WinningPlayers.Add(p.Data.PlayerId);
                     }
