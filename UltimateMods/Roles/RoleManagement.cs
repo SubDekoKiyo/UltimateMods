@@ -9,8 +9,20 @@ public static class RoleManagement
             foreach (var t in RoleData.allRoleIds)
                 if (roleId == t.Key) return role.RoleName();
         }
-        if (player.IsImpostor()) return ModTranslation.getString("Impostor");
-        if (player.IsCrew()) return ModTranslation.getString("Crewmate");
+        if (player.IsImpostor()) return "Impostor";
+        if (player.IsCrew()) return "Crewmate";
+        return "NoData";
+    }
+
+    public static string GetRoleString(this PlayerControl player)
+    {
+        foreach (var role in Role.allRoles)
+        {
+            foreach (var t in RoleData.allRoleIds)
+                if (player.GetRoleId() == t.Key) return role.RoleName();
+        }
+        if (player.IsImpostor()) return "Impostor";
+        if (player.IsCrew()) return "Crewmate";
         return "NoData";
     }
 
@@ -25,6 +37,18 @@ public static class RoleManagement
         {
             foreach (var t in RoleData.allRoleIds)
                 if (roleId == t.Key) return role.RoleColor();
+        }
+        if (player.IsImpostor()) return ImpostorRed;
+        if (player.IsCrew()) return CrewmateBlue;
+        return White;
+    }
+
+    public static Color GetRoleColor(this PlayerControl player)
+    {
+        foreach (var role in Role.allRoles)
+        {
+            foreach (var t in RoleData.allRoleIds)
+                if (player.GetRoleId() == t.Key) return role.RoleColor();
         }
         if (player.IsImpostor()) return ImpostorRed;
         if (player.IsCrew()) return CrewmateBlue;

@@ -26,7 +26,7 @@ public static class RolesButtons
         AltruistButton.Timer = AltruistButton.MaxTimer = 0f;
         EngineerRepairButton.MaxTimer = 0f;
         LighterButton.MaxTimer = Lighter.Cooldown; LighterButton.EffectDuration = Lighter.Duration;
-        MayorMeetingButton.MaxTimer = GameManager.Instance.LogicOptions.currentGameOptions.GetInt(Int32OptionNames.EmergencyCooldown);
+        MayorMeetingButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.EmergencyCooldown);
         SheriffKillButton.MaxTimer = Sheriff.Cooldown;
         EvilHackerAdminButton.MaxTimer = 0f;
         TeleportButton.MaxTimer = Teleporter.Cooldown;

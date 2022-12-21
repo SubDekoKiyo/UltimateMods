@@ -226,8 +226,7 @@ namespace UltimateMods
             {
                 task.Text += cs(JackalBlue, ModTranslation.getString("JackalWithSidekick"));
             }
-
-            task.Text = ModTranslation.getString(player.GetRoleString(player.GetRoleId())) + ": " + RoleManagement.GetRoleShortDesc(player.GetRoleId());
+            else task.Text = cs(player.GetRoleColor(), ModTranslation.getString(player.GetRoleString()) + ": " + RoleManagement.GetRoleShortDesc(player.GetRoleId()));
             player.myTasks.Insert(0, task);
         }
 
