@@ -9,6 +9,13 @@ public static class RoleManagement
         return false;
     }
 
+    public static RoleId GetRoleId(this PlayerControl player)
+    {
+        foreach (var t in RoleData.allRoleIds)
+            if (player.IsRole(t.Key)) return t.Key;
+        return RoleId.NoRole;
+    }
+
     public static void SetRole(this PlayerControl player, RoleId roleId)
     {
         foreach (var t in RoleData.allRoleIds)
