@@ -73,7 +73,7 @@ public static class RoleManagement
     public static string GetRoleAndModString(this PlayerControl player, RoleId roleId, ModifierId modifierId = 0)
     {
         string data = player.GetTranslatedRoleString(roleId);
-        if (modifierId > 0) data += player.GetTranslatedModifierString(modifierId);
+        if (modifierId > 0) data += Helpers.cs(player.GetModifierColor(), player.GetModifierPostfixString(modifierId));
         return data;
     }
 
