@@ -352,7 +352,7 @@ namespace UltimateMods.EndGame
 
                     if (AdditionalTempData.winCondition == WinCondition.JesterWin)
                     {
-                        bonusText = ModTranslation.getString("JesterWin");
+                        bonusText = "JesterWin";
                         textRenderer.color = JesterPink;
                         __instance.BackgroundBar.material.SetColor("_Color", JesterPink);
                         if (Options.EnableCustomSounds)
@@ -363,29 +363,29 @@ namespace UltimateMods.EndGame
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.JackalWin)
                     {
-                        bonusText = ModTranslation.getString("TeamJackalWin");
+                        bonusText = "TeamJackalWin";
                         textRenderer.color = JackalBlue;
                         __instance.BackgroundBar.material.SetColor("_Color", JackalBlue);
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.ArsonistWin)
                     {
-                        bonusText = ModTranslation.getString("ArsonistWin");
+                        bonusText = "ArsonistWin";
                         textRenderer.color = ArsonistOrange;
                         __instance.BackgroundBar.material.SetColor("_Color", ArsonistOrange);
                     }
                     else if (AdditionalTempData.gameOverReason is GameOverReason.HumansByTask or GameOverReason.HumansByVote)
                     {
-                        bonusText = ModTranslation.getString("CrewmateWin");
+                        bonusText = "CrewmateWin";
                         textRenderer.color = CrewmateBlue;
                     }
                     else if (AdditionalTempData.gameOverReason is GameOverReason.ImpostorByKill or GameOverReason.ImpostorByVote or GameOverReason.ImpostorBySabotage)
                     {
-                        bonusText = ModTranslation.getString("ImpostorWin");
+                        bonusText = "ImpostorWin";
                         textRenderer.color = ImpostorRed;
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
                     {
-                        bonusText = ModTranslation.getString("EveryoneLose");
+                        bonusText = "EveryoneLose";
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
                         if (Options.EnableCustomSounds)
@@ -396,7 +396,7 @@ namespace UltimateMods.EndGame
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.ForceEnd)
                     {
-                        __instance.WinText.text = ModTranslation.getString("ForceEnd");
+                        bonusText = "ForceEnd";
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
                         SoundManager.Instance.StopSound(__instance.ImpostorStinger);
@@ -416,9 +416,9 @@ namespace UltimateMods.EndGame
                         }
                     }
 
-                    if (extraText.Length > 0)
+                    if (extraText.Length > 0 && AdditionalTempData.winCondition != WinCondition.ForceEnd)
                     {
-                        textRenderer.text = string.Format(ModTranslation.getString(bonusText + "Extra"), extraText);
+                        textRenderer.text = bonusText + string.Format(ModTranslation.getString(bonusText + "Extra"), extraText);
                     }
                     else
                     {
