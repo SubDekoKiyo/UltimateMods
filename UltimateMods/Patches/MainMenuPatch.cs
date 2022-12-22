@@ -90,15 +90,15 @@ namespace UltimateMods.Patches
                     popUp.gameObject.SetActive(true);
                     popUp.Init();
                     // SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, "test");
-                    string creditsString = ModTranslation.getString("DevName");
-                    creditsString += ModTranslation.getString("CreditsText");
+                    string creditsString = LocalizationManager.GetString(TransKey.DevName);
+                    creditsString += LocalizationManager.GetString("CreditsText");
                     popUp.AnnounceTextMeshPro.text = creditsString;
                     __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) =>
                     {
                         if (p == 1)
                         {
                             var titleText = GameObject.Find("Title_Text").GetComponent<TextMeshPro>();
-                            if (titleText != null) titleText.text = ModTranslation.getString("CreditsTitle");
+                            if (titleText != null) titleText.text = LocalizationManager.GetString(TransKey.CreditsTitle);
                         }
                     })));
                 });

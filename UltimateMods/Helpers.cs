@@ -233,7 +233,7 @@ namespace UltimateMods
 
                 if (roleInfo.RoleId is RoleId.Jackal && Jackal.CanSidekick)
                 {
-                    task.Text += cs(roleInfo.RoleColor, ModTranslation.getString("JackalWithSidekick"));
+                    task.Text += cs(roleInfo.RoleColor, LocalizationManager.GetString(TransKey.JackalWithSidekick));
                 }
                 else
                 {

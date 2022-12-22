@@ -22,7 +22,7 @@ namespace UltimateMods.Modules
             var text = button.transform.GetChild(0).GetComponent<TMP_Text>();
             __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
             {
-                text.SetText(ModTranslation.getString("UpdateButton"));
+                text.SetText(LocalizationManager.GetString(TransKey.UpdateButton));
             })));
 
             buttonSprite.color = text.color = Color.red;
@@ -82,7 +82,7 @@ namespace UltimateMods.Modules
         {
             if (ModUpdater.hasUpdate)
             {
-                string info = ModTranslation.getString("Updating");
+                string info = LocalizationManager.GetString(TransKey.Updating);
                 ModUpdater.InfoPopup.Show(info); // Show originally
                 if (updateTask == null)
                 {
@@ -92,12 +92,12 @@ namespace UltimateMods.Modules
                     }
                     else
                     {
-                        info = ModTranslation.getString("UpdateManually");
+                        info = LocalizationManager.GetString(TransKey.UpdateManually);
                     }
                 }
                 else
                 {
-                    info = ModTranslation.getString("UpdateInProgress");
+                    info = LocalizationManager.GetString(TransKey.UpdateInProgress);
                     GameObject CloseButton = GameObject.Find("TwitchPopup(Clone)/ExitGame");
                     PassiveButton passiveButton = CloseButton.GetComponent<PassiveButton>();
                     passiveButton.OnClick = new Button.ButtonClickedEvent();
@@ -110,7 +110,7 @@ namespace UltimateMods.Modules
             }
             else
             {
-                string info = ModTranslation.getString("NoUpdate");
+                string info = LocalizationManager.GetString(TransKey.NoUpdate);
                 ModUpdater.InfoPopup.Show(info);
             }
         }
@@ -151,7 +151,7 @@ namespace UltimateMods.Modules
                     return false; // Something went wrong
                 }
 
-                string changeLog = ModTranslation.getString("Release");
+                string changeLog = LocalizationManager.GetString("Release");
                 if (changeLog != null) announcement = changeLog;
                 // check version
                 System.Version ver = System.Version.Parse(tagname.Replace("v", ""));
@@ -159,7 +159,7 @@ namespace UltimateMods.Modules
                 if (diff < 0)
                 { // Update required
                     hasUpdate = true;
-                    announcement = string.Format(ModTranslation.getString("Release"), ver, announcement);
+                    announcement = string.Format(LocalizationManager.GetString("Release"), ver, announcement);
 
                     JToken assets = data["assets"];
                     if (!assets.HasValues)
@@ -181,7 +181,7 @@ namespace UltimateMods.Modules
                 }
                 else
                 {
-                    announcement = string.Format(ModTranslation.getString("release"), ver, announcement);
+                    announcement = string.Format(LocalizationManager.GetString("release"), ver, announcement);
                 }
             }
             catch (System.Exception ex)
@@ -220,7 +220,7 @@ namespace UltimateMods.Modules
                         responseStream.CopyTo(fileStream);
                     }
                 }
-                showPopup(ModTranslation.getString("UpdateRestart"));
+                showPopup(LocalizationManager.GetString(TransKey.UpdateRestart));
                 return true;
             }
             catch (System.Exception ex)
@@ -228,7 +228,7 @@ namespace UltimateMods.Modules
                 UltimateModsPlugin.Instance.Log.LogError(ex.ToString());
                 System.Console.WriteLine(ex);
             }
-            showPopup(ModTranslation.getString("UpdateFailed"));
+            showPopup(LocalizationManager.GetString(TransKey.UpdateFailed));
             return false;
         }
         private static void showPopup(string message)

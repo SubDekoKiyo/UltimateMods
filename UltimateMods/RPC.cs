@@ -424,7 +424,7 @@ namespace UltimateMods
         {
             var p = Helpers.PlayerById(playerId);
             PlayerControl.LocalPlayer.transform.position = p.transform.position;
-            new CustomMessage(string.Format(ModTranslation.getString("TeleporterTeleported"), p.cosmetics.nameText.text), 3);
+            new CustomMessage(string.Format(LocalizationManager.GetString(TransKey.TeleporterTeleported), p.cosmetics.nameText.text), 3);
             SoundManager.Instance.PlaySound(Teleport, false, 0.8f);
         }
 

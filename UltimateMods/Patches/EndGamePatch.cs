@@ -412,7 +412,7 @@ namespace UltimateMods.EndGame
                         switch (w)
                         {
                             case WinCondition.OpportunistWin:
-                                extraText += ModTranslation.getString("OpportunistExtra");
+                                extraText += LocalizationManager.GetString(TransKey.OpportunistExtra);
                                 break;
                             default:
                                 break;
@@ -421,28 +421,28 @@ namespace UltimateMods.EndGame
 
                     if (extraText.Length > 0 && AdditionalTempData.winCondition != WinCondition.ForceEnd)
                     {
-                        textRenderer.text = bonusText + string.Format(ModTranslation.getString(bonusText + "Extra"), extraText);
+                        textRenderer.text = bonusText + string.Format(LocalizationManager.GetString(bonusText + "Extra"), extraText);
                     }
                     else
                     {
-                        textRenderer.text = ModTranslation.getString(bonusText);
+                        textRenderer.text = LocalizationManager.GetString(bonusText);
                     }
 
                     if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageO2)
                     {
-                        textRenderer.text += ($"\n" + ModTranslation.getString("O2Win"));
+                        textRenderer.text += ($"\n" + LocalizationManager.GetString(TransKey.O2Win));
                     }
                     else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.SabotageReactor)
                     {
-                        textRenderer.text += ($"\n" + ModTranslation.getString("ReactorWin"));
+                        textRenderer.text += ($"\n" + LocalizationManager.GetString(TransKey.ReactorWin));
                     }
                     else if (AdditionalTempData.gameOverReason == GameOverReason.HumansByTask)
                     {
-                        textRenderer.text += ($"\n" + ModTranslation.getString("TaskWin"));
+                        textRenderer.text += ($"\n" + LocalizationManager.GetString(TransKey.TaskWin));
                     }
                     else if (AdditionalTempData.gameOverReason == (GameOverReason)CustomGameOverReason.ForceEnd)
                     {
-                        textRenderer.text += ($"\n" + ModTranslation.getString("FinishedByHost"));
+                        textRenderer.text += ($"\n" + LocalizationManager.GetString(TransKey.FinishedByHost));
                     }
 
                     if (Options.ShowRoleSummary)
@@ -453,7 +453,7 @@ namespace UltimateMods.EndGame
                         roleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
 
                         var RoleSummaryText = new StringBuilder();
-                        RoleSummaryText.AppendLine(ModTranslation.getString("RoleSummaryText"));
+                        RoleSummaryText.AppendLine(LocalizationManager.GetString(TransKey.RoleSummaryText));
                         AdditionalTempData.playerRoles.Sort((x, y) =>
                         {
                             RoleInfo roleX = x.Roles.FirstOrDefault();
@@ -475,7 +475,7 @@ namespace UltimateMods.EndGame
                         foreach (var data in AdditionalTempData.playerRoles)
                         {
                             var TaskInfo = data.TasksTotal > 0 ? $"<color=#FAD934FF>{data.TasksCompleted}/{data.TasksTotal}</color>" : "";
-                            string AliveDead = ModTranslation.getString("RoleSummary" + data.Status.ToString(), def: "-");
+                            string AliveDead = LocalizationManager.GetString("RoleSummary" + data.Status.ToString(), def: "-");
                             string result = $"{data.PlayerName/* + data.NameSuffix*/}<pos=18.5%>{TaskInfo}<pos=25%>{AliveDead}<pos=34%>{data.RoleString}";
 
                             RoleSummaryText.AppendLine(result);

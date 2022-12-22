@@ -81,7 +81,7 @@ namespace UltimateMods.Patches
                     }
 
                     string timeString = TimeSpan.FromSeconds(Options.RestrictVitalsTime).ToString(@"mm\:ss\.ff");
-                    TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                    TimeRemaining.text = String.Format(LocalizationManager.GetString(TransKey.TimeRemaining), timeString);
                     TimeRemaining.gameObject.SetActive(true);
                 }
 

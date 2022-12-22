@@ -3,7 +3,7 @@ namespace UltimateMods.Roles
     [HarmonyPatch]
     public class ModifierT : ModifierBase<ModifierT>
     {
-        public static string Postfix { get { return ModTranslation.getString("ModifierPostfix"); } }
+        public static string Postfix { get { return LocalizationManager.GetString("ModifierPostfix"); } }
 
         public static List<PlayerControl> Candidates
         {

@@ -88,7 +88,7 @@ namespace UltimateMods.Patches
                         else if (!playerVersions.ContainsKey(client.Id))
                         {
                             BlockGameStart = true;
-                            message += $"<color=#00a2ff>{ModTranslation.getString("ErrorNotInstalled", client.Character.Data.PlayerName)}\n</color>";
+                            message += $"<color=#00a2ff>{LocalizationManager.GetString(TransKey.ErrorNotInstalled, client.Character.Data.PlayerName)}\n</color>";
                         }
                         else
                         {
@@ -96,17 +96,17 @@ namespace UltimateMods.Patches
                             int diff = UltimateModsPlugin.Version.CompareTo(PV.version);
                             if (diff > 0)
                             {
-                                message += $"<color=#00a2ff>{ModTranslation.getString("ErrorOlderVersion", client.Character.Data.PlayerName)} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
+                                message += $"<color=#00a2ff>{LocalizationManager.GetString(TransKey.ErrorOlderVersion, client.Character.Data.PlayerName)} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
                                 BlockGameStart = true;
                             }
                             else if (diff < 0)
                             {
-                                message += $"<color=#00a2ff>{ModTranslation.getString("ErrorNewerVersion", client.Character.Data.PlayerName)} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
+                                message += $"<color=#00a2ff>{LocalizationManager.GetString(TransKey.ErrorNewerVersion, client.Character.Data.PlayerName)} (Version{playerVersions[client.Id].version.ToString()})\n</color>";
                                 BlockGameStart = true;
                             }
                             else if (!PV.GuidMatches())
                             { // version presumably matches, check if Guid matches
-                                message += $"<color=#00a2ff>{ModTranslation.getString("ErrorWrongVersion", client.Character.Data.PlayerName)} Version{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
+                                message += $"<color=#00a2ff>{LocalizationManager.GetString(TransKey.ErrorWrongVersion, client.Character.Data.PlayerName)} Version{playerVersions[client.Id].version.ToString()} <size=30%>({PV.guid.ToString()})</size>\n</color>";
                                 BlockGameStart = true;
                             }
                         }
@@ -138,7 +138,7 @@ namespace UltimateMods.Patches
                             SceneChanger.ChangeScene("MainMenu");
                         }
 
-                        __instance.GameStartText.text = String.Format(ModTranslation.getString("ErrorHostNoVersion"), Math.Round(10 - kickingTimer));
+                        __instance.GameStartText.text = String.Format(LocalizationManager.GetString(TransKey.ErrorHostNoVersion), Math.Round(10 - kickingTimer));
                         __instance.GameStartText.transform.localPosition = __instance.StartButton.transform.localPosition + Vector3.up * 2;
                     }
                     else

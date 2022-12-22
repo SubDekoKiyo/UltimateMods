@@ -46,7 +46,7 @@ namespace UltimateMods.Roles
                 () => { }
             );
 
-            TemplateButton.ButtonText = ModTranslation.getString("ButtonText");
+            TemplateButton.ButtonText = LocalizationManager.GetString("ButtonText");
             TemplateButton.EffectCancellable = true;
             TemplateButtonText = GameObject.Instantiate(TemplateButton.actionButton.cooldownTimerText, TemplateButton.actionButton.cooldownTimerText.transform.parent);
             TemplateButtonText.text = "";

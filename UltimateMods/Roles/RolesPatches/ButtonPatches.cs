@@ -105,7 +105,7 @@ public static class ButtonPatches
                 if (PlayerControl.LocalPlayer.IsRole(RoleId.Jester) && !Jester.CanCallEmergency)
                 {
                     roleCanCallEmergency = false;
-                    statusText = ModTranslation.getString("JesterMeetingButton");
+                    statusText = LocalizationManager.GetString(TransKey.JesterMeetingButton);
                 }
 
                 if (!roleCanCallEmergency)
@@ -125,7 +125,7 @@ public static class ButtonPatches
                     int teamRemaining = Mathf.Max(0, MaxNumberOfMeetings - MeetingsCount);
                     int remaining = Mathf.Min(localRemaining, (PlayerControl.LocalPlayer.IsRole(RoleId.Mayor)) ? 1 : teamRemaining);
 
-                    __instance.StatusText.text = String.Format(ModTranslation.getString("MeetingStatus"), PlayerControl.LocalPlayer.name, localRemaining.ToString(), teamRemaining.ToString());
+                    __instance.StatusText.text = String.Format(LocalizationManager.GetString(TransKey.MeetingStatus), PlayerControl.LocalPlayer.name, localRemaining.ToString(), teamRemaining.ToString());
                     __instance.NumberText.text = "";
                     __instance.ButtonActive = remaining > 0;
                     __instance.ClosedLid.gameObject.SetActive(!__instance.ButtonActive);
@@ -225,7 +225,7 @@ public static class ButtonPatches
                 if (BlockButtonPatch.IsBlocked(target, pc))
                 {
                     __instance.currentTarget = null;
-                    __instance.buttonLabelText.text = ModTranslation.getString("ButtonBlocked");
+                    __instance.buttonLabelText.text = LocalizationManager.GetString(TransKey.ButtonBlocked);
                     __instance.enabled = false;
                     __instance.graphic.color = Palette.DisabledClear;
                     __instance.graphic.material.SetFloat("_Desat", 0f);

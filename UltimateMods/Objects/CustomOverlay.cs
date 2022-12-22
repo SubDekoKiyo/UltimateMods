@@ -248,7 +248,7 @@ namespace UltimateMods.Objects
 
                 List<string> gameOptions = GameManager.Instance.LogicOptions.currentGameOptions.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
                 infoOverlayRules.text = string.Join("\n", gameOptions);
-                string PlayerText = ModTranslation.getString("PlatformTitle");
+                string PlayerText = LocalizationManager.GetString(TransKey.PlatformTitle);
                 foreach (InnerNet.ClientData Client in AmongUsClient.Instance.allClients.ToArray())
                 {
                     if (Client == null) continue;

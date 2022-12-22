@@ -20,7 +20,7 @@ namespace UltimateMods.Roles.Patches
 
                 if (Probability >= 100 - Bakery.BombRate && !(Bakery.BombRate == 0f)) Bomb = true; // Bomb Bread
 
-                BakeryText.text = Bomb ? ModTranslation.getString("BombBakeryText") : ModTranslation.getString("MakeBreadText");
+                BakeryText.text = Bomb ? LocalizationManager.GetString(TransKey.BombBakeryText) : LocalizationManager.GetString(TransKey.MakeBreadText);
                 BakeryText.gameObject.SetActive(true);
 
                 if (GameManager.Instance.LogicOptions.currentGameOptions.GetBool(BoolOptionNames.ConfirmImpostor))

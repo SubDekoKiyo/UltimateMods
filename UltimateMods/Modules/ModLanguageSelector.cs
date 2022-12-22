@@ -1,13 +1,5 @@
 namespace UltimateMods.Modules
 {
-    public enum SupportedLang
-    {
-        Japanese = 0,
-        English = 1,
-        SChinese = 2,
-        Indonesia = 3,
-    }
-
     [HarmonyPatch]
     public static class ModLanguageSelector
     {
@@ -19,7 +11,7 @@ namespace UltimateMods.Modules
         public static void Initialize()
         {
             languageNum = UltimateModsPlugin.LanguageNum.Value;
-            language = ModTranslation.getString("AllLanguage");
+            language = LocalizationManager.GetString(TransKey.LanguageName);
         }
 
         [HarmonyPostfix]
@@ -45,7 +37,7 @@ namespace UltimateMods.Modules
             langOption.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.down * 0.5f + Vector3.right * 1.35f;
 
             langOption.gameObject.SetActive(true);
-            langOption.Text.text = String.Format(ModTranslation.getString("Language"), language);
+            langOption.Text.text = String.Format(LocalizationManager.GetString(TransKey.Language), language);
             var langOptionButton = langOption.GetComponent<PassiveButton>();
             langOptionButton.OnClick = new ButtonClickedEvent();
             langOptionButton.OnClick.AddListener((Action)(() =>
@@ -58,13 +50,14 @@ namespace UltimateMods.Modules
         {
             try
             {
-                if (languageNum == (int)SupportedLang.Indonesia) languageNum = UltimateModsPlugin.LanguageNum.Value = (int)SupportedLang.Japanese;
+                if (languageNum == (int)ModSupportedLangs.Indonesia) languageNum = UltimateModsPlugin.LanguageNum.Value = (int)ModSupportedLangs.Japanese;
                 else languageNum++;
+
                 ClientOptionsPatch.updateTranslations();
                 VanillaOptionsPatch.updateTranslations();
-                language = ModTranslation.getString("AllLanguage");
-                langOption.Text.text = String.Format(ModTranslation.getString("Language"), language);
-                UltimateModsPlugin.Logger.LogInfo("Changed Language");
+                language = LocalizationManager.GetString(TransKey.LanguageName);
+                langOption.Text.text = String.Format(LocalizationManager.GetString(TransKey.Language), language);
+                UltimateModsPlugin.Logger.LogInfo($"Changed Languaged to {language}, Id is{languageNum}.");
                 UltimateModsPlugin.LanguageNum.Value++;
             }
             catch (Exception e)

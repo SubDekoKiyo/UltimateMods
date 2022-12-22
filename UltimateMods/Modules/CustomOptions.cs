@@ -180,14 +180,14 @@ namespace UltimateMods.Modules
             string sel = selections[selection].ToString();
             if (format != "")
             {
-                return string.Format(ModTranslation.getString(format), sel);
+                return string.Format(LocalizationManager.GetString(format), sel);
             }
-            return ModTranslation.getString(sel);
+            return LocalizationManager.GetString(sel);
         }
 
         public virtual string getName()
         {
-            return ModTranslation.getString(name);
+            return LocalizationManager.GetString(name);
         }
 
         public virtual Color getColor()
@@ -405,32 +405,32 @@ namespace UltimateMods.Modules
         {
             if (GameObject.Find("UMSettings") != null)
             { // Settings setup has already been performed, fixing the title of the tab and returning
-                GameObject.Find("UMSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("GeneralSettings"));
+                GameObject.Find("UMSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(LocalizationManager.GetString(TransKey.GeneralSettings));
                 return;
             }
             if (GameObject.Find("ImpostorSettings") != null)
             {
-                GameObject.Find("ImpostorSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("ImpostorSettings"));
+                GameObject.Find("ImpostorSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(LocalizationManager.GetString(TransKey.ImpostorSettings));
                 return;
             }
             if (GameObject.Find("NeutralSettings") != null)
             {
-                GameObject.Find("NeutralSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("NeutralSettings"));
+                GameObject.Find("NeutralSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(LocalizationManager.GetString(TransKey.NeutralSettings));
                 return;
             }
             if (GameObject.Find("CrewmateSettings") != null)
             {
-                GameObject.Find("CrewmateSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("CrewmateSettings"));
+                GameObject.Find("CrewmateSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(LocalizationManager.GetString(TransKey.CrewmateSettings));
                 return;
             }
             if (GameObject.Find("ModifierSettings") != null)
             {
-                GameObject.Find("ModifierSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("ModifierSettings"));
+                GameObject.Find("ModifierSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(LocalizationManager.GetString(TransKey.ModifierSettings));
                 return;
             }
             if (GameObject.Find("OtherSettings") != null)
             {
-                GameObject.Find("OtherSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(ModTranslation.getString("OtherSettings"));
+                GameObject.Find("OtherSettings").transform.FindChild("GameGroup").FindChild("Text").GetComponent<TextMeshPro>().SetText(LocalizationManager.GetString(TransKey.OtherSettings));
                 return;
             }
 
@@ -809,7 +809,7 @@ namespace UltimateMods.Modules
         public static int NumPages;
         public static string tl(string key)
         {
-            return ModTranslation.getString(key);
+            return LocalizationManager.GetString(key);
         }
 
         public static string optionToString(CustomOption option)

@@ -84,7 +84,7 @@ namespace UltimateMods.Modules
             moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition;
 
             moreOptions.gameObject.SetActive(true);
-            moreOptions.Text.text = ModTranslation.getString("VanillaOptionsText");
+            moreOptions.Text.text = LocalizationManager.GetString(TransKey.VanillaOptionsText);
             var moreOptionsButton = moreOptions.GetComponent<PassiveButton>();
             moreOptionsButton.OnClick = new ButtonClickedEvent();
             moreOptionsButton.OnClick.AddListener((Action)(() =>
@@ -119,7 +119,7 @@ namespace UltimateMods.Modules
             var title = titleTextTitle = Object.Instantiate(titleText, popUp.transform);
             title.GetComponent<RectTransform>().localPosition = Vector3.up * 2.3f;
             title.gameObject.SetActive(true);
-            title.text = ModTranslation.getString("VanillaOptionsText");
+            title.text = LocalizationManager.GetString(TransKey.VanillaOptionsText);
             title.name = "TitleText";
         }
 
@@ -230,10 +230,10 @@ namespace UltimateMods.Modules
         public static void updateTranslations()
         {
             if (titleTextTitle)
-                titleTextTitle.text = ModTranslation.getString("VanillaOptionsText");
+                titleTextTitle.text = LocalizationManager.GetString(TransKey.VanillaOptionsText);
 
             if (moreOptions)
-                moreOptions.Text.text = ModTranslation.getString("VanillaOptionsText");
+                moreOptions.Text.text = LocalizationManager.GetString(TransKey.VanillaOptionsText);
 
             try
             {

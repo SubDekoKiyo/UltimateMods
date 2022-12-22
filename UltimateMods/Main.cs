@@ -35,7 +35,7 @@ global using AmongUs.Data.Legacy;
 global using AmongUs.GameOptions;
 global using UltimateMods.Patches;
 global using UltimateMods.Roles;
-global using UltimateMods.Debug;
+global using UltimateMods.Localization;
 global using UltimateMods.Utilities;
 global using UltimateMods.Modules;
 global using UltimateMods.Objects;
@@ -89,7 +89,7 @@ namespace UltimateMods
         {
             Logger = Log;
             Instance = this;
-            ModTranslation.Load();
+            LocalizationManager.Load();
 
             DebugMode = Config.Bind("Custom", "Enable Debug Mode", false);
             GhostsSeeTasks = Config.Bind("Custom", "Ghosts See Remaining Tasks", true);

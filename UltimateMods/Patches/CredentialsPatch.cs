@@ -15,8 +15,8 @@ namespace UltimateMods.Patches
 
                 var version = UnityEngine.Object.Instantiate<TextMeshPro>(__instance.text);
                 version.transform.position = new Vector3(0, -0.25f, 0);
-                if (UltimateModsPlugin.isBeta) version.SetText(string.Format(ModTranslation.getString("CreditsBetaVersion"), UltimateModsPlugin.Version.ToString()));
-                else version.SetText(string.Format(ModTranslation.getString("CreditsVersion"), UltimateModsPlugin.Version.ToString()));
+                if (UltimateModsPlugin.isBeta) version.SetText(string.Format(LocalizationManager.GetString(TransKey.CreditsBetaVersion), UltimateModsPlugin.Version.ToString()));
+                else version.SetText(string.Format(LocalizationManager.GetString(TransKey.CreditsVersion), UltimateModsPlugin.Version.ToString()));
 
                 version.transform.SetParent(amongUsLogo.transform);
 
@@ -35,7 +35,7 @@ namespace UltimateMods.Patches
                 __instance.text.alignment = TextAlignmentOptions.TopRight;
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
-                    if (UltimateModsPlugin.DebugMode.Value && AmongUsClient.Instance.AmHost) __instance.text.text = $"{baseCredentials}\n" + ModTranslation.getString("Position") + PlayerControl.LocalPlayer.GetTruePosition().ToString() + $"\n{__instance.text.text}";
+                    if (UltimateModsPlugin.DebugMode.Value && AmongUsClient.Instance.AmHost) __instance.text.text = $"{baseCredentials}\n" + LocalizationManager.GetString(TransKey.Position) + PlayerControl.LocalPlayer.GetTruePosition().ToString() + $"\n{__instance.text.text}";
                     else __instance.text.text = $"{baseCredentials}\n{__instance.text.text}";
 
                     if (PlayerControl.LocalPlayer.Data.IsDead) __instance.gameObject.GetComponent<AspectPosition>().DistanceFromEdge = new Vector3(2.0f, 0.1f, 0.5f);

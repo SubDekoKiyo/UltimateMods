@@ -102,7 +102,7 @@ namespace UltimateMods.Patches
                     if (OutOfTime == null)
                     {
                         OutOfTime = UnityEngine.Object.Instantiate(__instance.SabotageText, __instance.SabotageText.transform.parent);
-                        OutOfTime.text = ModTranslation.getString("RestrictOutOfTime");
+                        OutOfTime.text = LocalizationManager.GetString(TransKey.RestrictOutOfTime);
                     }
 
                     if (TimeRemaining == null)
@@ -137,7 +137,7 @@ namespace UltimateMods.Patches
                         clearedIcons = false;
                         OutOfTime.gameObject.SetActive(false);
                         string timeString = TimeSpan.FromSeconds(Options.RestrictAdminTime).ToString(@"mm\:ss\.ff");
-                        TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                        TimeRemaining.text = String.Format(LocalizationManager.GetString(TransKey.TimeRemaining), timeString);
                         //TimeRemaining.color = Options.RestrictAdminTime > 10f ? Palette.AcceptedGreen : Palette.ImpostorRed;
                         isUseAdmin = true;
                         TimeRemaining.gameObject.SetActive(true);

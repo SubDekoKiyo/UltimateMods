@@ -97,7 +97,7 @@ namespace UltimateMods.Patches
                             return false;
                         }
                         string timeString = TimeSpan.FromSeconds(Options.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
-                        TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                        TimeRemaining.text = String.Format(LocalizationManager.GetString(TransKey.TimeRemaining), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
                     // Update normal and securityGuard cameras
@@ -203,7 +203,7 @@ namespace UltimateMods.Patches
                             return false;
                         }
                         string timeString = TimeSpan.FromSeconds(Options.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
-                        TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                        TimeRemaining.text = String.Format(LocalizationManager.GetString(TransKey.TimeRemaining), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
                     return true;
@@ -269,7 +269,7 @@ namespace UltimateMods.Patches
                             return false;
                         }
                         string timeString = TimeSpan.FromSeconds(Options.RestrictCamerasTime).ToString(@"mm\:ss\.ff");
-                        TimeRemaining.text = String.Format(ModTranslation.getString("TimeRemaining"), timeString);
+                        TimeRemaining.text = String.Format(LocalizationManager.GetString(TransKey.TimeRemaining), timeString);
                         TimeRemaining.gameObject.SetActive(true);
                     }
                     return true;

@@ -75,7 +75,7 @@ public static class RolesButtons
                 Altruist.Ended = true;
             }
         );
-        AltruistButton.ButtonText = ModTranslation.getString("AltruistReviveText");
+        AltruistButton.ButtonText = LocalizationManager.GetString(TransKey.AltruistReviveText);
         AltruistButton.EffectCancellable = false;
 
         EngineerRepairButton = new(
@@ -133,7 +133,7 @@ public static class RolesButtons
 
                 if (EngineerRepairButtonText != null)
                 {
-                    if (ProEngineer.ReamingCounts > 0) EngineerRepairButtonText.text = String.Format(ModTranslation.getString("ReamingCount"), ProEngineer.ReamingCounts);
+                    if (ProEngineer.ReamingCounts > 0) EngineerRepairButtonText.text = String.Format(LocalizationManager.GetString(TransKey.ReamingCount), ProEngineer.ReamingCounts);
                     else EngineerRepairButtonText.text = "";
                 }
 
@@ -146,7 +146,7 @@ public static class RolesButtons
             __instance.UseButton,
             KeyCode.F
         );
-        EngineerRepairButton.ButtonText = ModTranslation.getString("EngineerRepairButtonText");
+        EngineerRepairButton.ButtonText = LocalizationManager.GetString(TransKey.EngineerRepairButtonText);
         EngineerRepairButtonText = GameObject.Instantiate(EngineerRepairButton.actionButton.cooldownTimerText, EngineerRepairButton.actionButton.cooldownTimerText.transform.parent); // TMP初期化
         EngineerRepairButtonText.text = "";
         EngineerRepairButtonText.enableWordWrapping = false;
@@ -183,7 +183,7 @@ public static class RolesButtons
                 LighterButton.Timer = LighterButton.MaxTimer;
             }
         );
-        LighterButton.ButtonText = ModTranslation.getString("LighterText");
+        LighterButton.ButtonText = LocalizationManager.GetString(TransKey.LighterText);
         LighterButton.EffectCancellable = true;
 
         MayorMeetingButton = new(
@@ -222,7 +222,7 @@ public static class RolesButtons
 
                 if (MayorMeetingButtonText != null)
                 {
-                    if (Mayor.ReamingCount > 0) MayorMeetingButtonText.text = String.Format(ModTranslation.getString("ReamingCount"), Mayor.ReamingCount);
+                    if (Mayor.ReamingCount > 0) MayorMeetingButtonText.text = String.Format(LocalizationManager.GetString(TransKey.ReamingCount), Mayor.ReamingCount);
                     else MayorMeetingButtonText.text = "";
                 }
 
@@ -235,7 +235,7 @@ public static class RolesButtons
             __instance.UseButton,
             KeyCode.F
         );
-        MayorMeetingButton.ButtonText = ModTranslation.getString("MayorMeetingButtonText");
+        MayorMeetingButton.ButtonText = LocalizationManager.GetString(TransKey.MayorMeetingButtonText);
         MayorMeetingButtonText = GameObject.Instantiate(MayorMeetingButton.actionButton.cooldownTimerText, MayorMeetingButton.actionButton.cooldownTimerText.transform.parent);
         MayorMeetingButtonText.text = "";
         MayorMeetingButtonText.enableWordWrapping = false;
@@ -286,7 +286,7 @@ public static class RolesButtons
             {
                 if (SheriffNumShotsText != null)
                 {
-                    if (Sheriff.ReamingShots > 0) SheriffNumShotsText.text = String.Format(ModTranslation.getString("ReamingShots"), Sheriff.ReamingShots);
+                    if (Sheriff.ReamingShots > 0) SheriffNumShotsText.text = String.Format(LocalizationManager.GetString(TransKey.ReamingShots), Sheriff.ReamingShots);
                     else SheriffNumShotsText.text = "";
                 }
                 return Sheriff.currentTarget && PlayerControl.LocalPlayer.CanMove;
@@ -374,7 +374,7 @@ public static class RolesButtons
             KeyCode.F,
             false
         );
-        TeleportButton.ButtonText = ModTranslation.getString("TeleportButtonText");
+        TeleportButton.ButtonText = LocalizationManager.GetString(TransKey.TeleportButtonText);
 
         UnderTakerButton = new(
             () =>
@@ -425,8 +425,8 @@ public static class RolesButtons
             },
             () =>
             {
-                if (UnderTaker.DraggingBody) UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDropText");
-                else UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDragText");
+                if (UnderTaker.DraggingBody) UnderTakerButton.ButtonText = LocalizationManager.GetString(TransKey.UnderTakerDropText);
+                else UnderTakerButton.ButtonText = LocalizationManager.GetString(TransKey.UnderTakerDragText);
                 bool canDrag = false;
                 foreach (Collider2D collider2D in Physics2D.OverlapCircleAll(PlayerControl.LocalPlayer.GetTruePosition(), 1f, Constants.PlayersOnlyMask)) if (collider2D.tag == "DeadBody") canDrag = true;
                 return canDrag && PlayerControl.LocalPlayer.CanMove;
@@ -461,7 +461,7 @@ public static class RolesButtons
                 UnderTakerButton.Timer = UnderTakerButton.MaxTimer = UnderTaker.MoveCooldown;
             }
         );
-        UnderTakerButton.ButtonText = ModTranslation.getString("UnderTakerDragText");
+        UnderTakerButton.ButtonText = LocalizationManager.GetString(TransKey.UnderTakerDragText);
         UnderTakerButton.EffectCancellable = true;
 
         ArsonistButton = new(
@@ -478,8 +478,8 @@ public static class RolesButtons
             },
             () =>
             {
-                if (Arsonist.DousedEveryone) ArsonistButton.ButtonText = ModTranslation.getString("IgniteText");
-                else ArsonistButton.ButtonText = ModTranslation.getString("DouseText");
+                if (Arsonist.DousedEveryone) ArsonistButton.ButtonText = LocalizationManager.GetString(TransKey.IgniteText);
+                else ArsonistButton.ButtonText = LocalizationManager.GetString(TransKey.DouseText);
 
                 if (ArsonistButton.IsEffectActive && Arsonist.DouseTarget != Arsonist.CurrentTarget)
                 {
@@ -527,7 +527,7 @@ public static class RolesButtons
                 }
             }
         );
-        ArsonistButton.ButtonText = ModTranslation.getString("DouseText");
+        ArsonistButton.ButtonText = LocalizationManager.GetString(TransKey.DouseText);
 
         IgniteButton = new(
             () =>
@@ -548,7 +548,7 @@ public static class RolesButtons
             __instance.KillButton,
             KeyCode.F
         );
-        IgniteButton.ButtonText = ModTranslation.getString("IgniteText");
+        IgniteButton.ButtonText = LocalizationManager.GetString(TransKey.IgniteText);
 
         JackalKillButton = new(
             () =>
@@ -591,7 +591,7 @@ public static class RolesButtons
             KeyCode.F,
             false
         );
-        JackalMakeSidekickButton.ButtonText = ModTranslation.getString("JackalSidekickText");
+        JackalMakeSidekickButton.ButtonText = LocalizationManager.GetString(TransKey.JackalSidekickText);
 
         SidekickKillButton = new(
             () =>

@@ -113,25 +113,25 @@ namespace UltimateMods.Patches
                 if (PlayerControl.LocalPlayer.IsRole(RoleId.Madmate))
                 {
                     __instance.YouAreText.color = ImpostorRed;
-                    __instance.RoleText.text = ModTranslation.getString("Madmate");
+                    __instance.RoleText.text = LocalizationManager.GetString(TransKey.Madmate);
                     __instance.RoleText.color = ImpostorRed;
-                    __instance.RoleBlurbText.text = ModTranslation.getString("MadmateIntro");
+                    __instance.RoleBlurbText.text = LocalizationManager.GetString(TransKey.MadmateIntro);
                     __instance.RoleBlurbText.color = ImpostorRed;
                 }
 
                 if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Opportunist))
                 {
-                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(OpportunistGreen, String.Format(ModTranslation.getString("OPIntro")));
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(OpportunistGreen, String.Format(LocalizationManager.GetString(TransKey.OPIntro)));
                 }
 
                 if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Watcher))
                 {
-                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(WatcherPurple, String.Format(ModTranslation.getString("WTIntro")));
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(WatcherPurple, String.Format(LocalizationManager.GetString(TransKey.WTIntro)));
                 }
 
                 if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Sunglasses))
                 {
-                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(SunglassesGray, String.Format(ModTranslation.getString("SGIntro")));
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(SunglassesGray, String.Format(LocalizationManager.GetString(TransKey.SGIntro)));
                 }
 
                 // 従来処理
