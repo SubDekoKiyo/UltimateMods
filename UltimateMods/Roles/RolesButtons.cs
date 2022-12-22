@@ -585,7 +585,7 @@ public static class RolesButtons
             { return Jackal.CanSidekick && Jackal.CurrentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { JackalMakeSidekickButton.Timer = JackalMakeSidekickButton.MaxTimer; },
             Jackal.GetButtonSprite(),
-            ButtonPositions.LeftBottom,
+            ButtonPositions.CenterTop,
             __instance,
             __instance.KillButton,
             KeyCode.F,
