@@ -19,6 +19,7 @@ namespace UltimateMods.Patches
 
             switch (p.GetRoleId())
             {
+                case RoleId.Impostor:
                 case RoleId.Adversity:
                 case RoleId.CustomImpostor:
                 case RoleId.UnderTaker:
@@ -36,6 +37,9 @@ namespace UltimateMods.Patches
                 case RoleId.Lighter: SetPlayerNameColor(p, LighterYellow); break;
                 case RoleId.Altruist: SetPlayerNameColor(p, AltruistRed); break;
                 case RoleId.Mayor: SetPlayerNameColor(p, MayorGreen); break;
+                case RoleId.Crewmate: SetPlayerNameColor(p, CrewmateBlue); break;
+                case RoleId.Engineer: SetPlayerNameColor(p, EngineerOrange); break;
+                case RoleId.Scientist: SetPlayerNameColor(p, ScientistBlue); break;
 
                 case RoleId.Jester: SetPlayerNameColor(p, JesterPink); break;
                 case RoleId.Arsonist: SetPlayerNameColor(p, ArsonistOrange); break;
