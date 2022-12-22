@@ -82,10 +82,10 @@ namespace UltimateMods
             return null;
         }
 
-        public static DeadBody DeadBodyById(DeadBody id)
+        public static DeadBody DeadBodyById(byte id)
         {
             foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
-                if (deadBody.ParentId == id.ParentId)
+                if (deadBody.ParentId == id)
                     return deadBody;
             return null;
         }

@@ -162,9 +162,9 @@ namespace UltimateMods
                         break;
                     // 84
                     case (byte)CustomRPC.AltruistRevive:
-                        var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                        foreach (var body in DeadBodies)
-                            RPCProcedure.AltruistRevive(body, reader.ReadByte());
+                        byte parentId = reader.ReadByte();
+                        byte AltruistId = reader.ReadByte();
+                        RPCProcedure.AltruistRevive(parentId, AltruistId);
                         break;
                     // 85
                     case (byte)CustomRPC.UncheckedCmdReportDeadBody:
@@ -479,33 +479,26 @@ namespace UltimateMods
 
         public static void AltruistKill(byte AltruistId)
         {
-            PlayerControl altruist = Helpers.PlayerById(AltruistId);
-            if (altruist == null) return;
-
-            altruist.MurderPlayer(altruist);
+            UncheckedMurderPlayer(AltruistId, AltruistId, (byte)0);
             finalStatuses[AltruistId] = FinalStatus.Suicide;
         }
 
-        public static void AltruistRevive(DeadBody target, byte altruistId)
+        public static void AltruistRevive(byte parentId, byte AltruistId)
         {
-            var parentId = target.ParentId;
-            var position = target.TruePosition;
+            PlayerControl Altruist = Helpers.PlayerById(AltruistId);
+            PlayerControl TargetPlayer = Helpers.PlayerById(parentId);
+            DeadBody Target = Helpers.DeadBodyById(parentId);
 
-            PlayerControl altruist = Helpers.PlayerById(altruistId);
-            DeadBody targetDeadBody = Helpers.DeadBodyById(target);
-            CleanBody(targetDeadBody.ParentId);
+            if (Altruist || Target || TargetPlayer == null) return;
 
-            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
-            {
-                if (deadBody.ParentId == altruist.PlayerId) CleanBody(altruist.PlayerId);
-            }
+            var Position = Target.TruePosition;
+            CleanBody(parentId);
 
-            var player = Helpers.PlayerById(parentId);
-            player.Revive();
-            player.SetRole(RoleTypes.Crewmate);
-            player.NetTransform.SnapTo(new(position.x, position.y + 0.3636f));
-
-            CleanBody(target.ParentId);
+            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>()) if (deadBody.ParentId == AltruistId) CleanBody(AltruistId);
+            TargetPlayer.Revive();
+            FastDestroyableSingleton<RoleManager>.Instance.SetRole(TargetPlayer, TargetPlayer.IsImpostor() ? RoleTypes.Impostor : RoleTypes.Crewmate);
+            finalStatuses[TargetPlayer.PlayerId] = FinalStatus.Revival;
+            TargetPlayer.NetTransform.SnapTo(new(Position.x, Position.y + 0.3636f));
         }
 
         public static void UncheckedCmdReportDeadBody(byte sourceId, byte targetId)

@@ -196,8 +196,8 @@ namespace UltimateMods
             TeleporterButtonCooldown = Create(181, Impostor, ImpostorRed, "TeleporterButtonCooldown", 40f, 10f, 80f, 2.5f, TeleporterRate, format: "FormatSeconds");
             TeleporterTeleportTo = Create(182, Impostor, ImpostorRed, "TeleporterTeleportTo", new string[] { "TeleporterAllRandom", "OnlyCrewmate" }, TeleporterRate);
 
-            AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
-            AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
+            // AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
+            // AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
 
             EvilHackerRate = new(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
             EvilHackerCanMoveEvenIfUsesAdmin = Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);
@@ -242,13 +242,6 @@ namespace UltimateMods
             LighterDuration = Create(262, Crewmate, LighterYellow, "LighterDurations", 10f, 2.5f, 30f, 2.5f, LighterRate, format: "FormatSeconds");
             LighterModeLightsOffVision = Create(263, Crewmate, LighterYellow, "LighterModeLightsOffVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
             LighterModeLightsOnVision = Create(264, Crewmate, LighterYellow, "LighterModeLightsOnVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
-
-            YakuzaRate = new(270, Crewmate, White, "Yakuza", YakuzaBlue, 1);
-            YakuzaKillCooldown = Create(271, Crewmate, YakuzaBlue, "KillCooldown", 30f, 2.5f, 60f, 2.5f, YakuzaRate, format: "FormatSeconds");
-            YakuzaNumShots = Create(272, Crewmate, YakuzaBlue, "MaxShots", 2f, 1f, 15f, 1f, YakuzaRate, format: "FormatShots");
-            YakuzaShareShots = Create(273, Crewmate, YakuzaBlue, "YakuzaShareShots", true, YakuzaRate);
-            YakuzaCanKillNeutrals = Create(274, Crewmate, YakuzaBlue, "CanKillNeutrals", true, YakuzaRate);
-            YakuzaMisfireKillsTarget = Create(275, Crewmate, YakuzaBlue, "MisfireKillsTarget", false, YakuzaRate);
 
             /* Modifiers */
             OpportunistRate = new(2000, Modifiers, White, "Opportunist", OpportunistGreen, 15);

@@ -68,10 +68,10 @@ public static class RolesButtons
             () =>
             {
                 MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.AltruistRevive, Hazel.SendOption.Reliable, -1);
-                writer.Write(Altruist.Target);
+                writer.Write(Altruist.Target.ParentId);
                 writer.Write(PlayerControl.LocalPlayer.PlayerId);
                 AmongUsClient.Instance.FinishRpcImmediately(writer);
-                RPCProcedure.AltruistRevive(Altruist.Target, PlayerControl.LocalPlayer.PlayerId);
+                RPCProcedure.AltruistRevive(Altruist.Target.ParentId, PlayerControl.LocalPlayer.PlayerId);
                 Altruist.Ended = true;
             }
         );
