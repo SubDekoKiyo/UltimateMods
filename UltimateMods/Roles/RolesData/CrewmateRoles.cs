@@ -4,8 +4,6 @@ public static class CrewmateRoles
 {
     public class Altruist : RoleBase<Altruist>
     {
-        public override string RoleName() { return "Altruist"; }
-        public override Color RoleColor() { return AltruistRed; }
         public static Sprite AltruistButtonSprite;
         public static bool Started = false;
         public static bool Ended = false;
@@ -63,8 +61,6 @@ public static class CrewmateRoles
 
     public class Bakery : RoleBase<Bakery>
     {
-        public override string RoleName() { return "Bakery"; }
-        public override Color RoleColor() { return BakeryYellow; }
         public static float BombRate { get { return CustomRolesH.BakeryBombRate.getFloat(); } }
 
         public Bakery()
@@ -87,8 +83,6 @@ public static class CrewmateRoles
 
     public class ProEngineer : RoleBase<ProEngineer>
     {
-        public override string RoleName() { return "ProEngineer"; }
-        public override Color RoleColor() { return EngineerBlue; }
         private static Sprite EngineerRepairButtonSprite;
 
         public ProEngineer()
@@ -125,9 +119,6 @@ public static class CrewmateRoles
 
     public class Lighter : RoleBase<Lighter>
     {
-        public override string RoleName() { return "Lighter"; }
-        public override Color RoleColor() { return LighterYellow; }
-
         public Lighter()
         {
             RoleId = roleId = RoleId.Lighter;
@@ -173,9 +164,6 @@ public static class CrewmateRoles
 
     public class Madmate : RoleBase<Madmate>
     {
-        public override string RoleName() { return "MadMate"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public Madmate()
         {
             RoleId = roleId = RoleId.Madmate;
@@ -251,9 +239,6 @@ public static class CrewmateRoles
 
     public class Mayor : RoleBase<Mayor>
     {
-        public override string RoleName() { return "Mayor"; }
-        public override Color RoleColor() { return MayorGreen; }
-
         public Mayor()
         {
             RoleId = roleId = RoleId.Mayor;
@@ -288,9 +273,6 @@ public static class CrewmateRoles
 
     public class Seer : RoleBase<Seer>
     {
-        public override string RoleName() { return "Seer"; }
-        public override Color RoleColor() { return SeerGreen; }
-
         public Seer()
         {
             RoleId = roleId = RoleId.Seer;
@@ -353,9 +335,6 @@ public static class CrewmateRoles
 
     public class Sheriff : RoleBase<Sheriff>
     {
-        public override string RoleName() { return "Sheriff"; }
-        public override Color RoleColor() { return SheriffYellow; }
-
         public Sheriff()
         {
             RoleId = roleId = RoleId.Sheriff;
@@ -391,9 +370,6 @@ public static class CrewmateRoles
 
     public class Snitch : RoleBase<Snitch>
     {
-        public override string RoleName() { return "Snitch"; }
-        public override Color RoleColor() { return SnitchGreen; }
-
         public Snitch()
         {
             RoleId = roleId = RoleId.Snitch;

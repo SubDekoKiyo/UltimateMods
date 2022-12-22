@@ -345,13 +345,12 @@ namespace UltimateMods.Modules
 
         public override void updateSelection(int newSelection)
         {
-            var roleId = PlayerControl.LocalPlayer.GetRoleId();
-            string NameColored = Helpers.cs(PlayerControl.LocalPlayer.GetRoleColor(roleId), ModTranslation.getString(PlayerControl.LocalPlayer.GetRoleString(roleId)));
             if (RoleIds.Count > 0)
             {
                 selections = RoleIds.Select(
                     x =>
-                        x == RoleId.NoRole ? "OptionOff" : NameColored
+                        x == RoleId.NoRole ? "OptionOff" :
+                        RoleInfoList.AllRoleInfos.First(y => y.RoleId == x).ColorName
                     ).ToArray();
             }
 

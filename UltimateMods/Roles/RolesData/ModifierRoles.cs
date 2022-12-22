@@ -4,9 +4,7 @@ public static class ModifierRoles
 {
     public class Opportunist : ModifierBase<Opportunist>
     {
-        public override string ModifierName() { return "Opportunist"; }
         public override string ModifierPostfix() { return "OP"; }
-        public override Color ModifierColor() { return OpportunistGreen; }
 
         public Opportunist()
         {
@@ -40,9 +38,7 @@ public static class ModifierRoles
 
     public class Sunglasses : ModifierBase<Sunglasses>
     {
-        public override string ModifierName() { return "Sunglasses"; }
         public override string ModifierPostfix() { return "SG"; }
-        public override Color ModifierColor() { return SunglassesGray; }
 
         public Sunglasses()
         {
@@ -78,9 +74,7 @@ public static class ModifierRoles
 
     public class Watcher : ModifierBase<Watcher>
     {
-        public override string ModifierName() { return "Watcher"; }
         public override string ModifierPostfix() { return "WT"; }
-        public override Color ModifierColor() { return WatcherPurple; }
 
         public Watcher()
         {

@@ -196,8 +196,8 @@ namespace UltimateMods
             TeleporterButtonCooldown = Create(181, Impostor, ImpostorRed, "TeleporterButtonCooldown", 40f, 10f, 80f, 2.5f, TeleporterRate, format: "FormatSeconds");
             TeleporterTeleportTo = Create(182, Impostor, ImpostorRed, "TeleporterTeleportTo", new string[] { "TeleporterAllRandom", "OnlyCrewmate" }, TeleporterRate);
 
-            // AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
-            // AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
+            AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
+            AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
 
             EvilHackerRate = new(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
             EvilHackerCanMoveEvenIfUsesAdmin = Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);

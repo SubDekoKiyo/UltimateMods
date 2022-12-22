@@ -6,8 +6,6 @@ public abstract class Role
     public PlayerControl player;
     public RoleId roleId;
 
-    public abstract string RoleName();
-    public abstract Color RoleColor();
     public abstract void OnMeetingStart();
     public abstract void OnMeetingEnd();
     public abstract void FixedUpdate();

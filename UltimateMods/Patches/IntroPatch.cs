@@ -61,7 +61,6 @@ namespace UltimateMods.Patches
     [HarmonyPatch]
     class IntroPatch
     {
-        public static RoleId roleId = PlayerControl.LocalPlayer.GetRoleId();
         public static void setupIntroTeamIcons(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
             // Intro solo teams
@@ -75,11 +74,14 @@ namespace UltimateMods.Patches
 
         public static void setupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
+            List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(PlayerControl.LocalPlayer);
+            RoleInfo roleInfo = infos.Where(info => info.RoleId != RoleId.NoRole).FirstOrDefault();
+            if (roleInfo == null) return;
             if (PlayerControl.LocalPlayer.IsNeutral())
             {
-                __instance.BackgroundBar.material.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
-                __instance.TeamTitle.text = PlayerControl.LocalPlayer.GetTranslatedRoleString(roleId);
-                __instance.TeamTitle.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
+                __instance.BackgroundBar.material.color = roleInfo.RoleColor;
+                __instance.TeamTitle.text = roleInfo.Name;
+                __instance.TeamTitle.color = roleInfo.RoleColor;
                 __instance.ImpostorText.text = "";
             }
         }
@@ -96,11 +98,17 @@ namespace UltimateMods.Patches
 
             private static IEnumerator SetupRole(IntroCutscene __instance)
             {
-                __instance.YouAreText.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
-                __instance.RoleText.text = PlayerControl.LocalPlayer.GetTranslatedRoleString(roleId);
-                __instance.RoleText.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
-                __instance.RoleBlurbText.text = RoleManagement.GetRoleIntroDesc(roleId);
-                __instance.RoleBlurbText.color = PlayerControl.LocalPlayer.GetRoleColor(roleId);
+                List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleId[] { });
+                RoleInfo roleInfo = infos.FirstOrDefault();
+
+                Helpers.Log($"{roleInfo.Name}");
+                Helpers.Log($"{roleInfo.IntroDescription}");
+
+                __instance.YouAreText.color = roleInfo.RoleColor;
+                __instance.RoleText.text = roleInfo.Name;
+                __instance.RoleText.color = roleInfo.RoleColor;
+                __instance.RoleBlurbText.text = roleInfo.IntroDescription;
+                __instance.RoleBlurbText.color = roleInfo.RoleColor;
 
                 if (PlayerControl.LocalPlayer.IsRole(RoleId.Madmate))
                 {

@@ -55,7 +55,7 @@ namespace UltimateMods.Patches
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
-                    string roleNames = p.GetRoleAndModString(p.GetRoleId(), p.GetModifierId());
+                    string roleNames = RoleInfoList.GetRolesString(p, true);
                     bool WasTaskEnd = tasksCompleted == tasksTotal;
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();

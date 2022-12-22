@@ -6,9 +6,7 @@ public abstract class Modifier
     public PlayerControl player;
     public ModifierId modId;
 
-    public abstract string ModifierName();
     public abstract string ModifierPostfix();
-    public abstract Color ModifierColor();
     public abstract void OnMeetingStart();
     public abstract void OnMeetingEnd();
     public abstract void FixedUpdate();

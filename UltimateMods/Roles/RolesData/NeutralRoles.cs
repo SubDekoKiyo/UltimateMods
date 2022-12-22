@@ -4,9 +4,6 @@ public static class NeutralRoles
 {
     public class Arsonist : RoleBase<Arsonist>
     {
-        public override string RoleName() { return "Arsonist"; }
-        public override Color RoleColor() { return ArsonistOrange; }
-
         public Arsonist()
         {
             RoleId = roleId = RoleId.Arsonist;
@@ -121,9 +118,6 @@ public static class NeutralRoles
 
     public class Jackal : RoleBase<Jackal>
     {
-        public override string RoleName() { return "Jackal"; }
-        public override Color RoleColor() { return JackalBlue; }
-
         public Jackal()
         {
             RoleId = roleId = RoleId.Jackal;
@@ -175,9 +169,6 @@ public static class NeutralRoles
 
     public class Sidekick : RoleBase<Sidekick>
     {
-        public override string RoleName() { return "Sidekick"; }
-        public override Color RoleColor() { return JackalBlue; }
-
         public Sidekick()
         {
             RoleId = roleId = RoleId.Sidekick;
@@ -229,9 +220,6 @@ public static class NeutralRoles
 
     public class Jester : RoleBase<Jester>
     {
-        public override string RoleName() { return "Jester"; }
-        public override Color RoleColor() { return JesterPink; }
-
         public Jester()
         {
             RoleId = roleId = RoleId.Jester;

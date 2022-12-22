@@ -83,7 +83,7 @@ namespace UltimateMods.Patches
                     // Exile role text
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
-                        __result = String.Format(ModTranslation.getString("ExilePlayer"), player.Data.PlayerName, ModTranslation.getString(player.GetRoleString(player.GetRoleId())));
+                        __result = String.Format(ModTranslation.getString("ExilePlayer"), player.Data.PlayerName, RoleInfoList.GetRoleInfoForPlayer(player).Select(x => x.Name).ToArray());
                     }
                     // Hide Number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)

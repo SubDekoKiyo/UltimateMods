@@ -4,9 +4,6 @@ public static class ImpostorRoles
 {
     public class Adversity : RoleBase<Adversity>
     {
-        public override string RoleName() { return "Adversity"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public Adversity()
         {
             RoleId = roleId = RoleId.Adversity;
@@ -87,9 +84,6 @@ public static class ImpostorRoles
 
     public class BountyHunter : RoleBase<BountyHunter>
     {
-        public override string RoleName() { return "BountyHunter"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public BountyHunter()
         {
             RoleId = roleId = RoleId.BountyHunter;
@@ -207,9 +201,6 @@ public static class ImpostorRoles
 
     public class CustomImpostor : RoleBase<CustomImpostor>
     {
-        public override string RoleName() { return "CustomImpostor"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public CustomImpostor()
         {
             RoleId = roleId = RoleId.CustomImpostor;
@@ -240,9 +231,6 @@ public static class ImpostorRoles
 
     public class EvilHacker : RoleBase<EvilHacker>
     {
-        public override string RoleName() { return "EvilHacker"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public EvilHacker()
         {
             RoleId = roleId = RoleId.EvilHacker;
@@ -275,9 +263,6 @@ public static class ImpostorRoles
 
     public class Teleporter : RoleBase<Teleporter>
     {
-        public override string RoleName() { return "Teleporter"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public Teleporter()
         {
             RoleId = roleId = RoleId.Teleporter;
@@ -315,9 +300,6 @@ public static class ImpostorRoles
 
     public class UnderTaker : RoleBase<UnderTaker>
     {
-        public override string RoleName() { return "UnderTaker"; }
-        public override Color RoleColor() { return ImpostorRed; }
-
         public UnderTaker()
         {
             RoleId = roleId = RoleId.UnderTaker;

@@ -63,6 +63,7 @@ namespace UltimateMods.EndGame
         {
             public string WinOrLose { get; set; }
             public string PlayerName { get; set; }
+            public List<RoleInfo> Roles { get; set; }
             public string RoleString { get; set; }
             public int ColorId = 0;
             public int TasksCompleted { get; set; }
@@ -89,6 +90,7 @@ namespace UltimateMods.EndGame
             var excludeRoles = new RoleId[] { };
             foreach (var p in GameData.Instance.AllPlayers)
             {
+                var roles = RoleInfoList.GetRoleInfoForPlayer(p.Object, excludeRoles, includeHidden: true);
                 var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p);
                 var finalStatus = finalStatuses[p.PlayerId] =
                     p.Disconnected == true ? FinalStatus.Disconnected :
@@ -106,7 +108,8 @@ namespace UltimateMods.EndGame
                     PlayerId = p.PlayerId,
                     ColorId = p.DefaultOutfit.ColorId,
                     // NameSuffix = Lovers.getIcon(p.Object),
-                    RoleString = p.Object.GetRoleAndModString(p.Object.GetRoleId(), p.Object.GetModifierId()),
+                    Roles = roles,
+                    RoleString = RoleInfoList.GetRolesString(p.Object, true, excludeRoles, true),
                     TasksTotal = tasksTotal,
                     TasksCompleted = tasksCompleted,
                     Status = finalStatus,
@@ -445,56 +448,52 @@ namespace UltimateMods.EndGame
                     if (Options.ShowRoleSummary)
                     {
                         var position = Camera.main.ViewportToWorldPoint(new Vector3(0f, 1f, Camera.main.nearClipPlane));
-                        GameObject RoleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
-                        RoleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + 0.1f, position.y - 0.1f, -14f);
-                        RoleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
+                        GameObject roleSummary = UnityEngine.Object.Instantiate(__instance.WinText.gameObject);
+                        roleSummary.transform.position = new Vector3(__instance.Navigation.ExitButton.transform.position.x + 0.1f, position.y - 0.1f, -14f);
+                        roleSummary.transform.localScale = new Vector3(1f, 1f, 1f);
 
-                        TMP_Text[] RoleSummaryText = new TMP_Text[5];
-                        for (int i = 0; i < RoleSummaryText.Length; i++)
+                        var RoleSummaryText = new StringBuilder();
+                        RoleSummaryText.AppendLine(ModTranslation.getString("RoleSummaryText"));
+                        AdditionalTempData.playerRoles.Sort((x, y) =>
                         {
-                            RoleSummaryText[i] = RoleSummary.GetComponent<TMP_Text>();
-                            RoleSummaryText[i].alignment = TextAlignmentOptions.TopLeft;
-                            RoleSummaryText[i].color = White;
-                            RoleSummaryText[i].outlineColor = Color.black;
-                            RoleSummaryText[i].outlineWidth *= 1.2f;
-                            RoleSummaryText[i].fontSizeMin = 1.25f;
-                            RoleSummaryText[i].fontSizeMax = 1.25f;
-                            RoleSummaryText[i].fontSize = 1.25f;
-                        }
+                            RoleInfo roleX = x.Roles.FirstOrDefault();
+                            RoleInfo roleY = y.Roles.FirstOrDefault();
+                            RoleId idX = roleX == null ? RoleId.NoRole : roleX.RoleId;
+                            RoleId idY = roleY == null ? RoleId.NoRole : roleY.RoleId;
 
-                        // Reference - Nebula(https://github.com/Dolly1016/Nebula)
-                        StringBuilder playerWin = new();
-                        StringBuilder playerName = new();
-                        StringBuilder playerFullRole = new();
-                        StringBuilder playerFinalStatus = new();
-                        StringBuilder playerRoleTaskStatus = new();
+                            if (x.Status == y.Status)
+                            {
+                                if (idX == idY)
+                                {
+                                    return x.PlayerName.CompareTo(y.PlayerName);
+                                }
+                                return idX.CompareTo(idY);
+                            }
+                            return x.Status.CompareTo(y.Status);
+                        });
 
                         foreach (var data in AdditionalTempData.playerRoles)
                         {
-                            bool IsWon = AdditionalTempData.WinningPlayers.Any(x => x == data.PlayerId);
+                            var TaskInfo = data.TasksTotal > 0 ? $"<color=#FAD934FF>{data.TasksCompleted}/{data.TasksTotal}</color>" : "";
+                            string AliveDead = ModTranslation.getString("RoleSummary" + data.Status.ToString(), def: "-");
+                            string result = $"{data.PlayerName/* + data.NameSuffix*/}<pos=18.5%>{TaskInfo}<pos=25%>{AliveDead}<pos=34%>{data.RoleString}";
 
-                            if (IsWon) playerWin.AppendLine(Helpers.cs(CrewmateBlue, "★")); else playerWin.AppendLine(" ");
-                            playerName.AppendLine(" " + data.PlayerName);
-                            playerFullRole.AppendLine(" " + data.RoleString);
-                            playerFinalStatus.AppendLine(" " + ModTranslation.getString("RoleSummary" + data.Status.ToString(), def: "-"));
-                            playerRoleTaskStatus.AppendLine(" " + (data.TasksTotal > 0 ? $"<color=#FAD934FF>{data.TasksCompleted}/{data.TasksTotal}</color>" : ""));
+                            RoleSummaryText.AppendLine(result);
                         }
 
-                        RoleSummaryText[0].text = playerWin.ToString();
-                        RoleSummaryText[1].text = playerName.ToString();
-                        RoleSummaryText[2].text = playerFullRole.ToString();
-                        RoleSummaryText[3].text = playerFinalStatus.ToString();
-                        RoleSummaryText[4].text = playerRoleTaskStatus.ToString();
+                        TMPro.TMP_Text RoleSummaryTextMesh = roleSummary.GetComponent<TMPro.TMP_Text>();
+                        RoleSummaryTextMesh.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                        RoleSummaryTextMesh.color = Color.white;
+                        RoleSummaryTextMesh.outlineWidth *= 1.2f;
+                        RoleSummaryTextMesh.fontSizeMin = 1.25f;
+                        RoleSummaryTextMesh.fontSizeMax = 1.25f;
+                        RoleSummaryTextMesh.fontSize = 1.25f;
 
-                        float width = 0.0f;
-                        for (int i = 0; i < 5; i++)
-                        {
-                            RoleSummaryText[i].transform.position += new Vector3(width, 0f, 0f);
-                            width += RoleSummaryText[i].preferredWidth - 0.05f;
-                        }
-
-                        AdditionalTempData.clear();
+                        var RoleSummaryTextMeshRectTransform = RoleSummaryTextMesh.GetComponent<RectTransform>();
+                        RoleSummaryTextMeshRectTransform.anchoredPosition = new Vector2(position.x + 3.5f, position.y - 0.1f);
+                        RoleSummaryTextMesh.text = RoleSummaryText.ToString();
                     }
+                    AdditionalTempData.clear();
                 }
 
                 [HarmonyPatch(typeof(LogicGameFlowNormal), nameof(LogicGameFlowNormal.CheckEndCriteria))]

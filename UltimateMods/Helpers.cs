@@ -202,13 +202,19 @@ namespace UltimateMods
         {
             if (player == null) return;
 
+            List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(player);
+
             var toRemove = new List<PlayerTask>();
             foreach (PlayerTask t in player.myTasks.GetFastEnumerator())
             {
                 var textTask = t.gameObject.GetComponent<ImportantTextTask>();
                 if (textTask != null)
                 {
-                    toRemove.Add(t);
+                    var info = infos.FirstOrDefault(x => textTask.Text.StartsWith(x.Name));
+                    if (info != null)
+                        infos.Remove(info); // TextTask for this RoleInfo does not have to be added, as it already exists
+                    else
+                        toRemove.Add(t); // TextTask does not have a corresponding RoleInfo and will hence be deleted
                 }
             }
 
@@ -219,15 +225,23 @@ namespace UltimateMods
                 UnityEngine.Object.Destroy(t.gameObject);
             }
 
-            var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
-            task.transform.SetParent(player.transform, false);
-
-            if (player.IsRole(RoleId.Jackal) && Jackal.CanSidekick)
+            // Add TextTask for remaining RoleInfos
+            foreach (RoleInfo roleInfo in infos)
             {
-                task.Text += cs(JackalBlue, ModTranslation.getString("JackalWithSidekick"));
+                var task = new GameObject("RoleTask").AddComponent<ImportantTextTask>();
+                task.transform.SetParent(player.transform, false);
+
+                if (roleInfo.RoleId is RoleId.Jackal && Jackal.CanSidekick)
+                {
+                    task.Text += cs(roleInfo.RoleColor, ModTranslation.getString("JackalWithSidekick"));
+                }
+                else
+                {
+                    task.Text = cs(roleInfo.RoleColor, $"{roleInfo.Name}: {roleInfo.ShortDescription}");
+                }
+
+                player.myTasks.Insert(0, task);
             }
-            else task.Text = cs(player.GetRoleColor(), ModTranslation.getString(player.GetRoleString()) + ": " + RoleManagement.GetRoleShortDesc(player.GetRoleId()));
-            player.myTasks.Insert(0, task);
         }
 
         public static bool HidePlayerName(PlayerControl target)
