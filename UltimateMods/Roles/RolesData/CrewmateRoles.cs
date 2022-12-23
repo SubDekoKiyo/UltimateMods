@@ -308,7 +308,7 @@ public static class CrewmateRoles
 
                     if (LimitSoulDuration)
                     {
-                        HudManager.Instance.StartCoroutine(Effects.Lerp(SoulDuration, new Action<float>((p) =>
+                        FastDestroyableSingleton<HudManager>.Instance.StartCoroutine(Effects.Lerp(SoulDuration, new Action<float>((p) =>
                         {
                             if (rend != null)
                             {

@@ -60,11 +60,11 @@ public static class RoleInfoList
             Arsonist,
         };
 
-        Impostor = new("", ImpostorRed, CustomRolesH.AdversityRate, RoleId.Impostor);
-        Crewmate = new("", CrewmateBlue, CustomRolesH.AdversityRate, RoleId.Crewmate);
-        Engineer = new("", EngineerOrange, CustomRolesH.AdversityRate, RoleId.Engineer);
-        Scientist = new("", ScientistBlue, CustomRolesH.AdversityRate, RoleId.Scientist);
-        ShapeShifter = new("", ImpostorRed, CustomRolesH.AdversityRate, RoleId.ShapeShifter);
+        Impostor = new("Impostor", ImpostorRed, CustomRolesH.AdversityRate, RoleId.Impostor);
+        Crewmate = new("Crewmate", CrewmateBlue, CustomRolesH.AdversityRate, RoleId.Crewmate);
+        Engineer = new("Engineer", EngineerOrange, CustomRolesH.AdversityRate, RoleId.Engineer);
+        Scientist = new("Scientist", ScientistBlue, CustomRolesH.AdversityRate, RoleId.Scientist);
+        ShapeShifter = new("ShapeShifter", ImpostorRed, CustomRolesH.AdversityRate, RoleId.ShapeShifter);
 
         Sheriff = new("Sheriff", SheriffYellow, CustomRolesH.SheriffRate, RoleId.Sheriff);
         ProEngineer = new("ProEngineer", EngineerBlue, CustomRolesH.EngineerRate, RoleId.ProEngineer);

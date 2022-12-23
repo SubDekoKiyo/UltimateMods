@@ -59,9 +59,8 @@ public static class NeutralRoles
             if (PlayerControl.LocalPlayer.IsRole(RoleId.Arsonist))
             {
                 int visibleCounter = 0;
-                Vector3 bottomLeft = FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition;
-                bottomLeft.x *= -1;
-                bottomLeft += new Vector3(-0.25f, -0.25f, 0);
+                Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.x, -FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.z);
+                bottomLeft += new Vector3(0.2f, 0.25f, 0);
 
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls.GetFastEnumerator())
                 {

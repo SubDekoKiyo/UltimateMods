@@ -169,7 +169,7 @@ public static class ButtonPatches
             {
                 if (!PlayerControl.LocalPlayer.IsNeutral()) return true;
 
-                HudManager.Instance.ToggleMapVisible(new MapOptions()
+                FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions()
                 {
                     Mode = MapOptions.Modes.Sabotage,
                     AllowMovementWhileMapOpen = true
