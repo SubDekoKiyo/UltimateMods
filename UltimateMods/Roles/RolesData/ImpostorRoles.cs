@@ -1,5 +1,6 @@
 namespace UltimateMods.Roles;
 
+[HarmonyPatch]
 public static class ImpostorRoles
 {
     public class Adversity : RoleBase<Adversity>

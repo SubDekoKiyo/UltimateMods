@@ -1,6 +1,7 @@
-.vs/*
+.vs
 build.cake
 nuget.config
-UltimateMods/obj
-UltimateMods/bin
+obj/
+bin/
+Propeties/
 ~$Localization.xlsx

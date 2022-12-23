@@ -1,5 +1,6 @@
 namespace UltimateMods.Roles;
 
+[HarmonyPatch]
 public static class CrewmateRoles
 {
     public class Altruist : RoleBase<Altruist>

@@ -1,5 +1,6 @@
 namespace UltimateMods.Roles;
 
+[HarmonyPatch]
 public static class ModifierRoles
 {
     public class Opportunist : ModifierBase<Opportunist>

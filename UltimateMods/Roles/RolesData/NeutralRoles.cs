@@ -1,5 +1,6 @@
 namespace UltimateMods.Roles;
 
+[HarmonyPatch]
 public static class NeutralRoles
 {
     public class Arsonist : RoleBase<Arsonist>
