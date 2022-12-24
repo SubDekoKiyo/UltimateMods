@@ -276,4 +276,13 @@ namespace UltimateMods.Patches
             }
         }
     }
+
+    [HarmonyPatch(typeof(AmongUsClient), nameof(AmongUsClient.StartGame))]
+    public static class SetAnonymousVotesPatch
+    {
+        public static void Postfix()
+        {
+            GameManager.Instance.LogicOptions.currentGameOptions.SetBool(BoolOptionNames.AnonymousVotes, true);
+        }
+    }
 }
