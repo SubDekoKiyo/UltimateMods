@@ -388,7 +388,7 @@ namespace UltimateMods.EndGame
                     }
                     else if (AdditionalTempData.winCondition == WinCondition.EveryoneLose)
                     {
-                        bonusText = "EveryoneLose";
+                        __instance.WinText.text = "EveryoneLose";
                         textRenderer.color = DisabledGrey;
                         __instance.BackgroundBar.material.SetColor("_Color", DisabledGrey);
                         if (Options.EnableCustomSounds)
