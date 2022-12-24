@@ -6,6 +6,11 @@ namespace UltimateMods
 
         public static Color ImpostorRed = Palette.ImpostorRed;
         public static Color CrewmateBlue = Palette.CrewmateBlue;
+
+        public static Color EngineerOrange = new Color32(239, 124, 12, byte.MaxValue);
+        public static Color ScientistBlue = new Color32(17, 150, 238, byte.MaxValue);
+        public static Color GuardianEngelGold = new Color32(255, 254, 65, byte.MaxValue);
+
         public static Color EngineerBlue = new Color32(0, 47, 140, byte.MaxValue);
         public static Color SheriffYellow = new Color32(248, 205, 70, byte.MaxValue);
         public static Color JesterPink = new Color32(236, 98, 165, byte.MaxValue);

@@ -37,7 +37,7 @@ namespace UltimateMods.Patches
             {
                 SpriteRenderer spriteRenderer = UnityEngine.Object.Instantiate<SpriteRenderer>(__instance.PlayerVotePrefab);
                 int cId = voterPlayer.DefaultOutfit.ColorId;
-                if (!(!GameOptionsManager.Instance.CurrentGameOptions.GetBool(BoolOptionNames.AnonymousVotes) || (PlayerControl.LocalPlayer.Data.IsDead && Options.GhostsSeeVotes) || PlayerControl.LocalPlayer.hasModifier(ModifierType.Watcher) || (PlayerControl.LocalPlayer.isRole(RoleType.Adversity) && CustomRolesH.AdversityAdversityStateCanSeeVotes.getBool())))
+                if (!(!GameManager.Instance.LogicOptions.currentGameOptions.GetBool(BoolOptionNames.AnonymousVotes) || (PlayerControl.LocalPlayer.Data.IsDead && Options.GhostsSeeVotes) || PlayerControl.LocalPlayer.HasModifier(ModifierId.Watcher) || (PlayerControl.LocalPlayer.IsRole(RoleId.Adversity) && CustomRolesH.AdversityAdversityStateCanSeeVotes.getBool())))
                     voterPlayer.Object.SetColor(6);
                 voterPlayer.Object.SetPlayerMaterialColors(spriteRenderer);
                 spriteRenderer.transform.SetParent(parent);
@@ -96,21 +96,19 @@ namespace UltimateMods.Patches
         {
             private static Dictionary<byte, int> CalculateVotes(MeetingHud __instance)
             {
-                Dictionary<byte, int> dictionary = new Dictionary<byte, int>();
+                Dictionary<byte, int> dictionary = new();
                 for (int i = 0; i < __instance.playerStates.Length; i++)
                 {
                     PlayerVoteArea playerVoteArea = __instance.playerStates[i];
                     byte votedFor = playerVoteArea.VotedFor;
                     if (votedFor != 252 && votedFor != 255 && votedFor != 254)
                     {
-                        foreach (var mayor in Mayor.allPlayers)
-                        {
-                            PlayerControl player = Helpers.PlayerById((byte)playerVoteArea.TargetPlayerId);
-                            if (player == null || player.Data == null || player.Data.IsDead || player.Data.Disconnected) continue;
-                            int additionalVotes = (mayor != null && mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.NumVotes : 1; // Mayor vote
-                            if (dictionary.TryGetValue(votedFor, out int currentVotes)) dictionary[votedFor] = currentVotes + additionalVotes;
-                            else dictionary[votedFor] = additionalVotes;
-                        }
+                        int additionalVotes = 1;
+                        PlayerControl player = Helpers.PlayerById((byte)playerVoteArea.TargetPlayerId);
+                        if (player == null || player.Data == null || player.Data.IsDead || player.Data.Disconnected) continue;
+                        foreach (var mayor in Mayor.allPlayers) additionalVotes = (Mayor.exists && mayor.PlayerId == playerVoteArea.TargetPlayerId) ? Mayor.NumVotes : 1; // May
+                        if (dictionary.TryGetValue(votedFor, out int currentVotes)) dictionary[votedFor] = currentVotes + additionalVotes;
+                        else dictionary[votedFor] = additionalVotes;
                     }
                 }
                 return dictionary;
@@ -157,17 +155,12 @@ namespace UltimateMods.Patches
             }
         }
 
-        public static void startMeeting()
-        {
-            UltimateMods.OnMeetingStart();
-        }
-
         [HarmonyPatch(typeof(HudManager), nameof(HudManager.OpenMeetingRoom))]
         class OpenMeetingPatch
         {
             public static void Prefix(HudManager __instance)
             {
-                startMeeting();
+                UltimateMods.OnMeetingStart();
             }
         }
 
@@ -223,14 +216,8 @@ namespace UltimateMods.Patches
                             votesApplied[voter.PlayerId] = 0;
 
                         votesApplied[voter.PlayerId]++;
-                        foreach (var mayor in Mayor.allPlayers)
-                        {
-                            // Major vote, redo this iteration to place a second vote
-                            if (Mayor.exists && voter.PlayerId == mayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.NumVotes)
-                            {
-                                j--;
-                            }
-                        }
+                        // Major vote, redo this iteration to place a second vote
+                        foreach (var mayor in Mayor.allPlayers) if (Mayor.exists && voter.PlayerId == mayor.PlayerId && votesApplied[voter.PlayerId] < Mayor.NumVotes) j--;
                     }
                 }
                 return false;

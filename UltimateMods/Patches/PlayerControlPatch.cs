@@ -55,10 +55,11 @@ namespace UltimateMods.Patches
                     }
 
                     var (tasksCompleted, tasksTotal) = TasksHandler.taskInfo(p.Data);
-                    string roleNames = RoleInfo.GetRolesString(p);
+                    string roleNames = RoleInfoList.GetRolesString(p, true);
+                    bool WasTaskEnd = tasksCompleted == tasksTotal;
 
                     var completedStr = commsActive ? "?" : tasksCompleted.ToString();
-                    var color = commsActive ? "808080" : "FAD934FF";
+                    var color = commsActive ? "808080" : WasTaskEnd ? "00FF00" : "FAD934FF";
                     string taskInfo = tasksTotal > 0 ? $"<color=#{color}>({completedStr}/{tasksTotal})</color>" : "";
 
                     string playerInfoText = "";
@@ -114,7 +115,6 @@ namespace UltimateMods.Patches
             }
 
             UltimateMods.FixedUpdate(__instance);
-            Yakuza.FixedUpdate();
         }
     }
 
@@ -125,8 +125,7 @@ namespace UltimateMods.Patches
 
         public static void Prefix(KillAnimation __instance, [HarmonyArgument(0)] ref PlayerControl source, [HarmonyArgument(1)] ref PlayerControl target)
         {
-            if (hideNextAnimation)
-                source = target;
+            if (hideNextAnimation) source = target;
             hideNextAnimation = false;
         }
     }
@@ -168,7 +167,7 @@ namespace UltimateMods.Patches
             // Seer show flash and add dead player position
             foreach (var seer in Seer.allPlayers)
             {
-                if (PlayerControl.LocalPlayer.isRole(RoleType.Seer) && !seer.Data.IsDead && seer != target && Seer.Mode <= 1)
+                if (PlayerControl.LocalPlayer.IsRole(RoleId.Seer) && !seer.Data.IsDead && seer != target && Seer.Mode <= 1)
                 {
                     Helpers.ShowFlash(new Color(42f / 255f, 187f / 255f, 245f / 255f));
                 }
@@ -188,15 +187,13 @@ namespace UltimateMods.Patches
         public static void Postfix(PlayerControl __instance)
         {
             // Collect dead player info
-            DeadPlayer deadPlayer = new DeadPlayer(__instance, DateTime.UtcNow, DeathReason.Exile, null);
+            DeadPlayer deadPlayer = new(__instance, DateTime.UtcNow, DeathReason.Exile, null);
             GameHistory.deadPlayers.Add(deadPlayer);
 
             // Remove fake tasks when player dies
-            if (__instance.HasFakeTasks())
-                __instance.ClearAllTasks();
+            if (__instance.HasFakeTasks()) __instance.ClearAllTasks();
 
-            if (__instance.IsImpostor())
-                Adversity.CheckAndAdversityState();
+            if (__instance.IsImpostor()) Adversity.CheckAndAdversityState();
 
             __instance.OnDeath(killer: null);
         }
@@ -207,12 +204,12 @@ namespace UltimateMods.Patches
     {
         public static bool Prefix(PlayerControl __instance, [HarmonyArgument(0)] float time)
         {
-            if (GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) <= 0f) return false;
+            if (GameManager.Instance.LogicOptions.currentGameOptions.GetFloat(FloatOptionNames.KillCooldown) <= 0f) return false;
             float multiplier = 1f;
             float addition = 0f;
-            if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
+            if (PlayerControl.LocalPlayer.IsRole(RoleId.BountyHunter)) addition = BountyHunter.AdditionalCooldown;
 
-            float Max = Mathf.Max(GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition, __instance.killTimer);
+            float Max = Mathf.Max(GameManager.Instance.LogicOptions.currentGameOptions.GetFloat(FloatOptionNames.KillCooldown) * multiplier + addition, __instance.killTimer);
             __instance.SetKillTimerUnchecked(Mathf.Clamp(time, 0f, Max), Max);
             return false;
         }

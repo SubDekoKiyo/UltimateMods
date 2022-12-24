@@ -29,20 +29,20 @@ namespace UltimateMods.Patches
         private static void assignRoles()
         {/*
             BlockLovers = new List<byte> {
-                (byte)RoleType.Bait,
+                (byte)RoleId.Bait,
             };
 
             if (!Lovers.hasTasks)
             {
-                BlockLovers.Add((byte)RoleType.Snitch);
-                BlockLovers.Add((byte)RoleType.FortuneTeller);
-                //BlockLovers.Add((byte)RoleType.Sunfish);
-                BlockLovers.Add((byte)RoleType.Fox);
+                BlockLovers.Add((byte)RoleId.Snitch);
+                BlockLovers.Add((byte)RoleId.FortuneTeller);
+                //BlockLovers.Add((byte)RoleId.Sunfish);
+                BlockLovers.Add((byte)RoleId.Fox);
             }
 
             if (!CustomOptionsH.arsonistCanBeLovers.getBool())
             {
-                BlockLovers.Add((byte)RoleType.Arsonist);
+                BlockLovers.Add((byte)RoleId.Arsonist);
             }*/
 
             var data = getRoleAssignmentData();
@@ -75,26 +75,26 @@ namespace UltimateMods.Patches
             Dictionary<byte, (int rate, int count)> NeutralSettings = new();
             Dictionary<byte, (int rate, int count)> CrewSettings = new();
 
-            ImpSettings.Add((byte)RoleType.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
-            ImpSettings.Add((byte)RoleType.UnderTaker, CustomRolesH.UnderTakerRate.data);
-            ImpSettings.Add((byte)RoleType.BountyHunter, CustomRolesH.BountyHunterRate.data);
-            ImpSettings.Add((byte)RoleType.Teleporter, CustomRolesH.TeleporterRate.data);
-            ImpSettings.Add((byte)RoleType.EvilHacker, CustomRolesH.EvilHackerRate.data);
-            ImpSettings.Add((byte)RoleType.Adversity, CustomRolesH.AdversityRate.data);
+            ImpSettings.Add((byte)RoleId.CustomImpostor, CustomRolesH.CustomImpostorRate.data);
+            ImpSettings.Add((byte)RoleId.UnderTaker, CustomRolesH.UnderTakerRate.data);
+            ImpSettings.Add((byte)RoleId.BountyHunter, CustomRolesH.BountyHunterRate.data);
+            ImpSettings.Add((byte)RoleId.Teleporter, CustomRolesH.TeleporterRate.data);
+            ImpSettings.Add((byte)RoleId.EvilHacker, CustomRolesH.EvilHackerRate.data);
+            ImpSettings.Add((byte)RoleId.Adversity, CustomRolesH.AdversityRate.data);
 
-            NeutralSettings.Add((byte)RoleType.Jester, CustomRolesH.JesterRate.data);
-            NeutralSettings.Add((byte)RoleType.Jackal, CustomRolesH.JackalRate.data);
-            NeutralSettings.Add((byte)RoleType.Arsonist, CustomRolesH.ArsonistRate.data);
+            NeutralSettings.Add((byte)RoleId.Jester, CustomRolesH.JesterRate.data);
+            NeutralSettings.Add((byte)RoleId.Jackal, CustomRolesH.JackalRate.data);
+            NeutralSettings.Add((byte)RoleId.Arsonist, CustomRolesH.ArsonistRate.data);
 
-            CrewSettings.Add((byte)RoleType.Sheriff, CustomRolesH.SheriffRate.data);
-            CrewSettings.Add((byte)RoleType.Engineer, CustomRolesH.EngineerRate.data);
-            CrewSettings.Add((byte)RoleType.Madmate, CustomRolesH.MadmateRate.data);
-            CrewSettings.Add((byte)RoleType.Bakery, CustomRolesH.BakeryRate.data);
-            CrewSettings.Add((byte)RoleType.Snitch, CustomRolesH.SnitchRate.data);
-            CrewSettings.Add((byte)RoleType.Seer, CustomRolesH.SeerRate.data);
-            CrewSettings.Add((byte)RoleType.Lighter, CustomRolesH.LighterRate.data);
-            CrewSettings.Add((byte)RoleType.Altruist, CustomRolesH.AltruistRate.data);
-            CrewSettings.Add((byte)RoleType.Mayor, CustomRolesH.MayorRate.data);
+            CrewSettings.Add((byte)RoleId.Sheriff, CustomRolesH.SheriffRate.data);
+            CrewSettings.Add((byte)RoleId.ProEngineer, CustomRolesH.EngineerRate.data);
+            CrewSettings.Add((byte)RoleId.Madmate, CustomRolesH.MadmateRate.data);
+            CrewSettings.Add((byte)RoleId.Bakery, CustomRolesH.BakeryRate.data);
+            CrewSettings.Add((byte)RoleId.Snitch, CustomRolesH.SnitchRate.data);
+            CrewSettings.Add((byte)RoleId.Seer, CustomRolesH.SeerRate.data);
+            // CrewSettings.Add((byte)RoleId.Lighter, CustomRolesH.LighterRate.data);
+            CrewSettings.Add((byte)RoleId.Altruist, CustomRolesH.AltruistRate.data);
+            CrewSettings.Add((byte)RoleId.Mayor, CustomRolesH.MayorRate.data);
 
             return new RoleAssignmentData
             {
@@ -168,15 +168,6 @@ namespace UltimateMods.Patches
                     }
                 }
             }*/
-
-            // Assign Yakuza
-            if (data.Crewmates.Count >= 3 && data.CrewmateRoles >= 3 && (rnd.Next(1, 101) <= CustomRolesH.YakuzaRate.getSelection() * 10))
-            {
-                setRoleToRandomPlayer((byte)RoleType.Boss, data.Crewmates);
-                setRoleToRandomPlayer((byte)RoleType.Executives, data.Crewmates);
-                setRoleToRandomPlayer((byte)RoleType.Gun, data.Crewmates);
-                data.CrewmateRoles -= 3;
-            }
         }
 
         private static void selectFactionForFactionIndependentRoles(RoleAssignmentData data)
@@ -191,25 +182,25 @@ namespace UltimateMods.Patches
                     {
                         if (data.Impostors.Count > 0 && data.MaxImpostorRoles > 0)
                         {
-                            byte evilGuesser = setRoleToRandomPlayer((byte)RoleType.EvilGuesser, data.Impostors);
+                            byte evilGuesser = setRoleToRandomPlayer((byte)RoleId.EvilGuesser, data.Impostors);
                             data.Impostors.ToList().RemoveAll(x => x.PlayerId == evilGuesser);
                             data.MaxImpostorRoles--;
-                            data.CrewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionsH.guesserSpawnBothRate.getSelection(), 1));
+                            data.CrewSettings.Add((byte)RoleId.NiceGuesser, (CustomOptionsH.guesserSpawnBothRate.getSelection(), 1));
                         }
                     }
                     else if (data.Crewmates.Count > 0 && data.MaxCrewmateRoles > 0)
                     {
-                        byte niceGuesser = setRoleToRandomPlayer((byte)RoleType.NiceGuesser, data.Crewmates);
+                        byte niceGuesser = setRoleToRandomPlayer((byte)RoleId.NiceGuesser, data.Crewmates);
                         data.Crewmates.ToList().RemoveAll(x => x.PlayerId == niceGuesser);
                         data.MaxCrewmateRoles--;
-                        data.ImpSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionsH.guesserSpawnBothRate.getSelection(), 1));
+                        data.ImpSettings.Add((byte)RoleId.EvilGuesser, (CustomOptionsH.guesserSpawnBothRate.getSelection(), 1));
                     }
                 }
             }
             else
             {
-                if (isEvilGuesser) data.ImpSettings.Add((byte)RoleType.EvilGuesser, (CustomOptionsH.guesserSpawnRate.getSelection(), 1));
-                else data.CrewSettings.Add((byte)RoleType.NiceGuesser, (CustomOptionsH.guesserSpawnRate.getSelection(), 1));
+                if (isEvilGuesser) data.ImpSettings.Add((byte)RoleId.EvilGuesser, (CustomOptionsH.guesserSpawnRate.getSelection(), 1));
+                else data.CrewSettings.Add((byte)RoleId.NiceGuesser, (CustomOptionsH.guesserSpawnRate.getSelection(), 1));
             }*/
 
             // Assign any dual role types
@@ -235,10 +226,10 @@ namespace UltimateMods.Patches
                 }
 
                 if (niceCount > 0)
-                    data.CrewSettings.Add((byte)option.roleType, (option.rate, niceCount));
+                    data.CrewSettings.Add((byte)option.RoleId, (option.rate, niceCount));
 
                 if (evilCount > 0)
-                    data.ImpSettings.Add((byte)option.roleType, (option.rate, evilCount));
+                    data.ImpSettings.Add((byte)option.RoleId, (option.rate, evilCount));
             }
         }
 
@@ -262,11 +253,11 @@ namespace UltimateMods.Patches
                 // Randomly select a pool of roles to assign a role from next (Crewmate role, Neutral role or Impostor role)
                 // then select one of the roles from the selected pool to a player
                 // and remove the role (and any potentially Blocked role pairings) from the pool(s)
-                var roleType = rolesToAssign.Keys.ElementAt(rnd.Next(0, rolesToAssign.Keys.Count()));
-                var players = roleType is TeamType.Crewmate or TeamType.Neutral ? data.Crewmates : data.Impostors;
-                var index = rnd.Next(0, rolesToAssign[roleType].Count);
-                var roleId = rolesToAssign[roleType][index];
-                var player = setRoleToRandomPlayer(rolesToAssign[roleType][index], players);
+                var RoleId = rolesToAssign.Keys.ElementAt(rnd.Next(0, rolesToAssign.Keys.Count()));
+                var players = RoleId is TeamType.Crewmate or TeamType.Neutral ? data.Crewmates : data.Impostors;
+                var index = rnd.Next(0, rolesToAssign[RoleId].Count);
+                var roleId = rolesToAssign[RoleId][index];
+                var player = setRoleToRandomPlayer(rolesToAssign[RoleId][index], players);
                 if (player == byte.MaxValue && BlockedAssignments < MaxBlocks)
                 {
                     BlockedAssignments++;
@@ -274,7 +265,7 @@ namespace UltimateMods.Patches
                 }
                 BlockedAssignments = 0;
 
-                rolesToAssign[roleType].RemoveAt(index);
+                rolesToAssign[RoleId].RemoveAt(index);
 
                 if (CustomOptionsH.BlockedRolePairings.ContainsKey(roleId))
                 {
@@ -293,7 +284,7 @@ namespace UltimateMods.Patches
                 }
 
                 // Adjust the role limit
-                switch (roleType)
+                switch (RoleId)
                 {
                     case TeamType.Crewmate: data.CrewmateRoles--; break;
                     case TeamType.Neutral: data.NeutralRoles--; break;
@@ -329,11 +320,11 @@ namespace UltimateMods.Patches
                 // Randomly select a pool of role tickets to assign a role from next (Crewmate role, Neutral role or Impostor role)
                 // then select one of the roles from the selected pool to a player
                 // and remove all tickets of this role (and any potentially Blocked role pairings) from the pool(s)
-                var roleType = rolesToAssign.Keys.ElementAt(rnd.Next(0, rolesToAssign.Keys.Count()));
-                var players = roleType is TeamType.Crewmate or TeamType.Neutral ? data.Crewmates : data.Impostors;
-                var index = rnd.Next(0, rolesToAssign[roleType].Count);
-                var roleId = rolesToAssign[roleType][index];
-                var player = setRoleToRandomPlayer(rolesToAssign[roleType][index], players);
+                var RoleId = rolesToAssign.Keys.ElementAt(rnd.Next(0, rolesToAssign.Keys.Count()));
+                var players = RoleId is TeamType.Crewmate or TeamType.Neutral ? data.Crewmates : data.Impostors;
+                var index = rnd.Next(0, rolesToAssign[RoleId].Count);
+                var roleId = rolesToAssign[RoleId][index];
+                var player = setRoleToRandomPlayer(rolesToAssign[RoleId][index], players);
                 if (player == byte.MaxValue && BlockedAssignments < MaxBlocks)
                 {
                     BlockedAssignments++;
@@ -341,7 +332,7 @@ namespace UltimateMods.Patches
                 }
                 BlockedAssignments = 0;
 
-                rolesToAssign[roleType].RemoveAll(x => x == roleId);
+                rolesToAssign[RoleId].RemoveAll(x => x == roleId);
 
                 if (CustomOptionsH.BlockedRolePairings.ContainsKey(roleId))
                 {
@@ -355,7 +346,7 @@ namespace UltimateMods.Patches
                 }
 
                 // Adjust the role limit
-                switch (roleType)
+                switch (RoleId)
                 {
                     case TeamType.Crewmate: data.CrewmateRoles--; break;
                     case TeamType.Neutral: data.NeutralRoles--; break;
@@ -389,7 +380,7 @@ namespace UltimateMods.Patches
                     {
                         break;
                     }
-                    setModifierToRandomPlayer((byte)ModifierType.Opportunist, Opportunist.Candidates);
+                    setModifierToRandomPlayer((byte)ModifierId.Opportunist, Opportunist.Candidates);
                 }
             }
 
@@ -403,7 +394,7 @@ namespace UltimateMods.Patches
                     {
                         break;
                     }
-                    setModifierToRandomPlayer((byte)ModifierType.Sunglasses, Sunglasses.Candidates);
+                    setModifierToRandomPlayer((byte)ModifierId.Sunglasses, Sunglasses.Candidates);
                 }
             }
 
@@ -417,7 +408,7 @@ namespace UltimateMods.Patches
                     {
                         break;
                     }
-                    setModifierToRandomPlayer((byte)ModifierType.Watcher, Watcher.Candidates);
+                    setModifierToRandomPlayer((byte)ModifierId.Watcher, Watcher.Candidates);
                 }
             }
         }

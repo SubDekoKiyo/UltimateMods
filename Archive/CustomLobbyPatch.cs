@@ -15,7 +15,7 @@ namespace UltimateMods.Patches
         public static GameObject GSM;
         public static GameObject ClickText;
         public static GameObject UseButtons;
-        public static TMPro.TextMeshPro NewsText;
+        public static TextMeshPro NewsText;
 
         public static void ResetLobbyText()
         {
@@ -103,7 +103,7 @@ namespace UltimateMods.Patches
             NewsText.fontSize = NewsText.fontSizeMin = NewsText.fontSizeMax = 1.15f;
             NewsText.autoSizeTextContainer = false;
             NewsText.enableWordWrapping = false;
-            NewsText.alignment = TMPro.TextAlignmentOptions.Right;
+            NewsText.alignment = TextAlignmentOptions.Right;
             NewsText.transform.localPosition = new Vector3(1.6f, -2.7f, 0.4f);
             NewsText.transform.localScale = Vector3.one * 1.25f;
             NewsText.outlineWidth += 0.02f;

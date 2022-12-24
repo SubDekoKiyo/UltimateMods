@@ -10,14 +10,14 @@ namespace UltimateMods
 
         public static void Prefix(SpawnInMinigame.SpawnLocation __instance)
         {
-            if (GameOptionsManager.Instance.CurrentGameOptions.MapId == 0 && Helpers.IsMirrorMap)
+            if (GameManager.Instance.LogicOptions.currentGameOptions.MapId == 0 && Helpers.IsMirrorMap)
             {
                 skeld = GameObject.Find("SkeldShip(Clone)");
                 skeld.transform.localScale = new Vector3(-1.2f, 1.2f, 1.2f);
                 SkeldShipStatus.Instance.InitialSpawnCenter = new(0.8f, 0.6f);
                 SkeldShipStatus.Instance.MeetingSpawnCenter = new(0.8f, 0.6f);
             }
-            else if (GameOptionsManager.Instance.CurrentGameOptions.MapId == 1 && Helpers.IsMirrorMap)
+            else if (GameManager.Instance.LogicOptions.currentGameOptions.MapId == 1 && Helpers.IsMirrorMap)
             {
                 miraHQ = GameObject.Find("MiraShip(Clone)");
                 miraHQ.transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -25,7 +25,7 @@ namespace UltimateMods
                 MiraShipStatus.Instance.MeetingSpawnCenter = new(-25.3921f, 2.5626f);
                 MiraShipStatus.Instance.MeetingSpawnCenter2 = new(-25.3921f, 2.5626f);
             }
-            else if (GameOptionsManager.Instance.CurrentGameOptions.MapId == 2 && Helpers.IsMirrorMap)
+            else if (GameManager.Instance.LogicOptions.currentGameOptions.MapId == 2 && Helpers.IsMirrorMap)
             {
                 polus = GameObject.Find("PolusShip(Clone)");
                 polus.transform.localScale = new Vector3(-1f, 1f, 1f);

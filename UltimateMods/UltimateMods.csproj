@@ -4,7 +4,7 @@
         <LangVersion>latest</LangVersion>
         <DebugType>embedded</DebugType>
 
-        <VersionPrefix>1.2.0.1</VersionPrefix>
+        <VersionPrefix>1.3.0</VersionPrefix>
         <Description>Ultimate Mods</Description>
 		<Authors>DekoKiyo</Authors>
 
@@ -39,8 +39,8 @@
 		<Copy SourceFiles="$(ProjectDir)\bin\$(Configuration)\.netstandard2.1\$(AssemblyName).dll" DestinationFolder="$(AmongUsLatest)/BepInEx/plugins/" />
 	</Target>
 
-	<!-- <Target Name="PreBuild" BeforeTargets="PreBuildEvent">
-    <Exec Command="python &quot;$(SolutionDir)Translate.py&quot;" />
-    <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" />
-	</Target> -->
+	<Target Name="PreBuild" BeforeTargets="PreBuildEvent">
+        <Exec Command="python &quot;$(SolutionDir)GenerateJsonFile.py&quot;" />
+		<!-- <Exec Command="python &quot;$(SolutionDir)BuildNum.py&quot;" /> -->
+	</Target>
 </Project>

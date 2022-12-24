@@ -6,13 +6,13 @@ namespace UltimateMods.Roles.Patches
         [HarmonyPatch(typeof(ExileController), nameof(ExileController.Begin))]
         public static class BombPatch
         {
-            private static TMPro.TextMeshPro BakeryText;
+            private static TextMeshPro BakeryText;
             public static bool Bomb = false;
             public static bool BakeryIsDead = false;
 
             public static void Postfix(ExileController __instance)
             {
-                if (BakeryIsDead || !Bakery.exists) return;
+                if (BakeryIsDead || !(Bakery.allPlayers.Count > 0)) return;
 
                 int Probability = rnd.Next(1, 101);
 
@@ -20,10 +20,10 @@ namespace UltimateMods.Roles.Patches
 
                 if (Probability >= 100 - Bakery.BombRate && !(Bakery.BombRate == 0f)) Bomb = true; // Bomb Bread
 
-                BakeryText.text = Bomb ? ModTranslation.getString("BombBakeryText") : ModTranslation.getString("MakeBreadText");
+                BakeryText.text = Bomb ? LocalizationManager.GetString(TransKey.BombBakeryText) : LocalizationManager.GetString(TransKey.MakeBreadText);
                 BakeryText.gameObject.SetActive(true);
 
-                if (GameOptionsManager.Instance.CurrentGameOptions.GetBool(BoolOptionNames.ConfirmImpostor))
+                if (GameManager.Instance.LogicOptions.currentGameOptions.GetBool(BoolOptionNames.ConfirmImpostor))
                 {
                     BakeryText.transform.localPosition -= new Vector3(0f, 0.4f, 0f);
                 }

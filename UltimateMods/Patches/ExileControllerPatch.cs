@@ -42,43 +42,29 @@ namespace UltimateMods.Patches
             {
                 var p = exiled.Object;
                 // Jester win condition
-                if (p.isRole(RoleType.Jester))
+                if (p.IsRole(RoleId.Jester))
                 {
                     if ((Jester.HasTasks && Jester.TasksComplete(p)) || !Jester.HasTasks)
                     {
-                        Jester.TriggerJesterWin = true;
+                        MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.UncheckedEndGame, Hazel.SendOption.Reliable, -1);
+                        writer.Write((byte)CustomGameOverReason.JesterExiled);
+                        AmongUsClient.Instance.FinishRpcImmediately(writer);
+                        RPCProcedure.UncheckedEndGame((byte)CustomGameOverReason.JesterExiled);
                     }
                 }
             }
-        }
-    }
 
-    [HarmonyPatch(typeof(ExileController), nameof(ExileController.ReEnableGameplay))]
-    class ExileControllerReEnableGameplayPatch
-    {
-        public static void Postfix(ExileController __instance)
-        {
-            ReEnableGameplay();
-        }
-        public static void ReEnableGameplay()
-        {
             // Reset custom button timers where necessary
             CustomButton.MeetingEndedUpdate();
 
             // Custom role post-meeting functions
             UltimateMods.OnMeetingEnd();
 
-            // ClassicMeeting.OnMeetingEnd();
-            // ClassicMeeting.DestroyObject();
-
-            if (BountyHunter.exists)
-                BountyHunter.BountyUpdateTimer = 0f;
-
-            // Remove DeadBodys
-            DeadBody[] array = UnityEngine.Object.FindObjectsOfType<DeadBody>();
+            // Remove all DeadBodies
+            DeadBody[] array = Object.FindObjectsOfType<DeadBody>();
             for (int i = 0; i < array.Length; i++)
             {
-                UnityEngine.Object.Destroy(array[i].gameObject);
+                Object.Destroy(array[i].gameObject);
             }
         }
     }
@@ -94,15 +80,17 @@ namespace UltimateMods.Patches
                 {
                     PlayerControl player = Helpers.PlayerById(ExileController.Instance.exiled.Object.PlayerId);
                     if (player == null) return;
+                    List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(player);
+                    RoleInfo roleInfo = infos.Where(info => info.RoleId != RoleId.NoRole).FirstOrDefault();
                     // Exile role text
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
-                        __result = String.Format(ModTranslation.getString("ExilePlayer"), player.Data.PlayerName, RoleInfo.getRoleInfoForPlayer(player).Select(x => x.Name).ToArray());
+                        __result = String.Format(LocalizationManager.GetString(TransKey.ExilePlayer), player.Data.PlayerName, roleInfo.Name);
                     }
                     // Hide Number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
                     {
-                        if (PlayerControl.LocalPlayer.isRole(RoleType.Jester)) __result = "";
+                        if (player.IsRole(RoleId.Jester)) __result = "";
                     }
                 }
             }
