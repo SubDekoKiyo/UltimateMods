@@ -80,10 +80,12 @@ namespace UltimateMods.Patches
                 {
                     PlayerControl player = Helpers.PlayerById(ExileController.Instance.exiled.Object.PlayerId);
                     if (player == null) return;
+                    List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(player);
+                    RoleInfo roleInfo = infos.Where(info => info.RoleId != RoleId.NoRole).FirstOrDefault();
                     // Exile role text
                     if (id is StringNames.ExileTextPN or StringNames.ExileTextSN or StringNames.ExileTextPP or StringNames.ExileTextSP)
                     {
-                        __result = String.Format(LocalizationManager.GetString(TransKey.ExilePlayer), player.Data.PlayerName, RoleInfoList.GetRoleInfoForPlayer(player).Select(x => x.Name).ToArray());
+                        __result = String.Format(LocalizationManager.GetString(TransKey.ExilePlayer), player.Data.PlayerName, roleInfo.Name);
                     }
                     // Hide Number of remaining impostors on Jester win
                     if (id is StringNames.ImpostorsRemainP or StringNames.ImpostorsRemainS)
