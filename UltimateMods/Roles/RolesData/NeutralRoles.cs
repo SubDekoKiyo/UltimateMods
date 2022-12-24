@@ -156,7 +156,18 @@ public static class NeutralRoles
             }
         }
         public override void OnKill(PlayerControl target) { }
-        public override void OnDeath(PlayerControl killer = null) { }
+        public override void OnDeath(PlayerControl killer = null)
+        {
+            if (Sidekick.PromotesToJackal &&
+                    PlayerControl.LocalPlayer.IsRole(RoleId.Sidekick) &&
+                    PlayerControl.LocalPlayer.IsAlive())
+            {
+                MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SidekickPromotes, Hazel.SendOption.Reliable, -1);
+                writer.Write(PlayerControl.LocalPlayer.PlayerId);
+                AmongUsClient.Instance.FinishRpcImmediately(writer);
+                RPCProcedure.SidekickPromotes(PlayerControl.LocalPlayer.PlayerId);
+            }
+        }
         public override void HandleDisconnect(PlayerControl player, DisconnectReasons reason) { }
 
         public override void Clear()
@@ -193,17 +204,6 @@ public static class NeutralRoles
 
                 Sidekick.CurrentTarget = SetTarget(untargetablePlayers: BlockTarget);
                 if (Sidekick.CanKill) SetPlayerOutline(Sidekick.CurrentTarget, ImpostorRed);
-
-                if (Sidekick.PromotesToJackal &&
-                    PlayerControl.LocalPlayer.IsRole(RoleId.Sidekick) &&
-                    PlayerControl.LocalPlayer.IsAlive() &&
-                    !(Jackal.allPlayers.Count > 0))
-                {
-                    MessageWriter writer = AmongUsClient.Instance.StartRpcImmediately(PlayerControl.LocalPlayer.NetId, (byte)CustomRPC.SidekickPromotes, Hazel.SendOption.Reliable, -1);
-                    writer.Write(PlayerControl.LocalPlayer.PlayerId);
-                    AmongUsClient.Instance.FinishRpcImmediately(writer);
-                    RPCProcedure.SidekickPromotes(PlayerControl.LocalPlayer.PlayerId);
-                }
             }
         }
         public override void OnKill(PlayerControl target) { }

@@ -118,8 +118,7 @@ public static class RoleInfoList
         if (infos.Count == 0 && p.Data.Role != null && p.Data.Role.IsImpostor) infos.Add(Impostor); // Just Impostor
         if (infos.Count == 0 && p.Data.Role != null && !p.Data.Role.IsImpostor) infos.Add(Crewmate); // Just Crewmate
 
-        if (excludeRoles != null)
-            infos.RemoveAll(x => excludeRoles.Contains(x.RoleId));
+        if (excludeRoles != null) infos.RemoveAll(x => excludeRoles.Contains(x.RoleId));
 
         return infos;
     }

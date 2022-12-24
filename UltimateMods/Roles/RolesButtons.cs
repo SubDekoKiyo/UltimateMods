@@ -24,16 +24,17 @@ public static class RolesButtons
     public static void SetButtonCooldowns()
     {
         AltruistButton.Timer = AltruistButton.MaxTimer = 0f;
-        EngineerRepairButton.MaxTimer = 0f;
-        LighterButton.MaxTimer = Lighter.Cooldown; LighterButton.EffectDuration = Lighter.Duration;
+        EngineerRepairButton.MaxTimer = EngineerRepairButton.Timer = 0f;
+        LighterButton.MaxTimer = Lighter.Cooldown;
+        LighterButton.EffectDuration = Lighter.Duration;
         MayorMeetingButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.EmergencyCooldown);
         SheriffKillButton.MaxTimer = Sheriff.Cooldown;
-        EvilHackerAdminButton.MaxTimer = 0f;
+        EvilHackerAdminButton.MaxTimer = EvilHackerAdminButton.Timer = 0f;
         TeleportButton.MaxTimer = Teleporter.Cooldown;
         UnderTakerButton.MaxTimer = UnderTaker.MoveCooldown;
         UnderTakerButton.EffectDuration = UnderTaker.Duration;
         ArsonistButton.MaxTimer = Arsonist.Cooldown;
-        IgniteButton.MaxTimer = 0f;
+        IgniteButton.MaxTimer = IgniteButton.Timer = 0f;
         JackalKillButton.MaxTimer = Jackal.Cooldown;
         JackalMakeSidekickButton.MaxTimer = Jackal.CreateSideKickCooldown;
         SidekickKillButton.MaxTimer = Sidekick.Cooldown;
@@ -581,8 +582,7 @@ public static class RolesButtons
                 RPCProcedure.JackalCreatesSidekick(Jackal.CurrentTarget.PlayerId);
             },
             () => { return Jackal.CanSidekick && PlayerControl.LocalPlayer.IsRole(RoleId.Jackal) && !PlayerControl.LocalPlayer.Data.IsDead; },
-            () =>
-            { return Jackal.CanSidekick && Jackal.CurrentTarget && PlayerControl.LocalPlayer.CanMove; },
+            () => { return Jackal.CanSidekick && Jackal.CurrentTarget && PlayerControl.LocalPlayer.CanMove; },
             () => { JackalMakeSidekickButton.Timer = JackalMakeSidekickButton.MaxTimer; },
             Jackal.GetButtonSprite(),
             ButtonPositions.CenterTop,

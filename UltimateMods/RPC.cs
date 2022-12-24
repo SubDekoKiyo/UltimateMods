@@ -451,7 +451,7 @@ namespace UltimateMods
             Player.SetRole(RoleId.Sidekick);
             if (Player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
 
-            if (!Jackal.JackalPromotedFromSidekickCanCreateSidekick) Jackal.CanSidekick = false;
+            Jackal.CanSidekick = false;
         }
 
         public static void SidekickPromotes(byte sidekickId)
@@ -459,6 +459,7 @@ namespace UltimateMods
             PlayerControl sidekick = Helpers.PlayerById(sidekickId);
             ErasePlayerRoles(sidekickId);
             sidekick.SetRole(RoleId.Jackal);
+            Jackal.CanSidekick = true;
         }
 
         public static void ArsonistDouse(byte playerId)
