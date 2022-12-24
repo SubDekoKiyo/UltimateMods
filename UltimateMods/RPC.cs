@@ -16,7 +16,7 @@ namespace UltimateMods
         EngineerFixLights,
         EngineerUsedRepair,
         UncheckedSetTasks,
-        ForceEnd,
+        UncheckedEndGame,
         DragPlaceBody,
         CleanBody,
         BakeryBomb,
@@ -25,8 +25,9 @@ namespace UltimateMods
         SidekickPromotes = 80,
         ArsonistDouse,
         ArsonistWin,
-        // AltruistKill,
-        // AltruistRevive,
+        AltruistKill,
+        AltruistRevive,
+        UncheckedCmdReportDeadBody,
     }
 
     public static class RPCProcedure
@@ -120,8 +121,8 @@ namespace UltimateMods
                         RPCProcedure.UncheckedSetTasks(reader.ReadByte(), reader.ReadBytesAndSize());
                         break;
                     // 74
-                    case (byte)CustomRPC.ForceEnd:
-                        RPCProcedure.ForceEnd();
+                    case (byte)CustomRPC.UncheckedEndGame:
+                        RPCProcedure.UncheckedEndGame(reader.ReadByte());
                         break;
                     // 75
                     case (byte)CustomRPC.DragPlaceBody:
@@ -155,22 +156,22 @@ namespace UltimateMods
                     case (byte)CustomRPC.ArsonistWin:
                         RPCProcedure.ArsonistWin();
                         break;
-                        // // 79
-                        // case (byte)CustomRPC.AltruistKill:
-                        //     RPCProcedure.AltruistKill(reader.ReadByte());
-                        //     break;
-                        // // 80
-                        // case (byte)CustomRPC.AltruistRevive:
-                        //     var DeadBodies = Object.FindObjectsOfType<DeadBody>();
-                        //     foreach (var body in DeadBodies)
-                        //     {
-                        //         if (body.ParentId == reader.ReadByte())
-                        //         {
-                        //             if (body.ParentId == PlayerControl.LocalPlayer.PlayerId)
-                        //                 RPCProcedure.AltruistRevive(body, reader.ReadByte());
-                        //         }
-                        //     }
-                        //     break;
+                    // 83
+                    case (byte)CustomRPC.AltruistKill:
+                        RPCProcedure.AltruistKill(reader.ReadByte());
+                        break;
+                    // 84
+                    case (byte)CustomRPC.AltruistRevive:
+                        byte parentId = reader.ReadByte();
+                        byte AltruistId = reader.ReadByte();
+                        RPCProcedure.AltruistRevive(parentId, AltruistId);
+                        break;
+                    // 85
+                    case (byte)CustomRPC.UncheckedCmdReportDeadBody:
+                        byte reportSource = reader.ReadByte();
+                        byte reportTarget = reader.ReadByte();
+                        RPCProcedure.UncheckedCmdReportDeadBody(reportSource, reportTarget);
+                        break;
                 }
             }
         }
@@ -183,10 +184,9 @@ namespace UltimateMods
             AdminPatch.ResetData();
             CameraPatch.ResetData();
             VitalsPatch.ResetData();
-            Buttons.SetCustomButtonCooldowns();
-            CustomOverlays.ResetOverlays();
+            RolesButtons.SetButtonCooldowns();
+            // CustomOverlays.ResetOverlays();
             MapBehaviorPatch.ResetIcons();
-            // CustomLobbyPatch.ReSetLobbyText();
         }
 
         public static void ShareOptions(int NumberOfOptions, MessageReader reader)
@@ -209,7 +209,7 @@ namespace UltimateMods
 
         public static void DynamicMapOption(byte mapId)
         {
-            GameOptionsManager.Instance.CurrentGameOptions.SetByte(ByteOptionNames.MapId, mapId);
+            GameManager.Instance.LogicOptions.currentGameOptions.SetByte(ByteOptionNames.MapId, mapId);
         }
 
         public static void VersionHandshake(int major, int minor, int build, int revision, Guid guid, int clientId)
@@ -226,7 +226,7 @@ namespace UltimateMods
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
-                x => x.setRole((RoleType)roleId)
+                x => x.SetRole((RoleId)roleId)
             );
         }
 
@@ -234,7 +234,7 @@ namespace UltimateMods
         {
             PlayerControl.AllPlayerControls.ToArray().DoIf(
                 x => x.PlayerId == playerId,
-                x => x.AddModifier((ModifierType)modId)
+                x => x.AddModifier((ModifierId)modId)
             );
         }
 
@@ -270,9 +270,7 @@ namespace UltimateMods
             PlayerControl target = Helpers.PlayerById(targetId);
             if (sheriff == null || target == null) return;
 
-            Sheriff role = Sheriff.getRole(sheriff);
-            if (role != null)
-                role.NumShots--;
+            if (sheriff != null) Sheriff.ReamingShots--;
 
             if (misfire)
             {
@@ -323,9 +321,7 @@ namespace UltimateMods
         public static void EngineerUsedRepair(byte engineerId)
         {
             PlayerControl engineer = Helpers.PlayerById(engineerId);
-            Engineer role = Engineer.getRole(engineer);
-            if (role != null)
-                role.RemainingFixes--;
+            if (engineer != null) ProEngineer.ReamingCounts--;
         }
 
         public static void UncheckedSetTasks(byte playerId, byte[] taskTypeIds)
@@ -336,9 +332,9 @@ namespace UltimateMods
             GameData.Instance.SetTasks(playerId, taskTypeIds);
         }
 
-        public static void ForceEnd()
+        public static void UncheckedEndGame(byte GameOverReason)
         {
-            AlivePlayer.IsForceEnd = true;
+            OnGameEndPatch.EndGameNavigationPatch.EndGameManagerSetUpPatch.CheckEndCriteriaPatch.UncheckedEndGame((CustomGameOverReason)GameOverReason);
         }
 
         public static void DragPlaceBody(byte playerId)
@@ -352,7 +348,7 @@ namespace UltimateMods
                     {
                         UnderTaker.DraggingBody = true;
                         UnderTaker.BodyId = playerId;
-                        if (GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
+                        if (GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
                         {
                             GameObject vent = GameObject.Find("LowerCentralVent");
                             vent.GetComponent<BoxCollider2D>().enabled = false;
@@ -374,7 +370,7 @@ namespace UltimateMods
                                 false
                             ))
                             {
-                                if (GameOptionsManager.Instance.CurrentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
+                                if (GameManager.Instance.LogicOptions.currentGameOptions.GetByte(ByteOptionNames.MapId) == 5)
                                 {
                                     Array[i].transform.position = newPos;
                                     Array[i].transform.position += new Vector3(0, 0, -0.5f);
@@ -395,7 +391,7 @@ namespace UltimateMods
         public static void UnderTakerReSetValues()
         {
             // Restore UnderTaker values when rewind time
-            if (PlayerControl.LocalPlayer.isRole(RoleType.UnderTaker) && UnderTaker.DraggingBody)
+            if (PlayerControl.LocalPlayer.IsRole(RoleId.UnderTaker) && UnderTaker.DraggingBody)
             {
                 UnderTaker.DraggingBody = false;
                 UnderTaker.BodyId = 0;
@@ -428,7 +424,7 @@ namespace UltimateMods
         {
             var p = Helpers.PlayerById(playerId);
             PlayerControl.LocalPlayer.transform.position = p.transform.position;
-            new CustomMessage(string.Format(ModTranslation.getString("TeleporterTeleported"), p.cosmetics.nameText.text), 3);
+            new CustomMessage(string.Format(LocalizationManager.GetString(TransKey.TeleporterTeleported), p.cosmetics.nameText.text), 3);
             SoundManager.Instance.PlaySound(Teleport, false, 0.8f);
         }
 
@@ -441,8 +437,8 @@ namespace UltimateMods
             if (player.IsNeutral() && ClearNeutralTasks)
                 player.ClearAllTasks();
 
-            player.eraseAllRoles();
-            player.eraseAllModifiers();
+            player.EraseAllRoles();
+            player.EraseAllModifiers();
         }
 
         public static void JackalCreatesSidekick(byte targetId)
@@ -452,17 +448,18 @@ namespace UltimateMods
 
             FastDestroyableSingleton<RoleManager>.Instance.SetRole(Player, RoleTypes.Crewmate);
             ErasePlayerRoles(Player.PlayerId, true);
-            Player.setRole(RoleType.Sidekick);
+            Player.SetRole(RoleId.Sidekick);
             if (Player.PlayerId == PlayerControl.LocalPlayer.PlayerId) PlayerControl.LocalPlayer.moveable = true;
 
-            if (!Jackal.JackalPromotedFromSidekickCanCreateSidekick) Jackal.CanSidekick = false;
+            Jackal.CanSidekick = false;
         }
 
         public static void SidekickPromotes(byte sidekickId)
         {
             PlayerControl sidekick = Helpers.PlayerById(sidekickId);
             ErasePlayerRoles(sidekickId);
-            sidekick.setRole(RoleType.Jackal);
+            sidekick.SetRole(RoleId.Jackal);
+            Jackal.CanSidekick = true;
         }
 
         public static void ArsonistDouse(byte playerId)
@@ -472,8 +469,8 @@ namespace UltimateMods
 
         public static void ArsonistWin()
         {
-            Arsonist.TriggerArsonistWin = true;
-            var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.isRole(RoleType.Arsonist) && p.IsAlive());
+            UncheckedEndGame((byte)CustomGameOverReason.ArsonistWin);
+            var livingPlayers = PlayerControl.AllPlayerControls.ToArray().Where(p => !p.IsRole(RoleId.Arsonist) && p.IsAlive());
             foreach (PlayerControl p in livingPlayers)
             {
                 p.Exiled();
@@ -481,44 +478,35 @@ namespace UltimateMods
             }
         }
 
-        // public static void AltruistKill(byte AltruistId)
-        // {
-        //     PlayerControl altruist = Helpers.PlayerById(AltruistId);
-        //     if (altruist == null) return;
+        public static void AltruistKill(byte AltruistId)
+        {
+            UncheckedMurderPlayer(AltruistId, AltruistId, (byte)0);
+            finalStatuses[AltruistId] = FinalStatus.Suicide;
+        }
 
-        //     altruist.MurderPlayer(altruist);
-        //     finalStatuses[AltruistId] = FinalStatus.Suicide;
-        // }
+        public static void AltruistRevive(byte parentId, byte AltruistId)
+        {
+            PlayerControl Altruist = Helpers.PlayerById(AltruistId);
+            PlayerControl TargetPlayer = Helpers.PlayerById(parentId);
+            DeadBody Target = Helpers.DeadBodyById(parentId);
 
-        // public static void AltruistRevive(byte deadBodyTarget, byte altruistId)
-        // {
-        //     PlayerControl AltruistId = Helpers.PlayerById(altruistId);
-        //     var DeadBodyId = deadBodyTarget.ParentId;
-        //     var DeadBodyPos = deadBodyTarget.TruePosition;
-        //     var RevivePlayer = Helpers.PlayerById(DeadBodyId);
+            if (Altruist || Target || TargetPlayer == null) return;
 
-        //     Altruist role = Altruist.getRole(AltruistId);
+            var Position = Target.TruePosition;
+            CleanBody(parentId);
 
-        //     if (deadBodyTarget != null || role != null)
-        //     {
-        //         foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>())
-        //         {
-        //             if (deadBody.ParentId == deadBodyTarget.ParentId) deadBody.gameObject.Destroy();
-        //             if (deadBody.ParentId == role.player.PlayerId) deadBody.gameObject.Destroy();
-        //         }
-        //     }
+            foreach (DeadBody deadBody in GameObject.FindObjectsOfType<DeadBody>()) if (deadBody.ParentId == AltruistId) CleanBody(AltruistId);
+            TargetPlayer.Revive();
+            FastDestroyableSingleton<RoleManager>.Instance.SetRole(TargetPlayer, TargetPlayer.IsImpostor() ? RoleTypes.Impostor : RoleTypes.Crewmate);
+            finalStatuses[TargetPlayer.PlayerId] = FinalStatus.Revival;
+            TargetPlayer.NetTransform.SnapTo(new(Position.x, Position.y + 0.3636f));
+        }
 
-        //     RevivePlayer.Revive();
-        //     RevivePlayer.NetTransform.SnapTo(new Vector2(DeadBodyPos.x, DeadBodyPos.y + 0.3636f));
-
-        //     if (SubmergedCompatibility.IsSubmerged && PlayerControl.LocalPlayer.PlayerId == RevivePlayer.PlayerId)
-        //     {
-        //         SubmergedCompatibility.ChangeFloor(RevivePlayer.transform.position.y > -7);
-        //     }
-
-        //     if (deadBodyTarget != null) Object.Destroy(deadBodyTarget.gameObject);
-
-        //     finalStatuses[DeadBodyId] = FinalStatus.Revival;
-        // }
+        public static void UncheckedCmdReportDeadBody(byte sourceId, byte targetId)
+        {
+            PlayerControl source = Helpers.PlayerById(sourceId);
+            var t = targetId == Byte.MaxValue ? null : Helpers.PlayerById(targetId).Data;
+            if (source != null) source.ReportDeadBody(t);
+        }
     }
 }

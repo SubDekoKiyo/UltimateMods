@@ -86,7 +86,7 @@ namespace UltimateMods.Modules
             moreOptions.transform.localPosition = __instance.CensorChatButton.transform.localPosition + Vector3.right * 2.6f;
 
             moreOptions.gameObject.SetActive(true);
-            moreOptions.Text.text = ModTranslation.getString("ModOptionsText");
+            moreOptions.Text.text = LocalizationManager.GetString(TransKey.ModOptionsText);
             var moreOptionsButton = moreOptions.GetComponent<PassiveButton>();
             moreOptionsButton.OnClick = new ButtonClickedEvent();
             moreOptionsButton.OnClick.AddListener((Action)(() =>
@@ -122,7 +122,7 @@ namespace UltimateMods.Modules
             var title = titleTextTitle = Object.Instantiate(titleText, popUp.transform);
             title.GetComponent<RectTransform>().localPosition = Vector3.up * 2.3f;
             title.gameObject.SetActive(true);
-            title.text = ModTranslation.getString("ModOptionsText");
+            title.text = LocalizationManager.GetString(TransKey.ModOptionsText);
             title.name = "TitleText";
         }
 
@@ -145,7 +145,7 @@ namespace UltimateMods.Modules
                 button.onState = info.DefaultValue;
                 button.Background.color = button.onState ? Color.green : Palette.ImpostorRed;
 
-                button.Text.text = ModTranslation.getString(info.Title);
+                button.Text.text = LocalizationManager.GetString(info.Title);
                 button.Text.fontSizeMin = button.Text.fontSizeMax = 2.2f;
                 button.Text.font = Object.Instantiate(titleText.font);
                 button.Text.GetComponent<RectTransform>().sizeDelta = new Vector2(2, 2);
@@ -188,17 +188,17 @@ namespace UltimateMods.Modules
         public static void updateTranslations()
         {
             if (titleTextTitle)
-                titleTextTitle.text = ModTranslation.getString("ModOptionsText");
+                titleTextTitle.text = LocalizationManager.GetString(TransKey.ModOptionsText);
 
             if (moreOptions)
-                moreOptions.Text.text = ModTranslation.getString("ModOptionsText");
+                moreOptions.Text.text = LocalizationManager.GetString(TransKey.ModOptionsText);
 
             try
             {
                 for (int i = 0; i < AllOptions.Length; i++)
                 {
                     if (i >= modButtons.Count) break;
-                    modButtons[i].Text.text = ModTranslation.getString(AllOptions[i].Title);
+                    modButtons[i].Text.text = LocalizationManager.GetString(AllOptions[i].Title);
                 }
             }
             catch { }

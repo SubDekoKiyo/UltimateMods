@@ -25,7 +25,7 @@ namespace UltimateMods.Patches
 
                 buttonDiscord = UnityEngine.Object.Instantiate(tmpButton, null);
 
-                var TextDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                var TextDiscord = buttonDiscord.transform.GetChild(0).GetComponent<TMP_Text>();
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
                 {
                     TextDiscord.SetText("Discord");
@@ -48,7 +48,7 @@ namespace UltimateMods.Patches
 
                 buttonTwitter = UnityEngine.Object.Instantiate(tmpButton, null);
 
-                var TextTwitter = buttonTwitter.transform.GetChild(0).GetComponent<TMPro.TMP_Text>();
+                var TextTwitter = buttonTwitter.transform.GetChild(0).GetComponent<TMP_Text>();
                 __instance.StartCoroutine(Effects.Lerp(0.1f, new System.Action<float>((p) =>
                 {
                     TextTwitter.SetText("Twitter");
@@ -90,15 +90,15 @@ namespace UltimateMods.Patches
                     popUp.gameObject.SetActive(true);
                     popUp.Init();
                     // SelectableHyperLinkHelper.DestroyGOs(popUp.selectableHyperLinks, "test");
-                    string creditsString = ModTranslation.getString("DevName");
-                    creditsString += ModTranslation.getString("CreditsText");
+                    string creditsString = LocalizationManager.GetString(TransKey.DevName);
+                    creditsString += LocalizationManager.GetString("CreditsText");
                     popUp.AnnounceTextMeshPro.text = creditsString;
                     __instance.StartCoroutine(Effects.Lerp(0.01f, new Action<float>((p) =>
                     {
                         if (p == 1)
                         {
-                            var titleText = GameObject.Find("Title_Text").GetComponent<TMPro.TextMeshPro>();
-                            if (titleText != null) titleText.text = ModTranslation.getString("CreditsTitle");
+                            var titleText = GameObject.Find("Title_Text").GetComponent<TextMeshPro>();
+                            if (titleText != null) titleText.text = LocalizationManager.GetString(TransKey.CreditsTitle);
                         }
                     })));
                 });

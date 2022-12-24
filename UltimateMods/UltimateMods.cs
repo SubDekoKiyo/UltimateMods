@@ -7,49 +7,34 @@ namespace UltimateMods
 
         public static void ClearAndReloadRoles()
         {
-            // Roles
-            Sheriff.Clear();
-            Jester.Clear();
-            Engineer.Clear();
-            CustomImpostor.Clear();
-            UnderTaker.Clear();
-            BountyHunter.Clear();
-            Madmate.Clear();
-            Bakery.Clear();
-            Teleporter.Clear();
-            // Altruist.Clear();
-            Adversity.Clear();
-            Snitch.Clear();
-            Jackal.Clear();
-            Sidekick.Clear();
-            Seer.Clear();
-            Arsonist.Clear();
-
-            // Modifiers
-            Opportunist.Clear();
-
-            AlivePlayer.Clear();
+            Clear();
             Role.ClearAll();
         }
 
         public static void FixedUpdate(PlayerControl player)
         {
             Role.allRoles.DoIf(x => x.player == player, x => x.FixedUpdate());
-            Modifiers.allModifiers.DoIf(x => x.player == player, x => x.FixedUpdate());
+            Modifier.allModifiers.DoIf(x => x.player == player, x => x.FixedUpdate());
         }
 
         public static void OnMeetingStart()
         {
             Role.allRoles.Do(x => x.OnMeetingStart());
-            Modifiers.allModifiers.Do(x => x.OnMeetingStart());
+            Modifier.allModifiers.Do(x => x.OnMeetingStart());
         }
 
         public static void OnMeetingEnd()
         {
             Role.allRoles.Do(x => x.OnMeetingEnd());
-            Modifiers.allModifiers.Do(x => x.OnMeetingEnd());
+            Modifier.allModifiers.Do(x => x.OnMeetingEnd());
 
             // CustomOverlays.HideInfoOverlay();
+        }
+
+        public static void Clear()
+        {
+            Role.allRoles.Do(x => x.Clear());
+            Modifier.allModifiers.Do(x => x.Clear());
         }
 
         [HarmonyPatch(typeof(GameData), nameof(GameData.HandleDisconnect), new Type[] { typeof(PlayerControl), typeof(DisconnectReasons) })]
@@ -60,7 +45,7 @@ namespace UltimateMods
                 if (AmongUsClient.Instance.GameState == InnerNet.InnerNetClient.GameStates.Started)
                 {
                     Role.allRoles.Do(x => x.HandleDisconnect(player, reason));
-                    Modifiers.allModifiers.Do(x => x.HandleDisconnect(player, reason));
+                    Modifier.allModifiers.Do(x => x.HandleDisconnect(player, reason));
                     finalStatuses[player.PlayerId] = FinalStatus.Disconnected;
                 }
             }

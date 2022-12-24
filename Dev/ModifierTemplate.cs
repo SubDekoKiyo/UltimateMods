@@ -1,12 +1,9 @@
-using HarmonyLib;
-using System.Collections.Generic;
-
 namespace UltimateMods.Roles
 {
     [HarmonyPatch]
     public class ModifierT : ModifierBase<ModifierT>
     {
-        public static string Postfix { get { return ModTranslation.getString("ModifierPostfix"); } }
+        public override string ModifierPostfix() { return ""; }
 
         public static List<PlayerControl> Candidates
         {

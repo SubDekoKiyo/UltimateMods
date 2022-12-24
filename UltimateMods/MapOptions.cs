@@ -8,7 +8,6 @@ namespace UltimateMods
         public static bool NoVoteIsSelfVote = false;
         public static bool HideOutOfSightNametags = false;
         public static bool HidePlayerNames = false;
-
         public static int RestrictDevices = 0;
         public static float RestrictAdminTime = 600f;
         public static float RestrictAdminTimeMax = 600f;

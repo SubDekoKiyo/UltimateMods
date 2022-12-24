@@ -13,7 +13,7 @@ public static class ButtonPatches
             bool isReactor = task.TaskType == TaskTypes.StopCharles || task.TaskType == TaskTypes.ResetSeismic || task.TaskType == TaskTypes.ResetReactor;
             bool isO2 = task.TaskType == TaskTypes.RestoreOxy;
 
-            if (pc.isRole(RoleType.Madmate) && (isLights && !Madmate.CanFixBlackout) || (isReactor && !Madmate.CanFixReactor) || (isO2 && !Madmate.CanFixO2) || (isComms && !Madmate.CanFixComms))
+            if (pc.IsRole(RoleId.Madmate) && (isLights && !Madmate.CanFixBlackout) || (isReactor && !Madmate.CanFixReactor) || (isO2 && !Madmate.CanFixO2) || (isComms && !Madmate.CanFixComms))
             {
                 return true;
             }
@@ -81,7 +81,7 @@ public static class ButtonPatches
                     // Handle blank kill
                     if (res == MurderAttemptResult.BlankKill)
                     {
-                        PlayerControl.LocalPlayer.killTimer = GameOptionsManager.Instance.CurrentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
+                        PlayerControl.LocalPlayer.killTimer = GameManager.Instance.LogicOptions.currentGameOptions.GetFloat(FloatOptionNames.KillCooldown);
                     }
 
                     __instance.SetTarget(null);
@@ -102,10 +102,10 @@ public static class ButtonPatches
                 var statusText = "";
 
                 // Jester
-                if (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanCallEmergency)
+                if (PlayerControl.LocalPlayer.IsRole(RoleId.Jester) && !Jester.CanCallEmergency)
                 {
                     roleCanCallEmergency = false;
-                    statusText = ModTranslation.getString("JesterMeetingButton");
+                    statusText = LocalizationManager.GetString(TransKey.JesterMeetingButton);
                 }
 
                 if (!roleCanCallEmergency)
@@ -123,9 +123,9 @@ public static class ButtonPatches
                 {
                     int localRemaining = PlayerControl.LocalPlayer.RemainingEmergencies;
                     int teamRemaining = Mathf.Max(0, MaxNumberOfMeetings - MeetingsCount);
-                    int remaining = Mathf.Min(localRemaining, teamRemaining);
+                    int remaining = Mathf.Min(localRemaining, (PlayerControl.LocalPlayer.IsRole(RoleId.Mayor)) ? 1 : teamRemaining);
 
-                    __instance.StatusText.text = String.Format(ModTranslation.getString("MeetingStatus"), PlayerControl.LocalPlayer.name, localRemaining.ToString(), teamRemaining.ToString());
+                    __instance.StatusText.text = String.Format(LocalizationManager.GetString(TransKey.MeetingStatus), PlayerControl.LocalPlayer.name, localRemaining.ToString(), teamRemaining.ToString());
                     __instance.NumberText.text = "";
                     __instance.ButtonActive = remaining > 0;
                     __instance.ClosedLid.gameObject.SetActive(!__instance.ButtonActive);
@@ -150,8 +150,7 @@ public static class ButtonPatches
 
                     if (Helpers.ShowButtons)
                     {
-                        if (__instance.RoleCanUseVents())
-                            FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.Show();
+                        if (__instance.RoleCanUseVents()) FastDestroyableSingleton<HudManager>.Instance.ImpostorVentButton.Show();
 
                         if (__instance.RoleCanSabotage())
                         {
@@ -168,10 +167,9 @@ public static class ButtonPatches
         {
             public static bool Prefix(SabotageButton __instance)
             {
-                if (!PlayerControl.LocalPlayer.IsNeutral())
-                    return true;
+                if (!PlayerControl.LocalPlayer.IsNeutral()) return true;
 
-                HudManager.Instance.ToggleMapVisible(new MapOptions()
+                FastDestroyableSingleton<HudManager>.Instance.ToggleMapVisible(new MapOptions()
                 {
                     Mode = MapOptions.Modes.Sabotage,
                     AllowMovementWhileMapOpen = true
@@ -188,12 +186,12 @@ public static class ButtonPatches
         public static void Prefix(ref RoleTeamTypes __state)
         {
             var player = PlayerControl.LocalPlayer;
-            if (player.isRole(RoleType.Jester) && CustomRolesH.JesterCanSabotage.getBool())
+            if (player.IsRole(RoleId.Jester) && CustomRolesH.JesterCanSabotage.getBool())
             {
                 __state = player.Data.Role.TeamType;
                 player.Data.Role.TeamType = RoleTeamTypes.Impostor;
             }
-            if (player.isRole(RoleType.CustomImpostor) && CustomRolesH.CustomImpostorCanSabotage.getBool())
+            if (player.IsRole(RoleId.CustomImpostor) && CustomRolesH.CustomImpostorCanSabotage.getBool())
             {
                 __state = player.Data.Role.TeamType;
                 player.Data.Role.TeamType = RoleTeamTypes.Impostor;
@@ -203,11 +201,11 @@ public static class ButtonPatches
         public static void Postfix(ref RoleTeamTypes __state)
         {
             var player = PlayerControl.LocalPlayer;
-            if (player.isRole(RoleType.Jester) && CustomRolesH.JesterCanSabotage.getBool())
+            if (player.IsRole(RoleId.Jester) && CustomRolesH.JesterCanSabotage.getBool())
             {
                 player.Data.Role.TeamType = __state;
             }
-            if (player.isRole(RoleType.CustomImpostor) && CustomRolesH.CustomImpostorCanSabotage.getBool())
+            if (player.IsRole(RoleId.CustomImpostor) && CustomRolesH.CustomImpostorCanSabotage.getBool())
             {
                 player.Data.Role.TeamType = __state;
             }
@@ -227,7 +225,7 @@ public static class ButtonPatches
                 if (BlockButtonPatch.IsBlocked(target, pc))
                 {
                     __instance.currentTarget = null;
-                    __instance.buttonLabelText.text = ModTranslation.getString("ButtonBlocked");
+                    __instance.buttonLabelText.text = LocalizationManager.GetString(TransKey.ButtonBlocked);
                     __instance.enabled = false;
                     __instance.graphic.color = Palette.DisabledClear;
                     __instance.graphic.material.SetFloat("_Desat", 0f);
@@ -293,21 +291,26 @@ public static class ButtonPatches
                 bool canUse;
                 bool couldUse;
                 __instance.CanUse(PlayerControl.LocalPlayer.Data, out canUse, out couldUse);
-                bool CannotMoveInVents = (PlayerControl.LocalPlayer.isRole(RoleType.Madmate) && !Madmate.CanMoveInVents) ||
-                                        (PlayerControl.LocalPlayer.isRole(RoleType.Jester) && !Jester.CanMoveInVents);
+                bool CannotMoveInVents = (PlayerControl.LocalPlayer.IsRole(RoleId.Madmate) && !Madmate.CanMoveInVents) ||
+                                        (PlayerControl.LocalPlayer.IsRole(RoleId.Jester) && !Jester.CanMoveInVents);
                 if (!canUse) return false; // No need to execute the native method as using is disallowed anyways
                 bool isEnter = !PlayerControl.LocalPlayer.inVent;
 
-                if (isEnter)
-                {
-                    PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(__instance.Id);
-                }
-                else
-                {
-                    PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(__instance.Id);
-                }
+                if (isEnter) PlayerControl.LocalPlayer.MyPhysics.RpcEnterVent(__instance.Id);
+
+                else PlayerControl.LocalPlayer.MyPhysics.RpcExitVent(__instance.Id);
+
                 __instance.SetButtons(isEnter && !CannotMoveInVents);
                 return false;
+            }
+        }
+
+        [HarmonyPatch(typeof(Vent), nameof(Vent.EnterVent))]
+        public static class DumpDeadBody
+        {
+            public static void Postfix()
+            {
+                UnderTaker.OnEnterVent();
             }
         }
     }

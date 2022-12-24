@@ -7,9 +7,9 @@ namespace UltimateMods.Objects
         public static Dictionary<int, PlayerVersion> playerVersions = new Dictionary<int, PlayerVersion>();
         private static SpriteRenderer meetingUnderlay;
         private static SpriteRenderer infoUnderlay;
-        private static TMPro.TextMeshPro infoOverlayRules;
-        private static TMPro.TextMeshPro infoOverlayPlayer;
-        private static TMPro.TextMeshPro infoOverlayRoles;
+        private static TextMeshPro infoOverlayRules;
+        private static TextMeshPro infoOverlayPlayer;
+        private static TextMeshPro infoOverlayRoles;
 
         public static bool OverlayShown = false;
 
@@ -75,7 +75,7 @@ namespace UltimateMods.Objects
                 infoOverlayRules.fontSize = infoOverlayRules.fontSizeMin = infoOverlayRules.fontSizeMax = 1.15f;
                 infoOverlayRules.autoSizeTextContainer = false;
                 infoOverlayRules.enableWordWrapping = false;
-                infoOverlayRules.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                infoOverlayRules.alignment = TextAlignmentOptions.TopLeft;
                 infoOverlayRules.transform.position = Vector3.zero;
                 infoOverlayRules.transform.localPosition = new Vector3(-3f, 1f, -910f);
                 infoOverlayRules.transform.localScale = Vector3.one * 1.25f;
@@ -91,7 +91,7 @@ namespace UltimateMods.Objects
                 infoOverlayPlayer.outlineWidth += 0.02f;
                 infoOverlayPlayer.autoSizeTextContainer = false;
                 infoOverlayPlayer.enableWordWrapping = false;
-                infoOverlayPlayer.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                infoOverlayPlayer.alignment = TextAlignmentOptions.TopLeft;
                 infoOverlayPlayer.transform.position = Vector3.zero;
                 infoOverlayPlayer.transform.localPosition = new Vector3(0f, 1f, -910f);
                 infoOverlayPlayer.transform.localScale = Vector3.one * 1.25f;
@@ -107,7 +107,7 @@ namespace UltimateMods.Objects
                 infoOverlayRoles.outlineWidth += 0.02f;
                 infoOverlayRoles.autoSizeTextContainer = false;
                 infoOverlayRoles.enableWordWrapping = false;
-                infoOverlayRoles.alignment = TMPro.TextAlignmentOptions.TopLeft;
+                infoOverlayRoles.alignment = TextAlignmentOptions.TopLeft;
                 infoOverlayRoles.transform.position = Vector3.zero;
                 infoOverlayRoles.transform.localPosition = new Vector3(2.7f, 1f, -910f);
                 infoOverlayRoles.transform.localScale = Vector3.one * 1.25f;
@@ -149,11 +149,12 @@ namespace UltimateMods.Objects
             infoOverlayPlayer.enabled = true;
 
             string rolesText = "";
-            foreach (RoleInfo r in RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer))
+
+            foreach (RoleInfo r in RoleInfoList.GetRoleInfoForPlayer(PlayerControl.LocalPlayer))
             {
                 string roleOptions = r.RoleOptions;
                 string roleDesc = r.FullDescription;
-                rolesText += $"<size=150%>{r.NameColored}</size>" +
+                rolesText += $"<size=150%>{r.ColorName}</size>" +
                     (roleDesc != "" ? $"\n{r.FullDescription}" : "") + "\n\n" +
                     (roleOptions != "" ? $"{roleOptions}\n\n" : "");
             }
@@ -245,9 +246,9 @@ namespace UltimateMods.Objects
                 if (!OverlayShown) return;
                 if (PlayerControl.LocalPlayer == null || __instance == null) return;
 
-                List<string> gameOptions = GameOptionsManager.Instance.CurrentGameOptions.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
+                List<string> gameOptions = GameManager.Instance.LogicOptions.currentGameOptions.ToString().Split("\n", StringSplitOptions.RemoveEmptyEntries).ToList();
                 infoOverlayRules.text = string.Join("\n", gameOptions);
-                string PlayerText = ModTranslation.getString("PlatformTitle");
+                string PlayerText = LocalizationManager.GetString(TransKey.PlatformTitle);
                 foreach (InnerNet.ClientData Client in AmongUsClient.Instance.allClients.ToArray())
                 {
                     if (Client == null) continue;

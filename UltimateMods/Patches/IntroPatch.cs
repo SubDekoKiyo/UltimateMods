@@ -7,48 +7,46 @@ namespace UltimateMods.Patches
         public static void Prefix(IntroCutscene __instance)
         {
             // Generate and initialize player icons
-            if (PlayerControl.LocalPlayer != null && HudManager.Instance != null)
+            if (PlayerControl.LocalPlayer != null && FastDestroyableSingleton<HudManager>.Instance != null)
             {
-                Vector3 bottomLeft = new Vector3(-HudManager.Instance.UseButton.transform.localPosition.x, HudManager.Instance.UseButton.transform.localPosition.y, HudManager.Instance.UseButton.transform.localPosition.z);
+                Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.x, -FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.z);
                 foreach (PlayerControl p in PlayerControl.AllPlayerControls)
                 {
                     GameData.PlayerInfo data = p.Data;
-                    PoolablePlayer player = UnityEngine.Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, FastDestroyableSingleton<HudManager>.Instance.transform);
+                    PoolablePlayer player = Object.Instantiate<PoolablePlayer>(__instance.PlayerPrefab, FastDestroyableSingleton<HudManager>.Instance.transform);
                     playerPrefab = __instance.PlayerPrefab;
                     p.SetPlayerMaterialColors(player.cosmetics.currentBodySprite.BodySprite);
                     player.SetSkin(data.DefaultOutfit.SkinId, data.DefaultOutfit.ColorId);
                     player.cosmetics.SetHat(data.DefaultOutfit.HatId, data.DefaultOutfit.ColorId);
                     // PlayerControl.SetPetImage(data.DefaultOutfit.PetId, data.DefaultOutfit.ColorId, player.PetSlot);
                     player.cosmetics.nameText.text = data.PlayerName;
+                    player.cosmetics.nameText.transform.localPosition += new Vector3(0f, -0.5f, 0f);
                     player.SetFlipX(true);
                     Options.PlayerIcons[p.PlayerId] = player;
 
-                    if (PlayerControl.LocalPlayer.isRole(RoleType.BountyHunter))
+                    if (PlayerControl.LocalPlayer.IsRole(RoleId.BountyHunter))
                     {
-                        player.transform.localPosition = bottomLeft + new Vector3(-0.25f, 0f, 0);
+                        player.transform.localPosition = bottomLeft + new Vector3(0.2f, 0.25f, 0);
                         player.transform.localScale = Vector3.one * 0.4f;
                         player.gameObject.SetActive(false);
                     }
-                    else
-                        player.gameObject.SetActive(false);
+                    else player.gameObject.SetActive(false);
                 }
             }
 
             if (BountyHunter.exists)
             {
-                foreach (var bountyHunter in BountyHunter.allPlayers)
+                if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer.IsRole(RoleId.BountyHunter))
                 {
-                    if (BountyHunter.Bounty != null && PlayerControl.LocalPlayer == bountyHunter)
+                    BountyHunter.BountyUpdateTimer = 0f;
+                    if (FastDestroyableSingleton<HudManager>.Instance != null)
                     {
-                        BountyHunter.BountyUpdateTimer = 0f;
-                        if (FastDestroyableSingleton<HudManager>.Instance != null)
-                        {
-                            Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.x, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.UseButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
-                            BountyHunter.CooldownTimer = UnityEngine.Object.Instantiate<TMPro.TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
-                            BountyHunter.CooldownTimer.alignment = TMPro.TextAlignmentOptions.Center;
-                            BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0f, -1f, -1f);
-                            BountyHunter.CooldownTimer.gameObject.SetActive(true);
-                        }
+                        Vector3 bottomLeft = new Vector3(-FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.x, -FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.y, FastDestroyableSingleton<HudManager>.Instance.SettingsButton.transform.localPosition.z) + new Vector3(-0.25f, 1f, 0);
+                        BountyHunter.CooldownTimer = Object.Instantiate<TextMeshPro>(FastDestroyableSingleton<HudManager>.Instance.KillButton.cooldownTimerText, FastDestroyableSingleton<HudManager>.Instance.transform);
+                        BountyHunter.CooldownTimer.alignment = TextAlignmentOptions.Center;
+                        BountyHunter.CooldownTimer.transform.localScale = Vector3.one * 0.8f;
+                        BountyHunter.CooldownTimer.transform.localPosition = bottomLeft + new Vector3(0.45f, -0.25f, -1f);
+                        BountyHunter.CooldownTimer.gameObject.SetActive(true);
                     }
                 }
             }
@@ -78,14 +76,14 @@ namespace UltimateMods.Patches
 
         public static void setupIntroTeam(IntroCutscene __instance, ref Il2CppSystem.Collections.Generic.List<PlayerControl> yourTeam)
         {
-            List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer);
-            RoleInfo roleInfo = infos.Where(info => info.roleType != RoleType.NoRole).FirstOrDefault();
+            List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(PlayerControl.LocalPlayer);
+            RoleInfo roleInfo = infos.Where(info => info.RoleId != RoleId.NoRole).FirstOrDefault();
             if (roleInfo == null) return;
             if (PlayerControl.LocalPlayer.IsNeutral())
             {
-                __instance.BackgroundBar.material.color = roleInfo.color;
+                __instance.BackgroundBar.material.color = roleInfo.RoleColor;
                 __instance.TeamTitle.text = roleInfo.Name;
-                __instance.TeamTitle.color = roleInfo.color;
+                __instance.TeamTitle.color = roleInfo.RoleColor;
                 __instance.ImpostorText.text = "";
             }
         }
@@ -102,25 +100,40 @@ namespace UltimateMods.Patches
 
             private static IEnumerator SetupRole(IntroCutscene __instance)
             {
-                List<RoleInfo> infos = RoleInfo.getRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleType[] { });
+                List<RoleInfo> infos = RoleInfoList.GetRoleInfoForPlayer(PlayerControl.LocalPlayer, new RoleId[] { });
                 RoleInfo roleInfo = infos.FirstOrDefault();
 
                 Helpers.Log($"{roleInfo.Name}");
                 Helpers.Log($"{roleInfo.IntroDescription}");
 
-                __instance.YouAreText.color = roleInfo.color;
+                __instance.YouAreText.color = roleInfo.RoleColor;
                 __instance.RoleText.text = roleInfo.Name;
-                __instance.RoleText.color = roleInfo.color;
+                __instance.RoleText.color = roleInfo.RoleColor;
                 __instance.RoleBlurbText.text = roleInfo.IntroDescription;
-                __instance.RoleBlurbText.color = roleInfo.color;
+                __instance.RoleBlurbText.color = roleInfo.RoleColor;
 
-                if (PlayerControl.LocalPlayer.isRole(RoleType.Madmate))
+                if (PlayerControl.LocalPlayer.IsRole(RoleId.Madmate))
                 {
                     __instance.YouAreText.color = ImpostorRed;
-                    __instance.RoleText.text = ModTranslation.getString("Madmate");
+                    __instance.RoleText.text = LocalizationManager.GetString(TransKey.Madmate);
                     __instance.RoleText.color = ImpostorRed;
-                    __instance.RoleBlurbText.text = ModTranslation.getString("MadmateIntro");
+                    __instance.RoleBlurbText.text = LocalizationManager.GetString(TransKey.MadmateIntro);
                     __instance.RoleBlurbText.color = ImpostorRed;
+                }
+
+                if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Opportunist))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(OpportunistGreen, String.Format(LocalizationManager.GetString(TransKey.OPIntro)));
+                }
+
+                if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Watcher))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(WatcherPurple, String.Format(LocalizationManager.GetString(TransKey.WTIntro)));
+                }
+
+                if (PlayerControl.LocalPlayer.HasModifier(ModifierId.Sunglasses))
+                {
+                    __instance.RoleBlurbText.text += "\n" + Helpers.cs(SunglassesGray, String.Format(LocalizationManager.GetString(TransKey.SGIntro)));
                 }
 
                 // 従来処理

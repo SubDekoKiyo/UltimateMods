@@ -5,61 +5,67 @@ namespace UltimateMods.Patches
     {
         static void ResetNameTagsAndColors() { }
 
-        static void setPlayerNameColor(PlayerControl p, Color color)
+        static void SetPlayerNameColor(PlayerControl p, Color color)
         {
             p.cosmetics.nameText.color = color;
-            if (MeetingHud.Instance != null)
-                foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
-                    if (player.NameText != null && p.PlayerId == player.TargetPlayerId)
-                        player.NameText.color = color;
+            if (MeetingHud.Instance != null) foreach (PlayerVoteArea player in MeetingHud.Instance.playerStates)
+                    if (player.NameText != null && p.PlayerId == player.TargetPlayerId) player.NameText.color = color;
         }
 
-        static void setNameColors()
+        static void SetNameColors()
         {
             var p = PlayerControl.LocalPlayer;
-            var role = p.isRole;
+            var role = p.IsRole;
 
-            if (role(RoleType.Jester))
-                setPlayerNameColor(p, JesterPink);
-            if (role(RoleType.Sheriff))
-                setPlayerNameColor(p, SheriffYellow);
-            if (role(RoleType.Engineer))
-                setPlayerNameColor(p, EngineerBlue);
-            if (role(RoleType.Arsonist))
-                setPlayerNameColor(p, ArsonistOrange);
-            if (role(RoleType.Seer))
-                setPlayerNameColor(p, SeerGreen);
-            if (role(RoleType.Snitch))
-                setPlayerNameColor(p, SnitchGreen);
-            if (role(RoleType.Bakery))
-                setPlayerNameColor(p, BakeryYellow);
-
-            if (role(RoleType.Madmate))
+            switch (p.GetRoleId())
             {
-                setPlayerNameColor(p, ImpostorRed);
+                case RoleId.Impostor:
+                case RoleId.Adversity:
+                case RoleId.CustomImpostor:
+                case RoleId.UnderTaker:
+                case RoleId.BountyHunter:
+                case RoleId.Teleporter:
+                case RoleId.EvilHacker:
+                    SetPlayerNameColor(p, ImpostorRed);
+                    break;
 
-                if (Madmate.KnowsImpostors(p))
-                    foreach (var pc in PlayerControl.AllPlayerControls)
-                        if (pc.IsImpostor())
-                            setPlayerNameColor(p, Palette.ImpostorRed);
-            }
+                case RoleId.Sheriff: SetPlayerNameColor(p, SheriffYellow); break;
+                case RoleId.ProEngineer: SetPlayerNameColor(p, EngineerBlue); break;
+                case RoleId.Bakery: SetPlayerNameColor(p, BakeryYellow); break;
+                case RoleId.Snitch: SetPlayerNameColor(p, SnitchGreen); break;
+                case RoleId.Seer: SetPlayerNameColor(p, SeerGreen); break;
+                // case RoleId.Lighter: SetPlayerNameColor(p, LighterYellow); break;
+                case RoleId.Altruist: SetPlayerNameColor(p, AltruistRed); break;
+                case RoleId.Mayor: SetPlayerNameColor(p, MayorGreen); break;
+                case RoleId.Crewmate: SetPlayerNameColor(p, CrewmateBlue); break;
+                case RoleId.Engineer: SetPlayerNameColor(p, EngineerOrange); break;
+                case RoleId.Scientist: SetPlayerNameColor(p, ScientistBlue); break;
 
-            if (p.IsTeamJackal())
-            {
-                foreach (var jk in Jackal.allPlayers)
-                    setPlayerNameColor(jk, JackalBlue);
-                foreach (var sk in Sidekick.allPlayers)
-                    setPlayerNameColor(sk, JackalBlue);
+                case RoleId.Jester: SetPlayerNameColor(p, JesterPink); break;
+                case RoleId.Arsonist: SetPlayerNameColor(p, ArsonistOrange); break;
+
+                case RoleId.Madmate:
+                    SetPlayerNameColor(p, ImpostorRed);
+                    if (Madmate.KnowsImpostors(p))
+                        foreach (var pc in PlayerControl.AllPlayerControls)
+                            if (pc.IsImpostor()) SetPlayerNameColor(p, Palette.ImpostorRed);
+                    break;
+
+                case RoleId.Jackal:
+                case RoleId.Sidekick:
+                    SetPlayerNameColor(p, JackalBlue);
+                    foreach (var jk in Jackal.allPlayers) SetPlayerNameColor(jk, JackalBlue);
+                    foreach (var sk in Sidekick.allPlayers) SetPlayerNameColor(sk, JackalBlue);
+                    break;
             }
         }
 
-        // 生存
         static void Postfix()
         {
             if (AmongUsClient.Instance.GameState != InnerNet.InnerNetClient.GameStates.Started) return;
 
             ResetNameTagsAndColors();
-            setNameColors();
+            SetNameColors();
         }
     }
 }
