@@ -16,115 +16,129 @@
         "1": "English",
         "2": "\u7b80\u4f53\u4e2d\u6587"
     },
-    "ModOptionsText": {
-        "0": "UM\u306e\u8a2d\u5b9a",
-        "1": "UM Options",
-        "2": "\u6781\u9650\u804c\u4e1a\u9009\u9879"
+    "CreditsMain": {
+        "0": "\u5236\u4f5c:DekoKiyo",
+        "1": "Created with DekoKiyo",
+        "2": "\u6a21\u7ec4\u4f5c\u8005\uff1aDekoKiyo"
     },
-    "VanillaOptionsText": {
-        "0": "AmongUs\u306e\u8a2d\u5b9a",
-        "1": "AmongUs Options",
-        "2": "\u539f\u7248\u9009\u9879"
+    "CreditsVersion": {
+        "0": "Version.{0}",
+        "1": "Version.{0}",
+        "2": "V.{0}"
     },
-    "GeneralSettings": {
-        "0": "UM\u306e\u8a2d\u5b9a",
-        "1": "UM Settings",
-        "2": "\u6781\u9650\u804c\u4e1a\u8bbe\u7f6e"
+    "CreditsBetaVersion": {
+        "0": "Version.Beta{0}",
+        "1": "Version.Beta{0}",
+        "2": "\u6d4b\u8bd5\u7248 V.{0}"
     },
-    "CrewmateSettings": {
-        "0": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u5f79\u8077",
-        "1": "Crewmate Roles",
-        "2": "\u8239\u5458\u804c\u4e1a\u8bbe\u7f6e"
+    "DevName": {
+        "0": "<align=\"center\">\u88fd\u4f5c\u8005\nDekoKiyo\n</align>",
+        "1": "<align=\"center\">Developer\nDekoKiyo\n</align>",
+        "2": "<align=\"center\">\u5236\u4f5c\u8005\uff1a\nDekoKiyo\n</align>"
     },
-    "ImpostorSettings": {
-        "0": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u5f79\u8077",
-        "1": "Impostor Roles",
-        "2": "\u4f2a\u88c5\u8005\u804c\u4e1a\u8bbe\u7f6e"
+    "CreditsTitle": {
+        "0": "Mod\u30af\u30ec\u30b8\u30c3\u30c8",
+        "1": "Mod Credits",
+        "2": "\u9e23\u8c22"
     },
-    "NeutralSettings": {
-        "0": "\u7b2c\u4e09\u9663\u55b6\u5f79\u8077",
-        "1": "Neutral Roles",
-        "2": "\u72ec\u7acb\u804c\u4e1a\u8bbe\u7f6e"
+    "NoUpdate": {
+        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u3042\u308a\u307e\u305b\u3093\u3002\n\u3053\u308c\u304c\u6700\u65b0\u3067\u3059\u3002",
+        "1": "There is no update.\nThis is latest version.",
+        "2": "\u76ee\u524d\u4e0d\u9700\u8981\u66f4\u65b0\u3002\n\u5df2\u66f4\u65b0\u81f3\u6700\u65b0\u7248\u672c\u3002"
     },
-    "ModifierSettings": {
-        "0": "\u5c5e\u6027\u5f79\u8077",
-        "1": "Modifier Roles",
-        "2": "\u9644\u52a0\u804c\u4e1a\u8bbe\u7f6e"
+    "Updating": {
+        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\u2026",
+        "1": "Updating now\u2026",
+        "2": "\u6b63\u5728\u66f4\u65b0\u4e2d.."
     },
-    "OtherSettings": {
-        "0": "\u305d\u306e\u4ed6\u8a2d\u5b9a",
-        "1": "Other Settings",
-        "2": "\u5176\u4ed6\u804c\u4e1a\u8bbe\u7f6e"
+    "UpdateManually": {
+        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n\u624b\u52d5\u3067\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+        "1": "Unable to auto-update.\nPlease update manually.",
+        "2": "\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0\u3002\n\u8bf7\u5c1d\u8bd5\u624b\u52a8\u66f4\u65b0\u3002"
     },
-    "OptionOn": {
-        "0": "\u30aa\u30f3",
-        "1": "On",
-        "2": "\u5f00\u542f"
+    "UpdateInProgress": {
+        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\nAmongUs\u3092\u7d42\u4e86\u3057\u307e\u3059\u3002\n\u518d\u5ea6\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+        "1": "Update finished.\nQuit Among Us.\nPlease start again.",
+        "2": "\u66f4\u65b0\u5b8c\u6210\u3002\n\u8bf7\u9000\u51fa\u6e38\u620f\uff0c\n\u5e76\u518d\u6b21\u542f\u52a8\u3002"
     },
-    "OptionOff": {
-        "0": "\u30aa\u30d5",
-        "1": "Off",
-        "2": "\u5173\u95ed"
+    "UpdateButton": {
+        "0": "Mod\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8",
+        "1": "Mod Update",
+        "2": "\u6a21\u7ec4\u66f4\u65b0"
     },
-    "FormatVotes": {
-        "0": "{0}\u7968",
-        "1": "{0}Votes",
-        "2": "{0}\u7968"
+    "UpdateRestart": {
+        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\nAmongUs\u3092\u7d42\u4e86\u3057\u307e\u3059\u3002\n\u518d\u5ea6\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+        "1": "Update finished.\nQuit Among Us.\nPlease start again.",
+        "2": "\u66f4\u65b0\u5b8c\u6210\u3002\n\u8bf7\u9000\u51fa\u6e38\u620f\uff0c\n\u5e76\u518d\u6b21\u542f\u52a8\u3002"
     },
-    "FormatSeconds": {
-        "0": "{0}\u79d2",
-        "1": "{0}Sec",
-        "2": "{0}\u79d2"
+    "UpdateFailed": {
+        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n\u624b\u52d5\u3067\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
+        "1": "Unable to auto-update.\nPlease update manually.",
+        "2": "\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0\u3002\n\u8bf7\u5c1d\u8bd5\u624b\u52a8\u66f4\u65b0\u3002"
     },
-    "FormatTimes": {
-        "0": "{0}\u56de",
-        "1": "{0}Times",
-        "2": "{0}\u6b21"
+    "Position": {
+        "0": "\u5ea7\u6a19:",
+        "1": "Position:",
+        "2": "\u4f4d\u7f6e\uff1a"
     },
-    "FormatPlayer": {
-        "0": "{0}\u4eba",
-        "1": "{0}Player",
-        "2": "{0}\u4eba"
+    "ErrorNotInstalled": {
+        "0": "{0}\u306eUltimateMods\u306f\u6b63\u5e38\u306b\u5c0e\u5165\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002",
+        "1": "{0} has a different or no version of UltimateMods",
+        "2": "\u6ca1\u6709\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u6216\u6a21\u7ec4\u7248\u672c\u4e0d\u540c"
     },
-    "FormatShots": {
-        "0": "{0}\u767a",
-        "1": "{0}Shots",
-        "2": "{0}\u6b21"
+    "ErrorOlderVersion": {
+        "0": "{0}\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3088\u308a\u53e4\u3044\u3067\u3059\u3002",
+        "1": "{0} has an older version of UltimateMods",
+        "2": "\u7684\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u7248\u672c\u8f83\u65e7"
     },
-    "FormatPercent": {
-        "0": "{0}%",
-        "1": "{0}%",
-        "2": "{0}%"
+    "ErrorNewerVersion": {
+        "0": "{0}\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3088\u308a\u65b0\u3057\u3044\u3067\u3059\u3002",
+        "1": "{0} has a newer version of UltimateMods",
+        "2": "\u7684\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u7248\u672c\u8f83\u65b0"
     },
-    "FormatMultiplier": {
-        "0": "{0}x",
-        "1": "{0}x",
-        "2": "{0}x"
+    "ErrorWrongVersion": {
+        "0": "{0}\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3068\u9055\u3044\u307e\u3059\u3002",
+        "1": "{0} has a modified version of UM",
+        "2": "\u7684\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u4e3a\u4fee\u6539\u8fc7\u7684\u7248\u672c"
     },
-    "Preset1": {
-        "0": "\u30d7\u30ea\u30bb\u30c3\u30c81",
-        "1": "Preset1",
-        "2": "\u9884\u8bbe 1"
+    "ErrorHostNoVersion": {
+        "0": "<color=#00a2ff>\u30db\u30b9\u30c8\u304cUltimateMods\u3092\u5c0e\u5165\u3057\u3066\u3044\u306a\u3044\u304b\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\n\u30d0\u30b0\u9632\u6b62\u306e\u305f\u3081\u3001\u3042\u306a\u305f\u306f\u3042\u3068{0}\u79d2\u3067\u30ad\u30c3\u30af\u3055\u308c\u307e\u3059\u3002</color>",
+        "1": "<color=#00a2ff>The host has no or a different version of UltimateMods\nYou will be kicked in {0}s</color>",
+        "2": "<color=#00a2ff>\u623f\u4e3b\u6ca1\u6709\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u6216\u6a21\u7ec4\u7248\u672c\u4e0d\u540c\n\u4f60\u5c06\u5728{0}\u79d2\u540e\u88ab\u8e22\u51fa\u3002</color>"
     },
-    "Preset2": {
-        "0": "\u30d7\u30ea\u30bb\u30c3\u30c82",
-        "1": "Preset2",
-        "2": "\u9884\u8bbe 2"
+    "PlatformTitle": {
+        "0": "\u30fc\u30fc\u30fc\u30d7\u30ec\u30a4\u30e4\u30fc\u540d\uff1a\u6a5f\u7a2e\u540d\u30fc\u30fc\u30fc",
+        "1": "\u30fc\u30fc\u30fcPlayer Name : Platform\u30fc\u30fc\u30fc",
+        "2": "\u30fc\u30fc\u30fc\u73a9\u5bb6\u540d\u79f0\uff1a\u6e38\u620f\u8bbe\u5907\u30fc\u30fc\u30fc"
     },
-    "Preset3": {
-        "0": "\u30d7\u30ea\u30bb\u30c3\u30c83",
-        "1": "Preset3",
-        "2": "\u9884\u8bbe 3"
+    "MeetingStatus": {
+        "0": "<size=100%>\u30af\u30eb\u30fc {0} \u306f\n<color=red>\u6b8b\u308a{1}\u56de\u3001\u5168\u4f53\u3067\u306f{2}\u56de</color>\n\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u50ac\u3067\u304d\u308b</size>",
+        "1": "<size=100%>Crewmate {0} has\n<color=red>{1} times left, {2} times overall</color>\ncan hold emergency meetings.</size>",
+        "2": "<size=100%>{0} \u8fd8\u80fd\u53ec\u5f00\n<color=red>{1}\u6b21\u4f1a\u8bae .\u6240\u6709\u4eba\u8fd8\u80fd\u53ec\u5f00 {2} \u6b21</color>\n\u7d27\u6025\u4f1a\u8bae.</size>"
     },
-    "Preset4": {
-        "0": "\u30d7\u30ea\u30bb\u30c3\u30c84",
-        "1": "Preset4",
-        "2": "\u9884\u8bbe 4"
+    "JesterMeetingButton": {
+        "0": "\u30b8\u30a7\u30b9\u30bf\u30fc\u306f\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u3051\u306a\u3044\u2026",
+        "1": "Jester can't call meetings...",
+        "2": "\u5c0f\u4e11\u4e0d\u80fd\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae"
     },
-    "Preset5": {
-        "0": "\u30d7\u30ea\u30bb\u30c3\u30c85",
-        "1": "Preset5",
-        "2": "\u9884\u8bbe 5"
+    "RestrictOutOfTime": {
+        "0": "\u6642\u9593\u5207\u308c",
+        "1": "Out Of Time",
+        "2": "\u8d85\u65f6"
+    },
+    "TimeRemaining": {
+        "0": "\u6b8b\u308a\u6642\u9593: {0}",
+        "1": "Remaining: {0}",
+        "2": "\u5269\u4f59\u65f6\u95f4:{0}"
+    },
+    "ButtonBlocked": {
+        "0": "\u4f7f\u7528\u4e0d\u53ef",
+        "1": "BLOCKED",
+        "2": "\u4e0d\u80fd\u4f7f\u7528"
+    },
+    "ExilePlayer": {
+        "0": "{0}\u306f{1}\u3060\u3063\u305f\u3002",
+        "1": "{0} was The {1}."
     },
     "CrewmateWin": {
         "0": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u9663\u55b6\u52dd\u5229",
@@ -273,160 +287,6 @@
         "0": "\u713c\u6bba",
         "1": "Torched",
         "2": "\u7eb5\u706b"
-    },
-    "CreditsMain": {
-        "0": "\u5236\u4f5c:DekoKiyo",
-        "1": "Created with DekoKiyo",
-        "2": "\u6a21\u7ec4\u4f5c\u8005\uff1aDekoKiyo"
-    },
-    "CreditsVersion": {
-        "0": "Version.{0}",
-        "1": "Version.{0}",
-        "2": "V.{0}"
-    },
-    "CreditsBetaVersion": {
-        "0": "Version.Beta{0}",
-        "1": "Version.Beta{0}",
-        "2": "\u6d4b\u8bd5\u7248 V.{0}"
-    },
-    "DevName": {
-        "0": "<align=\"center\">\u88fd\u4f5c\u8005\nDekoKiyo\n</align>",
-        "1": "<align=\"center\">Developer\nDekoKiyo\n</align>",
-        "2": "<align=\"center\">\u5236\u4f5c\u8005\uff1a\nDekoKiyo\n</align>"
-    },
-    "CreditsTitle": {
-        "0": "Mod\u30af\u30ec\u30b8\u30c3\u30c8",
-        "1": "Mod Credits",
-        "2": "\u9e23\u8c22"
-    },
-    "NoUpdate": {
-        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u3042\u308a\u307e\u305b\u3093\u3002\n\u3053\u308c\u304c\u6700\u65b0\u3067\u3059\u3002",
-        "1": "There is no update.\nThis is latest version.",
-        "2": "\u76ee\u524d\u4e0d\u9700\u8981\u66f4\u65b0\u3002\n\u5df2\u66f4\u65b0\u81f3\u6700\u65b0\u7248\u672c\u3002"
-    },
-    "Updating": {
-        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u4e2d\u2026",
-        "1": "Updating now\u2026",
-        "2": "\u6b63\u5728\u66f4\u65b0\u4e2d.."
-    },
-    "UpdateManually": {
-        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n\u624b\u52d5\u3067\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-        "1": "Unable to auto-update.\nPlease update manually.",
-        "2": "\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0\u3002\n\u8bf7\u5c1d\u8bd5\u624b\u52a8\u66f4\u65b0\u3002"
-    },
-    "UpdateInProgress": {
-        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\nAmongUs\u3092\u7d42\u4e86\u3057\u307e\u3059\u3002\n\u518d\u5ea6\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-        "1": "Update finished.\nQuit Among Us.\nPlease start again.",
-        "2": "\u66f4\u65b0\u5b8c\u6210\u3002\n\u8bf7\u9000\u51fa\u6e38\u620f\uff0c\n\u5e76\u518d\u6b21\u542f\u52a8\u3002"
-    },
-    "UpdateButton": {
-        "0": "Mod\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8",
-        "1": "Mod Update",
-        "2": "\u6a21\u7ec4\u66f4\u65b0"
-    },
-    "UpdateRestart": {
-        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u304c\u5b8c\u4e86\u3057\u307e\u3057\u305f\u3002\nAmongUs\u3092\u7d42\u4e86\u3057\u307e\u3059\u3002\n\u518d\u5ea6\u8d77\u52d5\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-        "1": "Update finished.\nQuit Among Us.\nPlease start again.",
-        "2": "\u66f4\u65b0\u5b8c\u6210\u3002\n\u8bf7\u9000\u51fa\u6e38\u620f\uff0c\n\u5e76\u518d\u6b21\u542f\u52a8\u3002"
-    },
-    "UpdateFailed": {
-        "0": "\u30a2\u30c3\u30d7\u30c7\u30fc\u30c8\u306b\u5931\u6557\u3057\u307e\u3057\u305f\u3002\n\u624b\u52d5\u3067\u3084\u308a\u76f4\u3057\u3066\u304f\u3060\u3055\u3044\u3002",
-        "1": "Unable to auto-update.\nPlease update manually.",
-        "2": "\u65e0\u6cd5\u81ea\u52a8\u66f4\u65b0\u3002\n\u8bf7\u5c1d\u8bd5\u624b\u52a8\u66f4\u65b0\u3002"
-    },
-    "Position": {
-        "0": "\u5ea7\u6a19:",
-        "1": "Position:",
-        "2": "\u4f4d\u7f6e\uff1a"
-    },
-    "ErrorNotInstalled": {
-        "0": "{0}\u306eUltimateMods\u306f\u6b63\u5e38\u306b\u5c0e\u5165\u3055\u308c\u3066\u3044\u307e\u305b\u3093\u3002",
-        "1": "{0} has a different or no version of UltimateMods",
-        "2": "\u6ca1\u6709\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u6216\u6a21\u7ec4\u7248\u672c\u4e0d\u540c"
-    },
-    "ErrorOlderVersion": {
-        "0": "{0}\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3088\u308a\u53e4\u3044\u3067\u3059\u3002",
-        "1": "{0} has an older version of UltimateMods",
-        "2": "\u7684\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u7248\u672c\u8f83\u65e7"
-    },
-    "ErrorNewerVersion": {
-        "0": "{0}\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3088\u308a\u65b0\u3057\u3044\u3067\u3059\u3002",
-        "1": "{0} has a newer version of UltimateMods",
-        "2": "\u7684\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u7248\u672c\u8f83\u65b0"
-    },
-    "ErrorWrongVersion": {
-        "0": "{0}\u306eUltimateMods\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u3053\u306e\u30d0\u30fc\u30b8\u30e7\u30f3\u3068\u9055\u3044\u307e\u3059\u3002",
-        "1": "{0} has a modified version of UM",
-        "2": "\u7684\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u4e3a\u4fee\u6539\u8fc7\u7684\u7248\u672c"
-    },
-    "ErrorHostNoVersion": {
-        "0": "<color=#00a2ff>\u30db\u30b9\u30c8\u304cUltimateMods\u3092\u5c0e\u5165\u3057\u3066\u3044\u306a\u3044\u304b\u30d0\u30fc\u30b8\u30e7\u30f3\u304c\u9055\u3044\u307e\u3059\u3002\n\u30d0\u30b0\u9632\u6b62\u306e\u305f\u3081\u3001\u3042\u306a\u305f\u306f\u3042\u3068{0}\u79d2\u3067\u30ad\u30c3\u30af\u3055\u308c\u307e\u3059\u3002</color>",
-        "1": "<color=#00a2ff>The host has no or a different version of UltimateMods\nYou will be kicked in {0}s</color>",
-        "2": "<color=#00a2ff>\u623f\u4e3b\u6ca1\u6709\u6781\u9650\u804c\u4e1a\u6a21\u7ec4\u6216\u6a21\u7ec4\u7248\u672c\u4e0d\u540c\n\u4f60\u5c06\u5728{0}\u79d2\u540e\u88ab\u8e22\u51fa\u3002</color>"
-    },
-    "GhostsSeeTasksButton": {
-        "0": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u30bf\u30b9\u30af\u6b8b\u91cf\u304c\u898b\u3048\u308b",
-        "1": "Ghosts See\nRemaining Tasks",
-        "2": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u4efb\u52a1\u8fdb\u5ea6"
-    },
-    "GhostsSeeVotesButton": {
-        "0": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u5f79\u8077\u304c\u898b\u3048\u308b",
-        "1": "Ghosts See\nRoles",
-        "2": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u804c\u4e1a"
-    },
-    "GhostsSeeRolesButton": {
-        "0": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u6295\u7968\u5148\u304c\u898b\u3048\u308b",
-        "1": "Ghosts See\nVotes",
-        "2": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u6295\u7968"
-    },
-    "HideNameplates": {
-        "0": "\u30cd\u30fc\u30e0\u30d7\u30ec\u30fc\u30c8\u3092\n\u975e\u8868\u793a\u306b\u3059\u308b",
-        "1": "Hide\nNameplates",
-        "2": "\u9690\u85cf\u540d\u724c"
-    },
-    "EnableCustomSounds": {
-        "0": "\u30ab\u30b9\u30bf\u30e0\u30b5\u30a6\u30f3\u30c9\u3092\n\u4f7f\u7528\u3059\u308b",
-        "1": "Enable\nCustom Sounds",
-        "2": "\u542f\u7528\u6a21\u7ec4\u97f3\u6548"
-    },
-    "ShowRoleSummaryButton": {
-        "0": "\u6700\u7d42\u7d50\u679c\u3092\n\u8868\u793a\u3059\u308b",
-        "1": "Show\nRole Summary",
-        "2": "\u663e\u793a\u804c\u4e1a\u603b\u7ed3"
-    },
-    "PlatformTitle": {
-        "0": "===\u30d7\u30ec\u30a4\u30e4\u30fc\u540d\uff1a\u6a5f\u7a2e\u540d===",
-        "1": "===PlayerName : Platform===",
-        "2": "===\u73a9\u5bb6\u540d\u79f0\uff1a\u6e38\u620f\u8bbe\u5907==="
-    },
-    "MeetingStatus": {
-        "0": "<size=100%>\u30af\u30eb\u30fc {0} \u306f\n<color=red>\u6b8b\u308a{1}\u56de\u3001\u5168\u4f53\u3067\u306f{2}\u56de</color>\n\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u50ac\u3067\u304d\u308b</size>",
-        "1": "<size=100%>Crewmate {0} has\n<color=red>{1} times left, {2} times overall</color>\ncan hold emergency meetings.</size>",
-        "2": "<size=100%>{0} \u8fd8\u80fd\u53ec\u5f00\n<color=red>{1}\u6b21\u4f1a\u8bae .\u6240\u6709\u4eba\u8fd8\u80fd\u53ec\u5f00 {2} \u6b21</color>\n\u7d27\u6025\u4f1a\u8bae.</size>"
-    },
-    "JesterMeetingButton": {
-        "0": "\u30b8\u30a7\u30b9\u30bf\u30fc\u306f\u7dca\u6025\u4f1a\u8b70\u3092\u958b\u3051\u306a\u3044\u2026",
-        "1": "Jester can't call meetings...",
-        "2": "\u5c0f\u4e11\u4e0d\u80fd\u53ec\u5f00\u7d27\u6025\u4f1a\u8bae"
-    },
-    "RestrictOutOfTime": {
-        "0": "\u6642\u9593\u5207\u308c",
-        "1": "Out Of Time",
-        "2": "\u8d85\u65f6"
-    },
-    "TimeRemaining": {
-        "0": "\u6b8b\u308a\u6642\u9593: {0}",
-        "1": "Remaining: {0}",
-        "2": "\u5269\u4f59\u65f6\u95f4:{0}"
-    },
-    "ButtonBlocked": {
-        "0": "\u4f7f\u7528\u4e0d\u53ef",
-        "1": "BLOCKED",
-        "2": "\u4e0d\u80fd\u4f7f\u7528"
-    },
-    "ExilePlayer": {
-        "0": "{0}\u306f{1}\u3060\u3063\u305f\u3002",
-        "1": "{0} was The {1}."
     },
     "ReamingShots": {
         "0": "\u6b8b\u308a {0}\u767a",
@@ -890,6 +750,146 @@
     "SGIntro": {
         "0": "\u30b5\u30f3\u30b0\u30e9\u30b9\u3092\u624b\u306b\u5165\u308c\u3066\u3057\u307e\u3063\u305f...",
         "1": "You got the sunglasses..."
+    },
+    "GhostsSeeTasksButton": {
+        "0": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u30bf\u30b9\u30af\u6b8b\u91cf\u304c\u898b\u3048\u308b",
+        "1": "Ghosts See\nRemaining Tasks",
+        "2": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u4efb\u52a1\u8fdb\u5ea6"
+    },
+    "GhostsSeeVotesButton": {
+        "0": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u5f79\u8077\u304c\u898b\u3048\u308b",
+        "1": "Ghosts See\nRoles",
+        "2": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u804c\u4e1a"
+    },
+    "GhostsSeeRolesButton": {
+        "0": "\u5e7d\u970a\u6642\u5168\u54e1\u306e\n\u6295\u7968\u5148\u304c\u898b\u3048\u308b",
+        "1": "Ghosts See\nVotes",
+        "2": "\u5e7d\u7075\u53ef\u89c1\u4ed6\u4eba\u6295\u7968"
+    },
+    "HideNameplates": {
+        "0": "\u30cd\u30fc\u30e0\u30d7\u30ec\u30fc\u30c8\u3092\n\u975e\u8868\u793a\u306b\u3059\u308b",
+        "1": "Hide\nNameplates",
+        "2": "\u9690\u85cf\u540d\u724c"
+    },
+    "EnableCustomSounds": {
+        "0": "\u30ab\u30b9\u30bf\u30e0\u30b5\u30a6\u30f3\u30c9\u3092\n\u4f7f\u7528\u3059\u308b",
+        "1": "Enable\nCustom Sounds",
+        "2": "\u542f\u7528\u6a21\u7ec4\u97f3\u6548"
+    },
+    "ShowRoleSummaryButton": {
+        "0": "\u6700\u7d42\u7d50\u679c\u3092\n\u8868\u793a\u3059\u308b",
+        "1": "Show\nRole Summary",
+        "2": "\u663e\u793a\u804c\u4e1a\u603b\u7ed3"
+    },
+    "ModOptionsText": {
+        "0": "UM\u306e\u8a2d\u5b9a",
+        "1": "UM Options",
+        "2": "\u6781\u9650\u804c\u4e1a\u9009\u9879"
+    },
+    "VanillaOptionsText": {
+        "0": "AmongUs\u306e\u8a2d\u5b9a",
+        "1": "AmongUs Options",
+        "2": "\u539f\u7248\u9009\u9879"
+    },
+    "GeneralSettings": {
+        "0": "UM\u306e\u8a2d\u5b9a",
+        "1": "UM Settings",
+        "2": "\u6781\u9650\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "CrewmateSettings": {
+        "0": "\u30af\u30eb\u30fc\u30e1\u30a4\u30c8\u5f79\u8077",
+        "1": "Crewmate Roles",
+        "2": "\u8239\u5458\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "ImpostorSettings": {
+        "0": "\u30a4\u30f3\u30dd\u30b9\u30bf\u30fc\u5f79\u8077",
+        "1": "Impostor Roles",
+        "2": "\u4f2a\u88c5\u8005\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "NeutralSettings": {
+        "0": "\u7b2c\u4e09\u9663\u55b6\u5f79\u8077",
+        "1": "Neutral Roles",
+        "2": "\u72ec\u7acb\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "ModifierSettings": {
+        "0": "\u5c5e\u6027\u5f79\u8077",
+        "1": "Modifier Roles",
+        "2": "\u9644\u52a0\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "OtherSettings": {
+        "0": "\u305d\u306e\u4ed6\u8a2d\u5b9a",
+        "1": "Other Settings",
+        "2": "\u5176\u4ed6\u804c\u4e1a\u8bbe\u7f6e"
+    },
+    "OptionOn": {
+        "0": "\u30aa\u30f3",
+        "1": "On",
+        "2": "\u5f00\u542f"
+    },
+    "OptionOff": {
+        "0": "\u30aa\u30d5",
+        "1": "Off",
+        "2": "\u5173\u95ed"
+    },
+    "FormatVotes": {
+        "0": "{0}\u7968",
+        "1": "{0}Votes",
+        "2": "{0}\u7968"
+    },
+    "FormatSeconds": {
+        "0": "{0}\u79d2",
+        "1": "{0}Sec",
+        "2": "{0}\u79d2"
+    },
+    "FormatTimes": {
+        "0": "{0}\u56de",
+        "1": "{0}Times",
+        "2": "{0}\u6b21"
+    },
+    "FormatPlayer": {
+        "0": "{0}\u4eba",
+        "1": "{0}Player",
+        "2": "{0}\u4eba"
+    },
+    "FormatShots": {
+        "0": "{0}\u767a",
+        "1": "{0}Shots",
+        "2": "{0}\u6b21"
+    },
+    "FormatPercent": {
+        "0": "{0}%",
+        "1": "{0}%",
+        "2": "{0}%"
+    },
+    "FormatMultiplier": {
+        "0": "{0}x",
+        "1": "{0}x",
+        "2": "{0}x"
+    },
+    "Preset1": {
+        "0": "\u30d7\u30ea\u30bb\u30c3\u30c81",
+        "1": "Preset1",
+        "2": "\u9884\u8bbe 1"
+    },
+    "Preset2": {
+        "0": "\u30d7\u30ea\u30bb\u30c3\u30c82",
+        "1": "Preset2",
+        "2": "\u9884\u8bbe 2"
+    },
+    "Preset3": {
+        "0": "\u30d7\u30ea\u30bb\u30c3\u30c83",
+        "1": "Preset3",
+        "2": "\u9884\u8bbe 3"
+    },
+    "Preset4": {
+        "0": "\u30d7\u30ea\u30bb\u30c3\u30c84",
+        "1": "Preset4",
+        "2": "\u9884\u8bbe 4"
+    },
+    "Preset5": {
+        "0": "\u30d7\u30ea\u30bb\u30c3\u30c85",
+        "1": "Preset5",
+        "2": "\u9884\u8bbe 5"
     },
     "ChangePage": {
         "0": "< >\u3067\u30da\u30fc\u30b8\u3092\u5909\u66f4",
