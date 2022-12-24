@@ -92,7 +92,7 @@ namespace UltimateMods.Patches
             CrewSettings.Add((byte)RoleId.Bakery, CustomRolesH.BakeryRate.data);
             CrewSettings.Add((byte)RoleId.Snitch, CustomRolesH.SnitchRate.data);
             CrewSettings.Add((byte)RoleId.Seer, CustomRolesH.SeerRate.data);
-            CrewSettings.Add((byte)RoleId.Lighter, CustomRolesH.LighterRate.data);
+            // CrewSettings.Add((byte)RoleId.Lighter, CustomRolesH.LighterRate.data);
             CrewSettings.Add((byte)RoleId.Altruist, CustomRolesH.AltruistRate.data);
             CrewSettings.Add((byte)RoleId.Mayor, CustomRolesH.MayorRate.data);
 

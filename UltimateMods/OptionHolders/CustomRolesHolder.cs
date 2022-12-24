@@ -102,18 +102,11 @@ namespace UltimateMods
         public static CustomOption ArsonistCooldown;
         public static CustomOption ArsonistDuration;
 
-        public static CustomRoleOption LighterRate;
-        public static CustomOption LighterModeLightsOnVision;
-        public static CustomOption LighterModeLightsOffVision;
-        public static CustomOption LighterCooldown;
-        public static CustomOption LighterDuration;
-
-        public static CustomRoleOption YakuzaRate;
-        public static CustomOption YakuzaKillCooldown;
-        public static CustomOption YakuzaNumShots;
-        public static CustomOption YakuzaShareShots;
-        public static CustomOption YakuzaCanKillNeutrals;
-        public static CustomOption YakuzaMisfireKillsTarget;
+        // public static CustomRoleOption LighterRate;
+        // public static CustomOption LighterModeLightsOnVision;
+        // public static CustomOption LighterModeLightsOffVision;
+        // public static CustomOption LighterCooldown;
+        // public static CustomOption LighterDuration;
 
         public static CustomRoleOption MayorRate;
         public static CustomOption MayorNumVotes;
@@ -196,8 +189,8 @@ namespace UltimateMods
             TeleporterButtonCooldown = Create(181, Impostor, ImpostorRed, "TeleporterButtonCooldown", 40f, 10f, 80f, 2.5f, TeleporterRate, format: "FormatSeconds");
             TeleporterTeleportTo = Create(182, Impostor, ImpostorRed, "TeleporterTeleportTo", new string[] { "TeleporterAllRandom", "OnlyCrewmate" }, TeleporterRate);
 
-            AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
-            AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
+            // AltruistRate = new(185, Crewmate, White, "Altruist", ImpostorRed, 1);
+            // AltruistDuration = Create(186, Crewmate, AltruistRed, "AltruistDuration", 7.5f, 2.5f, 20f, 2.5f, AltruistRate, format: "FormatSeconds");
 
             EvilHackerRate = new(190, Impostor, White, "EvilHacker", ImpostorRed, 1);
             EvilHackerCanMoveEvenIfUsesAdmin = Create(191, Impostor, ImpostorRed, "EvilHackerCanMoveEvenIfUsesAdmin", false, EvilHackerRate);
@@ -237,11 +230,11 @@ namespace UltimateMods
             MayorMeetingButton = Create(252, Crewmate, MayorGreen, "MayorMeetingButton", true, MayorRate);
             MayorNumMeetingButton = Create(253, Crewmate, MayorGreen, "MayorNumMeetingButton", 1f, 1f, 10f, 1f, MayorMeetingButton, format: "FormatTimes");
 
-            LighterRate = new(260, Crewmate, White, "Lighter", LighterYellow, 1);
-            LighterCooldown = Create(261, Crewmate, LighterYellow, "Cooldowns", 30f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
-            LighterDuration = Create(262, Crewmate, LighterYellow, "LighterDurations", 10f, 2.5f, 30f, 2.5f, LighterRate, format: "FormatSeconds");
-            LighterModeLightsOffVision = Create(263, Crewmate, LighterYellow, "LighterModeLightsOffVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
-            LighterModeLightsOnVision = Create(264, Crewmate, LighterYellow, "LighterModeLightsOnVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+            // LighterRate = new(260, Crewmate, White, "Lighter", LighterYellow, 1);
+            // LighterCooldown = Create(261, Crewmate, LighterYellow, "Cooldowns", 30f, 2.5f, 60f, 2.5f, LighterRate, format: "FormatSeconds");
+            // LighterDuration = Create(262, Crewmate, LighterYellow, "LighterDurations", 10f, 2.5f, 30f, 2.5f, LighterRate, format: "FormatSeconds");
+            // LighterModeLightsOffVision = Create(263, Crewmate, LighterYellow, "LighterModeLightsOffVision", 2f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
+            // LighterModeLightsOnVision = Create(264, Crewmate, LighterYellow, "LighterModeLightsOnVision", 0.75f, 0.25f, 5f, 0.25f, LighterRate, format: "FormatMultiplier");
 
             /* Modifiers */
             OpportunistRate = new(2000, Modifiers, White, "Opportunist", OpportunistGreen, 15);

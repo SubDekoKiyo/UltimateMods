@@ -5,7 +5,7 @@ public static class RolesButtons
 {
     private static CustomButton AltruistButton;
     private static CustomButton EngineerRepairButton;
-    private static CustomButton LighterButton;
+    // private static CustomButton LighterButton;
     private static CustomButton MayorMeetingButton;
     private static CustomButton SheriffKillButton;
     private static CustomButton EvilHackerAdminButton;
@@ -25,8 +25,8 @@ public static class RolesButtons
     {
         AltruistButton.Timer = AltruistButton.MaxTimer = 0f;
         EngineerRepairButton.MaxTimer = EngineerRepairButton.Timer = 0f;
-        LighterButton.MaxTimer = Lighter.Cooldown;
-        LighterButton.EffectDuration = Lighter.Duration;
+        // LighterButton.MaxTimer = Lighter.Cooldown;
+        // LighterButton.EffectDuration = Lighter.Duration;
         MayorMeetingButton.MaxTimer = GameOptionsManager.Instance.CurrentGameOptions.GetInt(Int32OptionNames.EmergencyCooldown);
         SheriffKillButton.MaxTimer = Sheriff.Cooldown;
         EvilHackerAdminButton.MaxTimer = EvilHackerAdminButton.Timer = 0f;
@@ -153,7 +153,7 @@ public static class RolesButtons
         EngineerRepairButtonText.enableWordWrapping = false;
         EngineerRepairButtonText.transform.localScale = Vector3.one * 0.5f;
         EngineerRepairButtonText.transform.localPosition += new Vector3(-0.05f, 0.5f, 0);
-
+/*
         LighterButton = new(
             () =>
             {
@@ -185,7 +185,7 @@ public static class RolesButtons
             }
         );
         LighterButton.ButtonText = LocalizationManager.GetString(TransKey.LighterText);
-        LighterButton.EffectCancellable = true;
+        LighterButton.EffectCancellable = true;*/
 
         MayorMeetingButton = new(
             () =>

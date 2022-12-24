@@ -117,7 +117,7 @@ public static class CrewmateRoles
             players = new List<ProEngineer>();
         }
     }
-
+/*
     public class Lighter : RoleBase<Lighter>
     {
         public Lighter()
@@ -131,15 +131,6 @@ public static class CrewmateRoles
         public static float Cooldown { get { return CustomRolesH.LighterCooldown.getFloat(); } }
         public static float Duration { get { return CustomRolesH.LighterDuration.getFloat(); } }
         public static bool LightActive = false;
-
-        public static bool IsLightActive(PlayerControl player)
-        {
-            if (player.IsRole(RoleId.Lighter) && player.IsAlive())
-            {
-                return LightActive;
-            }
-            return false;
-        }
 
         public static Sprite GetButtonSprite()
         {
@@ -161,7 +152,7 @@ public static class CrewmateRoles
 
             LightActive = false;
         }
-    }
+    }*/
 
     public class Madmate : RoleBase<Madmate>
     {

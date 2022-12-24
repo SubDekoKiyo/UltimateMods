@@ -16,7 +16,7 @@ public static class RoleInfoList
     public static RoleInfo Bakery;
     public static RoleInfo Snitch;
     public static RoleInfo Seer;
-    public static RoleInfo Lighter;
+    // public static RoleInfo Lighter;
     public static RoleInfo Altruist;
     public static RoleInfo Mayor;
     public static RoleInfo CustomImpostor;
@@ -45,7 +45,7 @@ public static class RoleInfoList
             Bakery,
             Snitch,
             Seer,
-            Lighter,
+            // Lighter,
             Altruist,
             Mayor,
             CustomImpostor,
@@ -72,7 +72,7 @@ public static class RoleInfoList
         Bakery = new("Bakery", BakeryYellow, CustomRolesH.BakeryRate, RoleId.Bakery);
         Snitch = new("Snitch", SnitchGreen, CustomRolesH.SnitchRate, RoleId.Snitch);
         Seer = new("Seer", SeerGreen, CustomRolesH.SeerRate, RoleId.Seer);
-        Lighter = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleId.Lighter);
+        // Lighter = new("Lighter", LighterYellow, CustomRolesH.LighterRate, RoleId.Lighter);
         Altruist = new("Altruist", AltruistRed, CustomRolesH.AltruistRate, RoleId.Altruist);
         Mayor = new("Mayor", MayorGreen, CustomRolesH.MayorRate, RoleId.Mayor);
         CustomImpostor = new("CustomImpostor", ImpostorRed, CustomRolesH.CustomImpostorRate, RoleId.CustomImpostor);
@@ -101,7 +101,7 @@ public static class RoleInfoList
         if (p.IsRole(RoleId.Bakery)) infos.Add(Bakery);
         if (p.IsRole(RoleId.Snitch)) infos.Add(Snitch);
         if (p.IsRole(RoleId.Seer)) infos.Add(Seer);
-        if (p.IsRole(RoleId.Lighter)) infos.Add(Lighter);
+        // if (p.IsRole(RoleId.Lighter)) infos.Add(Lighter);
         if (p.IsRole(RoleId.Altruist)) infos.Add(Altruist);
         if (p.IsRole(RoleId.Mayor)) infos.Add(Mayor);
         if (p.IsRole(RoleId.CustomImpostor)) infos.Add(CustomImpostor);

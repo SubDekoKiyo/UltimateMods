@@ -120,7 +120,7 @@ public enum RoleId
     Bakery,
     Snitch,
     Seer,
-    Lighter,
+    // Lighter,
     Altruist,
     Mayor,
     CustomImpostor,
@@ -154,7 +154,7 @@ public static class RoleData
         { RoleId.Bakery, typeof(RoleBase<Bakery>) },
         { RoleId.Snitch, typeof(RoleBase<Snitch>) },
         { RoleId.Seer, typeof(RoleBase<Seer>) },
-        { RoleId.Lighter, typeof(RoleBase<Lighter>) },
+        // { RoleId.Lighter, typeof(RoleBase<Lighter>) },
         { RoleId.Altruist, typeof(RoleBase<Altruist>) },
         { RoleId.Mayor, typeof(RoleBase<Mayor>) },
 

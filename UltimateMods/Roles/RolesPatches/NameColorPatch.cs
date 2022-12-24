@@ -34,7 +34,7 @@ namespace UltimateMods.Patches
                 case RoleId.Bakery: SetPlayerNameColor(p, BakeryYellow); break;
                 case RoleId.Snitch: SetPlayerNameColor(p, SnitchGreen); break;
                 case RoleId.Seer: SetPlayerNameColor(p, SeerGreen); break;
-                case RoleId.Lighter: SetPlayerNameColor(p, LighterYellow); break;
+                // case RoleId.Lighter: SetPlayerNameColor(p, LighterYellow); break;
                 case RoleId.Altruist: SetPlayerNameColor(p, AltruistRed); break;
                 case RoleId.Mayor: SetPlayerNameColor(p, MayorGreen); break;
                 case RoleId.Crewmate: SetPlayerNameColor(p, CrewmateBlue); break;
